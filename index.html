@@ -3,16 +3,53 @@
 <head>
     <meta charset="utf-8">
     <title>Komodi</title>
+    <style>* {padding: 0; margin: 0}</style>
 </head>
 <script src="pixi.js/bin/pixi.js"></script>
 <body>
 <script type="text/javascript">
-    var type = "WebGL"
-    if(!PIXI.utils.isWebGLSupported()){
-        type = "canvas"
+    //Create the renderer
+    var renderer = PIXI.autoDetectRenderer(
+        1, 1,
+        {antialias: true, transparent: false, resolution: 1}
+    );
+
+    renderer.backgroundColor = 0xecf0f1;
+    renderer.view.style.position = "absolute";
+    renderer.view.style.display = "block";
+    renderer.autoResize = true;
+
+    //Add the canvas to the HTML document
+    document.body.appendChild(renderer.view);
+
+    var stage = new PIXI.Container();
+
+    var menu = new PIXI.Graphics();
+
+    stage.addChild(menu);
+
+    function resizeWindow() {
+        const MENU_HEIGHT = 150;
+
+        renderer.resize(window.innerWidth, window.innerHeight);
+
+        menu.clear();
+        menu.beginFill(0xbdc3c7);
+        menu.drawRect(0, 0, window.innerWidth, MENU_HEIGHT);
+        menu.endFill();
     }
 
-    PIXI.utils.sayHello(type)
+    window.addEventListener('resize', resizeWindow, true);
+    resizeWindow();
+
+    function gameLoop() {
+        requestAnimationFrame(gameLoop);
+        cat.x += 1;
+        renderer.render(stage);
+    }
+
+    renderer.render(stage);
+    gameLoop();
 </script>
 </body>
 </html>
