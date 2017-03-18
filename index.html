@@ -26,6 +26,42 @@
 
     let menu = new PIXI.Graphics();
 
+    function hitTestRectangle(r1, r2) {
+        //Define the variables we'll need to calculate
+        let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+        //hit will determine whether there's a collision
+        hit = false;
+
+        //Find the center points of each sprite
+        r1.centerX = r1.x + r1.width / 2;
+        r1.centerY = r1.y + r1.height / 2;
+        r2.centerX = r2.x + r2.width / 2;
+        r2.centerY = r2.y + r2.height / 2;
+
+        //Find the half-widths and half-heights of each sprite
+        r1.halfWidth = r1.width / 2;
+        r1.halfHeight = r1.height / 2;
+        r2.halfWidth = r2.width / 2;
+        r2.halfHeight = r2.height / 2;
+
+        //Calculate the distance vector between the sprites
+        vx = r1.centerX - r2.centerX;
+        vy = r1.centerY - r2.centerY;
+
+        //Figure out the combined half-widths and half-heights
+        combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+        combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+        if (Math.abs(vx) < combinedHalfWidths) {
+            hit = Math.abs(vy) < combinedHalfHeights
+        } else {
+            hit = false;
+        }
+
+        return hit;
+    }
+
     class BubbleShape extends PIXI.Graphics {
         constructor(color, highlighted) {
             super();
@@ -68,7 +104,11 @@
         }
     }
 
-    class BlockGenerator extends PIXI.Container {
+    let BUBBLE_HIT = new PIXI.Rectangle(-50, -30, 100, 60);
+
+    let dragging = null;
+
+    class Block extends PIXI.Container {
         constructor(color) {
             super();
 
@@ -76,18 +116,24 @@
             this._highlight = false;
 
             this._normalShape = new BubbleShape(color, false);
-            this._highlightShape = new BubbleShape(color, false);
-            this._highlightShape.alpha = 0.7;
+            this._highlightShape = new BubbleShape(color, true);
 
             this._currentShape = this._normalShape;
-            this.addChild(this._normalShape);
+            this.addChild(this._currentShape);
 
             this.interactive = true;
-            this.buttonMode = true;
-            this.hitArea = new PIXI.Rectangle(-50, -30, 100, 60);
+            this.hitArea = BUBBLE_HIT;
 
-            this.mouseover = () => this.highlight = true;
-            this.mouseout = () => this.highlight = false;
+            this.mousedown = () => {
+                dragging = this;
+            };
+
+            this.mouseup = () => {
+                if (hitTestRectangle(this, menu)) {
+                    this.parent.removeChild(this);
+                }
+                dragging = null;
+            };
         }
 
         get highlight() {
@@ -100,6 +146,30 @@
             this.removeChild(this._currentShape);
             this._currentShape = highlighted ? this._highlightShape : this._normalShape;
             this.addChild(this._currentShape);
+        }
+    }
+
+    class BlockGenerator extends PIXI.Container {
+        constructor(color) {
+            super();
+
+            this._color = color;
+            this._highlight = false;
+
+            this.addChild(new BubbleShape(color, false));
+
+            this.interactive = true;
+            this.buttonMode = true;
+            this.hitArea = BUBBLE_HIT;
+
+            this.mouseover = () => this.alpha = 0.7;
+            this.mouseout = () => this.alpha = 1;
+
+            this.mousedown = () => {
+                let block = new Block(this._color);
+                dragging = block;
+                stage.addChild(block);
+            }
         }
     }
 
@@ -132,6 +202,11 @@
 
     function gameLoop() {
         requestAnimationFrame(gameLoop);
+
+        if (dragging) {
+            dragging.position = renderer.plugins.interaction.mouse.global;
+            console.log(dragging.position);
+        }
 
         renderer.render(stage);
     }
