@@ -9,7 +9,7 @@
 <body>
 <script type="text/javascript">
     //Create the renderer
-    var renderer = PIXI.autoDetectRenderer(
+    let renderer = PIXI.autoDetectRenderer(
         1, 1,
         {antialias: true, transparent: false, resolution: 1}
     );
@@ -22,14 +22,102 @@
     //Add the canvas to the HTML document
     document.body.appendChild(renderer.view);
 
-    var stage = new PIXI.Container();
+    let stage = new PIXI.Container();
 
-    var menu = new PIXI.Graphics();
+    let menu = new PIXI.Graphics();
+
+    class BubbleShape extends PIXI.Graphics {
+        constructor(color, highlighted) {
+            super();
+
+            const BUBBLE_WIDTH = 100;
+            const BUBBLE_HEIGHT = 60;
+            const TRIANGLE_WIDTH = 20;
+            const TRIANGLE_HEIGHT = 15;
+
+            const left = -BUBBLE_WIDTH*.5;
+            const top = -BUBBLE_HEIGHT*.5;
+            const right = -left;
+            const bottom = -top;
+
+            let path = [
+                left, top,
+                -TRIANGLE_WIDTH*.5, top,
+                0, top+TRIANGLE_HEIGHT,
+                TRIANGLE_WIDTH*.5, top,
+                right, top,
+                right, bottom,
+                TRIANGLE_WIDTH*.5, bottom,
+                0, bottom+TRIANGLE_HEIGHT,
+                -TRIANGLE_WIDTH*.5, bottom,
+                left, bottom,
+                left, top,
+            ];
+
+            this.beginFill(color);
+            this.drawPolygon(path);
+            this.endFill(color);
+
+            if (highlighted) {
+                this.lineStyle(4, 0xFF0000, 1);
+                this.moveTo(path[0], path[1])
+                for (let i = 1; i <= 4; i++) {
+                    this.lineTo(path[i*2], path[i*2+1]);
+                }
+            }
+        }
+    }
+
+    class BlockGenerator extends PIXI.Container {
+        constructor(color) {
+            super();
+
+            this._color = color;
+            this._highlight = false;
+
+            this._normalShape = new BubbleShape(color, false);
+            this._highlightShape = new BubbleShape(color, false);
+            this._highlightShape.alpha = 0.7;
+
+            this._currentShape = this._normalShape;
+            this.addChild(this._normalShape);
+
+            this.interactive = true;
+            this.buttonMode = true;
+            this.hitArea = new PIXI.Rectangle(-50, -30, 100, 60);
+
+            this.mouseover = () => this.highlight = true;
+            this.mouseout = () => this.highlight = false;
+        }
+
+        get highlight() {
+            return this._highlight;
+        }
+
+        set highlight(highlighted) {
+            this._highlight = highlighted;
+
+            this.removeChild(this._currentShape);
+            this._currentShape = highlighted ? this._highlightShape : this._normalShape;
+            this.addChild(this._currentShape);
+        }
+    }
 
     stage.addChild(menu);
 
+    let purpleBubble = new BlockGenerator(0x9b59b6);
+    purpleBubble.x = 80;
+    purpleBubble.y = 55;
+
+    let orangeBubble = new BlockGenerator(0xe67e22);
+    orangeBubble.x = 220;
+    orangeBubble.y = 55;
+
+    menu.addChild(purpleBubble);
+    menu.addChild(orangeBubble);
+
     function resizeWindow() {
-        const MENU_HEIGHT = 150;
+        const MENU_HEIGHT = 120;
 
         renderer.resize(window.innerWidth, window.innerHeight);
 
@@ -44,7 +132,7 @@
 
     function gameLoop() {
         requestAnimationFrame(gameLoop);
-        cat.x += 1;
+
         renderer.render(stage);
     }
 
