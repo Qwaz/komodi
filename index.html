@@ -8,24 +8,6 @@
 <script src="pixi.js/bin/pixi.js"></script>
 <body>
 <script type="text/javascript">
-    //Create the renderer
-    let renderer = PIXI.autoDetectRenderer(
-        1, 1,
-        {antialias: true, transparent: false, resolution: 1}
-    );
-
-    renderer.backgroundColor = 0xecf0f1;
-    renderer.view.style.position = "absolute";
-    renderer.view.style.display = "block";
-    renderer.autoResize = true;
-
-    //Add the canvas to the HTML document
-    document.body.appendChild(renderer.view);
-
-    let stage = new PIXI.Container();
-
-    let menu = new PIXI.Graphics();
-
     function hitTestRectangle(r1, r2) {
         //Define the variables we'll need to calculate
         let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
@@ -62,14 +44,14 @@
         return hit;
     }
 
+    const BUBBLE_WIDTH = 100;
+    const BUBBLE_HEIGHT = 60;
+    const TRIANGLE_WIDTH = 20;
+    const TRIANGLE_HEIGHT = 15;
+
     class BubbleShape extends PIXI.Graphics {
         constructor(color, highlighted) {
             super();
-
-            const BUBBLE_WIDTH = 100;
-            const BUBBLE_HEIGHT = 60;
-            const TRIANGLE_WIDTH = 20;
-            const TRIANGLE_HEIGHT = 15;
 
             const left = -BUBBLE_WIDTH*.5;
             const top = -BUBBLE_HEIGHT*.5;
@@ -90,13 +72,14 @@
                 left, top,
             ];
 
+            this.lineStyle(1, 0x000000, 1);
             this.beginFill(color);
             this.drawPolygon(path);
             this.endFill(color);
 
             if (highlighted) {
                 this.lineStyle(4, 0xFF0000, 1);
-                this.moveTo(path[0], path[1])
+                this.moveTo(path[0], path[1]);
                 for (let i = 1; i <= 4; i++) {
                     this.lineTo(path[i*2], path[i*2+1]);
                 }
@@ -104,16 +87,40 @@
         }
     }
 
-    let BUBBLE_HIT = new PIXI.Rectangle(-50, -30, 100, 60);
+    //Create the renderer
+    let renderer = PIXI.autoDetectRenderer(
+        1, 1,
+        {antialias: true, transparent: false, resolution: 1}
+    );
+
+    renderer.backgroundColor = 0xecf0f1;
+    renderer.view.style.position = "absolute";
+    renderer.view.style.display = "block";
+    renderer.autoResize = true;
+
+    //Add the canvas to the HTML document
+    document.body.appendChild(renderer.view);
+
+    let stage = new PIXI.Container();
+
+    let menu = new PIXI.Graphics();
+
+    let freeBlocks = new Set();
+
+    let BUBBLE_HIT = new PIXI.Rectangle(-BUBBLE_WIDTH*.5, -BUBBLE_HEIGHT*.5, BUBBLE_WIDTH, BUBBLE_HEIGHT);
 
     let dragging = null;
 
     class Block extends PIXI.Container {
         constructor(color) {
             super();
+            dragging = this;
+            freeBlocks.add(this);
 
             this._color = color;
             this._highlight = false;
+            this._prevBlock = null;
+            this._nextBlock = null;
 
             this._normalShape = new BubbleShape(color, false);
             this._highlightShape = new BubbleShape(color, true);
@@ -122,15 +129,36 @@
             this.addChild(this._currentShape);
 
             this.interactive = true;
+            this.buttonMode = true;
             this.hitArea = BUBBLE_HIT;
+
+            this.mouseover = () => this.alpha = 0.7;
+            this.mouseout = () => this.alpha = 1;
 
             this.mousedown = () => {
                 dragging = this;
+
+                if (this._prevBlock) {
+                    freeBlocks.add(this._prevBlock);
+                    this._prevBlock._nextBlock = null;
+                    this._prevBlock = null;
+                }
             };
 
             this.mouseup = () => {
                 if (hitTestRectangle(this, menu)) {
-                    this.parent.removeChild(this);
+                    this.deleteTree();
+                } else {
+                    freeBlocks.forEach((block) => {
+                        if (!this._prevBlock && block.possibleNextBlock(this)) {
+                            this._prevBlock = block;
+                            block._nextBlock = this;
+                            block.highlight = false;
+                            freeBlocks.delete(block);
+
+                            block.adjustChildrenPosition();
+                        }
+                    });
                 }
                 dragging = null;
             };
@@ -146,6 +174,31 @@
             this.removeChild(this._currentShape);
             this._currentShape = highlighted ? this._highlightShape : this._normalShape;
             this.addChild(this._currentShape);
+        }
+
+        possibleNextBlock(block) {
+            let NEAR = 40;
+
+            return Math.abs(block.x - this.x) <= NEAR
+                && Math.abs(block.y - (this.y - BUBBLE_HEIGHT)) <= NEAR;
+        }
+
+        deleteTree() {
+            if (freeBlocks.has(this)) {
+                freeBlocks.delete(this);
+            }
+            this.parent.removeChild(this);
+            if (this._nextBlock) {
+                this._nextBlock.deleteTree();
+            }
+        }
+
+        adjustChildrenPosition() {
+            if (this._nextBlock) {
+                this._nextBlock.x = this.x;
+                this._nextBlock.y = this.y - BUBBLE_HEIGHT;
+                this._nextBlock.adjustChildrenPosition();
+            }
         }
     }
 
@@ -167,7 +220,6 @@
 
             this.mousedown = () => {
                 let block = new Block(this._color);
-                dragging = block;
                 stage.addChild(block);
             }
         }
@@ -205,7 +257,11 @@
 
         if (dragging) {
             dragging.position = renderer.plugins.interaction.mouse.global;
-            console.log(dragging.position);
+            dragging.adjustChildrenPosition();
+
+            freeBlocks.forEach((block) => {
+                block.highlight = block.possibleNextBlock(dragging);
+            });
         }
 
         renderer.render(stage);
