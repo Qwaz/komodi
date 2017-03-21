@@ -1,0 +1,19 @@
+{
+  "name": "komodi",
+  "version": "0.1.0",
+  "description": "Visual functional programming language designed for education",
+  "main": "bundle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yechan Bae <qwazpia@gmail.com>",
+  "devDependencies": {
+    "@types/es6-shim": "^0.31.32",
+    "@types/pixi.js": "^4.4.0",
+    "ts-loader": "^2.0.2"
+  },
+  "dependencies": {
+    "es6-shim": "^0.35.3",
+    "pixi.js": "^4.4.2"
+  }
+}
