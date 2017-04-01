@@ -1,91 +1,107 @@
-import {Block, BlockGenerator} from "./ui/block";
+import {Generator} from "./ui/Generator";
+import {orangeBlockFactory, purpleBlockFactory} from "./ui/blocks";
+import {Block, FlowItem} from "./ui/flow";
+import {AttachController} from "./controllers/AttachController";
 
-export class State {
-    private static _instance:State = new State();
+const MENU_PADDING = 20;
 
+export class Global {
+    private static _instance:Global = new Global();
+
+    // logic related
+    static generators: Array<PIXI.Container>;
+    static attachController: AttachController;
+
+    // render related
     static renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 
     static stage: PIXI.Container;
     static menu: PIXI.Graphics;
+    static menuHeight: number;  // TODO: menuHight should not be here
 
-    static freeBlocks: Set<Block>;
-
-    static dragging: Block | null = null;
+    static dragging: FlowItem | null = null;
 
     private constructor() {
-        State.renderer = PIXI.autoDetectRenderer(
+        // logic initialization
+        Global.generators = [
+            new Generator(purpleBlockFactory),
+            new Generator(orangeBlockFactory),
+        ];
+
+        Global.attachController = new AttachController();
+
+        // render initialization
+        Global.renderer = PIXI.autoDetectRenderer(
             1, 1,
             {antialias: true, transparent: false, resolution: 1}
         );
 
-        State.renderer.backgroundColor = 0xecf0f1;
-        State.renderer.view.style.position = "absolute";
-        State.renderer.view.style.display = "block";
-        State.renderer.autoResize = true;
+        Global.renderer.backgroundColor = 0xecf0f1;
+        Global.renderer.view.style.position = "absolute";
+        Global.renderer.view.style.display = "block";
+        Global.renderer.autoResize = true;
 
-        //Add the canvas to the HTML document
-        document.body.appendChild(State.renderer.view);
+        document.body.appendChild(Global.renderer.view);
 
-        State.stage = new PIXI.Container();
-        State.freeBlocks = new Set<Block>();
+        Global.stage = new PIXI.Container();
 
-        State.menu = new PIXI.Graphics();
-        State.stage.addChild(State.menu);
+        Global.menu = new PIXI.Graphics();
+        Global.stage.addChild(Global.menu);
 
-        let purpleBlock = new BlockGenerator(0x9b59b6);
-        purpleBlock.x = 80;
-        purpleBlock.y = 55;
+        {
+            let maxHeight = 0;
+            for (let generator of Global.generators) {
+                Global.menu.addChild(generator);
+                maxHeight = Math.max(maxHeight, generator.height);
+            }
 
-        let orangeBlock = new BlockGenerator(0xe67e22);
-        orangeBlock.x = 220;
-        orangeBlock.y = 55;
+            Global.menuHeight = maxHeight + 2*MENU_PADDING;
 
-        State.menu.addChild(purpleBlock);
-        State.menu.addChild(orangeBlock);
+            let widthSum = 0;
+            for (let i = 0; i < Global.generators.length; i++) {
+                let generator = Global.generators[i];
+                generator.x = (i+1)*MENU_PADDING + widthSum + generator.width * .5;
+                generator.y = Global.menuHeight * .5;
+                widthSum += generator.width;
+            }
+        }
 
         window.addEventListener('resize', this.drawMenu, true);
         this.drawMenu();
-
-        function gameLoop() {
-            requestAnimationFrame(gameLoop);
-
-            if (State.dragging) {
-                State.dragging.position = State.renderer.plugins.interaction.mouse.global;
-                State.dragging.adjustChildrenPosition();
-
-                State.freeBlocks.forEach((block) => {
-                    block.highlight = block.possibleNextBlock(State.dragging);
-                });
-            }
-
-            State.renderer.render(State.stage);
-        }
-
-        State.renderer.render(State.stage);
-        gameLoop();
     }
 
     public static get instance() {
-        return this._instance || (this._instance = new State());
+        return this._instance || (this._instance = new Global());
     }
 
     private drawMenu() {
-        const MENU_HEIGHT = 120;
+        Global.menu.clear();
+        Global.menu.beginFill(0xbdc3c7);
+        Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
+        Global.menu.endFill();
 
-        State.renderer.resize(window.innerWidth, window.innerHeight);
-
-        State.menu.clear();
-        State.menu.beginFill(0xbdc3c7);
-        State.menu.drawRect(0, 0, window.innerWidth, MENU_HEIGHT);
-        State.menu.endFill();
+        Global.renderer.resize(window.innerWidth, window.innerHeight);
     }
 
     update() {
-        State.renderer.render(State.stage);
+        if (Global.dragging) {
+            let target = Global.dragging;
+            target.position = Global.renderer.plugins.interaction.mouse.global;
+
+            if (target instanceof Block) {
+                let globalPosition = target.getGlobalPosition();
+                Global.attachController.getNearestAttachPoint(
+                    globalPosition.x + target.shape.pivot.offsetX,
+                    globalPosition.y + target.shape.pivot.offsetY,
+                );
+            }
+        }
+
+        Global.renderer.render(Global.stage);
     }
 }
 
-let state = State.instance;
+let state = Global.instance;
 
 function loop() {
     requestAnimationFrame(loop);

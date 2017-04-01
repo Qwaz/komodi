@@ -68,12 +68,13 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_block__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "State", function() { return State; });
 
-Object.defineProperty(exports, "__esModule", { value: true });
-var block_1 = __webpack_require__(1);
 var State = (function () {
     function State() {
         State.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: true, transparent: false, resolution: 1 });
@@ -86,10 +87,10 @@ var State = (function () {
         State.freeBlocks = new Set();
         State.menu = new PIXI.Graphics();
         State.stage.addChild(State.menu);
-        var purpleBlock = new block_1.BlockGenerator(0x9b59b6);
+        var purpleBlock = new __WEBPACK_IMPORTED_MODULE_0__ui_block__["a" /* BlockGenerator */](0x9b59b6);
         purpleBlock.x = 80;
         purpleBlock.y = 55;
-        var orangeBlock = new block_1.BlockGenerator(0xe67e22);
+        var orangeBlock = new __WEBPACK_IMPORTED_MODULE_0__ui_block__["a" /* BlockGenerator */](0xe67e22);
         orangeBlock.x = 220;
         orangeBlock.y = 55;
         State.menu.addChild(purpleBlock);
@@ -130,9 +131,9 @@ var State = (function () {
     };
     return State;
 }());
+
 State._instance = new State();
 State.dragging = null;
-exports.State = State;
 var state = State.instance;
 function loop() {
     requestAnimationFrame(loop);
@@ -143,10 +144,14 @@ loop();
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(3);
+/* unused harmony export Block */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BlockGenerator; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -157,10 +162,9 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var BubbleShape_1 = __webpack_require__(2);
-var entry_1 = __webpack_require__(0);
-var utils_1 = __webpack_require__(3);
+
+
+
 var Block = (function (_super) {
     __extends(Block, _super);
     function Block(color) {
@@ -168,42 +172,42 @@ var Block = (function (_super) {
         _this._highlight = false;
         _this._prevBlock = null;
         _this._nextBlock = null;
-        entry_1.State.dragging = _this;
-        entry_1.State.freeBlocks.add(_this);
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging = _this;
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].freeBlocks.add(_this);
         _this._color = color;
-        _this._normalShape = new BubbleShape_1.default(color, false);
-        _this._highlightShape = new BubbleShape_1.default(color, true);
+        _this._normalShape = new __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */](color, false);
+        _this._highlightShape = new __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */](color, true);
         _this._currentShape = _this._normalShape;
         _this.addChild(_this._currentShape);
         _this.interactive = true;
         _this.buttonMode = true;
-        _this.hitArea = BubbleShape_1.default.hitArea;
+        _this.hitArea = __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */].hitArea;
         _this.on('mouseover', function () { return _this.alpha = 0.7; });
         _this.on('mouseout', function () { return _this.alpha = 1; });
         _this.on('mousedown', function () {
-            entry_1.State.dragging = _this;
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging = _this;
             if (_this._prevBlock) {
-                entry_1.State.freeBlocks.add(_this._prevBlock);
+                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].freeBlocks.add(_this._prevBlock);
                 _this._prevBlock._nextBlock = null;
                 _this._prevBlock = null;
             }
         });
         _this.on('mouseup', function () {
-            if (utils_1.hitTestRectangle(_this, entry_1.State.menu)) {
+            if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* hitTestRectangle */])(_this, __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu)) {
                 _this.deleteTree();
             }
             else {
-                entry_1.State.freeBlocks.forEach(function (block) {
+                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].freeBlocks.forEach(function (block) {
                     if (!_this._prevBlock && block.possibleNextBlock(_this)) {
                         _this._prevBlock = block;
                         block._nextBlock = _this;
                         block.highlight = false;
-                        entry_1.State.freeBlocks.delete(block);
+                        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].freeBlocks.delete(block);
                         block.adjustChildrenPosition();
                     }
                 });
             }
-            entry_1.State.dragging = null;
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging = null;
         });
         return _this;
     }
@@ -224,13 +228,13 @@ var Block = (function (_super) {
         if (block) {
             var NEAR = 40;
             return Math.abs(block.x - this.x) <= NEAR
-                && Math.abs(block.y - (this.y - BubbleShape_1.default.BUBBLE_HEIGHT)) <= NEAR;
+                && Math.abs(block.y - (this.y - __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */].BUBBLE_HEIGHT)) <= NEAR;
         }
         return false;
     };
     Block.prototype.deleteTree = function () {
-        if (entry_1.State.freeBlocks.has(this)) {
-            entry_1.State.freeBlocks.delete(this);
+        if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].freeBlocks.has(this)) {
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].freeBlocks.delete(this);
         }
         this.parent.removeChild(this);
         if (this._nextBlock) {
@@ -240,41 +244,40 @@ var Block = (function (_super) {
     Block.prototype.adjustChildrenPosition = function () {
         if (this._nextBlock) {
             this._nextBlock.x = this.x;
-            this._nextBlock.y = this.y - BubbleShape_1.default.BUBBLE_HEIGHT;
+            this._nextBlock.y = this.y - __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */].BUBBLE_HEIGHT;
             this._nextBlock.adjustChildrenPosition();
         }
     };
     return Block;
 }(PIXI.Container));
-exports.Block = Block;
+
 var BlockGenerator = (function (_super) {
     __extends(BlockGenerator, _super);
     function BlockGenerator(color) {
         var _this = _super.call(this) || this;
         _this._color = color;
-        _this.addChild(new BubbleShape_1.default(color, false));
+        _this.addChild(new __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */](color, false));
         _this.interactive = true;
         _this.buttonMode = true;
-        _this.hitArea = BubbleShape_1.default.hitArea;
+        _this.hitArea = __WEBPACK_IMPORTED_MODULE_0__shape_BubbleShape__["a" /* default */].hitArea;
         _this.on('mouseover', function () { return _this.alpha = 0.7; });
         _this.on('mouseout', function () { return _this.alpha = 1; });
         _this.on('mousedown', function () {
             var block = new Block(_this._color);
-            entry_1.State.stage.addChild(block);
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].stage.addChild(block);
         });
         return _this;
     }
     return BlockGenerator;
 }(PIXI.Container));
-exports.BlockGenerator = BlockGenerator;
+
 
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -285,7 +288,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
 var BUBBLE_WIDTH = 100;
 var BUBBLE_HEIGHT = 60;
 var TRIANGLE_WIDTH = 20;
@@ -326,18 +328,17 @@ var BubbleShape = (function (_super) {
     }
     return BubbleShape;
 }(PIXI.Graphics));
+/* harmony default export */ __webpack_exports__["a"] = BubbleShape;
 BubbleShape.hitArea = new PIXI.Rectangle(left, top, BUBBLE_WIDTH, BUBBLE_HEIGHT);
 BubbleShape.BUBBLE_HEIGHT = BUBBLE_HEIGHT;
-exports.default = BubbleShape;
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["a"] = hitTestRectangle;
 function hitTestRectangle(obj1, obj2) {
     var bound1 = obj1.getBounds();
     var bound2 = obj2.getBounds();
@@ -354,7 +355,6 @@ function hitTestRectangle(obj1, obj2) {
     return Math.abs(vx) < (bound1.width + bound2.width) * .5
         && Math.abs(vy) < (bound1.height + bound2.height) * .5;
 }
-exports.hitTestRectangle = hitTestRectangle;
 
 
 /***/ })
