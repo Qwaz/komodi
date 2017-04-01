@@ -1,10 +1,11 @@
 import {Block} from "../ui/flow";
 
 export interface AttachInfo {
-    attachedTo: Block;
+    attachTo: Block;
     attachIndex: number;
 }
 
+// Offset information is redundant, but used as cache
 export interface Offset {
     offsetX: number;
     offsetY: number;
@@ -34,13 +35,15 @@ export class AttachController {
     }
 
     setHighlight(attachInfo: AttachInfo) {
+        this.removeHighlight();
+
         this.currentHighlight = attachInfo;
         let highlight = this.getHighlightFromAttachInfo(this.currentHighlight);
         highlight.visible = true;
     }
 
     removeHighlight() {
-        if (this.currentHighlight != null) {
+        if (this.currentHighlight) {
             let highlight = this.getHighlightFromAttachInfo(this.currentHighlight);
             highlight.visible = false;
             this.currentHighlight = null;
@@ -48,22 +51,19 @@ export class AttachController {
     }
 
     getHighlightFromAttachInfo(attachInfo: AttachInfo): PIXI.Graphics {
-        return attachInfo.attachedTo.highlights[attachInfo.attachIndex];
+        return attachInfo.attachTo.highlights[attachInfo.attachIndex];
     }
 
     getNearestAttachPoint(stageX: number, stageY: number): AttachInfo | null {
         const NEAR = 20;
 
-        this.removeHighlight();
-
         let result: AttachInfo | null = null;
         let resultDist = 0;
 
         this.attachPoints.forEach((arr, block) => {
-            let globalPosition = block.getGlobalPosition();
             for (let candidates of arr) {
-                let candX = globalPosition.x + candidates.offsetX;
-                let candY = globalPosition.y + candidates.offsetY;
+                let candX = block.x + candidates.offsetX;
+                let candY = block.y + candidates.offsetY;
 
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
@@ -72,7 +72,7 @@ export class AttachController {
                     let distance = deltaX + deltaY;
                     if (result == null || distance <= resultDist) {
                         result = {
-                            attachedTo: block,
+                            attachTo: block,
                             attachIndex: candidates.attachIndex,
                         };
                         resultDist = distance;
@@ -81,9 +81,43 @@ export class AttachController {
             }
         });
 
-        if (result != null) {
-            this.setHighlight(result);
-        }
         return result;
+    }
+
+    attachBlock(target: Block, attachInfo: AttachInfo) {
+        let parent = attachInfo.attachTo;
+        parent.attachChildren[attachInfo.attachIndex] = target;
+        target.attachParent = attachInfo;
+
+        parent.updateChildrenPosition();
+
+        let arr = this.attachPoints.get(parent);
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].attachIndex == attachInfo.attachIndex) {
+                arr.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    detachBlock(target: Block) {
+        let attachInfo = target.attachParent;
+
+        if (attachInfo) {
+            let parent = attachInfo.attachTo;
+            parent.attachChildren[attachInfo.attachIndex] = null;
+            target.attachParent = null;
+
+            parent.updateChildrenPosition();
+
+            let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
+
+            let arr = this.attachPoints.get(parent);
+            arr.push({
+                attachIndex: attachInfo.attachIndex,
+                offsetX: offset.offsetX,
+                offsetY: offset.offsetY,
+            });
+        }
     }
 }

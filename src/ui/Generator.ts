@@ -11,7 +11,7 @@ export class Generator<T extends FlowItem> extends PIXI.Container {
         this.buttonMode = true;
         this.hitArea = target.shape.hitArea;
 
-        this.on('mouseover', () => this.alpha = 0.7);
+        this.on('mouseover', () => this.alpha = 0.85);
         this.on('mouseout', () => this.alpha = 1);
 
         this.on('mousedown', () => {

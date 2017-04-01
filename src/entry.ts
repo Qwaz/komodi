@@ -89,11 +89,18 @@ export class Global {
             target.position = Global.renderer.plugins.interaction.mouse.global;
 
             if (target instanceof Block) {
-                let globalPosition = target.getGlobalPosition();
-                Global.attachController.getNearestAttachPoint(
-                    globalPosition.x + target.shape.pivot.offsetX,
-                    globalPosition.y + target.shape.pivot.offsetY,
+                target.updateChildrenPosition();
+
+                let attachInfo = Global.attachController.getNearestAttachPoint(
+                    target.x + target.shape.pivot.offsetX,
+                    target.y + target.shape.pivot.offsetY,
                 );
+
+                if (attachInfo) {
+                    Global.attachController.setHighlight(attachInfo);
+                } else {
+                    Global.attachController.removeHighlight();
+                }
             }
         }
 

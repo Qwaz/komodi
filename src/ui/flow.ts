@@ -15,8 +15,8 @@ export abstract class FlowElement extends FlowItem {
 }
 
 export abstract class Block extends FlowElement {
-    attachParent: AttachInfo | null;
-    attachChildren: Array<Block | null>;
+    attachParent: AttachInfo | null = null;
+    attachChildren: Array<Block | null> = [];
 
     highlights: PIXI.Graphics[];
 
@@ -36,19 +36,20 @@ export abstract class Block extends FlowElement {
             this.highlights.push(clone);
             this.addChild(clone);
             clone.visible = false;
+
+            this.attachChildren.push(null);
         }
 
         Global.attachController.registerAttachPoints(this, _shape.highlightOffsets);
 
         // event handling
-        this.on('mouseover', () => this.alpha = 0.7);
+        this.on('mouseover', () => this.alpha = 0.85);
         this.on('mouseout', () => this.alpha = 1);
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
                 Global.dragging = this;
-                this.parent.addChild(this);
-                // TODO: Block detach logic
+                Global.attachController.detachBlock(this);
             }
         });
 
@@ -56,10 +57,19 @@ export abstract class Block extends FlowElement {
             if (Global.dragging == this) {
                 Global.dragging = null;
 
-                // TODO: Block attach logic
-
                 if (hitTestRectangle(Global.menu, this)) {
                     this.destroy();
+                } else {
+                    Global.attachController.removeHighlight();
+
+                    let attachInfo = Global.attachController.getNearestAttachPoint(
+                        this.x + this._shape.pivot.offsetX,
+                        this.y + this._shape.pivot.offsetY,
+                    );
+
+                    if (attachInfo) {
+                        Global.attachController.attachBlock(this, attachInfo);
+                    }
                 }
             }
         });
@@ -71,9 +81,22 @@ export abstract class Block extends FlowElement {
 
         for (let i = 0; i < this.attachChildren.length; i++) {
             let child = this.attachChildren[i];
-            if (child != null) {
+            if (child) {
                 this.attachChildren[i] = null;
                 child.destroy();
+            }
+        }
+    }
+
+    updateChildrenPosition() {
+        this.parent.setChildIndex(this, this.parent.children.length-1);
+        for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
+            let offset = this._shape.highlightOffsets[i];
+            let child = this.attachChildren[i];
+            if (child) {
+                child.x = this.x + offset.offsetX - child._shape.pivot.offsetX;
+                child.y = this.y + offset.offsetY - child._shape.pivot.offsetY;
+                child.updateChildrenPosition();
             }
         }
     }
