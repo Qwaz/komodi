@@ -1,11 +1,15 @@
 import {Offset} from "../controllers/AttachController";
 
-abstract class Shape {
+export abstract class Shape {
     abstract get graphics(): PIXI.Graphics;
     abstract get pivot(): Offset;
-    abstract get highlightGraphics(): PIXI.Graphics[];
-    abstract get highlightOffsets(): Offset[];
     abstract get hitArea(): PIXI.Polygon;
 }
 
-export default Shape;
+export abstract class BlockShape extends Shape {
+    abstract get highlightGraphics(): PIXI.Graphics[];
+    abstract get highlightOffsets(): Offset[];
+}
+
+export const TRIANGLE_WIDTH = 20;
+export const TRIANGLE_HEIGHT = 15;

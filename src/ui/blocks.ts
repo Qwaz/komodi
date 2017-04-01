@@ -1,21 +1,11 @@
 import {Block, FlowItemFactory} from "./flow";
-import BubbleShape from "../shape/BubbleShape";
-import Shape from "../shape/Shape";
+import {UnitaryBlockShape} from "../shape/UnitaryBlockShape";
+import {BinaryBlockShape} from "../shape/BinaryBlockShape";
+import {SmallBlockShape} from "../shape/SmallBlockShape";
 
-class UnitaryBlock extends Block {
-    constructor(shape: Shape) {
-        super(shape);
-    }
+export let purpleBlockFactory = new FlowItemFactory(Block, new UnitaryBlockShape(0x9b59b6));
+export let orangeBlockFactory = new FlowItemFactory(Block, new UnitaryBlockShape(0xf1c40f));
 
-    calculateElementSize(): void {
-    }
+export let binaryBlockFactory = new FlowItemFactory(Block, new BinaryBlockShape(0x2ecc71));
 
-    drawBranch(): void {
-    }
-
-    editingPoints(): void {
-    }
-}
-
-export let purpleBlockFactory = new FlowItemFactory(UnitaryBlock, new BubbleShape(0x9b59b6));
-export let orangeBlockFactory = new FlowItemFactory(UnitaryBlock, new BubbleShape(0xf1c40f));
+export let smallBlockFactory = new FlowItemFactory(Block, new SmallBlockShape(0x95a5a6));

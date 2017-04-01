@@ -1,4 +1,4 @@
-import Shape from "../shape/Shape";
+import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
 import {hitTestRectangle} from "../utils";
 import {AttachInfo} from "../controllers/AttachController";
@@ -14,13 +14,13 @@ export abstract class FlowElement extends FlowItem {
     abstract calculateElementSize(): void;
 }
 
-export abstract class Block extends FlowElement {
+export class Block extends FlowElement {
     attachParent: AttachInfo | null = null;
     attachChildren: Array<Block | null> = [];
 
     highlights: PIXI.Graphics[];
 
-    constructor(private _shape: Shape) {
+    constructor(private _shape: BlockShape) {
         super();
 
         // UI setup
@@ -101,13 +101,22 @@ export abstract class Block extends FlowElement {
         }
     }
 
-    get shape(): Shape {
+    get shape(): BlockShape {
         return this._shape;
+    }
+
+    calculateElementSize(): void {
+    }
+
+    drawBranch(): void {
+    }
+
+    editingPoints(): void {
     }
 }
 
-export class FlowItemFactory<T extends FlowItem> {
-    constructor(private constructor: {new (shape: Shape): T}, readonly shape: Shape) {
+export class FlowItemFactory<T extends FlowItem, S extends Shape> {
+    constructor(private constructor: {new (shape: S): T}, readonly shape: S) {
     }
 
     createFlowItem(): T {

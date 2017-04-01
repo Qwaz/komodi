@@ -1,5 +1,5 @@
 import {Generator} from "./ui/Generator";
-import {orangeBlockFactory, purpleBlockFactory} from "./ui/blocks";
+import {binaryBlockFactory, orangeBlockFactory, purpleBlockFactory, smallBlockFactory} from "./ui/blocks";
 import {Block, FlowItem} from "./ui/flow";
 import {AttachController} from "./controllers/AttachController";
 
@@ -24,8 +24,10 @@ export class Global {
     private constructor() {
         // logic initialization
         Global.generators = [
+            new Generator(smallBlockFactory),
             new Generator(purpleBlockFactory),
             new Generator(orangeBlockFactory),
+            new Generator(binaryBlockFactory),
         ];
 
         Global.attachController = new AttachController();
@@ -33,7 +35,7 @@ export class Global {
         // render initialization
         Global.renderer = PIXI.autoDetectRenderer(
             1, 1,
-            {antialias: true, transparent: false, resolution: 1}
+            {antialias: false, transparent: false, resolution: 1}
         );
 
         Global.renderer.backgroundColor = 0xecf0f1;

@@ -85,11 +85,13 @@ var MENU_PADDING = 20;
 var Global = (function () {
     function Global() {
         Global.generators = [
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["a" /* purpleBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["b" /* orangeBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["a" /* smallBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["b" /* purpleBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["c" /* orangeBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["d" /* binaryBlockFactory */]),
         ];
         Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
-        Global.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: true, transparent: false, resolution: 1 });
+        Global.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: false, resolution: 1 });
         Global.renderer.backgroundColor = 0xecf0f1;
         Global.renderer.view.style.position = "absolute";
         Global.renderer.view.style.display = "block";
@@ -277,6 +279,12 @@ var Block = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Block.prototype.calculateElementSize = function () {
+    };
+    Block.prototype.drawBranch = function () {
+    };
+    Block.prototype.editingPoints = function () {
+    };
     return Block;
 }(FlowElement));
 
@@ -438,149 +446,26 @@ var Generator = (function (_super) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_BubbleShape__ = __webpack_require__(5);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return purpleBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return orangeBlockFactory; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_UnitaryBlockShape__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__ = __webpack_require__(12);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return purpleBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return orangeBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return binaryBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return smallBlockFactory; });
 
 
-var UnitaryBlock = (function (_super) {
-    __extends(UnitaryBlock, _super);
-    function UnitaryBlock(shape) {
-        return _super.call(this, shape) || this;
-    }
-    UnitaryBlock.prototype.calculateElementSize = function () {
-    };
-    UnitaryBlock.prototype.drawBranch = function () {
-    };
-    UnitaryBlock.prototype.editingPoints = function () {
-    };
-    return UnitaryBlock;
-}(__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */]));
-var purpleBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](UnitaryBlock, new __WEBPACK_IMPORTED_MODULE_1__shape_BubbleShape__["a" /* default */](0x9b59b6));
-var orangeBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](UnitaryBlock, new __WEBPACK_IMPORTED_MODULE_1__shape_BubbleShape__["a" /* default */](0xf1c40f));
+
+
+var purpleBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_1__shape_UnitaryBlockShape__["a" /* UnitaryBlockShape */](0x9b59b6));
+var orangeBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_1__shape_UnitaryBlockShape__["a" /* UnitaryBlockShape */](0xf1c40f));
+var binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__["a" /* BinaryBlockShape */](0x2ecc71));
+var smallBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__["a" /* SmallBlockShape */](0x95a5a6));
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Shape__ = __webpack_require__(6);
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var BUBBLE_WIDTH = 100;
-var BUBBLE_HEIGHT = 60;
-var TRIANGLE_WIDTH = 20;
-var TRIANGLE_HEIGHT = 15;
-var left = -BUBBLE_WIDTH * .5;
-var top = -BUBBLE_HEIGHT * .5;
-var right = -left;
-var bottom = -top;
-var BubbleShape = (function (_super) {
-    __extends(BubbleShape, _super);
-    function BubbleShape(color) {
-        var _this = _super.call(this) || this;
-        _this._highlightGraphics = [];
-        _this._graphics = new PIXI.Graphics();
-        _this._graphics.lineStyle(1, 0x000000, 1);
-        _this._graphics.beginFill(color);
-        _this._graphics.drawPolygon(BubbleShape.path.points);
-        _this._graphics.endFill();
-        for (var _i = 0, _a = BubbleShape.highlightPaths; _i < _a.length; _i++) {
-            var path = _a[_i];
-            var highlight = new PIXI.Graphics();
-            highlight.beginFill(0xFF0000, 0.5);
-            highlight.drawPolygon(path.points);
-            highlight.endFill();
-            _this._highlightGraphics.push(highlight);
-        }
-        return _this;
-    }
-    Object.defineProperty(BubbleShape.prototype, "graphics", {
-        get: function () {
-            return this._graphics;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BubbleShape.prototype, "pivot", {
-        get: function () {
-            return {
-                offsetX: 0,
-                offsetY: bottom + TRIANGLE_HEIGHT,
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BubbleShape.prototype, "highlightGraphics", {
-        get: function () {
-            return this._highlightGraphics;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BubbleShape.prototype, "highlightOffsets", {
-        get: function () {
-            return [
-                {
-                    offsetX: 0,
-                    offsetY: top + TRIANGLE_HEIGHT,
-                },
-            ];
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(BubbleShape.prototype, "hitArea", {
-        get: function () {
-            return BubbleShape.path;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return BubbleShape;
-}(__WEBPACK_IMPORTED_MODULE_0__Shape__["a" /* default */]));
-/* harmony default export */ __webpack_exports__["a"] = BubbleShape;
-BubbleShape.path = new PIXI.Polygon(left, top, -TRIANGLE_WIDTH * .5, top, 0, top + TRIANGLE_HEIGHT, TRIANGLE_WIDTH * .5, top, right, top, right, bottom, TRIANGLE_WIDTH * .5, bottom, 0, bottom + TRIANGLE_HEIGHT, -TRIANGLE_WIDTH * .5, bottom, left, bottom, left, top);
-BubbleShape.highlightPaths = [
-    new PIXI.Polygon(-TRIANGLE_WIDTH * .5, top, 0, top + TRIANGLE_HEIGHT, TRIANGLE_WIDTH * .5, top, -TRIANGLE_WIDTH * .5, top),
-];
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var Shape = (function () {
-    function Shape() {
-    }
-    return Shape;
-}());
-/* harmony default export */ __webpack_exports__["a"] = Shape;
-
-
-/***/ }),
+/* 5 */,
+/* 6 */,
 /* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -602,6 +487,278 @@ function hitTestRectangle(obj1, obj2) {
     return Math.abs(vx) < (bound1.width + bound2.width) * .5
         && Math.abs(vy) < (bound1.height + bound2.height) * .5;
 }
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(10);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UnitaryBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var BUBBLE_WIDTH = 100;
+var BUBBLE_HEIGHT = 60;
+var left = -BUBBLE_WIDTH * .5;
+var top = -BUBBLE_HEIGHT * .5;
+var right = -left;
+var bottom = -top;
+var UnitaryBlockShape = (function (_super) {
+    __extends(UnitaryBlockShape, _super);
+    function UnitaryBlockShape(color) {
+        return _super.call(this, color, UnitaryBlockShape.path, UnitaryBlockShape.highlightInfos) || this;
+    }
+    Object.defineProperty(UnitaryBlockShape.prototype, "pivot", {
+        get: function () {
+            return {
+                offsetX: 0,
+                offsetY: bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return UnitaryBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
+
+UnitaryBlockShape.path = new PIXI.Polygon(left, top, -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, 0, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+UnitaryBlockShape.highlightInfos = [
+    {
+        path: new PIXI.Polygon(-__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, 0, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top),
+        offsetX: 0,
+        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
+    },
+];
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(10);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BinaryBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var BUBBLE_MARGIN = 30;
+var BUBBLE_HEIGHT = 70;
+var left = -BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] - 50;
+var top = -BUBBLE_HEIGHT * .5;
+var right = -left;
+var bottom = -top;
+var BinaryBlockShape = (function (_super) {
+    __extends(BinaryBlockShape, _super);
+    function BinaryBlockShape(color) {
+        return _super.call(this, color, BinaryBlockShape.path, BinaryBlockShape.highlightInfos) || this;
+    }
+    Object.defineProperty(BinaryBlockShape.prototype, "pivot", {
+        get: function () {
+            return {
+                offsetX: 0,
+                offsetY: bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return BinaryBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
+
+BinaryBlockShape.path = new PIXI.Polygon(left, top, left + BUBBLE_MARGIN, top, left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], right - BUBBLE_MARGIN, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+BinaryBlockShape.highlightInfos = [
+    {
+        path: new PIXI.Polygon(left + BUBBLE_MARGIN, top, left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, left + BUBBLE_MARGIN, top),
+        offsetX: left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5,
+        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
+    },
+    {
+        path: new PIXI.Polygon(right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], right - BUBBLE_MARGIN, top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top),
+        offsetX: right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5,
+        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
+    },
+];
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StaticBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var StaticBlockShape = (function (_super) {
+    __extends(StaticBlockShape, _super);
+    function StaticBlockShape(color, path, highlightInfos) {
+        var _this = _super.call(this) || this;
+        _this.path = path;
+        _this._highlightGraphics = [];
+        _this._highlightOffsets = [];
+        _this._graphics = new PIXI.Graphics();
+        _this._graphics.lineStyle(1, 0x000000, 1);
+        _this._graphics.beginFill(color);
+        _this._graphics.drawPolygon(_this.path.points);
+        _this._graphics.endFill();
+        for (var _i = 0, highlightInfos_1 = highlightInfos; _i < highlightInfos_1.length; _i++) {
+            var highlightInfo = highlightInfos_1[_i];
+            var highlight = new PIXI.Graphics();
+            highlight.beginFill(0xFF0000, 0.5);
+            highlight.drawPolygon(highlightInfo.path.points);
+            highlight.endFill();
+            _this._highlightGraphics.push(highlight);
+            _this._highlightOffsets.push(highlightInfo);
+        }
+        return _this;
+    }
+    Object.defineProperty(StaticBlockShape.prototype, "graphics", {
+        get: function () {
+            return this._graphics;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(StaticBlockShape.prototype, "highlightGraphics", {
+        get: function () {
+            return this._highlightGraphics;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(StaticBlockShape.prototype, "highlightOffsets", {
+        get: function () {
+            return this._highlightOffsets;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(StaticBlockShape.prototype, "hitArea", {
+        get: function () {
+            return this.path;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return StaticBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["c" /* BlockShape */]));
+
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export Shape */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return BlockShape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TRIANGLE_WIDTH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TRIANGLE_HEIGHT; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Shape = (function () {
+    function Shape() {
+    }
+    return Shape;
+}());
+
+var BlockShape = (function (_super) {
+    __extends(BlockShape, _super);
+    function BlockShape() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return BlockShape;
+}(Shape));
+
+var TRIANGLE_WIDTH = 20;
+var TRIANGLE_HEIGHT = 15;
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(10);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SmallBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var BUBBLE_WIDTH = 50;
+var BUBBLE_HEIGHT = 45;
+var left = -BUBBLE_WIDTH * .5;
+var top = -BUBBLE_HEIGHT * .5;
+var right = -left;
+var bottom = -top;
+var SmallBlockShape = (function (_super) {
+    __extends(SmallBlockShape, _super);
+    function SmallBlockShape(color) {
+        return _super.call(this, color, SmallBlockShape.path, SmallBlockShape.highlightInfos) || this;
+    }
+    Object.defineProperty(SmallBlockShape.prototype, "pivot", {
+        get: function () {
+            return {
+                offsetX: 0,
+                offsetY: bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return SmallBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
+
+SmallBlockShape.path = new PIXI.Polygon(left, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+SmallBlockShape.highlightInfos = [];
 
 
 /***/ })
