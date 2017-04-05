@@ -8,10 +8,59 @@ export abstract class FlowItem extends PIXI.Container {
 
     abstract drawBranch(): void;
     abstract editingPoints(): void;
+
+    constructor() {
+        super();
+
+        // event handling
+        this.on('mouseover', () => this.alpha = 0.85);
+        this.on('mouseout', () => this.alpha = 1);
+    }
 }
 
 export abstract class FlowElement extends FlowItem {
     abstract calculateElementSize(): void;
+}
+
+export class Signal extends FlowItem {
+    constructor(private _shape: Shape) {
+        super();
+
+        // UI setup
+        this.addChild(_shape.graphics.clone());
+        this.interactive = true;
+        this.hitArea = _shape.hitArea;
+
+        this.on('mousedown', () => {
+            if (!Global.dragging) {
+                Global.setDragging(this);
+            }
+        });
+
+        this.on('mouseup', () => {
+            if (Global.dragging == this) {
+                Global.setDragging(null);
+
+                if (hitTestRectangle(Global.menu, this)) {
+                    this.destroy();
+                }
+            }
+        });
+    }
+
+    destroy() {
+        this.parent.removeChild(this);
+    }
+
+    get shape(): Shape {
+        return this._shape;
+    }
+
+    drawBranch(): void {
+    }
+
+    editingPoints(): void {
+    }
 }
 
 export class Block extends FlowElement {
@@ -42,20 +91,16 @@ export class Block extends FlowElement {
 
         Global.attachController.registerAttachPoints(this, _shape.highlightOffsets);
 
-        // event handling
-        this.on('mouseover', () => this.alpha = 0.85);
-        this.on('mouseout', () => this.alpha = 1);
-
         this.on('mousedown', () => {
             if (!Global.dragging) {
-                Global.dragging = this;
+                Global.setDragging(this);
                 Global.attachController.detachBlock(this);
             }
         });
 
         this.on('mouseup', () => {
             if (Global.dragging == this) {
-                Global.dragging = null;
+                Global.setDragging(null);
 
                 if (hitTestRectangle(Global.menu, this)) {
                     this.destroy();
@@ -63,8 +108,8 @@ export class Block extends FlowElement {
                     Global.attachController.removeHighlight();
 
                     let attachInfo = Global.attachController.getNearestAttachPoint(
-                        this.x + this._shape.pivot.offsetX,
-                        this.y + this._shape.pivot.offsetY,
+                        this.x,
+                        this.y,
                     );
 
                     if (attachInfo) {
@@ -94,8 +139,8 @@ export class Block extends FlowElement {
             let offset = this._shape.highlightOffsets[i];
             let child = this.attachChildren[i];
             if (child) {
-                child.x = this.x + offset.offsetX - child._shape.pivot.offsetX;
-                child.y = this.y + offset.offsetY - child._shape.pivot.offsetY;
+                child.x = this.x + offset.offsetX;
+                child.y = this.y + offset.offsetY;
                 child.updateChildrenPosition();
             }
         }

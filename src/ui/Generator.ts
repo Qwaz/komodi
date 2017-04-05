@@ -18,7 +18,7 @@ export class Generator<T extends FlowItem, S extends Shape> extends PIXI.Contain
         this.on('mousedown', () => {
             let flowItem = target.createFlowItem();
             Global.stage.addChild(flowItem);
-            Global.dragging = flowItem;
+            Global.setDragging(flowItem, this.x, this.y);
         });
     }
 }

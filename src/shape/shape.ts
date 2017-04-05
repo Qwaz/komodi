@@ -2,7 +2,6 @@ import {Offset} from "../controllers/AttachController";
 
 export abstract class Shape {
     abstract get graphics(): PIXI.Graphics;
-    abstract get pivot(): Offset;
     abstract get hitArea(): PIXI.Polygon;
 }
 

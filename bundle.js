@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,11 +71,95 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Shape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return BlockShape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TRIANGLE_WIDTH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TRIANGLE_HEIGHT; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Shape = (function () {
+    function Shape() {
+    }
+    return Shape;
+}());
+
+var BlockShape = (function (_super) {
+    __extends(BlockShape, _super);
+    function BlockShape() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return BlockShape;
+}(Shape));
+
+var TRIANGLE_WIDTH = 20;
+var TRIANGLE_HEIGHT = 15;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StaticBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var StaticBlockShape = (function (_super) {
+    __extends(StaticBlockShape, _super);
+    function StaticBlockShape(color, hitArea, highlightInfos) {
+        var _this = _super.call(this) || this;
+        _this.hitArea = hitArea;
+        _this.highlightGraphics = [];
+        _this.highlightOffsets = [];
+        _this.graphics = new PIXI.Graphics();
+        _this.graphics.lineStyle(1, 0x000000, 1);
+        _this.graphics.beginFill(color);
+        _this.graphics.drawPolygon(hitArea.points);
+        _this.graphics.endFill();
+        for (var _i = 0, highlightInfos_1 = highlightInfos; _i < highlightInfos_1.length; _i++) {
+            var highlightInfo = highlightInfos_1[_i];
+            var highlight = new PIXI.Graphics();
+            highlight.beginFill(0xFF0000, 0.5);
+            highlight.drawPolygon(highlightInfo.path.points);
+            highlight.endFill();
+            _this.highlightGraphics.push(highlight);
+            _this.highlightOffsets.push(highlightInfo);
+        }
+        _this.hitArea = hitArea;
+        return _this;
+    }
+    return StaticBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["c" /* BlockShape */]));
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_Generator__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_blocks__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_flow__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_Generator__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_blocks__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_flow__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(4);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Global", function() { return Global; });
 
 
@@ -85,10 +169,11 @@ var MENU_PADDING = 20;
 var Global = (function () {
     function Global() {
         Global.generators = [
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["a" /* smallBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["b" /* purpleBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["c" /* orangeBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["d" /* binaryBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["a" /* startSignalFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["b" /* smallBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["c" /* purpleBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["d" /* orangeBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["e" /* binaryBlockFactory */]),
         ];
         Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
         Global.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: false, resolution: 1 });
@@ -112,7 +197,7 @@ var Global = (function () {
             for (var i = 0; i < Global.generators.length; i++) {
                 var generator = Global.generators[i];
                 generator.x = (i + 1) * MENU_PADDING + widthSum + generator.width * .5;
-                generator.y = Global.menuHeight * .5;
+                generator.y = Global.menuHeight * .5 + generator.height * .5;
                 widthSum += generator.width;
             }
         }
@@ -126,6 +211,27 @@ var Global = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Global, "dragging", {
+        get: function () {
+            return Global._dragging;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Global.setDragging = function (target, pivotX, pivotY) {
+        if (target) {
+            Global._dragging = target;
+            pivotX = pivotX || target.x;
+            pivotY = pivotY || target.y;
+            Global.dragOffset = {
+                offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
+                offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
+            };
+        }
+        else {
+            Global._dragging = null;
+        }
+    };
     Global.prototype.drawMenu = function () {
         Global.menu.clear();
         Global.menu.beginFill(0xbdc3c7);
@@ -134,12 +240,13 @@ var Global = (function () {
         Global.renderer.resize(window.innerWidth, window.innerHeight);
     };
     Global.prototype.update = function () {
-        if (Global.dragging) {
-            var target = Global.dragging;
-            target.position = Global.renderer.plugins.interaction.mouse.global;
+        if (Global._dragging) {
+            var target = Global._dragging;
+            target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
+            target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
             if (target instanceof __WEBPACK_IMPORTED_MODULE_2__ui_flow__["a" /* Block */]) {
                 target.updateChildrenPosition();
-                var attachInfo = Global.attachController.getNearestAttachPoint(target.x + target.shape.pivot.offsetX, target.y + target.shape.pivot.offsetY);
+                var attachInfo = Global.attachController.getNearestAttachPoint(target.x, target.y);
                 if (attachInfo) {
                     Global.attachController.setHighlight(attachInfo);
                 }
@@ -154,7 +261,8 @@ var Global = (function () {
 }());
 
 Global._instance = new Global();
-Global.dragging = null;
+Global._dragging = null;
+Global.dragOffset = { offsetX: 0, offsetY: 0 };
 var state = Global.instance;
 function loop() {
     requestAnimationFrame(loop);
@@ -164,14 +272,15 @@ loop();
 
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entry__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entry__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils__ = __webpack_require__(10);
 /* unused harmony export FlowItem */
 /* unused harmony export FlowElement */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Signal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Block; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FlowItemFactory; });
 var __extends = (this && this.__extends) || (function () {
@@ -189,8 +298,10 @@ var __extends = (this && this.__extends) || (function () {
 var FlowItem = (function (_super) {
     __extends(FlowItem, _super);
     function FlowItem() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
         _this.nextFlowItems = [];
+        _this.on('mouseover', function () { return _this.alpha = 0.85; });
+        _this.on('mouseout', function () { return _this.alpha = 1; });
         return _this;
     }
     return FlowItem;
@@ -202,6 +313,46 @@ var FlowElement = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     return FlowElement;
+}(FlowItem));
+
+var Signal = (function (_super) {
+    __extends(Signal, _super);
+    function Signal(_shape) {
+        var _this = _super.call(this) || this;
+        _this._shape = _shape;
+        _this.addChild(_shape.graphics.clone());
+        _this.interactive = true;
+        _this.hitArea = _shape.hitArea;
+        _this.on('mousedown', function () {
+            if (!__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging) {
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(_this);
+            }
+        });
+        _this.on('mouseup', function () {
+            if (__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging == _this) {
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(null);
+                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].menu, _this)) {
+                    _this.destroy();
+                }
+            }
+        });
+        return _this;
+    }
+    Signal.prototype.destroy = function () {
+        this.parent.removeChild(this);
+    };
+    Object.defineProperty(Signal.prototype, "shape", {
+        get: function () {
+            return this._shape;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Signal.prototype.drawBranch = function () {
+    };
+    Signal.prototype.editingPoints = function () {
+    };
+    return Signal;
 }(FlowItem));
 
 var Block = (function (_super) {
@@ -224,23 +375,21 @@ var Block = (function (_super) {
             _this.attachChildren.push(null);
         }
         __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.registerAttachPoints(_this, _shape.highlightOffsets);
-        _this.on('mouseover', function () { return _this.alpha = 0.85; });
-        _this.on('mouseout', function () { return _this.alpha = 1; });
         _this.on('mousedown', function () {
             if (!__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging) {
-                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging = _this;
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(_this);
                 __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.detachBlock(_this);
             }
         });
         _this.on('mouseup', function () {
             if (__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging == _this) {
-                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging = null;
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(null);
                 if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].menu, _this)) {
                     _this.destroy();
                 }
                 else {
                     __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.removeHighlight();
-                    var attachInfo = __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.getNearestAttachPoint(_this.x + _this._shape.pivot.offsetX, _this.y + _this._shape.pivot.offsetY);
+                    var attachInfo = __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.getNearestAttachPoint(_this.x, _this.y);
                     if (attachInfo) {
                         __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.attachBlock(_this, attachInfo);
                     }
@@ -266,8 +415,8 @@ var Block = (function (_super) {
             var offset = this._shape.highlightOffsets[i];
             var child = this.attachChildren[i];
             if (child) {
-                child.x = this.x + offset.offsetX - child._shape.pivot.offsetX;
-                child.y = this.y + offset.offsetY - child._shape.pivot.offsetY;
+                child.x = this.x + offset.offsetX;
+                child.y = this.y + offset.offsetY;
                 child.updateChildrenPosition();
             }
         }
@@ -302,7 +451,7 @@ var FlowItemFactory = (function () {
 
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -401,11 +550,11 @@ var AttachController = (function () {
 
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entry__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entry__ = __webpack_require__(2);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Generator; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -431,7 +580,7 @@ var Generator = (function (_super) {
         _this.on('mousedown', function () {
             var flowItem = target.createFlowItem();
             __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].stage.addChild(flowItem);
-            __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging = flowItem;
+            __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(flowItem, _this.x, _this.y);
         });
         return _this;
     }
@@ -441,32 +590,122 @@ var Generator = (function (_super) {
 
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_UnitaryBlockShape__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__ = __webpack_require__(12);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return purpleBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return orangeBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return binaryBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return smallBlockFactory; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_SignalShape__ = __webpack_require__(11);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startSignalFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return smallBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return purpleBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return orangeBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return binaryBlockFactory; });
 
 
 
 
-var purpleBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_1__shape_UnitaryBlockShape__["a" /* UnitaryBlockShape */](0x9b59b6));
-var orangeBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_1__shape_UnitaryBlockShape__["a" /* UnitaryBlockShape */](0xf1c40f));
-var binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__["a" /* BinaryBlockShape */](0x2ecc71));
+
+var startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_4__shape_SignalShape__["a" /* SignalShape */]());
 var smallBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__["a" /* SmallBlockShape */](0x95a5a6));
+var purpleBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__["a" /* UnaryBlockShape */](0x9b59b6));
+var orangeBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__["a" /* UnaryBlockShape */](0xf1c40f));
+var binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__["a" /* BinaryBlockShape */](0x2ecc71));
 
 
 /***/ }),
-/* 5 */,
-/* 6 */,
 /* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BinaryBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var MARGIN = 30;
+var BLOCK_HEIGHT = 70;
+var left = -MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] - 50;
+var top = -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */] - BLOCK_HEIGHT;
+var right = -left;
+var bottom = top + BLOCK_HEIGHT;
+var BinaryBlockShape = (function (_super) {
+    __extends(BinaryBlockShape, _super);
+    function BinaryBlockShape(color) {
+        return _super.call(this, color, BinaryBlockShape.path, BinaryBlockShape.highlightInfos) || this;
+    }
+    return BinaryBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
+
+BinaryBlockShape.path = new PIXI.Polygon(left, top, left + MARGIN, top, left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], right - MARGIN, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+BinaryBlockShape.highlightInfos = [
+    {
+        path: new PIXI.Polygon(left + MARGIN, top, left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, left + MARGIN, top),
+        offsetX: left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5,
+        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */],
+    },
+    {
+        path: new PIXI.Polygon(right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], right - MARGIN, top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top),
+        offsetX: right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5,
+        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */],
+    },
+];
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SmallBlockShape; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var BLOCK_WIDTH = 50;
+var BLOCK_HEIGHT = 45;
+var left = -BLOCK_WIDTH * .5;
+var top = -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */] - BLOCK_HEIGHT;
+var right = -left;
+var bottom = top + BLOCK_HEIGHT;
+var SmallBlockShape = (function (_super) {
+    __extends(SmallBlockShape, _super);
+    function SmallBlockShape(color) {
+        return _super.call(this, color, SmallBlockShape.path, SmallBlockShape.highlightInfos) || this;
+    }
+    return SmallBlockShape;
+}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
+
+SmallBlockShape.path = new PIXI.Polygon(left, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+SmallBlockShape.highlightInfos = [];
+
+
+/***/ }),
+/* 9 */,
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -490,201 +729,12 @@ function hitTestRectangle(obj1, obj2) {
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(10);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UnitaryBlockShape; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-
-var BUBBLE_WIDTH = 100;
-var BUBBLE_HEIGHT = 60;
-var left = -BUBBLE_WIDTH * .5;
-var top = -BUBBLE_HEIGHT * .5;
-var right = -left;
-var bottom = -top;
-var UnitaryBlockShape = (function (_super) {
-    __extends(UnitaryBlockShape, _super);
-    function UnitaryBlockShape(color) {
-        return _super.call(this, color, UnitaryBlockShape.path, UnitaryBlockShape.highlightInfos) || this;
-    }
-    Object.defineProperty(UnitaryBlockShape.prototype, "pivot", {
-        get: function () {
-            return {
-                offsetX: 0,
-                offsetY: bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return UnitaryBlockShape;
-}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
-
-UnitaryBlockShape.path = new PIXI.Polygon(left, top, -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, 0, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
-UnitaryBlockShape.highlightInfos = [
-    {
-        path: new PIXI.Polygon(-__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, 0, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top, -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top),
-        offsetX: 0,
-        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
-    },
-];
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(10);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BinaryBlockShape; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-
-var BUBBLE_MARGIN = 30;
-var BUBBLE_HEIGHT = 70;
-var left = -BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] - 50;
-var top = -BUBBLE_HEIGHT * .5;
-var right = -left;
-var bottom = -top;
-var BinaryBlockShape = (function (_super) {
-    __extends(BinaryBlockShape, _super);
-    function BinaryBlockShape(color) {
-        return _super.call(this, color, BinaryBlockShape.path, BinaryBlockShape.highlightInfos) || this;
-    }
-    Object.defineProperty(BinaryBlockShape.prototype, "pivot", {
-        get: function () {
-            return {
-                offsetX: 0,
-                offsetY: bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return BinaryBlockShape;
-}(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
-
-BinaryBlockShape.path = new PIXI.Polygon(left, top, left + BUBBLE_MARGIN, top, left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], right - BUBBLE_MARGIN, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
-BinaryBlockShape.highlightInfos = [
-    {
-        path: new PIXI.Polygon(left + BUBBLE_MARGIN, top, left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, left + BUBBLE_MARGIN, top),
-        offsetX: left + BUBBLE_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5,
-        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
-    },
-    {
-        path: new PIXI.Polygon(right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], right - BUBBLE_MARGIN, top, right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */], top),
-        offsetX: right - BUBBLE_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5,
-        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
-    },
-];
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StaticBlockShape; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var StaticBlockShape = (function (_super) {
-    __extends(StaticBlockShape, _super);
-    function StaticBlockShape(color, path, highlightInfos) {
-        var _this = _super.call(this) || this;
-        _this.path = path;
-        _this._highlightGraphics = [];
-        _this._highlightOffsets = [];
-        _this._graphics = new PIXI.Graphics();
-        _this._graphics.lineStyle(1, 0x000000, 1);
-        _this._graphics.beginFill(color);
-        _this._graphics.drawPolygon(_this.path.points);
-        _this._graphics.endFill();
-        for (var _i = 0, highlightInfos_1 = highlightInfos; _i < highlightInfos_1.length; _i++) {
-            var highlightInfo = highlightInfos_1[_i];
-            var highlight = new PIXI.Graphics();
-            highlight.beginFill(0xFF0000, 0.5);
-            highlight.drawPolygon(highlightInfo.path.points);
-            highlight.endFill();
-            _this._highlightGraphics.push(highlight);
-            _this._highlightOffsets.push(highlightInfo);
-        }
-        return _this;
-    }
-    Object.defineProperty(StaticBlockShape.prototype, "graphics", {
-        get: function () {
-            return this._graphics;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(StaticBlockShape.prototype, "highlightGraphics", {
-        get: function () {
-            return this._highlightGraphics;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(StaticBlockShape.prototype, "highlightOffsets", {
-        get: function () {
-            return this._highlightOffsets;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(StaticBlockShape.prototype, "hitArea", {
-        get: function () {
-            return this.path;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return StaticBlockShape;
-}(__WEBPACK_IMPORTED_MODULE_0__shape__["c" /* BlockShape */]));
-
-
-
-/***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export Shape */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return BlockShape; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return TRIANGLE_WIDTH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TRIANGLE_HEIGHT; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignalShape; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -695,22 +745,38 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Shape = (function () {
-    function Shape() {
-    }
-    return Shape;
-}());
 
-var BlockShape = (function (_super) {
-    __extends(BlockShape, _super);
-    function BlockShape() {
-        return _super !== null && _super.apply(this, arguments) || this;
+var BEZIER_X = 6;
+var BEZIER_Y = 25;
+var SIGNAL_WIDTH = 140;
+var SIGNAL_HEIGHT = 60;
+var left = -SIGNAL_WIDTH * .5;
+var top = -SIGNAL_HEIGHT;
+var right = -left;
+var bottom = top + SIGNAL_HEIGHT;
+var SignalShape = (function (_super) {
+    __extends(SignalShape, _super);
+    function SignalShape() {
+        var _this = _super.call(this) || this;
+        _this.pivot = {
+            offsetX: 0,
+            offsetY: bottom,
+        };
+        _this.hitArea = new PIXI.Polygon(left, top, right, top, right, bottom, left, bottom, left, top);
+        _this.graphics = new PIXI.Graphics();
+        _this.graphics.lineStyle(1, 0x000000, 1);
+        _this.graphics.beginFill(0xFFFFFF);
+        _this.graphics.moveTo(left, top);
+        _this.graphics.bezierCurveTo(-BEZIER_X, top - BEZIER_Y, BEZIER_X, top + BEZIER_Y, right, top);
+        _this.graphics.lineTo(right, bottom);
+        _this.graphics.lineTo(left, bottom);
+        _this.graphics.lineTo(left, top);
+        _this.graphics.endFill();
+        return _this;
     }
-    return BlockShape;
-}(Shape));
+    return SignalShape;
+}(__WEBPACK_IMPORTED_MODULE_0__shape__["d" /* Shape */]));
 
-var TRIANGLE_WIDTH = 20;
-var TRIANGLE_HEIGHT = 15;
 
 
 /***/ }),
@@ -718,9 +784,9 @@ var TRIANGLE_HEIGHT = 15;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(10);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SmallBlockShape; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UnaryBlockShape; });
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -733,32 +799,28 @@ var __extends = (this && this.__extends) || (function () {
 })();
 
 
-var BUBBLE_WIDTH = 50;
-var BUBBLE_HEIGHT = 45;
-var left = -BUBBLE_WIDTH * .5;
-var top = -BUBBLE_HEIGHT * .5;
+var BLOCK_WIDTH = 100;
+var BLOCK_HEIGHT = 60;
+var left = -BLOCK_WIDTH * .5;
+var top = -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */] - BLOCK_HEIGHT;
 var right = -left;
-var bottom = -top;
-var SmallBlockShape = (function (_super) {
-    __extends(SmallBlockShape, _super);
-    function SmallBlockShape(color) {
-        return _super.call(this, color, SmallBlockShape.path, SmallBlockShape.highlightInfos) || this;
+var bottom = top + BLOCK_HEIGHT;
+var UnaryBlockShape = (function (_super) {
+    __extends(UnaryBlockShape, _super);
+    function UnaryBlockShape(color) {
+        return _super.call(this, color, UnaryBlockShape.path, UnaryBlockShape.highlightInfos) || this;
     }
-    Object.defineProperty(SmallBlockShape.prototype, "pivot", {
-        get: function () {
-            return {
-                offsetX: 0,
-                offsetY: bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */],
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return SmallBlockShape;
+    return UnaryBlockShape;
 }(__WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["a" /* StaticBlockShape */]));
 
-SmallBlockShape.path = new PIXI.Polygon(left, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
-SmallBlockShape.highlightInfos = [];
+UnaryBlockShape.path = new PIXI.Polygon(left, top, -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top, 0, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+UnaryBlockShape.highlightInfos = [
+    {
+        path: new PIXI.Polygon(-__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top, 0, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top, -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top),
+        offsetX: 0,
+        offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */],
+    },
+];
 
 
 /***/ })

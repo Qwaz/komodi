@@ -1,7 +1,13 @@
 import {Generator} from "./ui/Generator";
-import {binaryBlockFactory, orangeBlockFactory, purpleBlockFactory, smallBlockFactory} from "./ui/blocks";
+import {
+    binaryBlockFactory,
+    orangeBlockFactory,
+    purpleBlockFactory,
+    smallBlockFactory,
+    startSignalFactory
+} from "./ui/blocks";
 import {Block, FlowItem} from "./ui/flow";
-import {AttachController} from "./controllers/AttachController";
+import {AttachController, Offset} from "./controllers/AttachController";
 
 const MENU_PADDING = 20;
 
@@ -17,13 +23,15 @@ export class Global {
 
     static stage: PIXI.Container;
     static menu: PIXI.Graphics;
-    static menuHeight: number;  // TODO: menuHight should not be here
+    static menuHeight: number;  // TODO: menuHeight should not be here
 
-    static dragging: FlowItem | null = null;
+    private static _dragging: FlowItem | null = null;
+    private static dragOffset: Offset = {offsetX: 0, offsetY: 0};
 
     private constructor() {
         // logic initialization
         Global.generators = [
+            new Generator(startSignalFactory),
             new Generator(smallBlockFactory),
             new Generator(purpleBlockFactory),
             new Generator(orangeBlockFactory),
@@ -63,7 +71,7 @@ export class Global {
             for (let i = 0; i < Global.generators.length; i++) {
                 let generator = Global.generators[i];
                 generator.x = (i+1)*MENU_PADDING + widthSum + generator.width * .5;
-                generator.y = Global.menuHeight * .5;
+                generator.y = Global.menuHeight * .5 + generator.height * .5;
                 widthSum += generator.width;
             }
         }
@@ -72,8 +80,28 @@ export class Global {
         this.drawMenu();
     }
 
-    public static get instance() {
+    static get instance() {
         return this._instance || (this._instance = new Global());
+    }
+
+    static get dragging() {
+        return Global._dragging;
+    }
+
+    static setDragging(target: FlowItem | null, pivotX?: number, pivotY?: number) {
+        if (target) {
+            Global._dragging = target;
+
+            pivotX = pivotX || target.x;
+            pivotY = pivotY || target.y;
+
+            Global.dragOffset = {
+                offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
+                offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
+            };
+        } else {
+            Global._dragging = null;
+        }
     }
 
     private drawMenu() {
@@ -86,16 +114,17 @@ export class Global {
     }
 
     update() {
-        if (Global.dragging) {
-            let target = Global.dragging;
-            target.position = Global.renderer.plugins.interaction.mouse.global;
+        if (Global._dragging) {
+            let target = Global._dragging;
+            target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
+            target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
 
             if (target instanceof Block) {
                 target.updateChildrenPosition();
 
                 let attachInfo = Global.attachController.getNearestAttachPoint(
-                    target.x + target.shape.pivot.offsetX,
-                    target.y + target.shape.pivot.offsetY,
+                    target.x,
+                    target.y,
                 );
 
                 if (attachInfo) {

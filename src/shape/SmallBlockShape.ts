@@ -1,14 +1,13 @@
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./shape";
-import {Offset} from "../controllers/AttachController";
 import {HighlightInfo, StaticBlockShape} from "./StaticBlockShape";
 
-const BUBBLE_WIDTH = 50;
-const BUBBLE_HEIGHT = 45;
+const BLOCK_WIDTH = 50;
+const BLOCK_HEIGHT = 45;
 
-const left = -BUBBLE_WIDTH*.5;
-const top = -BUBBLE_HEIGHT*.5;
+const left = -BLOCK_WIDTH*.5;
+const top = -TRIANGLE_HEIGHT-BLOCK_HEIGHT;
 const right = -left;
-const bottom = -top;
+const bottom = top+BLOCK_HEIGHT;
 
 export class SmallBlockShape extends StaticBlockShape {
     private static path: PIXI.Polygon = new PIXI.Polygon(
@@ -26,12 +25,5 @@ export class SmallBlockShape extends StaticBlockShape {
 
     constructor(color: number) {
         super(color, SmallBlockShape.path, SmallBlockShape.highlightInfos);
-    }
-
-    get pivot(): Offset {
-        return {
-            offsetX: 0,
-            offsetY: bottom+TRIANGLE_HEIGHT,
-        };
     }
 }
