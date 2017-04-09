@@ -6,8 +6,9 @@ import {
     smallBlockFactory,
     startSignalFactory
 } from "./ui/blocks";
-import {Block, FlowItem} from "./ui/flow";
+import {Block, FlowControl, Signal} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
+import {FlowController} from "./controllers/FlowController";
 
 const MENU_PADDING = 20;
 
@@ -17,6 +18,7 @@ export class Global {
     // logic related
     static generators: Array<PIXI.Container>;
     static attachController: AttachController;
+    static flowController: FlowController;
 
     // render related
     static renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
@@ -25,7 +27,7 @@ export class Global {
     static menu: PIXI.Graphics;
     static menuHeight: number;  // TODO: menuHeight should not be here
 
-    private static _dragging: FlowItem | null = null;
+    private static _dragging: FlowControl | null = null;
     private static dragOffset: Offset = {offsetX: 0, offsetY: 0};
 
     private constructor() {
@@ -39,6 +41,7 @@ export class Global {
         ];
 
         Global.attachController = new AttachController();
+        Global.flowController = new FlowController();
 
         // render initialization
         Global.renderer = PIXI.autoDetectRenderer(
@@ -46,7 +49,7 @@ export class Global {
             {antialias: false, transparent: false, resolution: 1}
         );
 
-        Global.renderer.backgroundColor = 0xecf0f1;
+        Global.renderer.backgroundColor = 0xECEFF1;
         Global.renderer.view.style.position = "absolute";
         Global.renderer.view.style.display = "block";
         Global.renderer.autoResize = true;
@@ -88,7 +91,7 @@ export class Global {
         return Global._dragging;
     }
 
-    static setDragging(target: FlowItem | null, pivotX?: number, pivotY?: number) {
+    static setDragging(target: FlowControl | null, pivotX?: number, pivotY?: number) {
         if (target) {
             Global._dragging = target;
 
@@ -106,7 +109,7 @@ export class Global {
 
     private drawMenu() {
         Global.menu.clear();
-        Global.menu.beginFill(0xbdc3c7);
+        Global.menu.beginFill(0xCFD8DC);
         Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
         Global.menu.endFill();
 
@@ -125,6 +128,7 @@ export class Global {
                 let attachInfo = Global.attachController.getNearestAttachPoint(
                     target.x,
                     target.y,
+                    target,
                 );
 
                 if (attachInfo) {
@@ -132,6 +136,8 @@ export class Global {
                 } else {
                     Global.attachController.removeHighlight();
                 }
+            } else if (target instanceof Signal) {
+                Global.flowController.update(target);
             }
         }
 

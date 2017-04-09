@@ -22,7 +22,7 @@ export abstract class StaticBlockShape extends BlockShape {
 
         for (let highlightInfo of highlightInfos) {
             let highlight = new PIXI.Graphics();
-            highlight.beginFill(0xFF0000, 0.5);
+            highlight.beginFill(0xFF0000, 0.7);
             highlight.drawPolygon(highlightInfo.path.points);
             highlight.endFill();
             this.highlightGraphics.push(highlight);

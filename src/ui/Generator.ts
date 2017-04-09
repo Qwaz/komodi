@@ -1,8 +1,8 @@
 import {Global} from "../entry";
-import {FlowItem, FlowItemFactory} from "./flow";
+import {FlowControl, FlowItemFactory} from "./flow";
 import {Shape} from "../shape/shape";
 
-export class Generator<T extends FlowItem, S extends Shape> extends PIXI.Container {
+export class Generator<T extends FlowControl, S extends Shape> extends PIXI.Container {
     constructor(target: FlowItemFactory<T, S>) {
         super();
 

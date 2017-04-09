@@ -1,30 +1,86 @@
 import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
 import {hitTestRectangle} from "../utils";
-import {AttachInfo} from "../controllers/AttachController";
+import {AttachInfo, AttachType} from "../controllers/AttachController";
+import {FlowStrategy, noStrategy} from "../controllers/flowStrategies";
+import {Flow} from "../controllers/FlowController";
 
-export abstract class FlowItem extends PIXI.Container {
-    nextFlowItems: Array<FlowItem> = [];
+export abstract class FlowControl extends PIXI.Container {
+    private _flowHighlights: PIXI.Graphics[];
 
-    abstract drawBranch(): void;
-    abstract editingPoints(): void;
+    get numFlow(): number {
+        return this.flowChildren.length-1;
+    }
 
-    constructor() {
+    attachParent: AttachInfo | null = null;
+
+    constructor(
+        public flowChildren: Array<FlowControl | null>,
+        public flowStrategy: FlowStrategy,
+    ) {
         super();
+
+        flowChildren.unshift(null); // default flow
+        Global.attachController.registerFlowControl(this);
 
         // event handling
         this.on('mouseover', () => this.alpha = 0.85);
         this.on('mouseout', () => this.alpha = 1);
     }
+
+    get flowNext(): FlowControl | null {
+        return this.flowChildren[0];
+    }
+
+    set flowNext(val: FlowControl | null) {
+        this.flowChildren[0] = val;
+    }
+
+    get flowHighlights(): PIXI.Graphics[] {
+        if (!this._flowHighlights) {
+            this._flowHighlights = Flow.generateFlowHighlights(this);
+        }
+        return this._flowHighlights;
+    }
+
+    // TODO: improve performance of finding flow root
+    findFlowRoot(): Signal | null {
+        let now: FlowControl = this;
+        while (now.attachParent) {
+            now = now.attachParent.attachTo;
+        }
+
+        if (now instanceof Signal) {
+            return now;
+        } else {
+            return null;
+        }
+    }
+
+    hasFlowParent(): boolean {
+        return this instanceof Signal || (!!this.attachParent && this.attachParent.attachType == AttachType.FLOW);
+    }
+
+    calculateElementSize(): PIXI.Rectangle {
+        return this.getBounds();
+    }
+
+    destroy() {
+        this.parent.removeChild(this);
+
+        Global.attachController.deleteFlowControl(this);
+
+        for (let control of this.flowChildren) {
+            if (control) {
+                control.destroy();
+            }
+        }
+    }
 }
 
-export abstract class FlowElement extends FlowItem {
-    abstract calculateElementSize(): void;
-}
-
-export class Signal extends FlowItem {
+export class Signal extends FlowControl {
     constructor(private _shape: Shape) {
-        super();
+        super([], noStrategy);
 
         // UI setup
         this.addChild(_shape.graphics.clone());
@@ -36,6 +92,9 @@ export class Signal extends FlowItem {
                 Global.setDragging(this);
             }
         });
+
+        // flow management
+        Global.flowController.registerSignal(this);
 
         this.on('mouseup', () => {
             if (Global.dragging == this) {
@@ -49,28 +108,26 @@ export class Signal extends FlowItem {
     }
 
     destroy() {
-        this.parent.removeChild(this);
+        super.destroy();
+
+        Global.flowController.deleteSignal(this);
     }
 
     get shape(): Shape {
         return this._shape;
     }
-
-    drawBranch(): void {
-    }
-
-    editingPoints(): void {
-    }
 }
 
-export class Block extends FlowElement {
-    attachParent: AttachInfo | null = null;
-    attachChildren: Array<Block | null> = [];
+export abstract class Block extends FlowControl {
+    logicChildren: Array<Block | null> = [];
+    logicHighlights: PIXI.Graphics[];
 
-    highlights: PIXI.Graphics[];
-
-    constructor(private _shape: BlockShape) {
-        super();
+    constructor(
+        private _shape: BlockShape,
+        flowChildren: Array<FlowControl | null>,
+        flowStrategy: FlowStrategy,
+    ) {
+        super(flowChildren, flowStrategy);
 
         // UI setup
         this.addChild(_shape.graphics.clone());
@@ -78,18 +135,18 @@ export class Block extends FlowElement {
         this.hitArea = _shape.hitArea;
 
         // attach management
-        this.highlights = [];
+        this.logicHighlights = [];
 
         for (let highlight of _shape.highlightGraphics) {
             let clone = highlight.clone();
-            this.highlights.push(clone);
+            this.logicHighlights.push(clone);
             this.addChild(clone);
             clone.visible = false;
 
-            this.attachChildren.push(null);
+            this.logicChildren.push(null);
         }
 
-        Global.attachController.registerAttachPoints(this, _shape.highlightOffsets);
+        Global.attachController.registerBlock(this, _shape.highlightOffsets);
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
@@ -110,6 +167,7 @@ export class Block extends FlowElement {
                     let attachInfo = Global.attachController.getNearestAttachPoint(
                         this.x,
                         this.y,
+                        this,
                     );
 
                     if (attachInfo) {
@@ -121,14 +179,13 @@ export class Block extends FlowElement {
     }
 
     destroy() {
-        this.parent.removeChild(this);
+        super.destroy();
+
         Global.attachController.deleteBlock(this);
 
-        for (let i = 0; i < this.attachChildren.length; i++) {
-            let child = this.attachChildren[i];
-            if (child) {
-                this.attachChildren[i] = null;
-                child.destroy();
+        for (let block of this.logicChildren) {
+            if (block) {
+                block.destroy();
             }
         }
     }
@@ -137,7 +194,7 @@ export class Block extends FlowElement {
         this.parent.setChildIndex(this, this.parent.children.length-1);
         for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
             let offset = this._shape.highlightOffsets[i];
-            let child = this.attachChildren[i];
+            let child = this.logicChildren[i];
             if (child) {
                 child.x = this.x + offset.offsetX;
                 child.y = this.y + offset.offsetY;
@@ -150,17 +207,18 @@ export class Block extends FlowElement {
         return this._shape;
     }
 
-    calculateElementSize(): void {
-    }
-
-    drawBranch(): void {
-    }
-
-    editingPoints(): void {
+    calculateElementSize(): PIXI.Rectangle {
+        let bounds = this.getBounds();
+        for (let block of this.logicChildren) {
+            if (block) {
+                bounds.enlarge(block.calculateElementSize());
+            }
+        }
+        return bounds;
     }
 }
 
-export class FlowItemFactory<T extends FlowItem, S extends Shape> {
+export class FlowItemFactory<T extends FlowControl, S extends Shape> {
     constructor(private constructor: {new (shape: S): T}, readonly shape: S) {
     }
 

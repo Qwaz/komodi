@@ -1,7 +1,14 @@
-import {Block} from "../ui/flow";
+import {Block, FlowControl} from "../ui/flow";
+import {Global} from "../entry";
+
+export enum AttachType {
+    FLOW,
+    LOGIC,
+}
 
 export interface AttachInfo {
-    attachTo: Block;
+    attachType: AttachType;
+    attachTo: FlowControl;
     attachIndex: number;
 }
 
@@ -12,17 +19,20 @@ export interface Offset {
 }
 
 export interface AttachCandidates extends Offset {
+    attachType: AttachType;
     attachIndex: number;
 }
 
 export class AttachController {
-    private attachPoints: Map<Block, AttachCandidates[]> = new Map<Block, AttachCandidates[]>();
+    private logicPoints: Map<Block, AttachCandidates[]> = new Map<Block, AttachCandidates[]>();
+    private flowPoints: Map<FlowControl, AttachCandidates[]> = new Map<FlowControl, AttachCandidates[]>();
     private currentHighlight: AttachInfo | null = null;
 
-    registerAttachPoints(block: Block, offsets: Offset[]) {
-        this.attachPoints.set(block, []);
+    registerBlock(block: Block, offsets: Offset[]) {
+        this.logicPoints.set(block, []);
         for (let i = 0; i < offsets.length; i++) {
-            this.attachPoints.get(block).push({
+            this.logicPoints.get(block).push({
+                attachType: AttachType.LOGIC,
                 attachIndex: i,
                 offsetX: offsets[i].offsetX,
                 offsetY: offsets[i].offsetY,
@@ -31,7 +41,37 @@ export class AttachController {
     }
 
     deleteBlock(block: Block) {
-        this.attachPoints.delete(block);
+        this.logicPoints.delete(block);
+    }
+
+    registerFlowControl(control: FlowControl) {
+        this.flowPoints.set(control, []);
+        for (let i = 0; i < control.numFlow+1; i++) {
+            this.flowPoints.get(control).push({
+                attachType: AttachType.FLOW,
+                attachIndex: i,
+                offsetX: 0,
+                offsetY: 0,
+            });
+        }
+    }
+
+    deleteFlowControl(control: FlowControl) {
+        this.flowPoints.delete(control);
+    }
+
+    updateFlowOffset(control: FlowControl, index: number, offset: Offset) {
+        control.flowHighlights[index].x = offset.offsetX;
+        control.flowHighlights[index].y = offset.offsetY;
+
+        let arr = this.flowPoints.get(control);
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].attachIndex == index) {
+                arr[i].offsetX = offset.offsetX;
+                arr[i].offsetY = offset.offsetY;
+                break;
+            }
+        }
     }
 
     setHighlight(attachInfo: AttachInfo) {
@@ -51,17 +91,27 @@ export class AttachController {
     }
 
     getHighlightFromAttachInfo(attachInfo: AttachInfo): PIXI.Graphics {
-        return attachInfo.attachTo.highlights[attachInfo.attachIndex];
+        if (attachInfo.attachType == AttachType.FLOW) {
+            return attachInfo.attachTo.flowHighlights[attachInfo.attachIndex];
+        } else if (attachInfo.attachType == AttachType.LOGIC) {
+            return (attachInfo.attachTo as Block).logicHighlights[attachInfo.attachIndex];
+        } else {
+            throw new TypeError("Unknown Attach Type");
+        }
     }
 
-    getNearestAttachPoint(stageX: number, stageY: number): AttachInfo | null {
+    getNearestAttachPoint(stageX: number, stageY: number, exclude?: FlowControl): AttachInfo | null {
         const NEAR = 20;
 
         let result: AttachInfo | null = null;
         let resultDist = 0;
 
-        this.attachPoints.forEach((arr, block) => {
+        this.logicPoints.forEach((arr, block) => {
             for (let candidates of arr) {
+                if (block == exclude) {
+                    continue;
+                }
+
                 let candX = block.x + candidates.offsetX;
                 let candY = block.y + candidates.offsetY;
 
@@ -72,7 +122,35 @@ export class AttachController {
                     let distance = deltaX + deltaY;
                     if (result == null || distance <= resultDist) {
                         result = {
+                            attachType: AttachType.LOGIC,
                             attachTo: block,
+                            attachIndex: candidates.attachIndex,
+                        };
+                        resultDist = distance;
+                    }
+                }
+            }
+        });
+
+        this.flowPoints.forEach((arr, control) => {
+            for (let candidates of arr) {
+                if (control == exclude ||
+                    (candidates.attachIndex == 0 && !control.hasFlowParent())) {
+                    continue;
+                }
+
+                let candX = control.x + candidates.offsetX;
+                let candY = control.y + candidates.offsetY;
+
+                let deltaX = Math.abs(stageX - candX);
+                let deltaY = Math.abs(stageY - candY);
+
+                if (deltaX <= NEAR && deltaY <= NEAR) {
+                    let distance = deltaX + deltaY;
+                    if (result == null || distance <= resultDist) {
+                        result = {
+                            attachType: AttachType.FLOW,
+                            attachTo: control,
                             attachIndex: candidates.attachIndex,
                         };
                         resultDist = distance;
@@ -86,17 +164,40 @@ export class AttachController {
 
     attachBlock(target: Block, attachInfo: AttachInfo) {
         let parent = attachInfo.attachTo;
-        parent.attachChildren[attachInfo.attachIndex] = target;
-        target.attachParent = attachInfo;
+        if (attachInfo.attachType == AttachType.LOGIC) {
+            if (parent instanceof Block) {
+                parent.logicChildren[attachInfo.attachIndex] = target;
+                target.attachParent = attachInfo;
 
-        parent.updateChildrenPosition();
+                parent.updateChildrenPosition();
 
-        let arr = this.attachPoints.get(parent);
-        for (let i = 0; i < arr.length; i++) {
-            if (arr[i].attachIndex == attachInfo.attachIndex) {
-                arr.splice(i, 1);
-                break;
+                let arr = this.logicPoints.get(parent);
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i].attachIndex == attachInfo.attachIndex) {
+                        arr.splice(i, 1);
+                        break;
+                    }
+                }
+            } else {
+                throw new TypeError("attachType and attachTo do not match");
             }
+        } else if (attachInfo.attachType == AttachType.FLOW) {
+            let next = parent.flowChildren[attachInfo.attachIndex];
+            if (next) {
+                next.attachParent = {
+                    attachTo: target,
+                    attachType: AttachType.FLOW,
+                    attachIndex: 0,
+                };
+                target.flowNext = next;
+            }
+            parent.flowChildren[attachInfo.attachIndex] = target;
+            target.attachParent = attachInfo;
+        }
+
+        let signal = parent.findFlowRoot();
+        if (signal) {
+            Global.flowController.update(signal);
         }
     }
 
@@ -105,19 +206,39 @@ export class AttachController {
 
         if (attachInfo) {
             let parent = attachInfo.attachTo;
-            parent.attachChildren[attachInfo.attachIndex] = null;
-            target.attachParent = null;
 
-            parent.updateChildrenPosition();
+            if (attachInfo.attachType == AttachType.LOGIC) {
+                if (parent instanceof Block) {
+                    parent.logicChildren[attachInfo.attachIndex] = null;
+                    target.attachParent = null;
 
-            let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
+                    parent.updateChildrenPosition();
 
-            let arr = this.attachPoints.get(parent);
-            arr.push({
-                attachIndex: attachInfo.attachIndex,
-                offsetX: offset.offsetX,
-                offsetY: offset.offsetY,
-            });
+                    let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
+
+                    let arr = this.logicPoints.get(parent);
+                    arr.push({
+                        attachType: AttachType.LOGIC,
+                        attachIndex: attachInfo.attachIndex,
+                        offsetX: offset.offsetX,
+                        offsetY: offset.offsetY,
+                    });
+                } else {
+                    throw new TypeError("attachType and attachTo do not match");
+                }
+            } else if (attachInfo.attachType == AttachType.FLOW) {
+                parent.flowChildren[attachInfo.attachIndex] = target.flowNext;
+                if (target.flowNext) {
+                    target.flowNext.attachParent = target.attachParent;
+                    target.flowNext = null;
+                }
+                target.attachParent = null;
+            }
+
+            let signal = parent.findFlowRoot();
+            if (signal) {
+                Global.flowController.update(signal);
+            }
         }
     }
 }
