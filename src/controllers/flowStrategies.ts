@@ -87,8 +87,8 @@ export let noStrategy: FlowStrategy = function (): Offset {
     };
 };
 
-const SPLIT_JOIN_VERTICAL_MARGIN = 30;
-const SPLIT_JOIN_HORIZONTAL_MARGIN = 60;
+const SPLIT_JOIN_VERTICAL_MARGIN = 20;
+const SPLIT_JOIN_HORIZONTAL_MARGIN = 50;
 
 export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl) {
     if (start.numFlow > 0) {

@@ -63,8 +63,16 @@ export abstract class FlowControl extends PIXI.Container {
 
     calculateElementSize(): PIXI.Rectangle {
         this.updateControl();
-        // TODO: Fix nested control size calculation
-        return this.getBounds();
+
+        let bound = this.getBounds();
+        for (let i = 1; i <= this.numFlow; i++) {
+            let now = this.flowChildren[i];
+            while (now) {
+                bound.enlarge(now.calculateElementSize());
+                now = now.flowChildren[0];
+            }
+        }
+        return bound;
     }
 
     destroy() {
@@ -208,10 +216,7 @@ export abstract class Block extends FlowControl {
     }
 
     calculateElementSize(): PIXI.Rectangle {
-        Global.flowController.update(this);
-        this.updateControl();
-
-        let bounds = this.getBounds();
+        let bounds = super.calculateElementSize();
         for (let block of this.logicChildren) {
             if (block) {
                 bounds.enlarge(block.calculateElementSize());

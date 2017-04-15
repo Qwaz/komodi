@@ -256,7 +256,15 @@ class FlowControl extends PIXI.Container {
     }
     calculateElementSize() {
         this.updateControl();
-        return this.getBounds();
+        let bound = this.getBounds();
+        for (let i = 1; i <= this.numFlow; i++) {
+            let now = this.flowChildren[i];
+            while (now) {
+                bound.enlarge(now.calculateElementSize());
+                now = now.flowChildren[0];
+            }
+        }
+        return bound;
     }
     destroy() {
         this.parent.removeChild(this);
@@ -366,9 +374,7 @@ class Block extends FlowControl {
         return this._shape;
     }
     calculateElementSize() {
-        __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].flowController.update(this);
-        this.updateControl();
-        let bounds = this.getBounds();
+        let bounds = super.calculateElementSize();
         for (let block of this.logicChildren) {
             if (block) {
                 bounds.enlarge(block.calculateElementSize());
@@ -17821,8 +17827,8 @@ let noStrategy = function () {
         offsetY: 0,
     };
 };
-const SPLIT_JOIN_VERTICAL_MARGIN = 30;
-const SPLIT_JOIN_HORIZONTAL_MARGIN = 60;
+const SPLIT_JOIN_VERTICAL_MARGIN = 20;
+const SPLIT_JOIN_HORIZONTAL_MARGIN = 50;
 let splitJoinStrategy = function (graphics, start) {
     if (start.numFlow > 0) {
         let widthList = __WEBPACK_IMPORTED_MODULE_1_lodash__["fill"](Array(start.numFlow), 0);
