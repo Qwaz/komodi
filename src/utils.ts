@@ -18,3 +18,7 @@ export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObj
     return Math.abs(vx) < (bound1.width+bound2.width)*.5
         && Math.abs(vy) < (bound1.height+bound2.height)*.5;
 }
+
+export function moveToTop(target: PIXI.DisplayObject) {
+    target.parent.setChildIndex(target, target.parent.children.length-1);
+}

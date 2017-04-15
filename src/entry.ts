@@ -1,12 +1,14 @@
 import {Generator} from "./ui/Generator";
 import {
     binaryBlockFactory,
+    ifBlockFactory,
     orangeBlockFactory,
     purpleBlockFactory,
     smallBlockFactory,
     startSignalFactory
 } from "./ui/blocks";
-import {Block, FlowControl, Signal} from "./ui/flow";
+
+import {Block, FlowControl} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
 import {FlowController} from "./controllers/FlowController";
 
@@ -34,6 +36,7 @@ export class Global {
         // logic initialization
         Global.generators = [
             new Generator(startSignalFactory),
+            new Generator(ifBlockFactory),
             new Generator(smallBlockFactory),
             new Generator(purpleBlockFactory),
             new Generator(orangeBlockFactory),
@@ -122,9 +125,9 @@ export class Global {
             target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
             target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
 
-            if (target instanceof Block) {
-                target.updateChildrenPosition();
+            target.updateControl();
 
+            if (target instanceof Block) {
                 let attachInfo = Global.attachController.getNearestAttachPoint(
                     target.x,
                     target.y,
@@ -136,8 +139,6 @@ export class Global {
                 } else {
                     Global.attachController.removeHighlight();
                 }
-            } else if (target instanceof Signal) {
-                Global.flowController.update(target);
             }
         }
 

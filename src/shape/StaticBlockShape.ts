@@ -17,18 +17,16 @@ export abstract class StaticBlockShape extends BlockShape {
 
         this.graphics.lineStyle(1, 0x000000, 1);
         this.graphics.beginFill(color);
-        this.graphics.drawPolygon(hitArea.points);
+        this.graphics.drawShape(hitArea);
         this.graphics.endFill();
 
         for (let highlightInfo of highlightInfos) {
             let highlight = new PIXI.Graphics();
             highlight.beginFill(0xFF0000, 0.7);
-            highlight.drawPolygon(highlightInfo.path.points);
+            highlight.drawShape(highlightInfo.path);
             highlight.endFill();
             this.highlightGraphics.push(highlight);
             this.highlightOffsets.push(highlightInfo);
         }
-
-        this.hitArea = hitArea;
     }
 }

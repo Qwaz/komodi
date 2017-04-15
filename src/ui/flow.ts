@@ -1,9 +1,8 @@
 import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
-import {hitTestRectangle} from "../utils";
+import {hitTestRectangle, moveToTop} from "../utils";
 import {AttachInfo, AttachType} from "../controllers/AttachController";
-import {FlowStrategy, noStrategy} from "../controllers/flowStrategies";
-import {Flow} from "../controllers/FlowController";
+import {FlowStrategy, generateFlowHighlights, splitJoinStrategy} from "../controllers/flowStrategies";
 
 export abstract class FlowControl extends PIXI.Container {
     private _flowHighlights: PIXI.Graphics[];
@@ -13,15 +12,20 @@ export abstract class FlowControl extends PIXI.Container {
     }
 
     attachParent: AttachInfo | null = null;
+    flowChildren: Array<FlowControl | null>;
 
     constructor(
-        public flowChildren: Array<FlowControl | null>,
+        numFlow: number,
         public flowStrategy: FlowStrategy,
     ) {
         super();
 
-        flowChildren.unshift(null); // default flow
+        this.flowChildren = [];
+        for (let i = 0; i < numFlow+1; i++) {
+            this.flowChildren.push(null);
+        }
         Global.attachController.registerFlowControl(this);
+        Global.flowController.registerControl(this);
 
         // event handling
         this.on('mouseover', () => this.alpha = 0.85);
@@ -38,30 +42,28 @@ export abstract class FlowControl extends PIXI.Container {
 
     get flowHighlights(): PIXI.Graphics[] {
         if (!this._flowHighlights) {
-            this._flowHighlights = Flow.generateFlowHighlights(this);
+            this._flowHighlights = generateFlowHighlights(this);
         }
         return this._flowHighlights;
     }
 
     // TODO: improve performance of finding flow root
-    findFlowRoot(): Signal | null {
+    findFlowRoot(): FlowControl {
         let now: FlowControl = this;
         while (now.attachParent) {
             now = now.attachParent.attachTo;
         }
 
-        if (now instanceof Signal) {
-            return now;
-        } else {
-            return null;
-        }
+        return now;
     }
 
     hasFlowParent(): boolean {
-        return this instanceof Signal || (!!this.attachParent && this.attachParent.attachType == AttachType.FLOW);
+        return !!this.attachParent && this.attachParent.attachType == AttachType.FLOW;
     }
 
     calculateElementSize(): PIXI.Rectangle {
+        this.updateControl();
+        // TODO: Fix nested control size calculation
         return this.getBounds();
     }
 
@@ -69,6 +71,7 @@ export abstract class FlowControl extends PIXI.Container {
         this.parent.removeChild(this);
 
         Global.attachController.deleteFlowControl(this);
+        Global.flowController.deleteControl(this);
 
         for (let control of this.flowChildren) {
             if (control) {
@@ -76,11 +79,16 @@ export abstract class FlowControl extends PIXI.Container {
             }
         }
     }
+
+    updateControl() {
+        moveToTop(this);
+        Global.flowController.update(this);
+    }
 }
 
 export class Signal extends FlowControl {
     constructor(private _shape: Shape) {
-        super([], noStrategy);
+        super(1, splitJoinStrategy);
 
         // UI setup
         this.addChild(_shape.graphics.clone());
@@ -93,9 +101,6 @@ export class Signal extends FlowControl {
             }
         });
 
-        // flow management
-        Global.flowController.registerSignal(this);
-
         this.on('mouseup', () => {
             if (Global.dragging == this) {
                 Global.setDragging(null);
@@ -105,12 +110,6 @@ export class Signal extends FlowControl {
                 }
             }
         });
-    }
-
-    destroy() {
-        super.destroy();
-
-        Global.flowController.deleteSignal(this);
     }
 
     get shape(): Shape {
@@ -124,10 +123,10 @@ export abstract class Block extends FlowControl {
 
     constructor(
         private _shape: BlockShape,
-        flowChildren: Array<FlowControl | null>,
+        numFlow: number,
         flowStrategy: FlowStrategy,
     ) {
-        super(flowChildren, flowStrategy);
+        super(numFlow, flowStrategy);
 
         // UI setup
         this.addChild(_shape.graphics.clone());
@@ -190,15 +189,16 @@ export abstract class Block extends FlowControl {
         }
     }
 
-    updateChildrenPosition() {
-        this.parent.setChildIndex(this, this.parent.children.length-1);
+    updateControl() {
+        super.updateControl();
+
         for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
             let offset = this._shape.highlightOffsets[i];
             let child = this.logicChildren[i];
             if (child) {
                 child.x = this.x + offset.offsetX;
                 child.y = this.y + offset.offsetY;
-                child.updateChildrenPosition();
+                child.updateControl();
             }
         }
     }
@@ -208,6 +208,9 @@ export abstract class Block extends FlowControl {
     }
 
     calculateElementSize(): PIXI.Rectangle {
+        Global.flowController.update(this);
+        this.updateControl();
+
         let bounds = this.getBounds();
         for (let block of this.logicChildren) {
             if (block) {
