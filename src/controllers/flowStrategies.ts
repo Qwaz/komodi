@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {FlowControl} from "../ui/flow";
 import {Global} from "../entry";
 import * as _ from "lodash";

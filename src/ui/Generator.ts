@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {Global} from "../entry";
 import {FlowControl, FlowItemFactory} from "./flow";
 import {Shape} from "../shape/shape";

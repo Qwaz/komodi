@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {Block, FlowControl} from "../ui/flow";
 import {Global} from "../entry";
 

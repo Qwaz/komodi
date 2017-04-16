@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
     let bound2 = obj2.getBounds();
