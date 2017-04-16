@@ -10,5 +10,5 @@ export abstract class BlockShape extends Shape {
     abstract get highlightOffsets(): Offset[];
 }
 
-export const TRIANGLE_WIDTH = 20;
-export const TRIANGLE_HEIGHT = 15;
+export const TRIANGLE_WIDTH = 12;
+export const TRIANGLE_HEIGHT = 10;

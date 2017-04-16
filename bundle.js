@@ -79,10 +79,10 @@ class BlockShape extends Shape {
 }
 /* harmony export (immutable) */ __webpack_exports__["c"] = BlockShape;
 
-const TRIANGLE_WIDTH = 20;
+const TRIANGLE_WIDTH = 12;
 /* harmony export (immutable) */ __webpack_exports__["a"] = TRIANGLE_WIDTH;
 
-const TRIANGLE_HEIGHT = 15;
+const TRIANGLE_HEIGHT = 10;
 /* harmony export (immutable) */ __webpack_exports__["b"] = TRIANGLE_HEIGHT;
 
 
@@ -95,7 +95,7 @@ const TRIANGLE_HEIGHT = 15;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_Generator__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_blocks__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_flow__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_flow__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__ = __webpack_require__(7);
 
@@ -204,6 +204,38 @@ loop();
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+
+class StaticBlockShape extends __WEBPACK_IMPORTED_MODULE_0__shape__["c" /* BlockShape */] {
+    constructor(color, hitArea, highlightInfos) {
+        super();
+        this.hitArea = hitArea;
+        this.highlightGraphics = [];
+        this.highlightOffsets = [];
+        this.graphics = new PIXI.Graphics();
+        this.graphics.lineStyle(1, 0x000000, 1);
+        this.graphics.beginFill(color);
+        this.graphics.drawShape(hitArea);
+        this.graphics.endFill();
+        for (let highlightInfo of highlightInfos) {
+            let highlight = new PIXI.Graphics();
+            highlight.beginFill(0xFF0000, 0.7);
+            highlight.drawShape(highlightInfo.path);
+            highlight.endFill();
+            this.highlightGraphics.push(highlight);
+            this.highlightOffsets.push(highlightInfo);
+        }
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = StaticBlockShape;
+
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -399,43 +431,11 @@ class FlowItemFactory {
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
-
-class StaticBlockShape extends __WEBPACK_IMPORTED_MODULE_0__shape__["c" /* BlockShape */] {
-    constructor(color, hitArea, highlightInfos) {
-        super();
-        this.hitArea = hitArea;
-        this.highlightGraphics = [];
-        this.highlightOffsets = [];
-        this.graphics = new PIXI.Graphics();
-        this.graphics.lineStyle(1, 0x000000, 1);
-        this.graphics.beginFill(color);
-        this.graphics.drawShape(hitArea);
-        this.graphics.endFill();
-        for (let highlightInfo of highlightInfos) {
-            let highlight = new PIXI.Graphics();
-            highlight.beginFill(0xFF0000, 0.7);
-            highlight.drawShape(highlightInfo.path);
-            highlight.endFill();
-            this.highlightGraphics.push(highlight);
-            this.highlightOffsets.push(highlightInfo);
-        }
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = StaticBlockShape;
-
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_flow__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_flow__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(1);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AttachType; });
 
@@ -17757,10 +17757,10 @@ class AttachController {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return splitJoinStrategy; });
 
 
-const FLOW_VERTICAL_MARGIN = 60;
-const EDIT_POINT_RADIUS = 8;
+const FLOW_VERTICAL_MARGIN = 45;
+const EDIT_POINT_RADIUS = 6;
 function setGraphicsStyle(graphics) {
-    graphics.lineStyle(4, 0);
+    graphics.lineStyle(3, 0);
 }
 function drawEditPoint(graphics, x, y, highlight = false) {
     if (highlight) {
@@ -17827,8 +17827,8 @@ let noStrategy = function () {
         offsetY: 0,
     };
 };
-const SPLIT_JOIN_VERTICAL_MARGIN = 20;
-const SPLIT_JOIN_HORIZONTAL_MARGIN = 50;
+const SPLIT_JOIN_VERTICAL_MARGIN = 15;
+const SPLIT_JOIN_HORIZONTAL_MARGIN = 40;
 let splitJoinStrategy = function (graphics, start) {
     if (start.numFlow > 0) {
         let widthList = __WEBPACK_IMPORTED_MODULE_1_lodash__["fill"](Array(start.numFlow), 0);
@@ -17962,7 +17962,7 @@ class Generator extends PIXI.Container {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__ = __webpack_require__(15);
@@ -18061,12 +18061,13 @@ module.exports = function(module) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(2);
 
 
-const MARGIN = 30;
-const BLOCK_HEIGHT = 70;
-const left = -MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] - 50;
+const CENTER_MARGIN = 60;
+const OUT_MARGIN = 20;
+const BLOCK_HEIGHT = 50;
+const left = -OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] - CENTER_MARGIN * .5;
 const top = -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */] - BLOCK_HEIGHT;
 const right = -left;
 const bottom = top + BLOCK_HEIGHT;
@@ -18077,16 +18078,16 @@ class BinaryBlockShape extends __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__["
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BinaryBlockShape;
 
-BinaryBlockShape.path = new PIXI.Polygon(left, top, left + MARGIN, top, left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], right - MARGIN, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
+BinaryBlockShape.path = new PIXI.Polygon(left, top, left + OUT_MARGIN, top, left + OUT_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], left + OUT_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], right - OUT_MARGIN, top, right, top, right, bottom, __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, 0, bottom + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], -__WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, bottom, left, bottom, left, top);
 BinaryBlockShape.highlightInfos = [
     {
-        path: new PIXI.Polygon(left + MARGIN, top, left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, left + MARGIN, top),
-        offsetX: left + MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5,
+        path: new PIXI.Polygon(left + OUT_MARGIN, top, left + OUT_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], left + OUT_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, left + OUT_MARGIN, top),
+        offsetX: left + OUT_MARGIN + __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5,
         offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */],
     },
     {
-        path: new PIXI.Polygon(right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], right - MARGIN, top, right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top),
-        offsetX: right - MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5,
+        path: new PIXI.Polygon(right - OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top, right - OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5, top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */], right - OUT_MARGIN, top, right - OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */], top),
+        offsetX: right - OUT_MARGIN - __WEBPACK_IMPORTED_MODULE_0__shape__["a" /* TRIANGLE_WIDTH */] * .5,
         offsetY: top + __WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */],
     },
 ];
@@ -18097,14 +18098,14 @@ BinaryBlockShape.highlightInfos = [
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__StaticBlockShape__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__StaticBlockShape__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
 
 
 
-const RADIUS = 30;
+const RADIUS = 20;
 const ANGLE = 50;
 const STEP = 10;
 const top = -2 * RADIUS;
@@ -18141,9 +18142,9 @@ IfBlockShape.highlightInfos = [
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
 
 const BEZIER_X = 6;
-const BEZIER_Y = 25;
-const SIGNAL_WIDTH = 140;
-const SIGNAL_HEIGHT = 60;
+const BEZIER_Y = 18;
+const SIGNAL_WIDTH = 100;
+const SIGNAL_HEIGHT = 50;
 const left = -SIGNAL_WIDTH * .5;
 const top = -SIGNAL_HEIGHT;
 const right = -left;
@@ -18177,11 +18178,11 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_0__shape__["d" /* Shape */] 
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(2);
 
 
-const BLOCK_WIDTH = 50;
-const BLOCK_HEIGHT = 45;
+const BLOCK_WIDTH = 40;
+const BLOCK_HEIGHT = 35;
 const left = -BLOCK_WIDTH * .5;
 const top = -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */] - BLOCK_HEIGHT;
 const right = -left;
@@ -18203,11 +18204,11 @@ SmallBlockShape.highlightInfos = [];
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__StaticBlockShape__ = __webpack_require__(2);
 
 
-const BLOCK_WIDTH = 100;
-const BLOCK_HEIGHT = 60;
+const BLOCK_WIDTH = 60;
+const BLOCK_HEIGHT = 40;
 const left = -BLOCK_WIDTH * .5;
 const top = -__WEBPACK_IMPORTED_MODULE_0__shape__["b" /* TRIANGLE_HEIGHT */] - BLOCK_HEIGHT;
 const right = -left;

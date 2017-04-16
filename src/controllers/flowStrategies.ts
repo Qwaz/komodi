@@ -5,11 +5,11 @@ import {Offset} from "./AttachController";
 
 export type FlowStrategy = (graphics: PIXI.Graphics, start: FlowControl) => Offset;
 
-const FLOW_VERTICAL_MARGIN = 60;
-const EDIT_POINT_RADIUS = 8;
+const FLOW_VERTICAL_MARGIN = 45;
+const EDIT_POINT_RADIUS = 6;
 
 function setGraphicsStyle(graphics: PIXI.Graphics) {
-    graphics.lineStyle(4, 0);
+    graphics.lineStyle(3, 0);
 }
 
 function drawEditPoint(graphics: PIXI.Graphics, x: number, y: number, highlight: boolean = false) {
@@ -87,8 +87,8 @@ export let noStrategy: FlowStrategy = function (): Offset {
     };
 };
 
-const SPLIT_JOIN_VERTICAL_MARGIN = 20;
-const SPLIT_JOIN_HORIZONTAL_MARGIN = 50;
+const SPLIT_JOIN_VERTICAL_MARGIN = 15;
+const SPLIT_JOIN_HORIZONTAL_MARGIN = 40;
 
 export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl) {
     if (start.numFlow > 0) {

@@ -2,10 +2,10 @@ import {Shape} from "./shape";
 import {Offset} from "../controllers/AttachController";
 
 const BEZIER_X = 6;
-const BEZIER_Y = 25;
+const BEZIER_Y = 18;
 
-const SIGNAL_WIDTH = 140;
-const SIGNAL_HEIGHT = 60;
+const SIGNAL_WIDTH = 100;
+const SIGNAL_HEIGHT = 50;
 
 const left = -SIGNAL_WIDTH*.5;
 const top = -SIGNAL_HEIGHT;

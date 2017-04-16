@@ -1,8 +1,8 @@
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./shape";
 import {HighlightInfo, StaticBlockShape} from "./StaticBlockShape";
 
-const BLOCK_WIDTH = 50;
-const BLOCK_HEIGHT = 45;
+const BLOCK_WIDTH = 40;
+const BLOCK_HEIGHT = 35;
 
 const left = -BLOCK_WIDTH*.5;
 const top = -TRIANGLE_HEIGHT-BLOCK_HEIGHT;

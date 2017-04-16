@@ -2,7 +2,7 @@ import {HighlightInfo, StaticBlockShape} from "./StaticBlockShape";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./shape";
 import * as _ from "lodash";
 
-const RADIUS = 30;
+const RADIUS = 20;
 const ANGLE = 50;
 const STEP = 10;
 
