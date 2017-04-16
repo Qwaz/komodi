@@ -82,7 +82,7 @@ class BlockShape extends Shape {
 const TRIANGLE_WIDTH = 12;
 /* harmony export (immutable) */ __webpack_exports__["a"] = TRIANGLE_WIDTH;
 
-const TRIANGLE_HEIGHT = 10;
+const TRIANGLE_HEIGHT = 9;
 /* harmony export (immutable) */ __webpack_exports__["b"] = TRIANGLE_HEIGHT;
 
 
@@ -109,10 +109,11 @@ class Global {
         Global.generators = [
             new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["a" /* startSignalFactory */]),
             new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["b" /* ifBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["c" /* smallBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["d" /* purpleBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["e" /* orangeBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["f" /* binaryBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["c" /* declarationFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["d" /* smallBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["e" /* brownBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["f" /* orangeBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_0__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_1__ui_blocks__["g" /* binaryBlockFactory */]),
         ];
         Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
         Global.flowController = new __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__["a" /* FlowController */]();
@@ -175,9 +176,9 @@ class Global {
             let target = Global._dragging;
             target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
             target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
-            target.updateControl();
-            if (target instanceof __WEBPACK_IMPORTED_MODULE_2__ui_flow__["a" /* Block */]) {
-                let attachInfo = Global.attachController.getNearestAttachPoint(target.x, target.y, target);
+            target.updateAndGetBounds();
+            if (!(target instanceof __WEBPACK_IMPORTED_MODULE_2__ui_flow__["a" /* Signal */])) {
+                let attachInfo = Global.attachController.getNearestAttachPoint(target, target.x, target.y);
                 if (attachInfo) {
                     Global.attachController.setHighlight(attachInfo);
                 }
@@ -286,13 +287,17 @@ class FlowControl extends PIXI.Container {
     hasFlowParent() {
         return !!this.attachParent && this.attachParent.attachType == __WEBPACK_IMPORTED_MODULE_2__controllers_AttachController__["b" /* AttachType */].FLOW;
     }
-    calculateElementSize() {
+    updateControl() {
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* moveToTop */])(this);
+        __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].flowController.update(this);
+    }
+    updateAndGetBounds() {
         this.updateControl();
         let bound = this.getBounds();
         for (let i = 1; i <= this.numFlow; i++) {
             let now = this.flowChildren[i];
             while (now) {
-                bound.enlarge(now.calculateElementSize());
+                bound.enlarge(now.updateAndGetBounds());
                 now = now.flowChildren[0];
             }
         }
@@ -307,10 +312,6 @@ class FlowControl extends PIXI.Container {
                 control.destroy();
             }
         }
-    }
-    updateControl() {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["a" /* moveToTop */])(this);
-        __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].flowController.update(this);
     }
 }
 /* unused harmony export FlowControl */
@@ -340,7 +341,7 @@ class Signal extends FlowControl {
         return this._shape;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["c"] = Signal;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Signal;
 
 class Block extends FlowControl {
     constructor(_shape, numFlow, flowStrategy) {
@@ -362,7 +363,7 @@ class Block extends FlowControl {
         this.on('mousedown', () => {
             if (!__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging) {
                 __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(this);
-                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.detachBlock(this);
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.detachControl(this);
             }
         });
         this.on('mouseup', () => {
@@ -373,9 +374,9 @@ class Block extends FlowControl {
                 }
                 else {
                     __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.removeHighlight();
-                    let attachInfo = __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.getNearestAttachPoint(this.x, this.y, this);
+                    let attachInfo = __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.getNearestAttachPoint(this, this.x, this.y);
                     if (attachInfo) {
-                        __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.attachBlock(this, attachInfo);
+                        __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.attachControl(this, attachInfo);
                     }
                 }
             }
@@ -390,6 +391,9 @@ class Block extends FlowControl {
             }
         }
     }
+    get shape() {
+        return this._shape;
+    }
     updateControl() {
         super.updateControl();
         for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
@@ -402,20 +406,66 @@ class Block extends FlowControl {
             }
         }
     }
-    get shape() {
-        return this._shape;
-    }
-    calculateElementSize() {
-        let bounds = super.calculateElementSize();
+    updateAndGetBounds() {
+        let bounds = super.updateAndGetBounds();
         for (let block of this.logicChildren) {
             if (block) {
-                bounds.enlarge(block.calculateElementSize());
+                bounds.enlarge(block.updateAndGetBounds());
             }
         }
         return bounds;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Block;
+/* harmony export (immutable) */ __webpack_exports__["b"] = Block;
+
+const OUTLINE_PADDING = 6;
+class Declaration extends FlowControl {
+    constructor(_shape) {
+        super(1, __WEBPACK_IMPORTED_MODULE_3__controllers_flowStrategies__["b" /* splitJoinStrategy */]);
+        this._shape = _shape;
+        this.addChild(_shape.graphics.clone());
+        this.interactive = true;
+        this.hitArea = _shape.hitArea;
+        this.on('mousedown', () => {
+            if (!__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging) {
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(this);
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.detachControl(this);
+            }
+        });
+        this.on('mouseup', () => {
+            if (__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].dragging == this) {
+                __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].setDragging(null);
+                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__utils__["b" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_0__entry__["Global"].menu, this)) {
+                    this.destroy();
+                }
+                else {
+                    __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.removeHighlight();
+                    let attachInfo = __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.getNearestAttachPoint(this, this.x, this.y);
+                    if (attachInfo) {
+                        __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].attachController.attachControl(this, attachInfo);
+                    }
+                }
+            }
+        });
+        this.outline = new PIXI.Graphics();
+        this.addChildAt(this.outline, 0);
+    }
+    get shape() {
+        return this._shape;
+    }
+    updateControl() {
+        this.outline.clear();
+        super.updateControl();
+    }
+    updateAndGetBounds() {
+        let bounds = super.updateAndGetBounds();
+        this.outline.lineStyle(1, 0x9E9E9E);
+        this.outline.drawRect(bounds.x - this.x - OUTLINE_PADDING, -2, bounds.width + OUTLINE_PADDING * 2, bounds.bottom - this.y + 2);
+        bounds.pad(OUTLINE_PADDING, 0);
+        return bounds;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["d"] = Declaration;
 
 class FlowItemFactory {
     constructor(constructor, shape) {
@@ -426,7 +476,7 @@ class FlowItemFactory {
         return new this.constructor(this.shape);
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["b"] = FlowItemFactory;
+/* harmony export (immutable) */ __webpack_exports__["c"] = FlowItemFactory;
 
 
 
@@ -519,35 +569,37 @@ class AttachController {
             throw new TypeError("Unknown Attach Type");
         }
     }
-    getNearestAttachPoint(stageX, stageY, exclude) {
+    getNearestAttachPoint(requestFrom, stageX, stageY) {
         const NEAR = 20;
         let result = null;
         let resultDist = 0;
-        this.logicPoints.forEach((arr, block) => {
-            for (let candidates of arr) {
-                if (block == exclude) {
-                    continue;
-                }
-                let candX = block.x + candidates.offsetX;
-                let candY = block.y + candidates.offsetY;
-                let deltaX = Math.abs(stageX - candX);
-                let deltaY = Math.abs(stageY - candY);
-                if (deltaX <= NEAR && deltaY <= NEAR) {
-                    let distance = deltaX + deltaY;
-                    if (result == null || distance <= resultDist) {
-                        result = {
-                            attachType: AttachType.LOGIC,
-                            attachTo: block,
-                            attachIndex: candidates.attachIndex,
-                        };
-                        resultDist = distance;
+        if (requestFrom instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */]) {
+            this.logicPoints.forEach((arr, block) => {
+                for (let candidates of arr) {
+                    if (block == requestFrom) {
+                        continue;
+                    }
+                    let candX = block.x + candidates.offsetX;
+                    let candY = block.y + candidates.offsetY;
+                    let deltaX = Math.abs(stageX - candX);
+                    let deltaY = Math.abs(stageY - candY);
+                    if (deltaX <= NEAR && deltaY <= NEAR) {
+                        let distance = deltaX + deltaY;
+                        if (result == null || distance <= resultDist) {
+                            result = {
+                                attachType: AttachType.LOGIC,
+                                attachTo: block,
+                                attachIndex: candidates.attachIndex,
+                            };
+                            resultDist = distance;
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
         this.flowPoints.forEach((arr, control) => {
             for (let candidates of arr) {
-                if (control == exclude ||
+                if (control == requestFrom ||
                     (candidates.attachIndex == 0 && !control.hasFlowParent())) {
                     continue;
                 }
@@ -570,10 +622,10 @@ class AttachController {
         });
         return result;
     }
-    attachBlock(target, attachInfo) {
+    attachControl(target, attachInfo) {
         let parent = attachInfo.attachTo;
         if (attachInfo.attachType == AttachType.LOGIC) {
-            if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */]) {
+            if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */] && target instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */]) {
                 parent.logicChildren[attachInfo.attachIndex] = target;
                 target.attachParent = attachInfo;
                 let arr = this.logicPoints.get(parent);
@@ -603,21 +655,21 @@ class AttachController {
             parent.flowChildren[attachInfo.attachIndex] = target;
             target.attachParent = attachInfo;
         }
-        parent.updateControl();
+        parent.updateAndGetBounds();
         let flowRoot = parent.findFlowRoot();
         if (flowRoot) {
-            flowRoot.updateControl();
+            flowRoot.updateAndGetBounds();
         }
     }
-    detachBlock(target) {
+    detachControl(target) {
         let attachInfo = target.attachParent;
         if (attachInfo) {
             let parent = attachInfo.attachTo;
             if (attachInfo.attachType == AttachType.LOGIC) {
-                if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */]) {
+                if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */]) {
                     parent.logicChildren[attachInfo.attachIndex] = null;
                     target.attachParent = null;
-                    parent.updateControl();
+                    parent.updateAndGetBounds();
                     let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
                     let arr = this.logicPoints.get(parent);
                     if (arr) {
@@ -17793,7 +17845,7 @@ function drawLinear(graphics, origin, startX, startY, now) {
         nowY += y;
     };
     while (now) {
-        let size = now.calculateElementSize();
+        let size = now.updateAndGetBounds();
         let offset = size.bottom - now.y;
         if (now.numFlow == 0) {
             lineDelta(0, size.height);
@@ -17804,7 +17856,7 @@ function drawLinear(graphics, origin, startX, startY, now) {
         }
         now.x = origin.x + nowX;
         now.y = origin.y + nowY - offset;
-        now.updateControl();
+        now.updateAndGetBounds();
         let prevY = nowY;
         lineDelta(0, FLOW_VERTICAL_MARGIN);
         let flowX = nowX;
@@ -17835,7 +17887,7 @@ let splitJoinStrategy = function (graphics, start) {
         for (let i = 0; i < start.numFlow; i++) {
             let now = start.flowChildren[i + 1];
             while (now) {
-                let widthCandidate = now.calculateElementSize().width;
+                let widthCandidate = now.updateAndGetBounds().width;
                 if (widthList[i] < widthCandidate) {
                     widthList[i] = widthCandidate;
                 }
@@ -17969,12 +18021,14 @@ class Generator extends PIXI.Container {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_SignalShape__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controllers_flowStrategies__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shape_IfBlockShape__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__shape_DeclarationShape__ = __webpack_require__(18);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startSignalFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ifBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return smallBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return purpleBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return orangeBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return binaryBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return declarationFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return smallBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return brownBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return orangeBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return binaryBlockFactory; });
 
 
 
@@ -17982,22 +18036,24 @@ class Generator extends PIXI.Container {
 
 
 
-class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
+
+class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* Block */] {
     constructor(shape) {
         super(shape, 0, __WEBPACK_IMPORTED_MODULE_5__controllers_flowStrategies__["c" /* noStrategy */]);
     }
 }
-class BranchBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
+class BranchBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* Block */] {
     constructor(shape) {
         super(shape, 2, __WEBPACK_IMPORTED_MODULE_5__controllers_flowStrategies__["b" /* splitJoinStrategy */]);
     }
 }
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_4__shape_SignalShape__["a" /* SignalShape */]());
-let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](BranchBlock, new __WEBPACK_IMPORTED_MODULE_6__shape_IfBlockShape__["a" /* IfBlockShape */](0xB2DFDB));
-let smallBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__["a" /* SmallBlockShape */](0xBDBDBD));
-let purpleBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__["a" /* UnaryBlockShape */](0xCE93D8));
-let orangeBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__["a" /* UnaryBlockShape */](0xFFC107));
-let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__["a" /* BinaryBlockShape */](0x81C784));
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Signal */], new __WEBPACK_IMPORTED_MODULE_4__shape_SignalShape__["a" /* SignalShape */]());
+let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](BranchBlock, new __WEBPACK_IMPORTED_MODULE_6__shape_IfBlockShape__["a" /* IfBlockShape */](0xB2EBF2));
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_7__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let smallBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_3__shape_SmallBlockShape__["a" /* SmallBlockShape */](0xBDBDBD));
+let brownBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__["a" /* UnaryBlockShape */](0xD7CCC8));
+let orangeBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_1__shape_UnaryBlockShape__["a" /* UnaryBlockShape */](0xFFECB3));
+let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_2__shape_BinaryBlockShape__["a" /* BinaryBlockShape */](0xB0BEC5));
 
 
 /***/ }),
@@ -18143,20 +18199,16 @@ IfBlockShape.highlightInfos = [
 
 const BEZIER_X = 6;
 const BEZIER_Y = 18;
-const SIGNAL_WIDTH = 100;
-const SIGNAL_HEIGHT = 50;
-const left = -SIGNAL_WIDTH * .5;
-const top = -SIGNAL_HEIGHT;
+const WIDTH = 100;
+const HEIGHT = 50;
+const left = -WIDTH * .5;
+const top = -HEIGHT;
 const right = -left;
-const bottom = top + SIGNAL_HEIGHT;
+const bottom = top + HEIGHT;
 class SignalShape extends __WEBPACK_IMPORTED_MODULE_0__shape__["d" /* Shape */] {
     constructor() {
         super();
-        this.pivot = {
-            offsetX: 0,
-            offsetY: bottom,
-        };
-        this.hitArea = new PIXI.Polygon(left, top, right, top, right, bottom, left, bottom, left, top);
+        this.hitArea = new PIXI.Rectangle(left, top, WIDTH, HEIGHT);
         this.graphics = new PIXI.Graphics();
         this.graphics.lineStyle(1, 0x000000, 1);
         this.graphics.beginFill(0xFFFFFF);
@@ -18256,6 +18308,35 @@ function hitTestRectangle(obj1, obj2) {
 function moveToTop(target) {
     target.parent.setChildIndex(target, target.parent.children.length - 1);
 }
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shape__ = __webpack_require__(0);
+
+const LINE = 4;
+const GAP = 4;
+const WIDTH = 70;
+const HEIGHT = 30;
+const left = -WIDTH * .5;
+const top = -HEIGHT - LINE - GAP;
+const bottom = top + HEIGHT;
+class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_0__shape__["d" /* Shape */] {
+    constructor(color) {
+        super();
+        this.hitArea = new PIXI.Rectangle(left, top, WIDTH, HEIGHT);
+        this.graphics = new PIXI.Graphics();
+        this.graphics.lineStyle(1, 0x000000, 1);
+        this.graphics.beginFill(color);
+        this.graphics.drawRect(left, top, WIDTH, HEIGHT);
+        this.graphics.drawRect(left, bottom + GAP, WIDTH, LINE);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = DeclarationShape;
+
 
 
 /***/ })

@@ -61,14 +61,19 @@ export abstract class FlowControl extends PIXI.Container {
         return !!this.attachParent && this.attachParent.attachType == AttachType.FLOW;
     }
 
-    calculateElementSize(): PIXI.Rectangle {
+    protected updateControl() {
+        moveToTop(this);
+        Global.flowController.update(this);
+    }
+
+    updateAndGetBounds(): PIXI.Rectangle {
         this.updateControl();
 
         let bound = this.getBounds();
         for (let i = 1; i <= this.numFlow; i++) {
             let now = this.flowChildren[i];
             while (now) {
-                bound.enlarge(now.calculateElementSize());
+                bound.enlarge(now.updateAndGetBounds());
                 now = now.flowChildren[0];
             }
         }
@@ -86,11 +91,6 @@ export abstract class FlowControl extends PIXI.Container {
                 control.destroy();
             }
         }
-    }
-
-    updateControl() {
-        moveToTop(this);
-        Global.flowController.update(this);
     }
 }
 
@@ -158,7 +158,7 @@ export abstract class Block extends FlowControl {
         this.on('mousedown', () => {
             if (!Global.dragging) {
                 Global.setDragging(this);
-                Global.attachController.detachBlock(this);
+                Global.attachController.detachControl(this);
             }
         });
 
@@ -172,13 +172,13 @@ export abstract class Block extends FlowControl {
                     Global.attachController.removeHighlight();
 
                     let attachInfo = Global.attachController.getNearestAttachPoint(
+                        this,
                         this.x,
                         this.y,
-                        this,
                     );
 
                     if (attachInfo) {
-                        Global.attachController.attachBlock(this, attachInfo);
+                        Global.attachController.attachControl(this, attachInfo);
                     }
                 }
             }
@@ -197,7 +197,11 @@ export abstract class Block extends FlowControl {
         }
     }
 
-    updateControl() {
+    get shape(): BlockShape {
+        return this._shape;
+    }
+
+    protected updateControl() {
         super.updateControl();
 
         for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
@@ -211,17 +215,84 @@ export abstract class Block extends FlowControl {
         }
     }
 
-    get shape(): BlockShape {
+    updateAndGetBounds(): PIXI.Rectangle {
+        let bounds = super.updateAndGetBounds();
+        for (let block of this.logicChildren) {
+            if (block) {
+                bounds.enlarge(block.updateAndGetBounds());
+            }
+        }
+        return bounds;
+    }
+}
+
+const OUTLINE_PADDING = 6;
+
+export class Declaration extends FlowControl {
+    private outline: PIXI.Graphics;
+
+    constructor(
+        private _shape: Shape
+    ) {
+        super(1, splitJoinStrategy);
+
+        // UI setup
+        this.addChild(_shape.graphics.clone());
+        this.interactive = true;
+        this.hitArea = _shape.hitArea;
+
+        this.on('mousedown', () => {
+            if (!Global.dragging) {
+                Global.setDragging(this);
+                Global.attachController.detachControl(this);
+            }
+        });
+
+        this.on('mouseup', () => {
+            if (Global.dragging == this) {
+                Global.setDragging(null);
+
+                if (hitTestRectangle(Global.menu, this)) {
+                    this.destroy();
+                } else {
+                    Global.attachController.removeHighlight();
+
+                    let attachInfo = Global.attachController.getNearestAttachPoint(
+                        this,
+                        this.x,
+                        this.y,
+                    );
+
+                    if (attachInfo) {
+                        Global.attachController.attachControl(this, attachInfo);
+                    }
+                }
+            }
+        });
+
+        this.outline = new PIXI.Graphics();
+        this.addChildAt(this.outline, 0);
+    }
+
+    get shape(): Shape {
         return this._shape;
     }
 
-    calculateElementSize(): PIXI.Rectangle {
-        let bounds = super.calculateElementSize();
-        for (let block of this.logicChildren) {
-            if (block) {
-                bounds.enlarge(block.calculateElementSize());
-            }
-        }
+    protected updateControl() {
+        this.outline.clear();
+        super.updateControl();
+    }
+
+    updateAndGetBounds(): PIXI.Rectangle {
+        let bounds = super.updateAndGetBounds();
+
+        this.outline.lineStyle(1, 0x9E9E9E);
+        this.outline.drawRect(
+            bounds.x - this.x - OUTLINE_PADDING, -2,
+            bounds.width + OUTLINE_PADDING*2, bounds.bottom - this.y + 2
+        );
+        bounds.pad(OUTLINE_PADDING, 0);
+
         return bounds;
     }
 }

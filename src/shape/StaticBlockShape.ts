@@ -1,4 +1,4 @@
-import {BlockShape} from "./shape";
+import {BlockShape, HitArea} from "./shape";
 import {Offset} from "../controllers/AttachController";
 
 export interface HighlightInfo extends Offset {
@@ -10,7 +10,7 @@ export abstract class StaticBlockShape extends BlockShape {
     readonly highlightGraphics: PIXI.Graphics[] = [];
     readonly highlightOffsets: Offset[] = [];
 
-    constructor(color: number, readonly hitArea: PIXI.Polygon, highlightInfos: HighlightInfo[]) {
+    constructor(color: number, readonly hitArea: HitArea, highlightInfos: HighlightInfo[]) {
         super();
 
         this.graphics = new PIXI.Graphics();

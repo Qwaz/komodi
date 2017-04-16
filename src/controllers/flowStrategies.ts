@@ -47,7 +47,7 @@ function drawLinear(graphics: PIXI.Graphics, origin: FlowControl, startX: number
     };
 
     while (now) {
-        let size = now.calculateElementSize();
+        let size = now.updateAndGetBounds();
         let offset = size.bottom - now.y;
 
         if (now.numFlow == 0) {
@@ -58,7 +58,7 @@ function drawLinear(graphics: PIXI.Graphics, origin: FlowControl, startX: number
         }
         now.x = origin.x + nowX;
         now.y = origin.y + nowY - offset;
-        now.updateControl();
+        now.updateAndGetBounds();
 
         let prevY = nowY;
         lineDelta(0, FLOW_VERTICAL_MARGIN);
@@ -98,7 +98,7 @@ export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, 
         for (let i = 0; i < start.numFlow; i++) {
             let now = start.flowChildren[i+1];
             while (now) {
-                let widthCandidate = now.calculateElementSize().width;
+                let widthCandidate = now.updateAndGetBounds().width;
                 if (widthList[i] < widthCandidate) {
                     widthList[i] = widthCandidate;
                 }

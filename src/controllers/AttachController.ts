@@ -104,41 +104,43 @@ export class AttachController {
         }
     }
 
-    getNearestAttachPoint(stageX: number, stageY: number, exclude?: FlowControl): AttachInfo | null {
+    getNearestAttachPoint(requestFrom: FlowControl, stageX: number, stageY: number): AttachInfo | null {
         const NEAR = 20;
 
         let result: AttachInfo | null = null;
         let resultDist = 0;
 
-        this.logicPoints.forEach((arr, block) => {
-            for (let candidates of arr) {
-                if (block == exclude) {
-                    continue;
-                }
+        if (requestFrom instanceof Block) {
+            this.logicPoints.forEach((arr, block) => {
+                for (let candidates of arr) {
+                    if (block == requestFrom) {
+                        continue;
+                    }
 
-                let candX = block.x + candidates.offsetX;
-                let candY = block.y + candidates.offsetY;
+                    let candX = block.x + candidates.offsetX;
+                    let candY = block.y + candidates.offsetY;
 
-                let deltaX = Math.abs(stageX - candX);
-                let deltaY = Math.abs(stageY - candY);
+                    let deltaX = Math.abs(stageX - candX);
+                    let deltaY = Math.abs(stageY - candY);
 
-                if (deltaX <= NEAR && deltaY <= NEAR) {
-                    let distance = deltaX + deltaY;
-                    if (result == null || distance <= resultDist) {
-                        result = {
-                            attachType: AttachType.LOGIC,
-                            attachTo: block,
-                            attachIndex: candidates.attachIndex,
-                        };
-                        resultDist = distance;
+                    if (deltaX <= NEAR && deltaY <= NEAR) {
+                        let distance = deltaX + deltaY;
+                        if (result == null || distance <= resultDist) {
+                            result = {
+                                attachType: AttachType.LOGIC,
+                                attachTo: block,
+                                attachIndex: candidates.attachIndex,
+                            };
+                            resultDist = distance;
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         this.flowPoints.forEach((arr, control) => {
             for (let candidates of arr) {
-                if (control == exclude ||
+                if (control == requestFrom ||
                     (candidates.attachIndex == 0 && !control.hasFlowParent())) {
                     continue;
                 }
@@ -166,10 +168,10 @@ export class AttachController {
         return result;
     }
 
-    attachBlock(target: Block, attachInfo: AttachInfo) {
+    attachControl(target: FlowControl, attachInfo: AttachInfo) {
         let parent = attachInfo.attachTo;
         if (attachInfo.attachType == AttachType.LOGIC) {
-            if (parent instanceof Block) {
+            if (parent instanceof Block && target instanceof Block) {
                 parent.logicChildren[attachInfo.attachIndex] = target;
                 target.attachParent = attachInfo;
 
@@ -199,15 +201,15 @@ export class AttachController {
             target.attachParent = attachInfo;
         }
 
-        parent.updateControl();
+        parent.updateAndGetBounds();
 
         let flowRoot = parent.findFlowRoot();
         if (flowRoot) {
-            flowRoot.updateControl();
+            flowRoot.updateAndGetBounds();
         }
     }
 
-    detachBlock(target: Block) {
+    detachControl(target: FlowControl) {
         let attachInfo = target.attachParent;
 
         if (attachInfo) {
@@ -218,7 +220,7 @@ export class AttachController {
                     parent.logicChildren[attachInfo.attachIndex] = null;
                     target.attachParent = null;
 
-                    parent.updateControl();
+                    parent.updateAndGetBounds();
 
                     let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
 

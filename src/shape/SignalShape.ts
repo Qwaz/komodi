@@ -1,16 +1,15 @@
-import {Shape} from "./shape";
-import {Offset} from "../controllers/AttachController";
+import {HitArea, Shape} from "./shape";
 
 const BEZIER_X = 6;
 const BEZIER_Y = 18;
 
-const SIGNAL_WIDTH = 100;
-const SIGNAL_HEIGHT = 50;
+const WIDTH = 100;
+const HEIGHT = 50;
 
-const left = -SIGNAL_WIDTH*.5;
-const top = -SIGNAL_HEIGHT;
+const left = -WIDTH*.5;
+const top = -HEIGHT;
 const right = -left;
-const bottom = top+SIGNAL_HEIGHT;
+const bottom = top+HEIGHT;
 
 export class SignalShape extends Shape {
     readonly graphics: PIXI.Graphics;
@@ -30,16 +29,5 @@ export class SignalShape extends Shape {
         this.graphics.endFill();
     }
 
-    readonly pivot: Offset = {
-        offsetX: 0,
-        offsetY: bottom,
-    };
-
-    readonly hitArea: PIXI.Polygon = new PIXI.Polygon(
-        left, top,
-        right, top,
-        right, bottom,
-        left, bottom,
-        left, top,
-    );
+    readonly hitArea: HitArea = new PIXI.Rectangle(left, top, WIDTH, HEIGHT);
 }
