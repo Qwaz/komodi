@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {Generator} from "./ui/Generator";
 import {
     binaryBlockFactory,

@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {FlowControl} from "../ui/flow";
 
 export class Flow extends PIXI.Container {

@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
 import {hitTestRectangle, moveToTop} from "../utils";

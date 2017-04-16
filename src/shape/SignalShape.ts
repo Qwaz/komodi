@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {HitArea, Shape} from "./shape";
 
 const BEZIER_X = 6;

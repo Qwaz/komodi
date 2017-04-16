@@ -1,6 +1,7 @@
+import * as PIXI from "pixi.js";
+import * as _ from "lodash";
 import {FlowControl} from "../ui/flow";
 import {Global} from "../entry";
-import * as _ from "lodash";
 import {Offset} from "./AttachController";
 
 export type FlowStrategy = (graphics: PIXI.Graphics, start: FlowControl) => Offset;

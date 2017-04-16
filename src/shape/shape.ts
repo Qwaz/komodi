@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {Offset} from "../controllers/AttachController";
 
 export type HitArea = PIXI.Rectangle | PIXI.Circle | PIXI.Ellipse | PIXI.Polygon | PIXI.RoundedRectangle;

@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {BlockShape, HitArea} from "./shape";
 import {Offset} from "../controllers/AttachController";
 

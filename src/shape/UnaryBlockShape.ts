@@ -1,3 +1,4 @@
+import * as PIXI from "pixi.js";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./shape";
 import {HighlightInfo, StaticBlockShape} from "./StaticBlockShape";
 

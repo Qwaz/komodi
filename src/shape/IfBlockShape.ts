@@ -1,6 +1,7 @@
+import * as PIXI from "pixi.js";
+import * as _ from "lodash";
 import {HighlightInfo, StaticBlockShape} from "./StaticBlockShape";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./shape";
-import * as _ from "lodash";
 
 const RADIUS = 20;
 const ANGLE = 50;

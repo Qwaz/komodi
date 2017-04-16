@@ -4,13 +4,16 @@
   "description": "Visual functional programming language designed for education",
   "main": "bundle.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack",
+    "watch": "webpack -w"
   },
   "author": "Yechan Bae <qwazpia@gmail.com>",
   "devDependencies": {
     "@types/lodash": "^4.14.62",
     "@types/pixi.js": "^4.4.0",
-    "ts-loader": "^2.0.2"
+    "ts-loader": "^2.0.2",
+    "typescript": "^2.2.2",
+    "webpack": "^2.4.1"
   },
   "dependencies": {
     "lodash": "^4.17.4",
