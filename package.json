@@ -5,15 +5,19 @@
   "main": "bundle.js",
   "scripts": {
     "build": "webpack",
-    "watch": "webpack -w"
+    "dev:watch": "webpack -w",
+    "dev:server": "webpack-dev-server",
+    "dev": "npm-run-all --parallel dev:*"
   },
   "author": "Yechan Bae <qwazpia@gmail.com>",
   "devDependencies": {
     "@types/lodash": "^4.14.62",
     "@types/pixi.js": "^4.4.0",
+    "npm-run-all": "^4.0.2",
     "ts-loader": "^2.0.2",
     "typescript": "^2.2.2",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "lodash": "^4.17.4",
