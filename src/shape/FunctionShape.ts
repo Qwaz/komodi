@@ -6,7 +6,8 @@ import {TFunction, typeInfoToColor} from "../type/type";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
 
 const DEFAULT_ARG_WIDTH = 35;
-const MARGIN = 30;
+const BETWEEN_MARGIN = 30;
+const PADDING = 4;
 const EMPTY_BLOCK_WIDTH = 35;
 const BLOCK_HEIGHT = 30;
 
@@ -60,10 +61,12 @@ export class FunctionShape extends BlockShape {
             }
 
             // TODO: Replace uniform margin to label size calculation
-            widthSum += (argWidth.length-1) * MARGIN;
+            widthSum += (argWidth.length-1) * BETWEEN_MARGIN + 2*PADDING;
 
-            let outlinePath = [];
-            let currentX = -widthSum * .5;
+            let outlinePath = [
+                -widthSum * .5, top,
+            ];
+            let currentX = -widthSum * .5 + PADDING;
             for (let i = 0; i < this.typeInfo.args.length; i++) {
                 let width = argWidth[i];
                 outlinePath.push(
@@ -73,10 +76,12 @@ export class FunctionShape extends BlockShape {
                     currentX+width*.5+TRIANGLE_WIDTH*.5, top,
                     currentX+width, top,
                 );
-                currentX += width + MARGIN;
+                currentX += width + BETWEEN_MARGIN;
             }
+            outlinePath.push(
+                widthSum * .5, top,
+            );
 
-            this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));
             outlinePath.push(
                 widthSum*.5, bottom,
                 TRIANGLE_WIDTH*.5, bottom,
@@ -85,11 +90,12 @@ export class FunctionShape extends BlockShape {
                 -widthSum*.5, bottom,
                 -widthSum*.5, top,
             );
+            this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));
             this.graphics.drawPolygon(outlinePath);
 
             this._hitArea = new PIXI.Polygon(outlinePath);
 
-            currentX = -widthSum * .5;
+            currentX = -widthSum * .5 + PADDING;
             for (let i = 0; i < this.typeInfo.args.length; i++) {
                 let width = argWidth[i];
                 this.graphics.beginFill(typeInfoToColor(this.typeInfo.args[i]));
@@ -99,15 +105,15 @@ export class FunctionShape extends BlockShape {
                     currentX+width*.5, top+TRIANGLE_HEIGHT,
                     currentX+width*.5+TRIANGLE_WIDTH*.5, top,
                     currentX+width, top,
-                    currentX+width, bottom,
-                    currentX, bottom,
+                    currentX+width, bottom-PADDING,
+                    currentX, bottom-PADDING,
                     currentX, top,
                 ]);
                 this._highlightOffsets.push({
                     offsetX: currentX+width*.5,
                     offsetY: top+TRIANGLE_HEIGHT,
                 });
-                currentX += width + MARGIN;
+                currentX += width + BETWEEN_MARGIN;
             }
         } else {
             this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));

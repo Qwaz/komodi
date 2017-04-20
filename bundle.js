@@ -56400,7 +56400,8 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["b" /* Shape
 
 
 const DEFAULT_ARG_WIDTH = 35;
-const MARGIN = 30;
+const BETWEEN_MARGIN = 30;
+const PADDING = 4;
 const EMPTY_BLOCK_WIDTH = 35;
 const BLOCK_HEIGHT = 30;
 const top = -BLOCK_HEIGHT - __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */];
@@ -56439,19 +56440,22 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["a" /* BlockSha
                 }
                 widthSum += argWidth[i];
             }
-            widthSum += (argWidth.length - 1) * MARGIN;
-            let outlinePath = [];
-            let currentX = -widthSum * .5;
+            widthSum += (argWidth.length - 1) * BETWEEN_MARGIN + 2 * PADDING;
+            let outlinePath = [
+                -widthSum * .5, top,
+            ];
+            let currentX = -widthSum * .5 + PADDING;
             for (let i = 0; i < this.typeInfo.args.length; i++) {
                 let width = argWidth[i];
                 outlinePath.push(currentX, top, currentX + width * .5 - __WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top, currentX + width * .5, top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */], currentX + width * .5 + __WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top, currentX + width, top);
-                currentX += width + MARGIN;
+                currentX += width + BETWEEN_MARGIN;
             }
-            this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__type_type__["e" /* typeInfoToColor */])(this.typeInfo.returns));
+            outlinePath.push(widthSum * .5, top);
             outlinePath.push(widthSum * .5, bottom, __WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, bottom, 0, 0, -__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, bottom, -widthSum * .5, bottom, -widthSum * .5, top);
+            this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__type_type__["e" /* typeInfoToColor */])(this.typeInfo.returns));
             this.graphics.drawPolygon(outlinePath);
             this._hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"](outlinePath);
-            currentX = -widthSum * .5;
+            currentX = -widthSum * .5 + PADDING;
             for (let i = 0; i < this.typeInfo.args.length; i++) {
                 let width = argWidth[i];
                 this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__type_type__["e" /* typeInfoToColor */])(this.typeInfo.args[i]));
@@ -56461,15 +56465,15 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["a" /* BlockSha
                     currentX + width * .5, top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */],
                     currentX + width * .5 + __WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
                     currentX + width, top,
-                    currentX + width, bottom,
-                    currentX, bottom,
+                    currentX + width, bottom - PADDING,
+                    currentX, bottom - PADDING,
                     currentX, top,
                 ]);
                 this._highlightOffsets.push({
                     offsetX: currentX + width * .5,
                     offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */],
                 });
-                currentX += width + MARGIN;
+                currentX += width + BETWEEN_MARGIN;
             }
         }
         else {
