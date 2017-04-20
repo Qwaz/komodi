@@ -13,7 +13,7 @@ function setGraphicsStyle(graphics: PIXI.Graphics) {
     graphics.lineStyle(3, 0);
 }
 
-function drawEditPoint(graphics: PIXI.Graphics, x: number, y: number, highlight: boolean = false) {
+export function drawEditPoint(graphics: PIXI.Graphics, x: number, y: number, highlight: boolean = false) {
     if (highlight) {
         graphics.beginFill(0xFF0000, 0.7);
     } else {
@@ -21,19 +21,6 @@ function drawEditPoint(graphics: PIXI.Graphics, x: number, y: number, highlight:
     }
     graphics.drawCircle(x, y, EDIT_POINT_RADIUS);
     graphics.endFill();
-}
-
-export function generateFlowHighlights(target: FlowControl) {
-    let ret = [];
-    for (let i = 0; i < target.numFlow+1; i++) {
-        let graphics = new PIXI.Graphics();
-        drawEditPoint(graphics, 0, 0, true);
-        graphics.visible = false;
-        target.addChild(graphics);
-        ret.push(graphics);
-    }
-
-    return ret;
 }
 
 function drawLinear(graphics: PIXI.Graphics, origin: FlowControl, startX: number, startY: number, now: FlowControl | null): Offset {

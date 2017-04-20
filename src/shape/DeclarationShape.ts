@@ -13,7 +13,11 @@ const bottom = top+HEIGHT;
 export class DeclarationShape extends Shape {
     readonly graphics: PIXI.Graphics;
 
-    constructor(color: number) {
+    clone() {
+        return new DeclarationShape(this.color);
+    }
+
+    constructor(private color: number) {
         super();
 
         this.graphics = new PIXI.Graphics();

@@ -3,7 +3,8 @@ import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
 import {hitTestRectangle, moveToTop} from "../utils";
 import {AttachInfo, AttachType} from "../controllers/AttachController";
-import {FlowStrategy, generateFlowHighlights, splitJoinStrategy} from "../controllers/flowStrategies";
+import {FlowStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
+import {FlowHighlight, LogicHighlight} from "../shape/Highlight";
 
 export abstract class FlowControl extends PIXI.Container {
     private _flowHighlights: PIXI.Graphics[];
@@ -43,7 +44,13 @@ export abstract class FlowControl extends PIXI.Container {
 
     get flowHighlights(): PIXI.Graphics[] {
         if (!this._flowHighlights) {
-            this._flowHighlights = generateFlowHighlights(this);
+            this._flowHighlights = [];
+            for (let i = 0; i < this.numFlow+1; i++) {
+                let highlight = new FlowHighlight();
+                highlight.visible = false;
+                this.addChild(highlight);
+                this._flowHighlights.push(highlight);
+            }
         }
         return this._flowHighlights;
     }
@@ -138,19 +145,21 @@ export abstract class Block extends FlowControl {
         super(numFlow, flowStrategy);
 
         // UI setup
-        this.addChild(_shape.graphics.clone());
+        this.addChild(_shape.graphics);
         this.interactive = true;
         this.hitArea = _shape.hitArea;
 
         // attach management
         this.logicHighlights = [];
 
-        for (let highlight of _shape.highlightGraphics) {
-            let clone = highlight.clone();
-            this.logicHighlights.push(clone);
-            this.addChild(clone);
-            clone.visible = false;
+        for (let offset of _shape.highlightOffsets) {
+            let highlight = new LogicHighlight();
+            this.addChild(highlight);
+            highlight.x = offset.offsetX;
+            highlight.y = offset.offsetY;
+            highlight.visible = false;
 
+            this.logicHighlights.push(highlight);
             this.logicChildren.push(null);
         }
 
@@ -202,8 +211,21 @@ export abstract class Block extends FlowControl {
         return this._shape;
     }
 
+    private updateShape() {
+        this._shape.updateShape(this.logicChildren);
+        this.hitArea = this._shape.hitArea;
+
+        Global.attachController.updateLogicOffset(this);
+        for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
+            let offset = this._shape.highlightOffsets[i];
+            this.logicHighlights[i].x = offset.offsetX;
+            this.logicHighlights[i].y = offset.offsetY;
+        }
+    }
+
     protected updateControl() {
         super.updateControl();
+        this.updateShape();
 
         for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
             let offset = this._shape.highlightOffsets[i];
@@ -303,6 +325,6 @@ export class FlowItemFactory<T extends FlowControl, S extends Shape> {
     }
 
     createFlowItem(): T {
-        return new this.constructor(this.shape);
+        return new this.constructor(this.shape.clone());
     }
 }

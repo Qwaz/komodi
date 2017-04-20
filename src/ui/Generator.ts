@@ -7,7 +7,7 @@ export class Generator<T extends FlowControl, S extends Shape> extends PIXI.Cont
     constructor(target: FlowItemFactory<T, S>) {
         super();
 
-        this.addChild(target.shape.graphics.clone());
+        this.addChild(target.shape.graphics);
 
         this.interactive = true;
         this.buttonMode = true;

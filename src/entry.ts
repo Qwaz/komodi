@@ -2,12 +2,12 @@ import * as PIXI from "pixi.js";
 import {Generator} from "./ui/Generator";
 import {
     binaryBlockFactory,
-    brownBlockFactory,
     declarationFactory,
     ifBlockFactory,
-    orangeBlockFactory,
-    smallBlockFactory,
-    startSignalFactory
+    intBlockFactory,
+    numberToStringBlockFactory,
+    startSignalFactory,
+    stringBlockFactory
 } from "./ui/blocks";
 
 import {FlowControl, Signal} from "./ui/flow";
@@ -18,7 +18,6 @@ const MENU_PADDING = 20;
 
 export class Global {
     private static _instance:Global = new Global();
-
     // logic related
     static generators: Array<PIXI.Container>;
     static attachController: AttachController;
@@ -40,9 +39,9 @@ export class Global {
             new Generator(startSignalFactory),
             new Generator(ifBlockFactory),
             new Generator(declarationFactory),
-            new Generator(smallBlockFactory),
-            new Generator(brownBlockFactory),
-            new Generator(orangeBlockFactory),
+            new Generator(intBlockFactory),
+            new Generator(stringBlockFactory),
+            new Generator(numberToStringBlockFactory),
             new Generator(binaryBlockFactory),
         ];
 

@@ -63,6 +63,17 @@ export class AttachController {
         this.flowPoints.delete(control);
     }
 
+    updateLogicOffset(block: Block) {
+        let arr = this.logicPoints.get(block);
+        if (arr) {
+            for (let i = 0; i < arr.length; i++) {
+                let newOffset = block.shape.highlightOffsets[arr[i].attachIndex];
+                arr[i].offsetX = newOffset.offsetX;
+                arr[i].offsetY = newOffset.offsetY;
+            }
+        }
+    }
+
     updateFlowOffset(control: FlowControl, index: number, offset: Offset) {
         control.flowHighlights[index].x = offset.offsetX;
         control.flowHighlights[index].y = offset.offsetY;

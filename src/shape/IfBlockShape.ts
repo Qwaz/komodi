@@ -1,7 +1,8 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {HighlightInfo, StaticBlockShape} from "./StaticBlockShape";
-import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./shape";
+import {BlockShape} from "./shape";
+import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
+import {TBoolean, typeInfoToColor} from "../type/type";
 
 const RADIUS = 20;
 const ANGLE = 50;
@@ -9,8 +10,10 @@ const STEP = 10;
 
 const top = -2*RADIUS;
 
-export class IfBlockShape extends StaticBlockShape {
-    private static path: PIXI.Polygon = new (PIXI.Polygon.bind.apply(PIXI.Polygon,
+export class IfBlockShape extends BlockShape {
+    readonly graphics: PIXI.Graphics;
+
+    readonly hitArea: PIXI.Polygon = new (PIXI.Polygon.bind.apply(PIXI.Polygon,
         _.concat([
                 0,
                 -TRIANGLE_WIDTH*.5, top,
@@ -25,20 +28,21 @@ export class IfBlockShape extends StaticBlockShape {
         )
     ));
 
-    private static highlightInfos: HighlightInfo[] = [
-        {
-            path: new PIXI.Polygon(
-                -TRIANGLE_WIDTH*.5, top,
-                0, top+TRIANGLE_HEIGHT,
-                TRIANGLE_WIDTH*.5, top,
-                -TRIANGLE_WIDTH*.5, top,
-            ),
-            offsetX: 0,
-            offsetY: top+TRIANGLE_HEIGHT,
-        },
-    ];
+    readonly highlightOffsets = [{offsetX: 0, offsetY: top+TRIANGLE_HEIGHT}];
 
-    constructor(color: number) {
-        super(color, IfBlockShape.path, IfBlockShape.highlightInfos);
+    clone() {
+        return new IfBlockShape();
     }
+
+    constructor() {
+        super();
+
+        this.graphics = new PIXI.Graphics();
+        this.graphics.lineStyle(1, 0x000000);
+        this.graphics.beginFill(typeInfoToColor(new TBoolean()));
+        this.graphics.drawShape(this.hitArea);
+        this.graphics.endFill();
+    }
+
+    updateShape() {}
 }

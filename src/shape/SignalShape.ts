@@ -15,6 +15,10 @@ const bottom = top+HEIGHT;
 export class SignalShape extends Shape {
     readonly graphics: PIXI.Graphics;
 
+    clone() {
+        return new SignalShape();
+    }
+
     constructor() {
         super();
 
