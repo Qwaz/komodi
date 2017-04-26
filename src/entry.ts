@@ -6,11 +6,12 @@ import {
     ifBlockFactory,
     intBlockFactory,
     numberToStringBlockFactory,
+    printStingBlockFactory,
     startSignalFactory,
     stringBlockFactory
 } from "./ui/blocks";
 
-import {FlowControl, Signal} from "./ui/flow";
+import {FlowControl} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
 import {FlowController} from "./controllers/FlowController";
 
@@ -42,6 +43,7 @@ export class Global {
             new Generator(intBlockFactory),
             new Generator(stringBlockFactory),
             new Generator(numberToStringBlockFactory),
+            new Generator(printStingBlockFactory),
             new Generator(binaryBlockFactory),
         ];
 
@@ -129,18 +131,15 @@ export class Global {
 
             target.updateAndGetBounds();
 
-            if (!(target instanceof Signal)) {
-                let attachInfo = Global.attachController.getNearestAttachPoint(
-                    target,
-                    target.x,
-                    target.y,
-                );
+            let attachInfo = Global.attachController.getNearestAttachPoint(
+                target.x, target.y,
+                target.attachFilter.bind(target)
+            );
 
-                if (attachInfo) {
-                    Global.attachController.setHighlight(attachInfo);
-                } else {
-                    Global.attachController.removeHighlight();
-                }
+            if (attachInfo) {
+                Global.attachController.setHighlight(attachInfo);
+            } else {
+                Global.attachController.removeHighlight();
             }
         }
 

@@ -4976,10 +4976,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_Generator__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_blocks__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_flow__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_AttachController__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controllers_FlowController__ = __webpack_require__(99);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__ = __webpack_require__(99);
 
 
 
@@ -4995,10 +4993,11 @@ class Global {
             new __WEBPACK_IMPORTED_MODULE_1__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_2__ui_blocks__["d" /* intBlockFactory */]),
             new __WEBPACK_IMPORTED_MODULE_1__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_2__ui_blocks__["e" /* stringBlockFactory */]),
             new __WEBPACK_IMPORTED_MODULE_1__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_2__ui_blocks__["f" /* numberToStringBlockFactory */]),
-            new __WEBPACK_IMPORTED_MODULE_1__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_2__ui_blocks__["g" /* binaryBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_1__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_2__ui_blocks__["g" /* printStingBlockFactory */]),
+            new __WEBPACK_IMPORTED_MODULE_1__ui_Generator__["a" /* Generator */](__WEBPACK_IMPORTED_MODULE_2__ui_blocks__["h" /* binaryBlockFactory */]),
         ];
-        Global.attachController = new __WEBPACK_IMPORTED_MODULE_4__controllers_AttachController__["a" /* AttachController */]();
-        Global.flowController = new __WEBPACK_IMPORTED_MODULE_5__controllers_FlowController__["a" /* FlowController */]();
+        Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
+        Global.flowController = new __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__["a" /* FlowController */]();
         Global.renderer = __WEBPACK_IMPORTED_MODULE_0_pixi_js__["autoDetectRenderer"](1, 1, { antialias: false, transparent: false, resolution: 2 });
         Global.renderer.backgroundColor = 0xECEFF1;
         Global.renderer.view.style.position = "absolute";
@@ -5059,14 +5058,12 @@ class Global {
             target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
             target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
             target.updateAndGetBounds();
-            if (!(target instanceof __WEBPACK_IMPORTED_MODULE_3__ui_flow__["a" /* Signal */])) {
-                let attachInfo = Global.attachController.getNearestAttachPoint(target, target.x, target.y);
-                if (attachInfo) {
-                    Global.attachController.setHighlight(attachInfo);
-                }
-                else {
-                    Global.attachController.removeHighlight();
-                }
+            let attachInfo = Global.attachController.getNearestAttachPoint(target.x, target.y, target.attachFilter.bind(target));
+            if (attachInfo) {
+                Global.attachController.setHighlight(attachInfo);
+            }
+            else {
+                Global.attachController.removeHighlight();
             }
         }
         Global.renderer.render(Global.stage);
@@ -6566,8 +6563,8 @@ function createLabel(text) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = hitTestRectangle;
-/* harmony export (immutable) */ __webpack_exports__["a"] = moveToTop;
+/* harmony export (immutable) */ __webpack_exports__["a"] = hitTestRectangle;
+/* harmony export (immutable) */ __webpack_exports__["b"] = moveToTop;
 /* harmony export (immutable) */ __webpack_exports__["c"] = centerChild;
 function hitTestRectangle(obj1, obj2) {
     let bound1 = obj1.getBounds();
@@ -6653,6 +6650,27 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.registerControl(this);
         this.on('mouseover', () => this.alpha = 0.85);
         this.on('mouseout', () => this.alpha = 1);
+        this.on('mousedown', () => {
+            if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
+                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
+                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.detachControl(this);
+            }
+        });
+        this.on('mouseup', () => {
+            if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
+                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
+                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
+                    this.destroy();
+                }
+                else {
+                    __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.removeHighlight();
+                    let attachInfo = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.getNearestAttachPoint(this.x, this.y, this.attachFilter.bind(this));
+                    if (attachInfo) {
+                        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.attachControl(this, attachInfo);
+                    }
+                }
+            }
+        });
     }
     get numFlow() {
         return this.flowChildren.length - 1;
@@ -6686,7 +6704,7 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         return !!this.attachParent && this.attachParent.attachType == __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["b" /* AttachType */].FLOW;
     }
     updateControl() {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* moveToTop */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* moveToTop */])(this);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.update(this);
     }
     updateAndGetBounds() {
@@ -6711,6 +6729,9 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
             }
         }
     }
+    attachFilter({}, {}) {
+        return false;
+    }
 }
 /* unused harmony export FlowControl */
 
@@ -6720,22 +6741,9 @@ class Signal extends FlowControl {
         this.shape = shape;
         this.addChild(shape);
         this.interactive = true;
-        this.on('mousedown', () => {
-            if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
-            }
-        });
-        this.on('mouseup', () => {
-            if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
-                    this.destroy();
-                }
-            }
-        });
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Signal;
+/* harmony export (immutable) */ __webpack_exports__["c"] = Signal;
 
 class Block extends FlowControl {
     constructor(shape, numFlow, flowStrategy) {
@@ -6755,36 +6763,6 @@ class Block extends FlowControl {
             this.logicChildren.push(null);
         }
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.registerBlock(this, shape.highlightOffsets);
-        this.on('mousedown', () => {
-            if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.detachControl(this);
-            }
-        });
-        this.on('mouseup', () => {
-            if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
-                    this.destroy();
-                }
-                else {
-                    __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.removeHighlight();
-                    let attachInfo = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.getNearestAttachPoint(this, this.x, this.y);
-                    if (attachInfo) {
-                        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.attachControl(this, attachInfo);
-                    }
-                }
-            }
-        });
-    }
-    destroy() {
-        super.destroy();
-        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.deleteBlock(this);
-        for (let block of this.logicChildren) {
-            if (block) {
-                block.destroy();
-            }
-        }
     }
     updateShape() {
         this.shape.updateShape(this.logicChildren);
@@ -6818,8 +6796,20 @@ class Block extends FlowControl {
         }
         return bounds;
     }
+    destroy() {
+        super.destroy();
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.deleteBlock(this);
+        for (let block of this.logicChildren) {
+            if (block) {
+                block.destroy();
+            }
+        }
+    }
+    attachFilter({}, requiredType) {
+        return requiredType ? this.shape.returnType.fitsTo(requiredType) : true;
+    }
 }
-/* harmony export (immutable) */ __webpack_exports__["b"] = Block;
+/* harmony export (immutable) */ __webpack_exports__["a"] = Block;
 
 const OUTLINE_PADDING = 6;
 class Declaration extends FlowControl {
@@ -6829,27 +6819,6 @@ class Declaration extends FlowControl {
         this.addChild(shape);
         this.interactive = true;
         this.hitArea = shape.hitArea;
-        this.on('mousedown', () => {
-            if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.detachControl(this);
-            }
-        });
-        this.on('mouseup', () => {
-            if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
-                    this.destroy();
-                }
-                else {
-                    __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.removeHighlight();
-                    let attachInfo = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.getNearestAttachPoint(this, this.x, this.y);
-                    if (attachInfo) {
-                        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.attachControl(this, attachInfo);
-                    }
-                }
-            }
-        });
         this.outline = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChildAt(this.outline, 0);
     }
@@ -6864,6 +6833,9 @@ class Declaration extends FlowControl {
         bounds.pad(OUTLINE_PADDING, 0);
         return bounds;
     }
+    attachFilter(attachInfo) {
+        return attachInfo.attachType == __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["b" /* AttachType */].FLOW;
+    }
 }
 /* harmony export (immutable) */ __webpack_exports__["d"] = Declaration;
 
@@ -6876,7 +6848,7 @@ class FlowItemFactory {
         return new this.constructor(this.shape.clone());
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["c"] = FlowItemFactory;
+/* harmony export (immutable) */ __webpack_exports__["b"] = FlowItemFactory;
 
 
 
@@ -11550,37 +11522,71 @@ class FlowHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["e"] = typeInfoToColor;
-class TNumber {
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+/* harmony export (immutable) */ __webpack_exports__["f"] = typeInfoToColor;
+
+class TypeBase {
+    fitsTo(typeInfo) {
+        if (this.primitive) {
+            return typeInfo instanceof this.constructor;
+        }
+        return false;
+    }
+    ;
+}
+class TNumber extends TypeBase {
     constructor() {
+        super(...arguments);
         this.name = "integer";
         this.primitive = true;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["b"] = TNumber;
 
-class TString {
+class TString extends TypeBase {
     constructor() {
+        super(...arguments);
         this.name = "string";
         this.primitive = true;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["c"] = TString;
 
-class TBoolean {
+class TBoolean extends TypeBase {
     constructor() {
+        super(...arguments);
         this.name = "boolean";
         this.primitive = true;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["d"] = TBoolean;
+/* harmony export (immutable) */ __webpack_exports__["e"] = TBoolean;
 
-class TFunction {
+class TVoid extends TypeBase {
+    constructor() {
+        super(...arguments);
+        this.name = "void";
+        this.primitive = true;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["d"] = TVoid;
+
+class TFunction extends TypeBase {
     constructor(args, returns) {
+        super();
         this.args = args;
         this.returns = returns;
         this.name = "Function";
         this.primitive = false;
+    }
+    fitsTo(typeInfo) {
+        if (typeInfo instanceof TFunction) {
+            if (typeInfo.args.length == this.args.length) {
+                return __WEBPACK_IMPORTED_MODULE_0_lodash__["every"](typeInfo.args, (argType, i) => this.args[i].fitsTo(argType))
+                    && this.returns.fitsTo(typeInfo.returns);
+            }
+        }
+        return false;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = TFunction;
@@ -11593,7 +11599,9 @@ function typeInfoToColor(typeInfo) {
             return 0xE1BEE7;
         case "boolean":
             return 0xBCAAA4;
-        default:
+        case "void":
+            return 0xe8e8e8;
+        case "Function":
             return 0;
     }
 }
@@ -11629,6 +11637,7 @@ class AttachController {
                 attachIndex: i,
                 offsetX: offsets[i].offsetX,
                 offsetY: offsets[i].offsetY,
+                requiredType: offsets[i].requiredType,
             });
         }
     }
@@ -11698,52 +11707,50 @@ class AttachController {
             throw new TypeError("Unknown Attach Type");
         }
     }
-    getNearestAttachPoint(requestFrom, stageX, stageY) {
+    getNearestAttachPoint(stageX, stageY, filter) {
         const NEAR = 20;
         let result = null;
         let resultDist = 0;
-        if (requestFrom instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */]) {
-            this.logicPoints.forEach((arr, block) => {
-                for (let candidates of arr) {
-                    if (block == requestFrom) {
-                        continue;
-                    }
-                    let candX = block.x + candidates.offsetX;
-                    let candY = block.y + candidates.offsetY;
-                    let deltaX = Math.abs(stageX - candX);
-                    let deltaY = Math.abs(stageY - candY);
-                    if (deltaX <= NEAR && deltaY <= NEAR) {
-                        let distance = deltaX + deltaY;
-                        if (result == null || distance <= resultDist) {
-                            result = {
-                                attachType: AttachType.LOGIC,
-                                attachTo: block,
-                                attachIndex: candidates.attachIndex,
-                            };
-                            resultDist = distance;
-                        }
-                    }
-                }
-            });
-        }
-        this.flowPoints.forEach((arr, control) => {
-            for (let candidates of arr) {
-                if (control == requestFrom ||
-                    (candidates.attachIndex == 0 && !control.hasFlowParent())) {
-                    continue;
-                }
-                let candX = control.x + candidates.offsetX;
-                let candY = control.y + candidates.offsetY;
+        this.logicPoints.forEach((arr, block) => {
+            for (let candidate of arr) {
+                let candX = block.x + candidate.offsetX;
+                let candY = block.y + candidate.offsetY;
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
                 if (deltaX <= NEAR && deltaY <= NEAR) {
+                    let attachInfo = {
+                        attachType: AttachType.LOGIC,
+                        attachTo: block,
+                        attachIndex: candidate.attachIndex,
+                    };
                     let distance = deltaX + deltaY;
-                    if (result == null || distance <= resultDist) {
-                        result = {
-                            attachType: AttachType.FLOW,
-                            attachTo: control,
-                            attachIndex: candidates.attachIndex,
-                        };
+                    if ((result == null || distance <= resultDist)
+                        && (filter ? filter(attachInfo, candidate.requiredType) : true)) {
+                        result = attachInfo;
+                        resultDist = distance;
+                    }
+                }
+            }
+        });
+        this.flowPoints.forEach((arr, control) => {
+            for (let candidate of arr) {
+                if ((candidate.attachIndex == 0 && !control.hasFlowParent())) {
+                    continue;
+                }
+                let candX = control.x + candidate.offsetX;
+                let candY = control.y + candidate.offsetY;
+                let deltaX = Math.abs(stageX - candX);
+                let deltaY = Math.abs(stageY - candY);
+                if (deltaX <= NEAR && deltaY <= NEAR) {
+                    let attachInfo = {
+                        attachType: AttachType.FLOW,
+                        attachTo: control,
+                        attachIndex: candidate.attachIndex,
+                    };
+                    let distance = deltaX + deltaY;
+                    if ((result == null || distance <= resultDist)
+                        && (filter ? filter(attachInfo, candidate.requiredType) : true)) {
+                        result = attachInfo;
                         resultDist = distance;
                     }
                 }
@@ -11754,7 +11761,7 @@ class AttachController {
     attachControl(target, attachInfo) {
         let parent = attachInfo.attachTo;
         if (attachInfo.attachType == AttachType.LOGIC) {
-            if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */] && target instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */]) {
+            if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */] && target instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */]) {
                 parent.logicChildren[attachInfo.attachIndex] = target;
                 target.attachParent = attachInfo;
                 let arr = this.logicPoints.get(parent);
@@ -11795,7 +11802,7 @@ class AttachController {
         if (attachInfo) {
             let parent = attachInfo.attachTo;
             if (attachInfo.attachType == AttachType.LOGIC) {
-                if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["b" /* Block */]) {
+                if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */]) {
                     parent.logicChildren[attachInfo.attachIndex] = null;
                     target.attachParent = null;
                     parent.updateAndGetBounds();
@@ -11807,6 +11814,7 @@ class AttachController {
                             attachIndex: attachInfo.attachIndex,
                             offsetX: offset.offsetX,
                             offsetY: offset.offsetY,
+                            requiredType: offset.requiredType,
                         });
                     }
                 }
@@ -36316,7 +36324,8 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return intBlockFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stringBlockFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return numberToStringBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return binaryBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return printStingBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return binaryBlockFactory; });
 
 
 
@@ -36324,23 +36333,24 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 
 
 
-class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* Block */] {
+class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
     constructor(shape) {
         super(shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["c" /* noStrategy */]);
     }
 }
-class BranchBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* Block */] {
+class BranchBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
     constructor(shape) {
         super(shape, 2, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
     }
 }
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Signal */], new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('onLoad'));
-let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](BranchBlock, new __WEBPACK_IMPORTED_MODULE_3__shape_IfBlockShape__["a" /* IfBlockShape */]());
-let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
-let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "Number"));
-let stringBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "String"));
-let numberToStringBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "ToString(num)"));
-let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["c" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TBoolean */]()), "(num1)<(num2)"));
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('onLoad'));
+let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](BranchBlock, new __WEBPACK_IMPORTED_MODULE_3__shape_IfBlockShape__["a" /* IfBlockShape */]());
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "input"));
+let stringBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "input"));
+let numberToStringBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "ToString(num)"));
+let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TVoid */]()), "print(string)"));
+let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TBoolean */]()), "(num1)<(num2)"));
 
 
 /***/ }),
@@ -56487,6 +56497,9 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
     clone() {
         return new FunctionShape(this.typeInfo, this.description);
     }
+    get returnType() {
+        return this.typeInfo.returns;
+    }
     get highlightOffsets() {
         return this._highlightOffsets;
     }
@@ -56499,7 +56512,6 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             return __WEBPACK_IMPORTED_MODULE_1_lodash__(labels).reduce((nowX, label, i) => {
                 let width = 0;
                 if (i % 2 == 0) {
-                    console.log(label.text, label.text.length);
                     width = label.text == " " ? PADDING : label.width + PADDING * 2;
                 }
                 else {
@@ -56523,12 +56535,12 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             }
         });
         outlinePath.push(widthSum * .5, top, widthSum * .5, bottom, __WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, bottom, 0, 0, -__WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, bottom, -widthSum * .5, bottom, -widthSum * .5, top);
-        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["e" /* typeInfoToColor */])(this.typeInfo.returns));
+        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["f" /* typeInfoToColor */])(this.typeInfo.returns));
         this.graphics.drawPolygon(outlinePath);
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"](outlinePath);
         forEachLabel(-widthSum * .5, (nowX, width, {}, i) => {
             if (i % 2 == 1) {
-                this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["e" /* typeInfoToColor */])(this.typeInfo.args[i >> 1]));
+                this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["f" /* typeInfoToColor */])(this.typeInfo.args[i >> 1]));
                 this.graphics.drawPolygon([
                     nowX, top,
                     nowX + width * .5 - __WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
@@ -56542,6 +56554,7 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
                 this._highlightOffsets.push({
                     offsetX: nowX + width * .5,
                     offsetY: top + __WEBPACK_IMPORTED_MODULE_4__Highlight__["c" /* TRIANGLE_HEIGHT */],
+                    requiredType: this.typeInfo.args[i >> 1],
                 });
             }
         });
@@ -56580,7 +56593,8 @@ const top = -2 * RADIUS;
 class IfBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockShape */] {
     constructor() {
         super();
-        this.highlightOffsets = [{ offsetX: 0, offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */] }];
+        this.returnType = new __WEBPACK_IMPORTED_MODULE_4__type_type__["d" /* TVoid */]();
+        this.highlightOffsets = [{ offsetX: 0, offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */], requiredType: new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]() }];
         this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChild(this.graphics);
         this.hitArea = new (__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"].bind.apply(__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"], __WEBPACK_IMPORTED_MODULE_1_lodash__["concat"]([
@@ -56593,7 +56607,7 @@ class IfBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockShap
             .flatMap((num) => [RADIUS * Math.sin(num), -RADIUS - RADIUS * Math.cos(num)])
             .value(), [-__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top])));
         this.graphics.lineStyle(1, 0x000000);
-        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* typeInfoToColor */])(new __WEBPACK_IMPORTED_MODULE_4__type_type__["d" /* TBoolean */]()));
+        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__type_type__["f" /* typeInfoToColor */])(new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]()));
         this.graphics.drawShape(this.hitArea);
         this.graphics.endFill();
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])('if');

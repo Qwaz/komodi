@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import {Block, FlowControl} from "../ui/flow";
 import {Global} from "../entry";
+import {TypeInfo} from "../type/type";
 
 export enum AttachType {
     FLOW,
@@ -19,7 +20,11 @@ export interface Offset {
     offsetY: number;
 }
 
-export interface AttachCandidates extends Offset {
+export interface TypedOffset extends Offset {
+    requiredType?: TypeInfo;
+}
+
+export interface AttachCandidates extends TypedOffset {
     attachType: AttachType;
     attachIndex: number;
 }
@@ -29,7 +34,7 @@ export class AttachController {
     private flowPoints: Map<FlowControl, AttachCandidates[]> = new Map<FlowControl, AttachCandidates[]>();
     private currentHighlight: AttachInfo | null = null;
 
-    registerBlock(block: Block, offsets: Offset[]) {
+    registerBlock(block: Block, offsets: TypedOffset[]) {
         this.logicPoints.set(block, []);
         for (let i = 0; i < offsets.length; i++) {
             let candidates = this.logicPoints.get(block);
@@ -38,6 +43,7 @@ export class AttachController {
                 attachIndex: i,
                 offsetX: offsets[i].offsetX,
                 offsetY: offsets[i].offsetY,
+                requiredType: offsets[i].requiredType,
             });
         }
     }
@@ -116,61 +122,63 @@ export class AttachController {
         }
     }
 
-    getNearestAttachPoint(requestFrom: FlowControl, stageX: number, stageY: number): AttachInfo | null {
+    getNearestAttachPoint(
+        stageX: number, stageY: number,
+        filter?: (attachInfo: AttachInfo, requiredType?: TypeInfo) => boolean
+    ): AttachInfo | null {
         const NEAR = 20;
 
         let result: AttachInfo | null = null;
         let resultDist = 0;
 
-        if (requestFrom instanceof Block) {
-            this.logicPoints.forEach((arr, block) => {
-                for (let candidates of arr) {
-                    if (block == requestFrom) {
-                        continue;
-                    }
-
-                    let candX = block.x + candidates.offsetX;
-                    let candY = block.y + candidates.offsetY;
-
-                    let deltaX = Math.abs(stageX - candX);
-                    let deltaY = Math.abs(stageY - candY);
-
-                    if (deltaX <= NEAR && deltaY <= NEAR) {
-                        let distance = deltaX + deltaY;
-                        if (result == null || distance <= resultDist) {
-                            result = {
-                                attachType: AttachType.LOGIC,
-                                attachTo: block,
-                                attachIndex: candidates.attachIndex,
-                            };
-                            resultDist = distance;
-                        }
-                    }
-                }
-            });
-        }
-
-        this.flowPoints.forEach((arr, control) => {
-            for (let candidates of arr) {
-                if (control == requestFrom ||
-                    (candidates.attachIndex == 0 && !control.hasFlowParent())) {
-                    continue;
-                }
-
-                let candX = control.x + candidates.offsetX;
-                let candY = control.y + candidates.offsetY;
+        this.logicPoints.forEach((arr, block) => {
+            for (let candidate of arr) {
+                let candX = block.x + candidate.offsetX;
+                let candY = block.y + candidate.offsetY;
 
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
 
                 if (deltaX <= NEAR && deltaY <= NEAR) {
+                    let attachInfo = {
+                        attachType: AttachType.LOGIC,
+                        attachTo: block,
+                        attachIndex: candidate.attachIndex,
+                    };
+
                     let distance = deltaX + deltaY;
-                    if (result == null || distance <= resultDist) {
-                        result = {
-                            attachType: AttachType.FLOW,
-                            attachTo: control,
-                            attachIndex: candidates.attachIndex,
-                        };
+                    if ((result == null || distance <= resultDist)
+                        && (filter ? filter(attachInfo, candidate.requiredType) : true)) {
+                        result = attachInfo;
+                        resultDist = distance;
+                    }
+                }
+            }
+        });
+
+        this.flowPoints.forEach((arr, control) => {
+            for (let candidate of arr) {
+                if ((candidate.attachIndex == 0 && !control.hasFlowParent())) {
+                    continue;
+                }
+
+                let candX = control.x + candidate.offsetX;
+                let candY = control.y + candidate.offsetY;
+
+                let deltaX = Math.abs(stageX - candX);
+                let deltaY = Math.abs(stageY - candY);
+
+                if (deltaX <= NEAR && deltaY <= NEAR) {
+                    let attachInfo = {
+                        attachType: AttachType.FLOW,
+                        attachTo: control,
+                        attachIndex: candidate.attachIndex,
+                    };
+
+                    let distance = deltaX + deltaY;
+                    if ((result == null || distance <= resultDist)
+                        && (filter ? filter(attachInfo, candidate.requiredType) : true)) {
+                        result = attachInfo;
                         resultDist = distance;
                     }
                 }
@@ -243,6 +251,7 @@ export class AttachController {
                             attachIndex: attachInfo.attachIndex,
                             offsetX: offset.offsetX,
                             offsetY: offset.offsetY,
+                            requiredType: offset.requiredType,
                         });
                     }
                 } else {

@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {BlockShape, createLabel} from "./shape";
-import {Offset} from "../controllers/AttachController";
+import {TypedOffset} from "../controllers/AttachController";
 import {Block} from "../ui/flow";
-import {TFunction, typeInfoToColor} from "../type/type";
+import {TFunction, TypeInfo, typeInfoToColor} from "../type/type";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
 import {centerChild} from "../utils";
 
@@ -16,7 +16,7 @@ const bottom = -TRIANGLE_HEIGHT;
 
 export class FunctionShape extends BlockShape {
     private graphics: PIXI.Graphics;
-    private _highlightOffsets: Offset[];
+    private _highlightOffsets: TypedOffset[];
 
     private argLabels: PIXI.Text[] = [];
     private textLabels: PIXI.Text[] = [];
@@ -73,7 +73,11 @@ export class FunctionShape extends BlockShape {
         this.updateShape([]);
     }
 
-    get highlightOffsets(): Offset[] {
+    get returnType(): TypeInfo {
+        return this.typeInfo.returns;
+    }
+
+    get highlightOffsets(): TypedOffset[] {
         return this._highlightOffsets;
     }
 
@@ -93,7 +97,7 @@ export class FunctionShape extends BlockShape {
                 let width = 0;
                 if (i % 2 == 0) {
                     // text label
-                    console.log(label.text, label.text.length);
+                    // TODO: PIXI.Text seems to convert empty string to a space
                     width = label.text == " " ? PADDING : label.width + PADDING*2;
                 } else {
                     // argument label
@@ -155,6 +159,7 @@ export class FunctionShape extends BlockShape {
                 this._highlightOffsets.push({
                     offsetX: nowX+width*.5,
                     offsetY: top+TRIANGLE_HEIGHT,
+                    requiredType: this.typeInfo.args[i >> 1],
                 });
             }
         });

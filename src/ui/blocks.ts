@@ -5,7 +5,7 @@ import {BlockShape} from "../shape/shape";
 import {IfBlockShape} from "../shape/IfBlockShape";
 import {DeclarationShape} from "../shape/DeclarationShape";
 import {FunctionShape} from "../shape/FunctionShape";
-import {TBoolean, TFunction, TNumber, TString} from "../type/type";
+import {TBoolean, TFunction, TNumber, TString, TVoid} from "../type/type";
 
 class SimpleBlock extends Block {
     constructor(shape: BlockShape) {
@@ -28,15 +28,19 @@ export let declarationFactory = new FlowItemFactory(Declaration, new Declaration
 // TODO: parse type info and labels at once by jison
 export let intBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([], new TNumber()),
-    "Number"
+    "input"
 ));
 export let stringBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([], new TString()),
-    "String"
+    "input"
 ));
 export let numberToStringBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([new TNumber()], new TString()),
     "ToString(num)"
+));
+export let printStingBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
+    new TFunction([new TString()], new TVoid()),
+    "print(string)"
 ));
 export let binaryBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([new TNumber(), new TNumber()], new TBoolean()),

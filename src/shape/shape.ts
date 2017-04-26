@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
-import {Offset} from "../controllers/AttachController";
+import {TypedOffset} from "../controllers/AttachController";
 import {Block} from "../ui/flow";
+import {TypeInfo} from "../type/type";
 
 export type HitArea = PIXI.Rectangle | PIXI.Circle | PIXI.Ellipse | PIXI.Polygon | PIXI.RoundedRectangle;
 
@@ -9,7 +10,8 @@ export abstract class Shape extends PIXI.Container {
 }
 
 export abstract class BlockShape extends Shape {
-    abstract get highlightOffsets(): Offset[];
+    abstract get returnType(): TypeInfo;
+    abstract get highlightOffsets(): TypedOffset[];
     abstract updateShape(logicChildren: Array<Block | null>): void;
 }
 

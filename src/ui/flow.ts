@@ -5,6 +5,7 @@ import {hitTestRectangle, moveToTop} from "../utils";
 import {AttachInfo, AttachType} from "../controllers/AttachController";
 import {FlowStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {FlowHighlight, LogicHighlight} from "../shape/Highlight";
+import {TypeInfo} from "../type/type";
 
 export abstract class FlowControl extends PIXI.Container {
     private _flowHighlights: PIXI.Graphics[];
@@ -32,6 +33,34 @@ export abstract class FlowControl extends PIXI.Container {
         // event handling
         this.on('mouseover', () => this.alpha = 0.85);
         this.on('mouseout', () => this.alpha = 1);
+
+        this.on('mousedown', () => {
+            if (!Global.dragging) {
+                Global.setDragging(this);
+                Global.attachController.detachControl(this);
+            }
+        });
+
+        this.on('mouseup', () => {
+            if (Global.dragging == this) {
+                Global.setDragging(null);
+
+                if (hitTestRectangle(Global.menu, this)) {
+                    this.destroy();
+                } else {
+                    Global.attachController.removeHighlight();
+
+                    let attachInfo = Global.attachController.getNearestAttachPoint(
+                        this.x, this.y,
+                        this.attachFilter.bind(this)
+                    );
+
+                    if (attachInfo) {
+                        Global.attachController.attachControl(this, attachInfo);
+                    }
+                }
+            }
+        });
     }
 
     get flowNext(): FlowControl | null {
@@ -100,6 +129,10 @@ export abstract class FlowControl extends PIXI.Container {
             }
         }
     }
+
+    attachFilter({}: AttachInfo, {}: TypeInfo): boolean {
+        return false;
+    }
 }
 
 export class Signal extends FlowControl {
@@ -109,22 +142,6 @@ export class Signal extends FlowControl {
         // UI setup
         this.addChild(shape);
         this.interactive = true;
-
-        this.on('mousedown', () => {
-            if (!Global.dragging) {
-                Global.setDragging(this);
-            }
-        });
-
-        this.on('mouseup', () => {
-            if (Global.dragging == this) {
-                Global.setDragging(null);
-
-                if (hitTestRectangle(Global.menu, this)) {
-                    this.destroy();
-                }
-            }
-        });
     }
 }
 
@@ -158,47 +175,6 @@ export abstract class Block extends FlowControl {
         }
 
         Global.attachController.registerBlock(this, shape.highlightOffsets);
-
-        this.on('mousedown', () => {
-            if (!Global.dragging) {
-                Global.setDragging(this);
-                Global.attachController.detachControl(this);
-            }
-        });
-
-        this.on('mouseup', () => {
-            if (Global.dragging == this) {
-                Global.setDragging(null);
-
-                if (hitTestRectangle(Global.menu, this)) {
-                    this.destroy();
-                } else {
-                    Global.attachController.removeHighlight();
-
-                    let attachInfo = Global.attachController.getNearestAttachPoint(
-                        this,
-                        this.x,
-                        this.y,
-                    );
-
-                    if (attachInfo) {
-                        Global.attachController.attachControl(this, attachInfo);
-                    }
-                }
-            }
-        });
-    }
-
-    destroy() {
-        super.destroy();
-
-        Global.attachController.deleteBlock(this);
-
-        for (let block of this.logicChildren) {
-            if (block) {
-                block.destroy();
-            }
-        }
     }
 
     private updateShape() {
@@ -237,6 +213,22 @@ export abstract class Block extends FlowControl {
         }
         return bounds;
     }
+
+    destroy() {
+        super.destroy();
+
+        Global.attachController.deleteBlock(this);
+
+        for (let block of this.logicChildren) {
+            if (block) {
+                block.destroy();
+            }
+        }
+    }
+
+    attachFilter({}: AttachInfo, requiredType: TypeInfo): boolean {
+        return requiredType ? this.shape.returnType.fitsTo(requiredType) : true;
+    }
 }
 
 const OUTLINE_PADDING = 6;
@@ -253,35 +245,6 @@ export class Declaration extends FlowControl {
         this.addChild(shape);
         this.interactive = true;
         this.hitArea = shape.hitArea;
-
-        this.on('mousedown', () => {
-            if (!Global.dragging) {
-                Global.setDragging(this);
-                Global.attachController.detachControl(this);
-            }
-        });
-
-        this.on('mouseup', () => {
-            if (Global.dragging == this) {
-                Global.setDragging(null);
-
-                if (hitTestRectangle(Global.menu, this)) {
-                    this.destroy();
-                } else {
-                    Global.attachController.removeHighlight();
-
-                    let attachInfo = Global.attachController.getNearestAttachPoint(
-                        this,
-                        this.x,
-                        this.y,
-                    );
-
-                    if (attachInfo) {
-                        Global.attachController.attachControl(this, attachInfo);
-                    }
-                }
-            }
-        });
 
         this.outline = new PIXI.Graphics();
         this.addChildAt(this.outline, 0);
@@ -303,6 +266,10 @@ export class Declaration extends FlowControl {
         bounds.pad(OUTLINE_PADDING, 0);
 
         return bounds;
+    }
+
+    attachFilter(attachInfo: AttachInfo): boolean {
+        return attachInfo.attachType == AttachType.FLOW;
     }
 }
 

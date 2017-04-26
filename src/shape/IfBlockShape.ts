@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {BlockShape, createLabel} from "./shape";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
-import {TBoolean, typeInfoToColor} from "../type/type";
+import {TBoolean, TVoid, typeInfoToColor} from "../type/type";
 import {centerChild} from "../utils";
 
 const RADIUS = 20;
@@ -14,7 +14,8 @@ const top = -2*RADIUS;
 export class IfBlockShape extends BlockShape {
     private graphics: PIXI.Graphics;
 
-    readonly highlightOffsets = [{offsetX: 0, offsetY: top+TRIANGLE_HEIGHT}];
+    readonly returnType = new TVoid();
+    readonly highlightOffsets = [{offsetX: 0, offsetY: top+TRIANGLE_HEIGHT, requiredType: new TBoolean()}];
 
     clone() {
         return new IfBlockShape();
