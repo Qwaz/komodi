@@ -51,7 +51,7 @@ export class Global {
         // render initialization
         Global.renderer = PIXI.autoDetectRenderer(
             1, 1,
-            {antialias: false, transparent: false, resolution: 1}
+            {antialias: false, transparent: false, resolution: 2}
         );
 
         Global.renderer.backgroundColor = 0xECEFF1;

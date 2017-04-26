@@ -7,11 +7,12 @@ export class Generator<T extends FlowControl, S extends Shape> extends PIXI.Cont
     constructor(target: FlowItemFactory<T, S>) {
         super();
 
-        this.addChild(target.shape.graphics);
+        let shape = target.shape.clone();
+        this.addChild(shape);
 
         this.interactive = true;
         this.buttonMode = true;
-        this.hitArea = target.shape.hitArea;
+        this.hitArea = shape.hitArea;
 
         this.on('mouseover', () => this.alpha = 0.85);
         this.on('mouseout', () => this.alpha = 1);

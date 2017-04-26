@@ -19,21 +19,26 @@ class BranchBlock extends Block {
     }
 }
 
-export let startSignalFactory = new FlowItemFactory(Signal, new SignalShape());
+export let startSignalFactory = new FlowItemFactory(Signal, new SignalShape('onLoad'));
 
 export let ifBlockFactory = new FlowItemFactory(BranchBlock, new IfBlockShape());
 
 export let declarationFactory = new FlowItemFactory(Declaration, new DeclarationShape(0xC8E6C9));
 
+// TODO: parse type info and labels at once by jison
 export let intBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
-    new TFunction([], new TNumber())
+    new TFunction([], new TNumber()),
+    "Number"
 ));
 export let stringBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
-    new TFunction([], new TString())
+    new TFunction([], new TString()),
+    "String"
 ));
 export let numberToStringBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
-    new TFunction([new TNumber()], new TString())
+    new TFunction([new TNumber()], new TString()),
+    "ToString(num)"
 ));
 export let binaryBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
-    new TFunction([new TNumber(), new TNumber()], new TBoolean())
+    new TFunction([new TNumber(), new TNumber()], new TBoolean()),
+    "(num1)<(num2)"
 ));

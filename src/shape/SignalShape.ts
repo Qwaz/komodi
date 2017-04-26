@@ -1,11 +1,12 @@
 import * as PIXI from "pixi.js";
-import {HitArea, Shape} from "./shape";
+import {createLabel, Shape} from "./shape";
+import {centerChild} from "../utils";
 
-const BEZIER_X = 6;
+const BEZIER_X = 5;
 const BEZIER_Y = 18;
 
-const WIDTH = 100;
-const HEIGHT = 50;
+const WIDTH = 80;
+const HEIGHT = 40;
 
 const left = -WIDTH*.5;
 const top = -HEIGHT;
@@ -13,16 +14,17 @@ const right = -left;
 const bottom = top+HEIGHT;
 
 export class SignalShape extends Shape {
-    readonly graphics: PIXI.Graphics;
+    private graphics: PIXI.Graphics;
 
     clone() {
-        return new SignalShape();
+        return new SignalShape(this.message);
     }
 
-    constructor() {
+    constructor(private message: string) {
         super();
 
         this.graphics = new PIXI.Graphics();
+        this.addChild(this.graphics);
 
         this.graphics.lineStyle(1, 0x000000, 1);
         this.graphics.beginFill(0xFFFFFF);
@@ -32,7 +34,12 @@ export class SignalShape extends Shape {
         this.graphics.lineTo(left, bottom);
         this.graphics.lineTo(left, top);
         this.graphics.endFill();
+
+        this.hitArea = new PIXI.Rectangle(left, top, WIDTH, HEIGHT);
+
+        let text = createLabel(message);
+        this.addChild(text);
+        centerChild(text, 0, -HEIGHT*.5);
     }
 
-    readonly hitArea: HitArea = new PIXI.Rectangle(left, top, WIDTH, HEIGHT);
 }

@@ -103,13 +103,12 @@ export abstract class FlowControl extends PIXI.Container {
 }
 
 export class Signal extends FlowControl {
-    constructor(private _shape: Shape) {
+    constructor(readonly shape: Shape) {
         super(1, splitJoinStrategy);
 
         // UI setup
-        this.addChild(_shape.graphics.clone());
+        this.addChild(shape);
         this.interactive = true;
-        this.hitArea = _shape.hitArea;
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
@@ -127,10 +126,6 @@ export class Signal extends FlowControl {
             }
         });
     }
-
-    get shape(): Shape {
-        return this._shape;
-    }
 }
 
 export abstract class Block extends FlowControl {
@@ -138,21 +133,20 @@ export abstract class Block extends FlowControl {
     logicHighlights: PIXI.Graphics[];
 
     constructor(
-        private _shape: BlockShape,
+        readonly shape: BlockShape,
         numFlow: number,
         flowStrategy: FlowStrategy,
     ) {
         super(numFlow, flowStrategy);
 
         // UI setup
-        this.addChild(_shape.graphics);
+        this.addChild(shape);
         this.interactive = true;
-        this.hitArea = _shape.hitArea;
 
         // attach management
         this.logicHighlights = [];
 
-        for (let offset of _shape.highlightOffsets) {
+        for (let offset of shape.highlightOffsets) {
             let highlight = new LogicHighlight();
             this.addChild(highlight);
             highlight.x = offset.offsetX;
@@ -163,7 +157,7 @@ export abstract class Block extends FlowControl {
             this.logicChildren.push(null);
         }
 
-        Global.attachController.registerBlock(this, _shape.highlightOffsets);
+        Global.attachController.registerBlock(this, shape.highlightOffsets);
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
@@ -207,17 +201,13 @@ export abstract class Block extends FlowControl {
         }
     }
 
-    get shape(): BlockShape {
-        return this._shape;
-    }
-
     private updateShape() {
-        this._shape.updateShape(this.logicChildren);
-        this.hitArea = this._shape.hitArea;
+        this.shape.updateShape(this.logicChildren);
+        this.hitArea = this.shape.hitArea;
 
         Global.attachController.updateLogicOffset(this);
-        for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
-            let offset = this._shape.highlightOffsets[i];
+        for (let i = 0; i < this.shape.highlightOffsets.length; i++) {
+            let offset = this.shape.highlightOffsets[i];
             this.logicHighlights[i].x = offset.offsetX;
             this.logicHighlights[i].y = offset.offsetY;
         }
@@ -227,8 +217,8 @@ export abstract class Block extends FlowControl {
         super.updateControl();
         this.updateShape();
 
-        for (let i = 0; i < this._shape.highlightOffsets.length; i++) {
-            let offset = this._shape.highlightOffsets[i];
+        for (let i = 0; i < this.shape.highlightOffsets.length; i++) {
+            let offset = this.shape.highlightOffsets[i];
             let child = this.logicChildren[i];
             if (child) {
                 child.x = this.x + offset.offsetX;
@@ -255,14 +245,14 @@ export class Declaration extends FlowControl {
     private outline: PIXI.Graphics;
 
     constructor(
-        private _shape: Shape
+        readonly shape: Shape
     ) {
         super(1, splitJoinStrategy);
 
         // UI setup
-        this.addChild(_shape.graphics.clone());
+        this.addChild(shape);
         this.interactive = true;
-        this.hitArea = _shape.hitArea;
+        this.hitArea = shape.hitArea;
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
@@ -295,10 +285,6 @@ export class Declaration extends FlowControl {
 
         this.outline = new PIXI.Graphics();
         this.addChildAt(this.outline, 0);
-    }
-
-    get shape(): Shape {
-        return this._shape;
     }
 
     protected updateControl() {

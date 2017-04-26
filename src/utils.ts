@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import DisplayObject = PIXI.DisplayObject;
 
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
@@ -23,4 +24,10 @@ export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObj
 
 export function moveToTop(target: PIXI.DisplayObject) {
     target.parent.setChildIndex(target, target.parent.children.length-1);
+}
+
+export function centerChild(target: DisplayObject, x: number, y: number) {
+    let localBounds = target.getLocalBounds();
+    target.x = x - localBounds.width*.5;
+    target.y = y - localBounds.height*.5;
 }

@@ -1,39 +1,76 @@
 import * as PIXI from "pixi.js";
-import {BlockShape, HitArea} from "./shape";
+import * as _ from "lodash";
+import {BlockShape, createLabel} from "./shape";
 import {Offset} from "../controllers/AttachController";
 import {Block} from "../ui/flow";
 import {TFunction, typeInfoToColor} from "../type/type";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
+import {centerChild} from "../utils";
 
-const DEFAULT_ARG_WIDTH = 35;
-const BETWEEN_MARGIN = 30;
-const PADDING = 4;
-const EMPTY_BLOCK_WIDTH = 35;
-const BLOCK_HEIGHT = 30;
+const MINIMUM_ARG_WIDTH = 35;
+const PADDING = 5;
+const BLOCK_HEIGHT = 33;
 
 const top = -BLOCK_HEIGHT-TRIANGLE_HEIGHT;
 const bottom = -TRIANGLE_HEIGHT;
 
 export class FunctionShape extends BlockShape {
-    readonly graphics: PIXI.Graphics;
-    private _hitArea: PIXI.Polygon;
+    private graphics: PIXI.Graphics;
     private _highlightOffsets: Offset[];
 
+    private argLabels: PIXI.Text[] = [];
+    private textLabels: PIXI.Text[] = [];
+
     clone() {
-        return new FunctionShape(this.typeInfo);
+        return new FunctionShape(this.typeInfo, this.description);
     }
 
     // TODO: Apply lexer to type info
-    constructor(private typeInfo: TFunction) {
+    constructor(
+        private typeInfo: TFunction,
+        private description: string,
+    ) {
         super();
 
         this.graphics = new PIXI.Graphics();
+        this.addChild(this.graphics);
+
+        let getAllIndex = function (text: string, searchString: string): number[] {
+            let ret = [];
+
+            let position = 0;
+            while (true) {
+                let cand = text.indexOf(searchString, position);
+                if (cand == -1) break;
+                else {
+                    ret.push(cand);
+                    position = cand+1;
+                }
+            }
+
+            return ret;
+        };
+
+        let openIndex = getAllIndex(description, '(');
+        let closeIndex = getAllIndex(description, ')');
+
+        if (openIndex.length != closeIndex.length) {
+            throw Error("Number of parenthesis does not match");
+        }
+
+        this.argLabels = _.zip(openIndex, closeIndex)
+            .map(([start, end]) => createLabel(description.slice(start+1, end)));
+
+        this.textLabels = _.concat(
+            [createLabel(description.slice(0, openIndex[0]))],
+            _.zip(_.tail(openIndex), closeIndex)
+                .map(([start, end]) => createLabel(description.slice(end+1, start)))
+        );
+
+        _.forEach(this.argLabels, (label) => this.addChild(label));
+        _.forEach(this.textLabels, (label) => this.addChild(label));
 
         this.updateShape([]);
-    }
-
-    get hitArea(): HitArea {
-        return this._hitArea;
     }
 
     get highlightOffsets(): Offset[] {
@@ -46,89 +83,85 @@ export class FunctionShape extends BlockShape {
         this.graphics.clear();
         this.graphics.lineStyle(1, 0x000000);
 
-        if (this.typeInfo.args.length > 0) {
-            let widthSum = 0;
-            let argWidth = [];
-            for (let i = 0; i < this.typeInfo.args.length; i++) {
-                let child = logicChildren[i];
-                if (child) {
-                    let size = child.updateAndGetBounds();
-                    argWidth.push(size.width);
+        let labels = _.dropRight(_.flatten(_.zip(this.textLabels, this.argLabels)));
+
+        let forEachLabel = function (
+            startVal: number,
+            func?: (nowX: number, width: number, label: PIXI.Text, i: number) => void
+        ) {
+            return _(labels).reduce((nowX, label, i) => {
+                let width = 0;
+                if (i % 2 == 0) {
+                    // text label
+                    console.log(label.text, label.text.length);
+                    width = label.text == " " ? PADDING : label.width + PADDING*2;
                 } else {
-                    argWidth.push(DEFAULT_ARG_WIDTH);
+                    // argument label
+                    let child = logicChildren[i >> 1];
+                    let childWidth = child ? child.updateAndGetBounds().width : MINIMUM_ARG_WIDTH;
+                    width = Math.max(label.width, childWidth) + PADDING*2;
                 }
-                widthSum += argWidth[i];
-            }
 
-            // TODO: Replace uniform margin to label size calculation
-            widthSum += (argWidth.length-1) * BETWEEN_MARGIN + 2*PADDING;
+                if (func) {
+                    func(nowX, width, label, i);
+                }
 
-            let outlinePath = [
-                -widthSum * .5, top,
-            ];
-            let currentX = -widthSum * .5 + PADDING;
-            for (let i = 0; i < this.typeInfo.args.length; i++) {
-                let width = argWidth[i];
+                return nowX+width;
+            }, startVal);
+        };
+
+        let widthSum = forEachLabel(0);
+
+        // draw outline
+        let outlinePath = [
+            -widthSum*.5, top,
+        ];
+        forEachLabel(-widthSum*.5, (nowX, width, {}, i) => {
+            if (i % 2 == 1) {
                 outlinePath.push(
-                    currentX, top,
-                    currentX+width*.5-TRIANGLE_WIDTH*.5, top,
-                    currentX+width*.5, top+TRIANGLE_HEIGHT,
-                    currentX+width*.5+TRIANGLE_WIDTH*.5, top,
-                    currentX+width, top,
-                );
-                currentX += width + BETWEEN_MARGIN;
+                    nowX+width*.5 - TRIANGLE_WIDTH*.5, top,
+                    nowX+width*.5, top+TRIANGLE_HEIGHT,
+                    nowX+width*.5 + TRIANGLE_WIDTH*.5, top,
+                )
             }
-            outlinePath.push(
-                widthSum * .5, top,
-            );
+        });
+        outlinePath.push(
+            widthSum*.5, top,
+            widthSum*.5, bottom,
+            TRIANGLE_WIDTH*.5, bottom,
+            0, 0,
+            -TRIANGLE_WIDTH*.5, bottom,
+            -widthSum*.5, bottom,
+            -widthSum*.5, top,
+        );
+        this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));
+        this.graphics.drawPolygon(outlinePath);
+        this.hitArea = new PIXI.Polygon(outlinePath);
 
-            outlinePath.push(
-                widthSum*.5, bottom,
-                TRIANGLE_WIDTH*.5, bottom,
-                0, 0,
-                -TRIANGLE_WIDTH*.5, bottom,
-                -widthSum*.5, bottom,
-                -widthSum*.5, top,
-            );
-            this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));
-            this.graphics.drawPolygon(outlinePath);
-
-            this._hitArea = new PIXI.Polygon(outlinePath);
-
-            currentX = -widthSum * .5 + PADDING;
-            for (let i = 0; i < this.typeInfo.args.length; i++) {
-                let width = argWidth[i];
-                this.graphics.beginFill(typeInfoToColor(this.typeInfo.args[i]));
+        // draw argument
+        forEachLabel(-widthSum*.5, (nowX, width, {}, i) => {
+            if (i % 2 == 1) {
+                this.graphics.beginFill(typeInfoToColor(this.typeInfo.args[i >> 1]));
                 this.graphics.drawPolygon([
-                    currentX, top,
-                    currentX+width*.5-TRIANGLE_WIDTH*.5, top,
-                    currentX+width*.5, top+TRIANGLE_HEIGHT,
-                    currentX+width*.5+TRIANGLE_WIDTH*.5, top,
-                    currentX+width, top,
-                    currentX+width, bottom-PADDING,
-                    currentX, bottom-PADDING,
-                    currentX, top,
+                    nowX, top,
+                    nowX+width*.5-TRIANGLE_WIDTH*.5, top,
+                    nowX+width*.5, top+TRIANGLE_HEIGHT,
+                    nowX+width*.5+TRIANGLE_WIDTH*.5, top,
+                    nowX+width, top,
+                    nowX+width, bottom-PADDING,
+                    nowX, bottom-PADDING,
+                    nowX, top,
                 ]);
                 this._highlightOffsets.push({
-                    offsetX: currentX+width*.5,
+                    offsetX: nowX+width*.5,
                     offsetY: top+TRIANGLE_HEIGHT,
                 });
-                currentX += width + BETWEEN_MARGIN;
             }
-        } else {
-            this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));
-            let path = [
-                -EMPTY_BLOCK_WIDTH*.5, top,
-                EMPTY_BLOCK_WIDTH*.5, top,
-                EMPTY_BLOCK_WIDTH*.5, bottom,
-                TRIANGLE_WIDTH*.5, bottom,
-                0, 0,
-                -TRIANGLE_WIDTH*.5, bottom,
-                -EMPTY_BLOCK_WIDTH*.5, bottom,
-                -EMPTY_BLOCK_WIDTH*.5, top,
-            ];
-            this.graphics.drawPolygon(path);
-            this._hitArea = new PIXI.Polygon(path);
-        }
+        });
+
+        // position labels
+        forEachLabel(-widthSum*.5, (nowX, width, label) => {
+           centerChild(label, nowX+width*.5, bottom-BLOCK_HEIGHT*.5);
+        });
     }
 }
