@@ -28,15 +28,23 @@ export let declarationFactory = new FlowItemFactory(Declaration, new Declaration
 // TODO: parse type info and labels at once by jison
 export let intBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([], new TNumber()),
-    "input"
+    "User Input"
 ));
-export let stringBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
+export let tenBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
+    new TFunction([], new TNumber()),
+    "10"
+));
+export let multiplyBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
+    new TFunction([new TNumber()], new TNumber()),
+    "(num) x2"
+));
+export let yesBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([], new TString()),
-    "input"
+    "\"yes\""
 ));
-export let numberToStringBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
-    new TFunction([new TNumber()], new TString()),
-    "ToString(num)"
+export let noBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
+    new TFunction([], new TString()),
+    "\"no\""
 ));
 export let printStingBlockFactory = new FlowItemFactory(SimpleBlock, new FunctionShape(
     new TFunction([new TString()], new TVoid()),

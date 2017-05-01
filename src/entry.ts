@@ -5,10 +5,12 @@ import {
     declarationFactory,
     ifBlockFactory,
     intBlockFactory,
-    numberToStringBlockFactory,
+    multiplyBlockFactory,
+    noBlockFactory,
     printStingBlockFactory,
     startSignalFactory,
-    stringBlockFactory
+    tenBlockFactory,
+    yesBlockFactory
 } from "./ui/blocks";
 
 import {FlowControl} from "./ui/flow";
@@ -41,8 +43,10 @@ export class Global {
             new Generator(ifBlockFactory),
             new Generator(declarationFactory),
             new Generator(intBlockFactory),
-            new Generator(stringBlockFactory),
-            new Generator(numberToStringBlockFactory),
+            new Generator(tenBlockFactory),
+            new Generator(multiplyBlockFactory),
+            new Generator(yesBlockFactory),
+            new Generator(noBlockFactory),
             new Generator(printStingBlockFactory),
             new Generator(binaryBlockFactory),
         ];
