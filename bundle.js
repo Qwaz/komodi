@@ -4978,12 +4978,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_blocks__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__ = __webpack_require__(203);
+
 
 
 
 
 
 const MENU_PADDING = 20;
+const TEXT_PADDING = 14;
+class TextButton extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
+    constructor(msg, color = 0xFFFFFF) {
+        super();
+        this.text = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Text"](msg);
+        this.text.x = TEXT_PADDING;
+        this.text.y = TEXT_PADDING;
+        let backgroundWidth = this.text.width + TEXT_PADDING * 2;
+        let backgroundHeight = this.text.height + TEXT_PADDING * 2;
+        this.background = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
+        this.background.lineStyle(1);
+        this.background.beginFill(color);
+        this.background.drawRect(0, 0, backgroundWidth, backgroundHeight);
+        this.background.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](0, 0, backgroundWidth, backgroundHeight);
+        this.addChild(this.background);
+        this.addChild(this.text);
+        this.interactive = true;
+        this.buttonMode = true;
+    }
+}
 class Global {
     constructor() {
         Global.generators = [
@@ -5000,6 +5022,7 @@ class Global {
         ];
         Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
         Global.flowController = new __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__["a" /* FlowController */]();
+        Global.logicController = new __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__["a" /* LogicController */]();
         Global.renderer = __WEBPACK_IMPORTED_MODULE_0_pixi_js__["autoDetectRenderer"](1, 1, { antialias: false, transparent: false, resolution: 2 });
         Global.renderer.backgroundColor = 0xECEFF1;
         Global.renderer.view.style.position = "absolute";
@@ -5009,6 +5032,12 @@ class Global {
         Global.stage = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"]();
         Global.menu = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         Global.stage.addChild(Global.menu);
+        Global.runButton = new TextButton("RUN", 0xE0F2F1);
+        Global.runButton.on("click", function () {
+            let code = Global.logicController.generateCode();
+            eval(code);
+        });
+        Global.stage.addChild(Global.runButton);
         {
             let maxHeight = 0;
             for (let generator of Global.generators) {
@@ -5053,6 +5082,8 @@ class Global {
         Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
         Global.menu.endFill();
         Global.renderer.resize(window.innerWidth, window.innerHeight);
+        Global.runButton.x = MENU_PADDING;
+        Global.runButton.y = window.innerHeight - Global.runButton.height - MENU_PADDING;
     }
     update() {
         if (Global._dragging) {
@@ -36088,18 +36119,25 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 /* unused harmony export FlowControl */
 
 class Signal extends FlowControl {
-    constructor(shape) {
+    constructor(logic, shape) {
         super(1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
+        this.logic = logic;
         this.shape = shape;
         this.addChild(shape);
         this.interactive = true;
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].logicController.registerSignal(this);
+    }
+    destroy() {
+        super.destroy();
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].logicController.deleteSignal(this);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["c"] = Signal;
 
 class Block extends FlowControl {
-    constructor(shape, numFlow, flowStrategy) {
+    constructor(logic, shape, numFlow, flowStrategy) {
         super(numFlow, flowStrategy);
+        this.logic = logic;
         this.shape = shape;
         this.logicChildren = [];
         this.addChild(shape);
@@ -36116,11 +36154,14 @@ class Block extends FlowControl {
         }
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.registerBlock(this, shape.highlightOffsets);
     }
+    get numLogic() {
+        return this.logicChildren.length;
+    }
     updateShape() {
         this.shape.updateShape(this.logicChildren);
         this.hitArea = this.shape.hitArea;
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateLogicOffset(this);
-        for (let i = 0; i < this.shape.highlightOffsets.length; i++) {
+        for (let i = 0; i < this.numLogic; i++) {
             let offset = this.shape.highlightOffsets[i];
             this.logicHighlights[i].x = offset.offsetX;
             this.logicHighlights[i].y = offset.offsetY;
@@ -36129,7 +36170,7 @@ class Block extends FlowControl {
     updateControl() {
         super.updateControl();
         this.updateShape();
-        for (let i = 0; i < this.shape.highlightOffsets.length; i++) {
+        for (let i = 0; i < this.numLogic; i++) {
             let offset = this.shape.highlightOffsets[i];
             let child = this.logicChildren[i];
             if (child) {
@@ -36165,8 +36206,9 @@ class Block extends FlowControl {
 
 const OUTLINE_PADDING = 6;
 class Declaration extends FlowControl {
-    constructor(shape) {
+    constructor(logic, shape) {
         super(1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
+        this.logic = logic;
         this.shape = shape;
         this.addChild(shape);
         this.interactive = true;
@@ -36192,12 +36234,13 @@ class Declaration extends FlowControl {
 /* harmony export (immutable) */ __webpack_exports__["d"] = Declaration;
 
 class FlowItemFactory {
-    constructor(constructor, shape) {
+    constructor(constructor, logic, shape) {
         this.constructor = constructor;
+        this.logic = logic;
         this.shape = shape;
     }
     createFlowItem() {
-        return new this.constructor(this.shape.clone());
+        return new this.constructor(this.logic, this.shape.clone());
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["b"] = FlowItemFactory;
@@ -36320,6 +36363,7 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__type_type__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__logic_logic__ = __webpack_require__(202);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startSignalFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ifBlockFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return declarationFactory; });
@@ -36337,26 +36381,27 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 
 
 
+
 class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
-    constructor(shape) {
-        super(shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["c" /* noStrategy */]);
+    constructor(logic, shape) {
+        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["c" /* noStrategy */]);
     }
 }
 class BranchBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
-    constructor(shape) {
-        super(shape, 2, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
+    constructor(logic, shape) {
+        super(logic, shape, 2, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
     }
 }
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('onLoad'));
-let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](BranchBlock, new __WEBPACK_IMPORTED_MODULE_3__shape_IfBlockShape__["a" /* IfBlockShape */]());
-let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
-let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "User Input"));
-let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "10"));
-let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "(num) x2"));
-let yesBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"yes\""));
-let noBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"no\""));
-let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TVoid */]()), "print(string)"));
-let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TBoolean */]()), "(num1)<(num2)"));
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
+let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](BranchBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_3__shape_IfBlockShape__["a" /* IfBlockShape */]());
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert("Not Implemented")`), new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "User Input"));
+let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`10`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "10"));
+let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "(num) x2"));
+let yesBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"yes"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"yes\""));
+let noBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"no"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"no\""));
+let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TVoid */]()), "print(string)"));
+let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TBoolean */]()), "(num1)<(num2)"));
 
 
 /***/ }),
@@ -57436,6 +57481,72 @@ module.exports = {
     return arg == null;
   }
 };
+
+
+/***/ }),
+/* 202 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_flow__ = __webpack_require__(97);
+
+class Logic {
+    constructor(pattern) {
+        this.pattern = pattern;
+    }
+    parseLogic(control) {
+        let ret = '';
+        let now = control;
+        while (now) {
+            let pat = now.logic.pattern;
+            if (now instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */]) {
+                for (let i = now.numLogic - 1; i >= 0; i--) {
+                    let child = now.logicChildren[i];
+                    pat = pat.replace(`@${i + 1}`, child ? child.logic.parseLogic(child) : "");
+                }
+            }
+            for (let i = now.numFlow; i >= 1; i--) {
+                let child = now.flowChildren[i];
+                pat = pat.replace(`$${i}`, child ? child.logic.parseLogic(child) : "");
+            }
+            if (ret != '') {
+                ret += ';';
+            }
+            ret += pat;
+            now = now.flowNext;
+        }
+        return ret;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Logic;
+
+
+
+/***/ }),
+/* 203 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class LogicController {
+    constructor() {
+        this.signals = new Set();
+    }
+    registerSignal(signal) {
+        this.signals.add(signal);
+    }
+    deleteSignal(signal) {
+        this.signals.delete(signal);
+    }
+    generateCode() {
+        let result = '';
+        for (let signal of this.signals) {
+            result += signal.logic.parseLogic(signal) + ';';
+        }
+        return result;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = LogicController;
+
 
 
 /***/ })

@@ -6,8 +6,11 @@ import {AttachInfo, AttachType} from "../controllers/AttachController";
 import {FlowStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {FlowHighlight, LogicHighlight} from "../shape/Highlight";
 import {TypeInfo} from "../type/type";
+import {Logic} from "../logic/logic";
 
 export abstract class FlowControl extends PIXI.Container {
+    abstract get logic(): Logic;
+
     private _flowHighlights: PIXI.Graphics[];
 
     get numFlow(): number {
@@ -136,12 +139,20 @@ export abstract class FlowControl extends PIXI.Container {
 }
 
 export class Signal extends FlowControl {
-    constructor(readonly shape: Shape) {
+    constructor(readonly logic: Logic, readonly shape: Shape) {
         super(1, splitJoinStrategy);
 
         // UI setup
         this.addChild(shape);
         this.interactive = true;
+
+        Global.logicController.registerSignal(this);
+    }
+
+    destroy() {
+        super.destroy();
+
+        Global.logicController.deleteSignal(this);
     }
 }
 
@@ -149,7 +160,12 @@ export abstract class Block extends FlowControl {
     logicChildren: Array<Block | null> = [];
     logicHighlights: PIXI.Graphics[];
 
+    get numLogic(): number {
+        return this.logicChildren.length;
+    }
+
     constructor(
+        readonly logic: Logic,
         readonly shape: BlockShape,
         numFlow: number,
         flowStrategy: FlowStrategy,
@@ -182,7 +198,7 @@ export abstract class Block extends FlowControl {
         this.hitArea = this.shape.hitArea;
 
         Global.attachController.updateLogicOffset(this);
-        for (let i = 0; i < this.shape.highlightOffsets.length; i++) {
+        for (let i = 0; i < this.numLogic; i++) {
             let offset = this.shape.highlightOffsets[i];
             this.logicHighlights[i].x = offset.offsetX;
             this.logicHighlights[i].y = offset.offsetY;
@@ -193,7 +209,7 @@ export abstract class Block extends FlowControl {
         super.updateControl();
         this.updateShape();
 
-        for (let i = 0; i < this.shape.highlightOffsets.length; i++) {
+        for (let i = 0; i < this.numLogic; i++) {
             let offset = this.shape.highlightOffsets[i];
             let child = this.logicChildren[i];
             if (child) {
@@ -237,6 +253,7 @@ export class Declaration extends FlowControl {
     private outline: PIXI.Graphics;
 
     constructor(
+        readonly logic: Logic,
         readonly shape: Shape
     ) {
         super(1, splitJoinStrategy);
@@ -273,11 +290,11 @@ export class Declaration extends FlowControl {
     }
 }
 
-export class FlowItemFactory<T extends FlowControl, S extends Shape> {
-    constructor(private constructor: {new (shape: S): T}, readonly shape: S) {
+export class FlowItemFactory<F extends FlowControl, L extends Logic, S extends Shape> {
+    constructor(private constructor: {new (logic: L, shape: S): F}, readonly logic: L, readonly shape: S) {
     }
 
-    createFlowItem(): T {
-        return new this.constructor(this.shape.clone());
+    createFlowItem(): F {
+        return new this.constructor(this.logic, this.shape.clone());
     }
 }

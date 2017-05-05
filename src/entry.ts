@@ -16,8 +16,38 @@ import {
 import {FlowControl} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
 import {FlowController} from "./controllers/FlowController";
+import {LogicController} from "./controllers/LogicController";
 
 const MENU_PADDING = 20;
+const TEXT_PADDING = 14;
+
+class TextButton extends PIXI.Container {
+    private text: PIXI.Text;
+    private background: PIXI.Graphics;
+
+    constructor(msg: string, color: number=0xFFFFFF) {
+        super();
+
+        this.text = new PIXI.Text(msg);
+        this.text.x = TEXT_PADDING;
+        this.text.y = TEXT_PADDING;
+
+        let backgroundWidth = this.text.width + TEXT_PADDING*2;
+        let backgroundHeight = this.text.height + TEXT_PADDING*2;
+
+        this.background = new PIXI.Graphics();
+        this.background.lineStyle(1);
+        this.background.beginFill(color);
+        this.background.drawRect(0, 0, backgroundWidth, backgroundHeight);
+        this.background.hitArea = new PIXI.Rectangle(0, 0, backgroundWidth, backgroundHeight);
+
+        this.addChild(this.background);
+        this.addChild(this.text);
+
+        this.interactive = true;
+        this.buttonMode = true;
+    }
+}
 
 export class Global {
     private static _instance:Global = new Global();
@@ -25,12 +55,14 @@ export class Global {
     static generators: Array<PIXI.Container>;
     static attachController: AttachController;
     static flowController: FlowController;
+    static logicController: LogicController;
 
     // render related
     static renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 
     static stage: PIXI.Container;
     static menu: PIXI.Graphics;
+    static runButton: TextButton;
     static menuHeight: number;  // TODO: menuHeight should not be here
 
     private static _dragging: FlowControl | null = null;
@@ -53,6 +85,7 @@ export class Global {
 
         Global.attachController = new AttachController();
         Global.flowController = new FlowController();
+        Global.logicController = new LogicController();
 
         // render initialization
         Global.renderer = PIXI.autoDetectRenderer(
@@ -71,6 +104,13 @@ export class Global {
 
         Global.menu = new PIXI.Graphics();
         Global.stage.addChild(Global.menu);
+
+        Global.runButton = new TextButton("RUN", 0xE0F2F1);
+        Global.runButton.on("click", function () {
+            let code = Global.logicController.generateCode();
+            eval(code);
+        });
+        Global.stage.addChild(Global.runButton);
 
         {
             let maxHeight = 0;
@@ -125,6 +165,9 @@ export class Global {
         Global.menu.endFill();
 
         Global.renderer.resize(window.innerWidth, window.innerHeight);
+
+        Global.runButton.x = MENU_PADDING;
+        Global.runButton.y = window.innerHeight - Global.runButton.height - MENU_PADDING;
     }
 
     update() {
