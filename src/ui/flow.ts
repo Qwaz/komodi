@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
-import {hitTestRectangle, moveToTop} from "../utils";
+import {hitTestRectangle, makeTargetInteractive} from "../utils";
 import {AttachInfo, AttachType} from "../controllers/AttachController";
-import {FlowStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
+import {FlowStrategy, outlineStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {FlowHighlight, LogicHighlight} from "../shape/Highlight";
 import {TypeInfo} from "../type/type";
 import {Logic} from "../logic/logic";
@@ -34,8 +34,7 @@ export abstract class FlowControl extends PIXI.Container {
         Global.flowController.registerControl(this);
 
         // event handling
-        this.on('mouseover', () => this.alpha = 0.85);
-        this.on('mouseout', () => this.alpha = 1);
+        makeTargetInteractive(this);
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
@@ -101,23 +100,8 @@ export abstract class FlowControl extends PIXI.Container {
         return !!this.attachParent && this.attachParent.attachType == AttachType.FLOW;
     }
 
-    protected updateControl() {
-        moveToTop(this);
+    updateControl() {
         Global.flowController.update(this);
-    }
-
-    updateAndGetBounds(): PIXI.Rectangle {
-        this.updateControl();
-
-        let bound = this.getBounds();
-        for (let i = 1; i <= this.numFlow; i++) {
-            let now = this.flowChildren[i];
-            while (now) {
-                bound.enlarge(now.updateAndGetBounds());
-                now = now.flowChildren[0];
-            }
-        }
-        return bound;
     }
 
     destroy() {
@@ -144,7 +128,6 @@ export class Signal extends FlowControl {
 
         // UI setup
         this.addChild(shape);
-        this.interactive = true;
 
         Global.logicController.registerSignal(this);
     }
@@ -158,7 +141,7 @@ export class Signal extends FlowControl {
 
 export abstract class Block extends FlowControl {
     logicChildren: Array<Block | null> = [];
-    logicHighlights: PIXI.Graphics[];
+    logicHighlights: LogicHighlight[];
 
     get numLogic(): number {
         return this.logicChildren.length;
@@ -174,7 +157,6 @@ export abstract class Block extends FlowControl {
 
         // UI setup
         this.addChild(shape);
-        this.interactive = true;
 
         // attach management
         this.logicHighlights = [];
@@ -193,41 +175,24 @@ export abstract class Block extends FlowControl {
         Global.attachController.registerBlock(this, shape.highlightOffsets);
     }
 
-    private updateShape() {
+    updateControl() {
+        super.updateControl();
+
+        console.log("Block Update");
+        console.trace();
+
         this.shape.updateShape(this.logicChildren);
-        this.hitArea = this.shape.hitArea;
 
         Global.attachController.updateLogicOffset(this);
-        for (let i = 0; i < this.numLogic; i++) {
-            let offset = this.shape.highlightOffsets[i];
-            this.logicHighlights[i].x = offset.offsetX;
-            this.logicHighlights[i].y = offset.offsetY;
-        }
-    }
-
-    protected updateControl() {
-        super.updateControl();
-        this.updateShape();
 
         for (let i = 0; i < this.numLogic; i++) {
             let offset = this.shape.highlightOffsets[i];
             let child = this.logicChildren[i];
             if (child) {
-                child.x = this.x + offset.offsetX;
-                child.y = this.y + offset.offsetY;
-                child.updateControl();
+                child.x = offset.offsetX;
+                child.y = offset.offsetY;
             }
         }
-    }
-
-    updateAndGetBounds(): PIXI.Rectangle {
-        let bounds = super.updateAndGetBounds();
-        for (let block of this.logicChildren) {
-            if (block) {
-                bounds.enlarge(block.updateAndGetBounds());
-            }
-        }
-        return bounds;
     }
 
     destroy() {
@@ -247,8 +212,6 @@ export abstract class Block extends FlowControl {
     }
 }
 
-const OUTLINE_PADDING = 6;
-
 export class Declaration extends FlowControl {
     private outline: PIXI.Graphics;
 
@@ -256,33 +219,15 @@ export class Declaration extends FlowControl {
         readonly logic: Logic,
         readonly shape: Shape
     ) {
-        super(1, splitJoinStrategy);
+        super(1, outlineStrategy);
 
         // UI setup
         this.addChild(shape);
-        this.interactive = true;
-        this.hitArea = shape.hitArea;
 
         this.outline = new PIXI.Graphics();
         this.addChildAt(this.outline, 0);
-    }
 
-    protected updateControl() {
-        this.outline.clear();
-        super.updateControl();
-    }
-
-    updateAndGetBounds(): PIXI.Rectangle {
-        let bounds = super.updateAndGetBounds();
-
-        this.outline.lineStyle(1, 0x9E9E9E);
-        this.outline.drawRect(
-            bounds.x - this.x - OUTLINE_PADDING, -2,
-            bounds.width + OUTLINE_PADDING*2, bounds.bottom - this.y + 2
-        );
-        bounds.pad(OUTLINE_PADDING, 0);
-
-        return bounds;
+        Global.flowController.update(this);
     }
 
     attachFilter(attachInfo: AttachInfo): boolean {

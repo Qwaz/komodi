@@ -23,7 +23,7 @@ export function drawEditPoint(graphics: PIXI.Graphics, x: number, y: number, hig
     graphics.endFill();
 }
 
-function drawLinear(graphics: PIXI.Graphics, origin: FlowControl, startX: number, startY: number, now: FlowControl | null): Offset {
+function drawLinear(graphics: PIXI.Graphics, startX: number, startY: number, now: FlowControl | null, updating: boolean): Offset {
     let nowX = startX;
     let nowY = startY;
 
@@ -35,18 +35,17 @@ function drawLinear(graphics: PIXI.Graphics, origin: FlowControl, startX: number
     };
 
     while (now) {
-        let size = now.updateAndGetBounds();
-        let offset = size.bottom - now.y;
-
-        if (now.numFlow == 0) {
-            lineDelta(0, size.height);
-        } else {
-            lineDelta(0, now.y - size.top);
-            nowY += offset;
+        if (updating) {
+            now.updateControl();
         }
-        now.x = origin.x + nowX;
-        now.y = origin.y + nowY - offset;
-        now.updateAndGetBounds();
+
+        let size = now.getLocalBounds();
+
+        lineDelta(0, -size.top);
+
+        now.x = nowX;
+        now.y = nowY;
+        nowY += size.bottom;
 
         let prevY = nowY;
         lineDelta(0, FLOW_VERTICAL_MARGIN);
@@ -54,9 +53,10 @@ function drawLinear(graphics: PIXI.Graphics, origin: FlowControl, startX: number
         let flowX = nowX;
         let flowY = (nowY + prevY)*.5;
         drawEditPoint(graphics, flowX, flowY);
+
         Global.attachController.updateFlowOffset(now, 0, {
-            offsetX: flowX + (origin.x - now.x),
-            offsetY: flowY + (origin.y - now.y),
+            offsetX: 0,
+            offsetY: size.bottom + FLOW_VERTICAL_MARGIN * .5,
         });
 
         now = now.flowChildren[0];
@@ -78,7 +78,7 @@ export let noStrategy: FlowStrategy = function (): Offset {
 const SPLIT_JOIN_VERTICAL_MARGIN = 15;
 const SPLIT_JOIN_HORIZONTAL_MARGIN = 40;
 
-export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl) {
+export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl): Offset {
     if (start.numFlow > 0) {
         // pre-calculate each flow's width
         let widthList = _.fill(Array(start.numFlow), 0);
@@ -86,7 +86,9 @@ export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, 
         for (let i = 0; i < start.numFlow; i++) {
             let now = start.flowChildren[i+1];
             while (now) {
-                let widthCandidate = now.updateAndGetBounds().width;
+                now.updateControl();
+
+                let widthCandidate = now.getBounds().width;
                 if (widthList[i] < widthCandidate) {
                     widthList[i] = widthCandidate;
                 }
@@ -121,7 +123,7 @@ export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, 
             });
 
             endOffset.push(
-                drawLinear(graphics, start, splitX, nextY, start.flowChildren[flowIndex+1])
+                drawLinear(graphics, splitX, nextY, start.flowChildren[flowIndex+1], false)
             );
 
             splitX += widthList[flowIndex]*.5 + SPLIT_JOIN_HORIZONTAL_MARGIN;
@@ -149,4 +151,33 @@ export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, 
             offsetY: 0,
         };
     }
+};
+
+const OUTLINE_PADDING = 6;
+
+export let outlineStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl): Offset {
+    setGraphicsStyle(graphics);
+
+    graphics.moveTo(0, 0);
+    graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+
+    drawEditPoint(graphics, 0, FLOW_VERTICAL_MARGIN*.5);
+    Global.attachController.updateFlowOffset(start, 1, {
+        offsetX: 0,
+        offsetY: FLOW_VERTICAL_MARGIN*.5,
+    });
+
+    let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
+
+    let bounds = start.getLocalBounds();
+    graphics.lineStyle(1, 0x9E9E9E);
+    graphics.drawRect(
+        bounds.x - OUTLINE_PADDING, -2,
+        bounds.width + OUTLINE_PADDING*2, bounds.bottom + 2
+    );
+
+    return {
+        offsetX: offset.offsetX,
+        offsetY: offset.offsetY,
+    };
 };

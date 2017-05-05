@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import {Block, FlowControl} from "../ui/flow";
 import {Global} from "../entry";
 import {TypeInfo} from "../type/type";
+import {globalPositionOf} from "../utils";
 
 export enum AttachType {
     FLOW,
@@ -73,9 +74,14 @@ export class AttachController {
         let arr = this.logicPoints.get(block);
         if (arr) {
             for (let i = 0; i < arr.length; i++) {
-                let newOffset = block.shape.highlightOffsets[arr[i].attachIndex];
+                let attachIndex = arr[i].attachIndex;
+
+                let newOffset = block.shape.highlightOffsets[attachIndex];
                 arr[i].offsetX = newOffset.offsetX;
                 arr[i].offsetY = newOffset.offsetY;
+
+                block.logicHighlights[attachIndex].x = newOffset.offsetX;
+                block.logicHighlights[attachIndex].y = newOffset.offsetY;
             }
         }
     }
@@ -132,9 +138,10 @@ export class AttachController {
         let resultDist = 0;
 
         this.logicPoints.forEach((arr, block) => {
+            let globalPosition = globalPositionOf(block);
             for (let candidate of arr) {
-                let candX = block.x + candidate.offsetX;
-                let candY = block.y + candidate.offsetY;
+                let candX = globalPosition.x + candidate.offsetX;
+                let candY = globalPosition.y + candidate.offsetY;
 
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
@@ -157,13 +164,14 @@ export class AttachController {
         });
 
         this.flowPoints.forEach((arr, control) => {
+            let globalPosition = globalPositionOf(control);
             for (let candidate of arr) {
                 if ((candidate.attachIndex == 0 && !control.hasFlowParent())) {
                     continue;
                 }
 
-                let candX = control.x + candidate.offsetX;
-                let candY = control.y + candidate.offsetY;
+                let candX = globalPosition.x + candidate.offsetX;
+                let candY = globalPosition.y + candidate.offsetY;
 
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
@@ -204,6 +212,9 @@ export class AttachController {
                         }
                     }
                 }
+
+                // update display
+                parent.addChild(target);
             } else {
                 throw new TypeError("attachType and attachTo do not match");
             }
@@ -219,14 +230,17 @@ export class AttachController {
             }
             parent.flowChildren[attachInfo.attachIndex] = target;
             target.attachParent = attachInfo;
-        }
 
-        parent.updateAndGetBounds();
+            // update display
+            if (attachInfo.attachIndex == 0) {
+                parent.parent.addChild(target);
+            } else {
+                parent.addChild(target);
+            }
+        }
 
         let flowRoot = parent.findFlowRoot();
-        if (flowRoot) {
-            flowRoot.updateAndGetBounds();
-        }
+        flowRoot.updateControl();
     }
 
     detachControl(target: FlowControl) {
@@ -240,8 +254,7 @@ export class AttachController {
                     parent.logicChildren[attachInfo.attachIndex] = null;
                     target.attachParent = null;
 
-                    parent.updateAndGetBounds();
-
+                    parent.updateControl();
                     let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
 
                     let arr = this.logicPoints.get(parent);
@@ -266,10 +279,11 @@ export class AttachController {
                 target.attachParent = null;
             }
 
-            let signal = parent.findFlowRoot();
-            if (signal) {
-                Global.flowController.update(signal);
-            }
+            // update display
+            Global.stage.addChild(target);
+
+            let flowRoot = parent.findFlowRoot();
+            flowRoot.updateControl();
         }
     }
 }

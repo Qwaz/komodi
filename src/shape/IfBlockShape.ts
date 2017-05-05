@@ -51,6 +51,4 @@ export class IfBlockShape extends BlockShape {
         this.addChild(text);
         centerChild(text, 0, -RADIUS);
     }
-
-    updateShape() {}
 }

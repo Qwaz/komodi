@@ -1,5 +1,4 @@
 import * as PIXI from "pixi.js";
-import DisplayObject = PIXI.DisplayObject;
 
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
@@ -26,8 +25,20 @@ export function moveToTop(target: PIXI.DisplayObject) {
     target.parent.setChildIndex(target, target.parent.children.length-1);
 }
 
-export function centerChild(target: DisplayObject, x: number, y: number) {
+export function centerChild(target: PIXI.DisplayObject, x: number, y: number) {
     let localBounds = target.getLocalBounds();
     target.x = x - localBounds.width*.5;
     target.y = y - localBounds.height*.5;
+}
+
+export function globalPositionOf(target: PIXI.DisplayObject): PIXI.Point {
+    return target.parent.toGlobal(target.position);
+}
+
+export function makeTargetInteractive(target: PIXI.Container) {
+    target.interactive = true;
+    target.buttonMode = true;
+
+    target.on('mouseover', () => target.alpha = 0.75);
+    target.on('mouseout', () => target.alpha = 1);
 }

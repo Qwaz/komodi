@@ -82,6 +82,8 @@ export class FunctionShape extends BlockShape {
     }
 
     updateShape(logicChildren: Array<Block | null>) {
+        super.updateShape(logicChildren);
+
         this._highlightOffsets = [];
 
         this.graphics.clear();
@@ -102,7 +104,14 @@ export class FunctionShape extends BlockShape {
                 } else {
                     // argument label
                     let child = logicChildren[i >> 1];
-                    let childWidth = child ? child.updateAndGetBounds().width : MINIMUM_ARG_WIDTH;
+
+                    let childWidth = 0;
+                    if (child) {
+                        childWidth = Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH);
+                    } else {
+                        childWidth = MINIMUM_ARG_WIDTH;
+                    }
+
                     width = Math.max(label.width, childWidth) + PADDING*2;
                 }
 

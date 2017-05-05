@@ -17,6 +17,7 @@ import {FlowControl} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
 import {FlowController} from "./controllers/FlowController";
 import {LogicController} from "./controllers/LogicController";
+import {globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
 
 const MENU_PADDING = 20;
 const TEXT_PADDING = 14;
@@ -44,8 +45,7 @@ class TextButton extends PIXI.Container {
         this.addChild(this.background);
         this.addChild(this.text);
 
-        this.interactive = true;
-        this.buttonMode = true;
+        makeTargetInteractive(this);
     }
 }
 
@@ -145,9 +145,11 @@ export class Global {
     static setDragging(target: FlowControl | null, pivotX?: number, pivotY?: number) {
         if (target) {
             Global._dragging = target;
+            moveToTop(target);
 
-            pivotX = pivotX || target.x;
-            pivotY = pivotY || target.y;
+            let globalPosition = globalPositionOf(target);
+            pivotX = pivotX || globalPosition.x;
+            pivotY = pivotY || globalPosition.y;
 
             Global.dragOffset = {
                 offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
@@ -175,8 +177,6 @@ export class Global {
             let target = Global._dragging;
             target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
             target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
-
-            target.updateAndGetBounds();
 
             let attachInfo = Global.attachController.getNearestAttachPoint(
                 target.x, target.y,

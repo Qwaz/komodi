@@ -4979,6 +4979,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(18);
+
 
 
 
@@ -5002,8 +5004,7 @@ class TextButton extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         this.background.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](0, 0, backgroundWidth, backgroundHeight);
         this.addChild(this.background);
         this.addChild(this.text);
-        this.interactive = true;
-        this.buttonMode = true;
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* makeTargetInteractive */])(this);
     }
 }
 class Global {
@@ -5065,8 +5066,10 @@ class Global {
     static setDragging(target, pivotX, pivotY) {
         if (target) {
             Global._dragging = target;
-            pivotX = pivotX || target.x;
-            pivotY = pivotY || target.y;
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["b" /* moveToTop */])(target);
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* globalPositionOf */])(target);
+            pivotX = pivotX || globalPosition.x;
+            pivotY = pivotY || globalPosition.y;
             Global.dragOffset = {
                 offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
                 offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
@@ -5090,7 +5093,6 @@ class Global {
             let target = Global._dragging;
             target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
             target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
-            target.updateAndGetBounds();
             let attachInfo = Global.attachController.getNearestAttachPoint(target.x, target.y, target.attachFilter.bind(target));
             if (attachInfo) {
                 Global.attachController.setHighlight(attachInfo);
@@ -5120,9 +5122,11 @@ loop();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = hitTestRectangle;
+/* harmony export (immutable) */ __webpack_exports__["d"] = hitTestRectangle;
 /* harmony export (immutable) */ __webpack_exports__["b"] = moveToTop;
-/* harmony export (immutable) */ __webpack_exports__["c"] = centerChild;
+/* harmony export (immutable) */ __webpack_exports__["e"] = centerChild;
+/* harmony export (immutable) */ __webpack_exports__["c"] = globalPositionOf;
+/* harmony export (immutable) */ __webpack_exports__["a"] = makeTargetInteractive;
 function hitTestRectangle(obj1, obj2) {
     let bound1 = obj1.getBounds();
     let bound2 = obj2.getBounds();
@@ -5146,6 +5150,15 @@ function centerChild(target, x, y) {
     let localBounds = target.getLocalBounds();
     target.x = x - localBounds.width * .5;
     target.y = y - localBounds.height * .5;
+}
+function globalPositionOf(target) {
+    return target.parent.toGlobal(target.position);
+}
+function makeTargetInteractive(target) {
+    target.interactive = true;
+    target.buttonMode = true;
+    target.on('mouseover', () => target.alpha = 0.75);
+    target.on('mouseout', () => target.alpha = 1);
 }
 
 
@@ -23700,13 +23713,24 @@ exports.default = RenderTarget;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 /* harmony export (immutable) */ __webpack_exports__["b"] = createLabel;
+
 
 class Shape extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 }
 /* harmony export (immutable) */ __webpack_exports__["c"] = Shape;
 
 class BlockShape extends Shape {
+    updateShape(logicChildren) {
+        __WEBPACK_IMPORTED_MODULE_1_lodash__(logicChildren).forEach((block) => {
+            if (block) {
+                block.updateControl();
+            }
+        });
+    }
+    ;
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = BlockShape;
 
@@ -28248,9 +28272,10 @@ function reqType(xhr) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(17);
-/* harmony export (immutable) */ __webpack_exports__["b"] = drawEditPoint;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return noStrategy; });
+/* harmony export (immutable) */ __webpack_exports__["c"] = drawEditPoint;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return noStrategy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return splitJoinStrategy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return outlineStrategy; });
 
 
 const FLOW_VERTICAL_MARGIN = 45;
@@ -28268,7 +28293,7 @@ function drawEditPoint(graphics, x, y, highlight = false) {
     graphics.drawCircle(x, y, EDIT_POINT_RADIUS);
     graphics.endFill();
 }
-function drawLinear(graphics, origin, startX, startY, now) {
+function drawLinear(graphics, startX, startY, now, updating) {
     let nowX = startX;
     let nowY = startY;
     let lineDelta = (x, y) => {
@@ -28278,26 +28303,22 @@ function drawLinear(graphics, origin, startX, startY, now) {
         nowY += y;
     };
     while (now) {
-        let size = now.updateAndGetBounds();
-        let offset = size.bottom - now.y;
-        if (now.numFlow == 0) {
-            lineDelta(0, size.height);
+        if (updating) {
+            now.updateControl();
         }
-        else {
-            lineDelta(0, now.y - size.top);
-            nowY += offset;
-        }
-        now.x = origin.x + nowX;
-        now.y = origin.y + nowY - offset;
-        now.updateAndGetBounds();
+        let size = now.getLocalBounds();
+        lineDelta(0, -size.top);
+        now.x = nowX;
+        now.y = nowY;
+        nowY += size.bottom;
         let prevY = nowY;
         lineDelta(0, FLOW_VERTICAL_MARGIN);
         let flowX = nowX;
         let flowY = (nowY + prevY) * .5;
         drawEditPoint(graphics, flowX, flowY);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateFlowOffset(now, 0, {
-            offsetX: flowX + (origin.x - now.x),
-            offsetY: flowY + (origin.y - now.y),
+            offsetX: 0,
+            offsetY: size.bottom + FLOW_VERTICAL_MARGIN * .5,
         });
         now = now.flowChildren[0];
     }
@@ -28320,7 +28341,8 @@ let splitJoinStrategy = function (graphics, start) {
         for (let i = 0; i < start.numFlow; i++) {
             let now = start.flowChildren[i + 1];
             while (now) {
-                let widthCandidate = now.updateAndGetBounds().width;
+                now.updateControl();
+                let widthCandidate = now.getBounds().width;
                 if (widthList[i] < widthCandidate) {
                     widthList[i] = widthCandidate;
                 }
@@ -28346,7 +28368,7 @@ let splitJoinStrategy = function (graphics, start) {
                 offsetX: splitX,
                 offsetY: editY,
             });
-            endOffset.push(drawLinear(graphics, start, splitX, nextY, start.flowChildren[flowIndex + 1]));
+            endOffset.push(drawLinear(graphics, splitX, nextY, start.flowChildren[flowIndex + 1], false));
             splitX += widthList[flowIndex] * .5 + SPLIT_JOIN_HORIZONTAL_MARGIN;
         }
         let maxY = __WEBPACK_IMPORTED_MODULE_0_lodash__(endOffset).map((obj) => obj.offsetY).max();
@@ -28370,6 +28392,25 @@ let splitJoinStrategy = function (graphics, start) {
             offsetY: 0,
         };
     }
+};
+const OUTLINE_PADDING = 6;
+let outlineStrategy = function (graphics, start) {
+    setGraphicsStyle(graphics);
+    graphics.moveTo(0, 0);
+    graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+    drawEditPoint(graphics, 0, FLOW_VERTICAL_MARGIN * .5);
+    __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateFlowOffset(start, 1, {
+        offsetX: 0,
+        offsetY: FLOW_VERTICAL_MARGIN * .5,
+    });
+    let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
+    let bounds = start.getLocalBounds();
+    graphics.lineStyle(1, 0x9E9E9E);
+    graphics.drawRect(bounds.x - OUTLINE_PADDING, -2, bounds.width + OUTLINE_PADDING * 2, bounds.bottom + 2);
+    return {
+        offsetX: offset.offsetX,
+        offsetY: offset.offsetY,
+    };
 };
 
 
@@ -28402,7 +28443,7 @@ class LogicHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
 class FlowHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
     constructor() {
         super();
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__controllers_flowStrategies__["b" /* drawEditPoint */])(this, 0, 0, true);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__controllers_flowStrategies__["c" /* drawEditPoint */])(this, 0, 0, true);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FlowHighlight;
@@ -28506,7 +28547,9 @@ function typeInfoToColor(typeInfo) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_flow__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(18);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AttachType; });
+
 
 
 var AttachType;
@@ -28555,9 +28598,12 @@ class AttachController {
         let arr = this.logicPoints.get(block);
         if (arr) {
             for (let i = 0; i < arr.length; i++) {
-                let newOffset = block.shape.highlightOffsets[arr[i].attachIndex];
+                let attachIndex = arr[i].attachIndex;
+                let newOffset = block.shape.highlightOffsets[attachIndex];
                 arr[i].offsetX = newOffset.offsetX;
                 arr[i].offsetY = newOffset.offsetY;
+                block.logicHighlights[attachIndex].x = newOffset.offsetX;
+                block.logicHighlights[attachIndex].y = newOffset.offsetY;
             }
         }
     }
@@ -28604,9 +28650,10 @@ class AttachController {
         let result = null;
         let resultDist = 0;
         this.logicPoints.forEach((arr, block) => {
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* globalPositionOf */])(block);
             for (let candidate of arr) {
-                let candX = block.x + candidate.offsetX;
-                let candY = block.y + candidate.offsetY;
+                let candX = globalPosition.x + candidate.offsetX;
+                let candY = globalPosition.y + candidate.offsetY;
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
                 if (deltaX <= NEAR && deltaY <= NEAR) {
@@ -28625,12 +28672,13 @@ class AttachController {
             }
         });
         this.flowPoints.forEach((arr, control) => {
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* globalPositionOf */])(control);
             for (let candidate of arr) {
                 if ((candidate.attachIndex == 0 && !control.hasFlowParent())) {
                     continue;
                 }
-                let candX = control.x + candidate.offsetX;
-                let candY = control.y + candidate.offsetY;
+                let candX = globalPosition.x + candidate.offsetX;
+                let candY = globalPosition.y + candidate.offsetY;
                 let deltaX = Math.abs(stageX - candX);
                 let deltaY = Math.abs(stageY - candY);
                 if (deltaX <= NEAR && deltaY <= NEAR) {
@@ -28665,6 +28713,7 @@ class AttachController {
                         }
                     }
                 }
+                parent.addChild(target);
             }
             else {
                 throw new TypeError("attachType and attachTo do not match");
@@ -28682,12 +28731,15 @@ class AttachController {
             }
             parent.flowChildren[attachInfo.attachIndex] = target;
             target.attachParent = attachInfo;
+            if (attachInfo.attachIndex == 0) {
+                parent.parent.addChild(target);
+            }
+            else {
+                parent.addChild(target);
+            }
         }
-        parent.updateAndGetBounds();
         let flowRoot = parent.findFlowRoot();
-        if (flowRoot) {
-            flowRoot.updateAndGetBounds();
-        }
+        flowRoot.updateControl();
     }
     detachControl(target) {
         let attachInfo = target.attachParent;
@@ -28697,7 +28749,7 @@ class AttachController {
                 if (parent instanceof __WEBPACK_IMPORTED_MODULE_0__ui_flow__["a" /* Block */]) {
                     parent.logicChildren[attachInfo.attachIndex] = null;
                     target.attachParent = null;
-                    parent.updateAndGetBounds();
+                    parent.updateControl();
                     let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
                     let arr = this.logicPoints.get(parent);
                     if (arr) {
@@ -28722,10 +28774,9 @@ class AttachController {
                 }
                 target.attachParent = null;
             }
-            let signal = parent.findFlowRoot();
-            if (signal) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.update(signal);
-            }
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].stage.addChild(target);
+            let flowRoot = parent.findFlowRoot();
+            flowRoot.updateControl();
         }
     }
 }
@@ -36031,8 +36082,7 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         }
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.registerFlowControl(this);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.registerControl(this);
-        this.on('mouseover', () => this.alpha = 0.85);
-        this.on('mouseout', () => this.alpha = 1);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* makeTargetInteractive */])(this);
         this.on('mousedown', () => {
             if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
                 __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
@@ -36042,7 +36092,7 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         this.on('mouseup', () => {
             if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
                 __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
+                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
                     this.destroy();
                 }
                 else {
@@ -36087,20 +36137,7 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         return !!this.attachParent && this.attachParent.attachType == __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["b" /* AttachType */].FLOW;
     }
     updateControl() {
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* moveToTop */])(this);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.update(this);
-    }
-    updateAndGetBounds() {
-        this.updateControl();
-        let bound = this.getBounds();
-        for (let i = 1; i <= this.numFlow; i++) {
-            let now = this.flowChildren[i];
-            while (now) {
-                bound.enlarge(now.updateAndGetBounds());
-                now = now.flowChildren[0];
-            }
-        }
-        return bound;
     }
     destroy() {
         this.parent.removeChild(this);
@@ -36124,7 +36161,6 @@ class Signal extends FlowControl {
         this.logic = logic;
         this.shape = shape;
         this.addChild(shape);
-        this.interactive = true;
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].logicController.registerSignal(this);
     }
     destroy() {
@@ -36141,7 +36177,6 @@ class Block extends FlowControl {
         this.shape = shape;
         this.logicChildren = [];
         this.addChild(shape);
-        this.interactive = true;
         this.logicHighlights = [];
         for (let offset of shape.highlightOffsets) {
             let highlight = new __WEBPACK_IMPORTED_MODULE_5__shape_Highlight__["b" /* LogicHighlight */]();
@@ -36157,37 +36192,20 @@ class Block extends FlowControl {
     get numLogic() {
         return this.logicChildren.length;
     }
-    updateShape() {
-        this.shape.updateShape(this.logicChildren);
-        this.hitArea = this.shape.hitArea;
-        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateLogicOffset(this);
-        for (let i = 0; i < this.numLogic; i++) {
-            let offset = this.shape.highlightOffsets[i];
-            this.logicHighlights[i].x = offset.offsetX;
-            this.logicHighlights[i].y = offset.offsetY;
-        }
-    }
     updateControl() {
         super.updateControl();
-        this.updateShape();
+        console.log("Block Update");
+        console.trace();
+        this.shape.updateShape(this.logicChildren);
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateLogicOffset(this);
         for (let i = 0; i < this.numLogic; i++) {
             let offset = this.shape.highlightOffsets[i];
             let child = this.logicChildren[i];
             if (child) {
-                child.x = this.x + offset.offsetX;
-                child.y = this.y + offset.offsetY;
-                child.updateControl();
+                child.x = offset.offsetX;
+                child.y = offset.offsetY;
             }
         }
-    }
-    updateAndGetBounds() {
-        let bounds = super.updateAndGetBounds();
-        for (let block of this.logicChildren) {
-            if (block) {
-                bounds.enlarge(block.updateAndGetBounds());
-            }
-        }
-        return bounds;
     }
     destroy() {
         super.destroy();
@@ -36204,28 +36222,15 @@ class Block extends FlowControl {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Block;
 
-const OUTLINE_PADDING = 6;
 class Declaration extends FlowControl {
     constructor(logic, shape) {
-        super(1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
+        super(1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["b" /* outlineStrategy */]);
         this.logic = logic;
         this.shape = shape;
         this.addChild(shape);
-        this.interactive = true;
-        this.hitArea = shape.hitArea;
         this.outline = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChildAt(this.outline, 0);
-    }
-    updateControl() {
-        this.outline.clear();
-        super.updateControl();
-    }
-    updateAndGetBounds() {
-        let bounds = super.updateAndGetBounds();
-        this.outline.lineStyle(1, 0x9E9E9E);
-        this.outline.drawRect(bounds.x - this.x - OUTLINE_PADDING, -2, bounds.width + OUTLINE_PADDING * 2, bounds.bottom - this.y + 2);
-        bounds.pad(OUTLINE_PADDING, 0);
-        return bounds;
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.update(this);
     }
     attachFilter(attachInfo) {
         return attachInfo.attachType == __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["b" /* AttachType */].FLOW;
@@ -36328,6 +36333,8 @@ class FlowController {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(18);
+
 
 
 class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
@@ -36335,11 +36342,7 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         super();
         let shape = target.shape.clone();
         this.addChild(shape);
-        this.interactive = true;
-        this.buttonMode = true;
-        this.hitArea = shape.hitArea;
-        this.on('mouseover', () => this.alpha = 0.85);
-        this.on('mouseout', () => this.alpha = 1);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* makeTargetInteractive */])(this);
         this.on('mousedown', () => {
             let flowItem = target.createFlowItem();
             __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].stage.addChild(flowItem);
@@ -36384,7 +36387,7 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 
 class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
     constructor(logic, shape) {
-        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["c" /* noStrategy */]);
+        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["d" /* noStrategy */]);
     }
 }
 class BranchBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
@@ -56475,7 +56478,7 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])("let");
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE - GAP);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE - GAP);
     }
     clone() {
         return new DeclarationShape(this.color);
@@ -56555,6 +56558,7 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
         return this._highlightOffsets;
     }
     updateShape(logicChildren) {
+        super.updateShape(logicChildren);
         this._highlightOffsets = [];
         this.graphics.clear();
         this.graphics.lineStyle(1, 0x000000);
@@ -56567,7 +56571,13 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
                 }
                 else {
                     let child = logicChildren[i >> 1];
-                    let childWidth = child ? child.updateAndGetBounds().width : MINIMUM_ARG_WIDTH;
+                    let childWidth = 0;
+                    if (child) {
+                        childWidth = Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH);
+                    }
+                    else {
+                        childWidth = MINIMUM_ARG_WIDTH;
+                    }
                     width = Math.max(label.width, childWidth) + PADDING * 2;
                 }
                 if (func) {
@@ -56610,7 +56620,7 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             }
         });
         forEachLabel(-widthSum * .5, (nowX, width, label) => {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["e" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
         });
     }
 }
@@ -56663,12 +56673,11 @@ class IfBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockShap
         this.graphics.endFill();
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])('if');
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* centerChild */])(text, 0, -RADIUS);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["e" /* centerChild */])(text, 0, -RADIUS);
     }
     clone() {
         return new IfBlockShape();
     }
-    updateShape() { }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = IfBlockShape;
 
@@ -56711,7 +56720,7 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])(message);
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* centerChild */])(text, 0, -HEIGHT * .5);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5);
     }
     clone() {
         return new SignalShape(this.message);
