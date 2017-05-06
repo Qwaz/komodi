@@ -181,3 +181,68 @@ export let outlineStrategy: FlowStrategy = function (graphics: PIXI.Graphics, st
         offsetY: offset.offsetY,
     };
 };
+
+const LOOP_HORIZONTAL_PADDING = 10;
+const LOOP_TRIANGLE_WIDTH = 6;
+const LOOP_TRIANGLE_HEIGHT = 5;
+
+export let loopStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl): Offset {
+    setGraphicsStyle(graphics);
+
+    graphics.moveTo(0, 0);
+    graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+
+    drawEditPoint(graphics, 0, FLOW_VERTICAL_MARGIN*.5);
+    Global.attachController.updateFlowOffset(start, 1, {
+        offsetX: 0,
+        offsetY: FLOW_VERTICAL_MARGIN*.5,
+    });
+
+    let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
+
+    let bounds = start.getLocalBounds();
+    bounds.height -= LOOP_TRIANGLE_HEIGHT*.5;
+
+    let endX, endY;
+    graphics.lineStyle(2, 0x616161);
+    graphics.beginFill(0x616161);
+
+    const left = bounds.left - LOOP_HORIZONTAL_PADDING;
+    graphics.moveTo(left + bounds.width*.15, 0);
+    graphics.lineTo(left, 0);
+    graphics.moveTo(left, 0);
+    graphics.lineTo(left, bounds.bottom);
+    graphics.moveTo(left, bounds.bottom);
+    graphics.lineTo(left + bounds.width*.35, bounds.bottom);
+
+    endX = left + bounds.width*.35;
+    endY = bounds.bottom;
+    graphics.drawPolygon([
+        endX, endY,
+        endX-LOOP_TRIANGLE_WIDTH, endY-LOOP_TRIANGLE_HEIGHT*.5,
+        endX-LOOP_TRIANGLE_WIDTH, endY+LOOP_TRIANGLE_HEIGHT*.5,
+        endX, endY,
+    ]);
+
+    const right = bounds.right + LOOP_HORIZONTAL_PADDING;
+    graphics.moveTo(right - bounds.width*.15, bounds.bottom);
+    graphics.lineTo(right, bounds.bottom);
+    graphics.moveTo(right, bounds.bottom);
+    graphics.lineTo(right, 0);
+    graphics.moveTo(right, 0);
+    graphics.lineTo(right - bounds.width*.35, 0);
+
+    endX = right - bounds.width*.35;
+    endY = 0;
+    graphics.drawPolygon([
+        endX, endY,
+        endX+LOOP_TRIANGLE_WIDTH, endY-LOOP_TRIANGLE_HEIGHT*.5,
+        endX+LOOP_TRIANGLE_WIDTH, endY+LOOP_TRIANGLE_HEIGHT*.5,
+        endX, endY,
+    ]);
+
+    return {
+        offsetX: offset.offsetX,
+        offsetY: offset.offsetY,
+    };
+};

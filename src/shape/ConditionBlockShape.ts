@@ -11,17 +11,17 @@ const STEP = 10;
 
 const top = -2*RADIUS;
 
-export class IfBlockShape extends BlockShape {
+export class ConditionBlockShape extends BlockShape {
     private graphics: PIXI.Graphics;
 
     readonly returnType = new TVoid();
     readonly highlightOffsets = [{offsetX: 0, offsetY: top+TRIANGLE_HEIGHT, requiredType: new TBoolean()}];
 
     clone() {
-        return new IfBlockShape();
+        return new ConditionBlockShape(this.msg);
     }
 
-    constructor() {
+    constructor(readonly msg: string) {
         super();
 
         this.graphics = new PIXI.Graphics();
@@ -47,7 +47,7 @@ export class IfBlockShape extends BlockShape {
         this.graphics.drawShape(this.hitArea);
         this.graphics.endFill();
 
-        let text = createLabel('if');
+        let text = createLabel(msg);
         this.addChild(text);
         centerChild(text, 0, -RADIUS);
     }

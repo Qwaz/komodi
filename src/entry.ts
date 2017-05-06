@@ -1,23 +1,12 @@
 import * as PIXI from "pixi.js";
+import * as _ from "lodash";
 import {Generator} from "./ui/Generator";
-import {
-    binaryBlockFactory,
-    declarationFactory,
-    ifBlockFactory,
-    intBlockFactory,
-    multiplyBlockFactory,
-    noBlockFactory,
-    printStingBlockFactory,
-    startSignalFactory,
-    tenBlockFactory,
-    yesBlockFactory
-} from "./ui/blocks";
-
 import {FlowControl} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
 import {FlowController} from "./controllers/FlowController";
 import {LogicController} from "./controllers/LogicController";
 import {globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
+import {activeBlocks} from "./blockDefinition";
 
 const MENU_PADDING = 20;
 const TEXT_PADDING = 14;
@@ -70,18 +59,7 @@ export class Global {
 
     private constructor() {
         // logic initialization
-        Global.generators = [
-            new Generator(startSignalFactory),
-            new Generator(ifBlockFactory),
-            new Generator(declarationFactory),
-            new Generator(intBlockFactory),
-            new Generator(tenBlockFactory),
-            new Generator(multiplyBlockFactory),
-            new Generator(yesBlockFactory),
-            new Generator(noBlockFactory),
-            new Generator(printStingBlockFactory),
-            new Generator(binaryBlockFactory),
-        ];
+        Global.generators = _(activeBlocks).map((factory) => new Generator(factory)).value();
 
         Global.attachController = new AttachController();
         Global.flowController = new FlowController();

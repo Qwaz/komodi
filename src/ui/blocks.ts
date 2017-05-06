@@ -1,12 +1,13 @@
 import {Block, Declaration, FlowItemFactory, Signal} from "./flow";
 import {SignalShape} from "../shape/SignalShape";
-import {noStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
+import {loopStrategy, noStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {BlockShape} from "../shape/shape";
-import {IfBlockShape} from "../shape/IfBlockShape";
+import {ConditionBlockShape} from "../shape/ConditionBlockShape";
 import {DeclarationShape} from "../shape/DeclarationShape";
 import {FunctionShape} from "../shape/FunctionShape";
 import {TBoolean, TFunction, TNumber, TString, TVoid} from "../type/type";
 import {Logic} from "../logic/logic";
+import {Global} from "../entry";
 
 class SimpleBlock extends Block {
     constructor(logic: Logic, shape: BlockShape) {
@@ -14,9 +15,17 @@ class SimpleBlock extends Block {
     }
 }
 
-class BranchBlock extends Block {
+class IfBlock extends Block {
     constructor(logic: Logic, shape: BlockShape) {
         super(logic, shape, 2, splitJoinStrategy);
+    }
+}
+
+class WhileBlock extends Block {
+    constructor(logic: Logic, shape: BlockShape) {
+        super(logic, shape, 1, loopStrategy);
+
+        Global.flowController.update(this);
     }
 }
 
@@ -27,9 +36,15 @@ export let startSignalFactory = new FlowItemFactory(
 );
 
 export let ifBlockFactory = new FlowItemFactory(
-    BranchBlock,
+    IfBlock,
     new Logic(`if (@1) {$1} else {$2}`),
-    new IfBlockShape()
+    new ConditionBlockShape('if')
+);
+
+export let whileBlockFactory = new FlowItemFactory(
+    WhileBlock,
+    new Logic(`while (@1) {$1}`),
+    new ConditionBlockShape('while')
 );
 
 export let declarationFactory = new FlowItemFactory(

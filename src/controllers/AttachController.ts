@@ -215,6 +215,7 @@ export class AttachController {
 
                 // update display
                 parent.addChild(target);
+                parent.updateControl();
             } else {
                 throw new TypeError("attachType and attachTo do not match");
             }
