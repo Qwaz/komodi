@@ -35,10 +35,12 @@ export function globalPositionOf(target: PIXI.DisplayObject): PIXI.Point {
     return target.parent.toGlobal(target.position);
 }
 
-export function makeTargetInteractive(target: PIXI.Container) {
-    target.interactive = true;
-    target.buttonMode = true;
-
+export function enableHighlight(target: PIXI.DisplayObject) {
     target.on('mouseover', () => target.alpha = 0.75);
     target.on('mouseout', () => target.alpha = 1);
+}
+
+export function makeTargetInteractive(target: PIXI.DisplayObject) {
+    target.interactive = true;
+    target.buttonMode = true;
 }

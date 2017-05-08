@@ -201,7 +201,7 @@ export let loopStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start
     let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
 
     let bounds = start.getLocalBounds();
-    bounds.height -= LOOP_TRIANGLE_HEIGHT*.5;
+    bounds.height -= LOOP_TRIANGLE_HEIGHT*.5 + 1;
 
     let endX, endY;
     graphics.lineStyle(2, 0x616161);

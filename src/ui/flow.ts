@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
-import {hitTestRectangle, makeTargetInteractive} from "../utils";
+import {enableHighlight, hitTestRectangle, makeTargetInteractive} from "../utils";
 import {AttachInfo, AttachType} from "../controllers/AttachController";
 import {FlowStrategy, outlineStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {FlowHighlight, LogicHighlight} from "../shape/Highlight";
@@ -21,10 +21,14 @@ export abstract class FlowControl extends PIXI.Container {
     flowChildren: Array<FlowControl | null>;
 
     constructor(
+        readonly shape: Shape,
         numFlow: number,
         public flowStrategy: FlowStrategy,
     ) {
         super();
+
+        // UI Setup
+        this.addChild(shape);
 
         this.flowChildren = [];
         for (let i = 0; i < numFlow+1; i++) {
@@ -35,6 +39,8 @@ export abstract class FlowControl extends PIXI.Container {
 
         // event handling
         makeTargetInteractive(this);
+        makeTargetInteractive(this.shape);
+        enableHighlight(this.shape);
 
         this.on('mousedown', () => {
             if (!Global.dragging) {
@@ -123,11 +129,8 @@ export abstract class FlowControl extends PIXI.Container {
 }
 
 export class Signal extends FlowControl {
-    constructor(readonly logic: Logic, readonly shape: Shape) {
-        super(1, splitJoinStrategy);
-
-        // UI setup
-        this.addChild(shape);
+    constructor(readonly logic: Logic, shape: Shape) {
+        super(shape, 1, splitJoinStrategy);
 
         Global.logicController.registerSignal(this);
     }
@@ -153,10 +156,7 @@ export abstract class Block extends FlowControl {
         numFlow: number,
         flowStrategy: FlowStrategy,
     ) {
-        super(numFlow, flowStrategy);
-
-        // UI setup
-        this.addChild(shape);
+        super(shape, numFlow, flowStrategy);
 
         // attach management
         this.logicHighlights = [];
@@ -177,9 +177,6 @@ export abstract class Block extends FlowControl {
 
     updateControl() {
         super.updateControl();
-
-        console.log("Block Update");
-        console.trace();
 
         this.shape.updateShape(this.logicChildren);
 
@@ -217,17 +214,12 @@ export class Declaration extends FlowControl {
 
     constructor(
         readonly logic: Logic,
-        readonly shape: Shape
+        shape: Shape
     ) {
-        super(1, outlineStrategy);
-
-        // UI setup
-        this.addChild(shape);
+        super(shape, 1, outlineStrategy);
 
         this.outline = new PIXI.Graphics();
         this.addChildAt(this.outline, 0);
-
-        Global.flowController.update(this);
     }
 
     attachFilter(attachInfo: AttachInfo): boolean {

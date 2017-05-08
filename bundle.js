@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -127,7 +127,7 @@ Object.defineProperty(exports, 'DisplayObject', {
   }
 });
 
-var _Container = __webpack_require__(13);
+var _Container = __webpack_require__(14);
 
 Object.defineProperty(exports, 'Container', {
   enumerable: true,
@@ -262,7 +262,7 @@ Object.defineProperty(exports, 'Spritesheet', {
   }
 });
 
-var _Texture = __webpack_require__(10);
+var _Texture = __webpack_require__(11);
 
 Object.defineProperty(exports, 'Texture', {
   enumerable: true,
@@ -271,7 +271,7 @@ Object.defineProperty(exports, 'Texture', {
   }
 });
 
-var _BaseTexture = __webpack_require__(16);
+var _BaseTexture = __webpack_require__(17);
 
 Object.defineProperty(exports, 'BaseTexture', {
   enumerable: true,
@@ -325,7 +325,7 @@ Object.defineProperty(exports, 'CanvasRenderTarget', {
   }
 });
 
-var _Shader = __webpack_require__(12);
+var _Shader = __webpack_require__(13);
 
 Object.defineProperty(exports, 'Shader', {
   enumerable: true,
@@ -334,7 +334,7 @@ Object.defineProperty(exports, 'Shader', {
   }
 });
 
-var _WebGLManager = __webpack_require__(15);
+var _WebGLManager = __webpack_require__(16);
 
 Object.defineProperty(exports, 'WebGLManager', {
   enumerable: true,
@@ -418,7 +418,7 @@ var _settings = __webpack_require__(4);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _CanvasRenderer = __webpack_require__(14);
+var _CanvasRenderer = __webpack_require__(15);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -1849,10 +1849,11 @@ global.PIXI = exports; // eslint-disable-line
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["d"] = hitTestRectangle;
-/* harmony export (immutable) */ __webpack_exports__["b"] = moveToTop;
-/* harmony export (immutable) */ __webpack_exports__["e"] = centerChild;
-/* harmony export (immutable) */ __webpack_exports__["c"] = globalPositionOf;
+/* harmony export (immutable) */ __webpack_exports__["e"] = hitTestRectangle;
+/* harmony export (immutable) */ __webpack_exports__["c"] = moveToTop;
+/* harmony export (immutable) */ __webpack_exports__["f"] = centerChild;
+/* harmony export (immutable) */ __webpack_exports__["d"] = globalPositionOf;
+/* harmony export (immutable) */ __webpack_exports__["b"] = enableHighlight;
 /* harmony export (immutable) */ __webpack_exports__["a"] = makeTargetInteractive;
 function hitTestRectangle(obj1, obj2) {
     let bound1 = obj1.getBounds();
@@ -1881,11 +1882,13 @@ function centerChild(target, x, y) {
 function globalPositionOf(target) {
     return target.parent.toGlobal(target.position);
 }
+function enableHighlight(target) {
+    target.on('mouseover', () => target.alpha = 0.75);
+    target.on('mouseout', () => target.alpha = 1);
+}
 function makeTargetInteractive(target) {
     target.interactive = true;
     target.buttonMode = true;
-    target.on('mouseover', () => target.alpha = 0.75);
-    target.on('mouseout', () => target.alpha = 1);
 }
 
 
@@ -2209,635 +2212,6 @@ if (true) {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _BaseTexture = __webpack_require__(16);
-
-var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
-
-var _VideoBaseTexture = __webpack_require__(76);
-
-var _VideoBaseTexture2 = _interopRequireDefault(_VideoBaseTexture);
-
-var _TextureUvs = __webpack_require__(75);
-
-var _TextureUvs2 = _interopRequireDefault(_TextureUvs);
-
-var _eventemitter = __webpack_require__(9);
-
-var _eventemitter2 = _interopRequireDefault(_eventemitter);
-
-var _math = __webpack_require__(3);
-
-var _utils = __webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * A texture stores the information that represents an image or part of an image. It cannot be added
- * to the display list directly. Instead use it as the texture for a Sprite. If no frame is provided
- * then the whole image is used.
- *
- * You can directly create a texture from an image and then reuse it multiple times like this :
- *
- * ```js
- * let texture = PIXI.Texture.fromImage('assets/image.png');
- * let sprite1 = new PIXI.Sprite(texture);
- * let sprite2 = new PIXI.Sprite(texture);
- * ```
- *
- * Textures made from SVGs, loaded or not, cannot be used before the file finishes processing.
- * You can check for this by checking the sprite's _textureID property.
- * ```js
- * var texture = PIXI.Texture.fromImage('assets/image.svg');
- * var sprite1 = new PIXI.Sprite(texture);
- * //sprite1._textureID should not be undefined if the texture has finished processing the SVG file
- * ```
- * You can use a ticker or rAF to ensure your sprites load the finished textures after processing. See issue #3068.
- *
- * @class
- * @extends EventEmitter
- * @memberof PIXI
- */
-var Texture = function (_EventEmitter) {
-    _inherits(Texture, _EventEmitter);
-
-    /**
-     * @param {PIXI.BaseTexture} baseTexture - The base texture source to create the texture from
-     * @param {PIXI.Rectangle} [frame] - The rectangle frame of the texture to show
-     * @param {PIXI.Rectangle} [orig] - The area of original texture
-     * @param {PIXI.Rectangle} [trim] - Trimmed rectangle of original texture
-     * @param {number} [rotate] - indicates how the texture was rotated by texture packer. See {@link PIXI.GroupD8}
-     */
-    function Texture(baseTexture, frame, orig, trim, rotate) {
-        _classCallCheck(this, Texture);
-
-        /**
-         * Does this Texture have any frame data assigned to it?
-         *
-         * @member {boolean}
-         */
-        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
-
-        _this.noFrame = false;
-
-        if (!frame) {
-            _this.noFrame = true;
-            frame = new _math.Rectangle(0, 0, 1, 1);
-        }
-
-        if (baseTexture instanceof Texture) {
-            baseTexture = baseTexture.baseTexture;
-        }
-
-        /**
-         * The base texture that this texture uses.
-         *
-         * @member {PIXI.BaseTexture}
-         */
-        _this.baseTexture = baseTexture;
-
-        /**
-         * This is the area of the BaseTexture image to actually copy to the Canvas / WebGL when rendering,
-         * irrespective of the actual frame size or placement (which can be influenced by trimmed texture atlases)
-         *
-         * @member {PIXI.Rectangle}
-         */
-        _this._frame = frame;
-
-        /**
-         * This is the trimmed area of original texture, before it was put in atlas
-         *
-         * @member {PIXI.Rectangle}
-         */
-        _this.trim = trim;
-
-        /**
-         * This will let the renderer know if the texture is valid. If it's not then it cannot be rendered.
-         *
-         * @member {boolean}
-         */
-        _this.valid = false;
-
-        /**
-         * This will let a renderer know that a texture has been updated (used mainly for webGL uv updates)
-         *
-         * @member {boolean}
-         */
-        _this.requiresUpdate = false;
-
-        /**
-         * The WebGL UV data cache.
-         *
-         * @member {PIXI.TextureUvs}
-         * @private
-         */
-        _this._uvs = null;
-
-        /**
-         * This is the area of original texture, before it was put in atlas
-         *
-         * @member {PIXI.Rectangle}
-         */
-        _this.orig = orig || frame; // new Rectangle(0, 0, 1, 1);
-
-        _this._rotate = Number(rotate || 0);
-
-        if (rotate === true) {
-            // this is old texturepacker legacy, some games/libraries are passing "true" for rotated textures
-            _this._rotate = 2;
-        } else if (_this._rotate % 2 !== 0) {
-            throw new Error('attempt to use diamond-shaped UVs. If you are sure, set rotation manually');
-        }
-
-        if (baseTexture.hasLoaded) {
-            if (_this.noFrame) {
-                frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
-
-                // if there is no frame we should monitor for any base texture changes..
-                baseTexture.on('update', _this.onBaseTextureUpdated, _this);
-            }
-            _this.frame = frame;
-        } else {
-            baseTexture.once('loaded', _this.onBaseTextureLoaded, _this);
-        }
-
-        /**
-         * Fired when the texture is updated. This happens if the frame or the baseTexture is updated.
-         *
-         * @event update
-         * @memberof PIXI.Texture#
-         * @protected
-         */
-
-        _this._updateID = 0;
-
-        /**
-         * Extra field for extra plugins. May contain clamp settings and some matrices
-         * @type {Object}
-         */
-        _this.transform = null;
-        return _this;
-    }
-
-    /**
-     * Updates this texture on the gpu.
-     *
-     */
-
-
-    Texture.prototype.update = function update() {
-        this.baseTexture.update();
-    };
-
-    /**
-     * Called when the base texture is loaded
-     *
-     * @private
-     * @param {PIXI.BaseTexture} baseTexture - The base texture.
-     */
-
-
-    Texture.prototype.onBaseTextureLoaded = function onBaseTextureLoaded(baseTexture) {
-        this._updateID++;
-
-        // TODO this code looks confusing.. boo to abusing getters and setters!
-        if (this.noFrame) {
-            this.frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
-        } else {
-            this.frame = this._frame;
-        }
-
-        this.baseTexture.on('update', this.onBaseTextureUpdated, this);
-        this.emit('update', this);
-    };
-
-    /**
-     * Called when the base texture is updated
-     *
-     * @private
-     * @param {PIXI.BaseTexture} baseTexture - The base texture.
-     */
-
-
-    Texture.prototype.onBaseTextureUpdated = function onBaseTextureUpdated(baseTexture) {
-        this._updateID++;
-
-        this._frame.width = baseTexture.width;
-        this._frame.height = baseTexture.height;
-
-        this.emit('update', this);
-    };
-
-    /**
-     * Destroys this texture
-     *
-     * @param {boolean} [destroyBase=false] Whether to destroy the base texture as well
-     */
-
-
-    Texture.prototype.destroy = function destroy(destroyBase) {
-        if (this.baseTexture) {
-            if (destroyBase) {
-                // delete the texture if it exists in the texture cache..
-                // this only needs to be removed if the base texture is actually destroyed too..
-                if (_utils.TextureCache[this.baseTexture.imageUrl]) {
-                    delete _utils.TextureCache[this.baseTexture.imageUrl];
-                }
-
-                this.baseTexture.destroy();
-            }
-
-            this.baseTexture.off('update', this.onBaseTextureUpdated, this);
-            this.baseTexture.off('loaded', this.onBaseTextureLoaded, this);
-
-            this.baseTexture = null;
-        }
-
-        this._frame = null;
-        this._uvs = null;
-        this.trim = null;
-        this.orig = null;
-
-        this.valid = false;
-
-        this.off('dispose', this.dispose, this);
-        this.off('update', this.update, this);
-    };
-
-    /**
-     * Creates a new texture object that acts the same as this one.
-     *
-     * @return {PIXI.Texture} The new texture
-     */
-
-
-    Texture.prototype.clone = function clone() {
-        return new Texture(this.baseTexture, this.frame, this.orig, this.trim, this.rotate);
-    };
-
-    /**
-     * Updates the internal WebGL UV cache.
-     *
-     * @protected
-     */
-
-
-    Texture.prototype._updateUvs = function _updateUvs() {
-        if (!this._uvs) {
-            this._uvs = new _TextureUvs2.default();
-        }
-
-        this._uvs.set(this._frame, this.baseTexture, this.rotate);
-
-        this._updateID++;
-    };
-
-    /**
-     * Helper function that creates a Texture object from the given image url.
-     * If the image is not in the texture cache it will be  created and loaded.
-     *
-     * @static
-     * @param {string} imageUrl - The image url of the texture
-     * @param {boolean} [crossorigin] - Whether requests should be treated as crossorigin
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with SVG images.
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
-        var texture = _utils.TextureCache[imageUrl];
-
-        if (!texture) {
-            texture = new Texture(_BaseTexture2.default.fromImage(imageUrl, crossorigin, scaleMode, sourceScale));
-            _utils.TextureCache[imageUrl] = texture;
-        }
-
-        return texture;
-    };
-
-    /**
-     * Helper function that creates a sprite that will contain a texture from the TextureCache based on the frameId
-     * The frame ids are created when a Texture packer file has been loaded
-     *
-     * @static
-     * @param {string} frameId - The frame Id of the texture in the cache
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromFrame = function fromFrame(frameId) {
-        var texture = _utils.TextureCache[frameId];
-
-        if (!texture) {
-            throw new Error('The frameId "' + frameId + '" does not exist in the texture cache');
-        }
-
-        return texture;
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the given canvas element.
-     *
-     * @static
-     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromCanvas = function fromCanvas(canvas, scaleMode) {
-        return new Texture(_BaseTexture2.default.fromCanvas(canvas, scaleMode));
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the given video element.
-     *
-     * @static
-     * @param {HTMLVideoElement|string} video - The URL or actual element of the video
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromVideo = function fromVideo(video, scaleMode) {
-        if (typeof video === 'string') {
-            return Texture.fromVideoUrl(video, scaleMode);
-        }
-
-        return new Texture(_VideoBaseTexture2.default.fromVideo(video, scaleMode));
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the video url.
-     *
-     * @static
-     * @param {string} videoUrl - URL of the video
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromVideoUrl = function fromVideoUrl(videoUrl, scaleMode) {
-        return new Texture(_VideoBaseTexture2.default.fromUrl(videoUrl, scaleMode));
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the source you provide.
-     * The source can be - frame id, image url, video url, canvas element, video element, base texture
-     *
-     * @static
-     * @param {number|string|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|PIXI.BaseTexture}
-     *        source - Source to create texture from
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.from = function from(source) {
-        // TODO auto detect cross origin..
-        // TODO pass in scale mode?
-        if (typeof source === 'string') {
-            var texture = _utils.TextureCache[source];
-
-            if (!texture) {
-                // check if its a video..
-                var isVideo = source.match(/\.(mp4|webm|ogg|h264|avi|mov)$/) !== null;
-
-                if (isVideo) {
-                    return Texture.fromVideoUrl(source);
-                }
-
-                return Texture.fromImage(source);
-            }
-
-            return texture;
-        } else if (source instanceof HTMLImageElement) {
-            return new Texture(_BaseTexture2.default.from(source));
-        } else if (source instanceof HTMLCanvasElement) {
-            return Texture.fromCanvas(source);
-        } else if (source instanceof HTMLVideoElement) {
-            return Texture.fromVideo(source);
-        } else if (source instanceof _BaseTexture2.default) {
-            return new Texture(source);
-        }
-
-        // lets assume its a texture!
-        return source;
-    };
-
-    /**
-     * Create a texture from a source and add to the cache.
-     *
-     * @static
-     * @param {HTMLImageElement|HTMLCanvasElement} source - The input source.
-     * @param {String} imageUrl - File name of texture, for cache and resolving resolution.
-     * @param {String} [name] - Human readible name for the texture cache. If no name is
-     *        specified, only `imageUrl` will be used as the cache ID.
-     * @return {PIXI.Texture} Output texture
-     */
-
-
-    Texture.fromLoader = function fromLoader(source, imageUrl, name) {
-        var baseTexture = new _BaseTexture2.default(source, undefined, (0, _utils.getResolutionOfUrl)(imageUrl));
-        var texture = new Texture(baseTexture);
-
-        baseTexture.imageUrl = imageUrl;
-
-        // No name, use imageUrl instead
-        if (!name) {
-            name = imageUrl;
-        }
-
-        // lets also add the frame to pixi's global cache for fromFrame and fromImage fucntions
-        _utils.BaseTextureCache[name] = baseTexture;
-        _utils.TextureCache[name] = texture;
-
-        // also add references by url if they are different.
-        if (name !== imageUrl) {
-            _utils.BaseTextureCache[imageUrl] = baseTexture;
-            _utils.TextureCache[imageUrl] = texture;
-        }
-
-        return texture;
-    };
-
-    /**
-     * Adds a texture to the global TextureCache. This cache is shared across the whole PIXI object.
-     *
-     * @static
-     * @param {PIXI.Texture} texture - The Texture to add to the cache.
-     * @param {string} id - The id that the texture will be stored against.
-     */
-
-
-    Texture.addTextureToCache = function addTextureToCache(texture, id) {
-        _utils.TextureCache[id] = texture;
-    };
-
-    /**
-     * Remove a texture from the global TextureCache.
-     *
-     * @static
-     * @param {string} id - The id of the texture to be removed
-     * @return {PIXI.Texture} The texture that was removed
-     */
-
-
-    Texture.removeTextureFromCache = function removeTextureFromCache(id) {
-        var texture = _utils.TextureCache[id];
-
-        delete _utils.TextureCache[id];
-        delete _utils.BaseTextureCache[id];
-
-        return texture;
-    };
-
-    /**
-     * The frame specifies the region of the base texture that this texture uses.
-     *
-     * @member {PIXI.Rectangle}
-     */
-
-
-    _createClass(Texture, [{
-        key: 'frame',
-        get: function get() {
-            return this._frame;
-        },
-        set: function set(frame) // eslint-disable-line require-jsdoc
-        {
-            this._frame = frame;
-
-            this.noFrame = false;
-
-            if (frame.x + frame.width > this.baseTexture.width || frame.y + frame.height > this.baseTexture.height) {
-                throw new Error('Texture Error: frame does not fit inside the base Texture dimensions: ' + ('X: ' + frame.x + ' + ' + frame.width + ' > ' + this.baseTexture.width + ' ') + ('Y: ' + frame.y + ' + ' + frame.height + ' > ' + this.baseTexture.height));
-            }
-
-            // this.valid = frame && frame.width && frame.height && this.baseTexture.source && this.baseTexture.hasLoaded;
-            this.valid = frame && frame.width && frame.height && this.baseTexture.hasLoaded;
-
-            if (!this.trim && !this.rotate) {
-                this.orig = frame;
-            }
-
-            if (this.valid) {
-                this._updateUvs();
-            }
-        }
-
-        /**
-         * Indicates whether the texture is rotated inside the atlas
-         * set to 2 to compensate for texture packer rotation
-         * set to 6 to compensate for spine packer rotation
-         * can be used to rotate or mirror sprites
-         * See {@link PIXI.GroupD8} for explanation
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'rotate',
-        get: function get() {
-            return this._rotate;
-        },
-        set: function set(rotate) // eslint-disable-line require-jsdoc
-        {
-            this._rotate = rotate;
-            if (this.valid) {
-                this._updateUvs();
-            }
-        }
-
-        /**
-         * The width of the Texture in pixels.
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'width',
-        get: function get() {
-            return this.orig.width;
-        }
-
-        /**
-         * The height of the Texture in pixels.
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'height',
-        get: function get() {
-            return this.orig.height;
-        }
-    }]);
-
-    return Texture;
-}(_eventemitter2.default);
-
-exports.default = Texture;
-
-
-function createWhiteTexture() {
-    var canvas = document.createElement('canvas');
-
-    canvas.width = 10;
-    canvas.height = 10;
-
-    var context = canvas.getContext('2d');
-
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, 10, 10);
-
-    return new Texture(new _BaseTexture2.default(canvas));
-}
-
-function removeAllHandlers(tex) {
-    tex.destroy = function _emptyDestroy() {/* empty */};
-    tex.on = function _emptyOn() {/* empty */};
-    tex.once = function _emptyOnce() {/* empty */};
-    tex.emit = function _emptyEmit() {/* empty */};
-}
-
-/**
- * An empty texture, used often to not have to create multiple empty textures.
- * Can not be destroyed.
- *
- * @static
- * @constant
- */
-Texture.EMPTY = new Texture(new _BaseTexture2.default());
-removeAllHandlers(Texture.EMPTY);
-
-/**
- * A white texture of 10x10 size, used for graphics and other things
- * Can not be destroyed.
- *
- * @static
- * @constant
- */
-Texture.WHITE = createWhiteTexture();
-removeAllHandlers(Texture.WHITE);
-//# sourceMappingURL=Texture.js.map
-
-/***/ }),
-/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -19929,7 +19303,780 @@ removeAllHandlers(Texture.WHITE);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25), __webpack_require__(98)(module)))
 
 /***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _BaseTexture = __webpack_require__(17);
+
+var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
+
+var _VideoBaseTexture = __webpack_require__(76);
+
+var _VideoBaseTexture2 = _interopRequireDefault(_VideoBaseTexture);
+
+var _TextureUvs = __webpack_require__(75);
+
+var _TextureUvs2 = _interopRequireDefault(_TextureUvs);
+
+var _eventemitter = __webpack_require__(9);
+
+var _eventemitter2 = _interopRequireDefault(_eventemitter);
+
+var _math = __webpack_require__(3);
+
+var _utils = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * A texture stores the information that represents an image or part of an image. It cannot be added
+ * to the display list directly. Instead use it as the texture for a Sprite. If no frame is provided
+ * then the whole image is used.
+ *
+ * You can directly create a texture from an image and then reuse it multiple times like this :
+ *
+ * ```js
+ * let texture = PIXI.Texture.fromImage('assets/image.png');
+ * let sprite1 = new PIXI.Sprite(texture);
+ * let sprite2 = new PIXI.Sprite(texture);
+ * ```
+ *
+ * Textures made from SVGs, loaded or not, cannot be used before the file finishes processing.
+ * You can check for this by checking the sprite's _textureID property.
+ * ```js
+ * var texture = PIXI.Texture.fromImage('assets/image.svg');
+ * var sprite1 = new PIXI.Sprite(texture);
+ * //sprite1._textureID should not be undefined if the texture has finished processing the SVG file
+ * ```
+ * You can use a ticker or rAF to ensure your sprites load the finished textures after processing. See issue #3068.
+ *
+ * @class
+ * @extends EventEmitter
+ * @memberof PIXI
+ */
+var Texture = function (_EventEmitter) {
+    _inherits(Texture, _EventEmitter);
+
+    /**
+     * @param {PIXI.BaseTexture} baseTexture - The base texture source to create the texture from
+     * @param {PIXI.Rectangle} [frame] - The rectangle frame of the texture to show
+     * @param {PIXI.Rectangle} [orig] - The area of original texture
+     * @param {PIXI.Rectangle} [trim] - Trimmed rectangle of original texture
+     * @param {number} [rotate] - indicates how the texture was rotated by texture packer. See {@link PIXI.GroupD8}
+     */
+    function Texture(baseTexture, frame, orig, trim, rotate) {
+        _classCallCheck(this, Texture);
+
+        /**
+         * Does this Texture have any frame data assigned to it?
+         *
+         * @member {boolean}
+         */
+        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+        _this.noFrame = false;
+
+        if (!frame) {
+            _this.noFrame = true;
+            frame = new _math.Rectangle(0, 0, 1, 1);
+        }
+
+        if (baseTexture instanceof Texture) {
+            baseTexture = baseTexture.baseTexture;
+        }
+
+        /**
+         * The base texture that this texture uses.
+         *
+         * @member {PIXI.BaseTexture}
+         */
+        _this.baseTexture = baseTexture;
+
+        /**
+         * This is the area of the BaseTexture image to actually copy to the Canvas / WebGL when rendering,
+         * irrespective of the actual frame size or placement (which can be influenced by trimmed texture atlases)
+         *
+         * @member {PIXI.Rectangle}
+         */
+        _this._frame = frame;
+
+        /**
+         * This is the trimmed area of original texture, before it was put in atlas
+         *
+         * @member {PIXI.Rectangle}
+         */
+        _this.trim = trim;
+
+        /**
+         * This will let the renderer know if the texture is valid. If it's not then it cannot be rendered.
+         *
+         * @member {boolean}
+         */
+        _this.valid = false;
+
+        /**
+         * This will let a renderer know that a texture has been updated (used mainly for webGL uv updates)
+         *
+         * @member {boolean}
+         */
+        _this.requiresUpdate = false;
+
+        /**
+         * The WebGL UV data cache.
+         *
+         * @member {PIXI.TextureUvs}
+         * @private
+         */
+        _this._uvs = null;
+
+        /**
+         * This is the area of original texture, before it was put in atlas
+         *
+         * @member {PIXI.Rectangle}
+         */
+        _this.orig = orig || frame; // new Rectangle(0, 0, 1, 1);
+
+        _this._rotate = Number(rotate || 0);
+
+        if (rotate === true) {
+            // this is old texturepacker legacy, some games/libraries are passing "true" for rotated textures
+            _this._rotate = 2;
+        } else if (_this._rotate % 2 !== 0) {
+            throw new Error('attempt to use diamond-shaped UVs. If you are sure, set rotation manually');
+        }
+
+        if (baseTexture.hasLoaded) {
+            if (_this.noFrame) {
+                frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
+
+                // if there is no frame we should monitor for any base texture changes..
+                baseTexture.on('update', _this.onBaseTextureUpdated, _this);
+            }
+            _this.frame = frame;
+        } else {
+            baseTexture.once('loaded', _this.onBaseTextureLoaded, _this);
+        }
+
+        /**
+         * Fired when the texture is updated. This happens if the frame or the baseTexture is updated.
+         *
+         * @event update
+         * @memberof PIXI.Texture#
+         * @protected
+         */
+
+        _this._updateID = 0;
+
+        /**
+         * Extra field for extra plugins. May contain clamp settings and some matrices
+         * @type {Object}
+         */
+        _this.transform = null;
+        return _this;
+    }
+
+    /**
+     * Updates this texture on the gpu.
+     *
+     */
+
+
+    Texture.prototype.update = function update() {
+        this.baseTexture.update();
+    };
+
+    /**
+     * Called when the base texture is loaded
+     *
+     * @private
+     * @param {PIXI.BaseTexture} baseTexture - The base texture.
+     */
+
+
+    Texture.prototype.onBaseTextureLoaded = function onBaseTextureLoaded(baseTexture) {
+        this._updateID++;
+
+        // TODO this code looks confusing.. boo to abusing getters and setters!
+        if (this.noFrame) {
+            this.frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
+        } else {
+            this.frame = this._frame;
+        }
+
+        this.baseTexture.on('update', this.onBaseTextureUpdated, this);
+        this.emit('update', this);
+    };
+
+    /**
+     * Called when the base texture is updated
+     *
+     * @private
+     * @param {PIXI.BaseTexture} baseTexture - The base texture.
+     */
+
+
+    Texture.prototype.onBaseTextureUpdated = function onBaseTextureUpdated(baseTexture) {
+        this._updateID++;
+
+        this._frame.width = baseTexture.width;
+        this._frame.height = baseTexture.height;
+
+        this.emit('update', this);
+    };
+
+    /**
+     * Destroys this texture
+     *
+     * @param {boolean} [destroyBase=false] Whether to destroy the base texture as well
+     */
+
+
+    Texture.prototype.destroy = function destroy(destroyBase) {
+        if (this.baseTexture) {
+            if (destroyBase) {
+                // delete the texture if it exists in the texture cache..
+                // this only needs to be removed if the base texture is actually destroyed too..
+                if (_utils.TextureCache[this.baseTexture.imageUrl]) {
+                    delete _utils.TextureCache[this.baseTexture.imageUrl];
+                }
+
+                this.baseTexture.destroy();
+            }
+
+            this.baseTexture.off('update', this.onBaseTextureUpdated, this);
+            this.baseTexture.off('loaded', this.onBaseTextureLoaded, this);
+
+            this.baseTexture = null;
+        }
+
+        this._frame = null;
+        this._uvs = null;
+        this.trim = null;
+        this.orig = null;
+
+        this.valid = false;
+
+        this.off('dispose', this.dispose, this);
+        this.off('update', this.update, this);
+    };
+
+    /**
+     * Creates a new texture object that acts the same as this one.
+     *
+     * @return {PIXI.Texture} The new texture
+     */
+
+
+    Texture.prototype.clone = function clone() {
+        return new Texture(this.baseTexture, this.frame, this.orig, this.trim, this.rotate);
+    };
+
+    /**
+     * Updates the internal WebGL UV cache.
+     *
+     * @protected
+     */
+
+
+    Texture.prototype._updateUvs = function _updateUvs() {
+        if (!this._uvs) {
+            this._uvs = new _TextureUvs2.default();
+        }
+
+        this._uvs.set(this._frame, this.baseTexture, this.rotate);
+
+        this._updateID++;
+    };
+
+    /**
+     * Helper function that creates a Texture object from the given image url.
+     * If the image is not in the texture cache it will be  created and loaded.
+     *
+     * @static
+     * @param {string} imageUrl - The image url of the texture
+     * @param {boolean} [crossorigin] - Whether requests should be treated as crossorigin
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with SVG images.
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
+        var texture = _utils.TextureCache[imageUrl];
+
+        if (!texture) {
+            texture = new Texture(_BaseTexture2.default.fromImage(imageUrl, crossorigin, scaleMode, sourceScale));
+            _utils.TextureCache[imageUrl] = texture;
+        }
+
+        return texture;
+    };
+
+    /**
+     * Helper function that creates a sprite that will contain a texture from the TextureCache based on the frameId
+     * The frame ids are created when a Texture packer file has been loaded
+     *
+     * @static
+     * @param {string} frameId - The frame Id of the texture in the cache
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromFrame = function fromFrame(frameId) {
+        var texture = _utils.TextureCache[frameId];
+
+        if (!texture) {
+            throw new Error('The frameId "' + frameId + '" does not exist in the texture cache');
+        }
+
+        return texture;
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the given canvas element.
+     *
+     * @static
+     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromCanvas = function fromCanvas(canvas, scaleMode) {
+        return new Texture(_BaseTexture2.default.fromCanvas(canvas, scaleMode));
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the given video element.
+     *
+     * @static
+     * @param {HTMLVideoElement|string} video - The URL or actual element of the video
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromVideo = function fromVideo(video, scaleMode) {
+        if (typeof video === 'string') {
+            return Texture.fromVideoUrl(video, scaleMode);
+        }
+
+        return new Texture(_VideoBaseTexture2.default.fromVideo(video, scaleMode));
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the video url.
+     *
+     * @static
+     * @param {string} videoUrl - URL of the video
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromVideoUrl = function fromVideoUrl(videoUrl, scaleMode) {
+        return new Texture(_VideoBaseTexture2.default.fromUrl(videoUrl, scaleMode));
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the source you provide.
+     * The source can be - frame id, image url, video url, canvas element, video element, base texture
+     *
+     * @static
+     * @param {number|string|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|PIXI.BaseTexture}
+     *        source - Source to create texture from
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.from = function from(source) {
+        // TODO auto detect cross origin..
+        // TODO pass in scale mode?
+        if (typeof source === 'string') {
+            var texture = _utils.TextureCache[source];
+
+            if (!texture) {
+                // check if its a video..
+                var isVideo = source.match(/\.(mp4|webm|ogg|h264|avi|mov)$/) !== null;
+
+                if (isVideo) {
+                    return Texture.fromVideoUrl(source);
+                }
+
+                return Texture.fromImage(source);
+            }
+
+            return texture;
+        } else if (source instanceof HTMLImageElement) {
+            return new Texture(_BaseTexture2.default.from(source));
+        } else if (source instanceof HTMLCanvasElement) {
+            return Texture.fromCanvas(source);
+        } else if (source instanceof HTMLVideoElement) {
+            return Texture.fromVideo(source);
+        } else if (source instanceof _BaseTexture2.default) {
+            return new Texture(source);
+        }
+
+        // lets assume its a texture!
+        return source;
+    };
+
+    /**
+     * Create a texture from a source and add to the cache.
+     *
+     * @static
+     * @param {HTMLImageElement|HTMLCanvasElement} source - The input source.
+     * @param {String} imageUrl - File name of texture, for cache and resolving resolution.
+     * @param {String} [name] - Human readible name for the texture cache. If no name is
+     *        specified, only `imageUrl` will be used as the cache ID.
+     * @return {PIXI.Texture} Output texture
+     */
+
+
+    Texture.fromLoader = function fromLoader(source, imageUrl, name) {
+        var baseTexture = new _BaseTexture2.default(source, undefined, (0, _utils.getResolutionOfUrl)(imageUrl));
+        var texture = new Texture(baseTexture);
+
+        baseTexture.imageUrl = imageUrl;
+
+        // No name, use imageUrl instead
+        if (!name) {
+            name = imageUrl;
+        }
+
+        // lets also add the frame to pixi's global cache for fromFrame and fromImage fucntions
+        _utils.BaseTextureCache[name] = baseTexture;
+        _utils.TextureCache[name] = texture;
+
+        // also add references by url if they are different.
+        if (name !== imageUrl) {
+            _utils.BaseTextureCache[imageUrl] = baseTexture;
+            _utils.TextureCache[imageUrl] = texture;
+        }
+
+        return texture;
+    };
+
+    /**
+     * Adds a texture to the global TextureCache. This cache is shared across the whole PIXI object.
+     *
+     * @static
+     * @param {PIXI.Texture} texture - The Texture to add to the cache.
+     * @param {string} id - The id that the texture will be stored against.
+     */
+
+
+    Texture.addTextureToCache = function addTextureToCache(texture, id) {
+        _utils.TextureCache[id] = texture;
+    };
+
+    /**
+     * Remove a texture from the global TextureCache.
+     *
+     * @static
+     * @param {string} id - The id of the texture to be removed
+     * @return {PIXI.Texture} The texture that was removed
+     */
+
+
+    Texture.removeTextureFromCache = function removeTextureFromCache(id) {
+        var texture = _utils.TextureCache[id];
+
+        delete _utils.TextureCache[id];
+        delete _utils.BaseTextureCache[id];
+
+        return texture;
+    };
+
+    /**
+     * The frame specifies the region of the base texture that this texture uses.
+     *
+     * @member {PIXI.Rectangle}
+     */
+
+
+    _createClass(Texture, [{
+        key: 'frame',
+        get: function get() {
+            return this._frame;
+        },
+        set: function set(frame) // eslint-disable-line require-jsdoc
+        {
+            this._frame = frame;
+
+            this.noFrame = false;
+
+            if (frame.x + frame.width > this.baseTexture.width || frame.y + frame.height > this.baseTexture.height) {
+                throw new Error('Texture Error: frame does not fit inside the base Texture dimensions: ' + ('X: ' + frame.x + ' + ' + frame.width + ' > ' + this.baseTexture.width + ' ') + ('Y: ' + frame.y + ' + ' + frame.height + ' > ' + this.baseTexture.height));
+            }
+
+            // this.valid = frame && frame.width && frame.height && this.baseTexture.source && this.baseTexture.hasLoaded;
+            this.valid = frame && frame.width && frame.height && this.baseTexture.hasLoaded;
+
+            if (!this.trim && !this.rotate) {
+                this.orig = frame;
+            }
+
+            if (this.valid) {
+                this._updateUvs();
+            }
+        }
+
+        /**
+         * Indicates whether the texture is rotated inside the atlas
+         * set to 2 to compensate for texture packer rotation
+         * set to 6 to compensate for spine packer rotation
+         * can be used to rotate or mirror sprites
+         * See {@link PIXI.GroupD8} for explanation
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'rotate',
+        get: function get() {
+            return this._rotate;
+        },
+        set: function set(rotate) // eslint-disable-line require-jsdoc
+        {
+            this._rotate = rotate;
+            if (this.valid) {
+                this._updateUvs();
+            }
+        }
+
+        /**
+         * The width of the Texture in pixels.
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'width',
+        get: function get() {
+            return this.orig.width;
+        }
+
+        /**
+         * The height of the Texture in pixels.
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'height',
+        get: function get() {
+            return this.orig.height;
+        }
+    }]);
+
+    return Texture;
+}(_eventemitter2.default);
+
+exports.default = Texture;
+
+
+function createWhiteTexture() {
+    var canvas = document.createElement('canvas');
+
+    canvas.width = 10;
+    canvas.height = 10;
+
+    var context = canvas.getContext('2d');
+
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, 10, 10);
+
+    return new Texture(new _BaseTexture2.default(canvas));
+}
+
+function removeAllHandlers(tex) {
+    tex.destroy = function _emptyDestroy() {/* empty */};
+    tex.on = function _emptyOn() {/* empty */};
+    tex.once = function _emptyOnce() {/* empty */};
+    tex.emit = function _emptyEmit() {/* empty */};
+}
+
+/**
+ * An empty texture, used often to not have to create multiple empty textures.
+ * Can not be destroyed.
+ *
+ * @static
+ * @constant
+ */
+Texture.EMPTY = new Texture(new _BaseTexture2.default());
+removeAllHandlers(Texture.EMPTY);
+
+/**
+ * A white texture of 10x10 size, used for graphics and other things
+ * Can not be destroyed.
+ *
+ * @static
+ * @constant
+ */
+Texture.WHITE = createWhiteTexture();
+removeAllHandlers(Texture.WHITE);
+//# sourceMappingURL=Texture.js.map
+
+/***/ }),
 /* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_Generator__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__blockDefinition__ = __webpack_require__(99);
+
+
+
+
+
+
+
+
+const MENU_PADDING = 20;
+const TEXT_PADDING = 14;
+class TextButton extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
+    constructor(msg, color = 0xFFFFFF) {
+        super();
+        this.text = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Text"](msg);
+        this.text.x = TEXT_PADDING;
+        this.text.y = TEXT_PADDING;
+        let backgroundWidth = this.text.width + TEXT_PADDING * 2;
+        let backgroundHeight = this.text.height + TEXT_PADDING * 2;
+        this.background = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
+        this.background.lineStyle(1);
+        this.background.beginFill(color);
+        this.background.drawRect(0, 0, backgroundWidth, backgroundHeight);
+        this.background.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](0, 0, backgroundWidth, backgroundHeight);
+        this.addChild(this.background);
+        this.addChild(this.text);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["b" /* enableHighlight */])(this);
+    }
+}
+class Global {
+    constructor() {
+        Global.generators = __WEBPACK_IMPORTED_MODULE_1_lodash__(__WEBPACK_IMPORTED_MODULE_7__blockDefinition__["a" /* activeBlocks */]).map((factory) => new __WEBPACK_IMPORTED_MODULE_2__ui_Generator__["a" /* Generator */](factory)).value();
+        Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
+        Global.flowController = new __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__["a" /* FlowController */]();
+        Global.logicController = new __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__["a" /* LogicController */]();
+        Global.renderer = __WEBPACK_IMPORTED_MODULE_0_pixi_js__["autoDetectRenderer"](1, 1, { antialias: false, transparent: false, resolution: 2 });
+        Global.renderer.backgroundColor = 0xECEFF1;
+        Global.renderer.view.style.position = "absolute";
+        Global.renderer.view.style.display = "block";
+        Global.renderer.autoResize = true;
+        document.body.appendChild(Global.renderer.view);
+        Global.stage = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"]();
+        Global.menu = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
+        Global.stage.addChild(Global.menu);
+        Global.runButton = new TextButton("RUN", 0xE0F2F1);
+        Global.runButton.on("click", function () {
+            let code = Global.logicController.generateCode();
+            eval(code);
+        });
+        Global.stage.addChild(Global.runButton);
+        {
+            let maxHeight = 0;
+            for (let generator of Global.generators) {
+                Global.menu.addChild(generator);
+                maxHeight = Math.max(maxHeight, generator.height);
+            }
+            Global.menuHeight = maxHeight + 2 * MENU_PADDING;
+            let widthSum = 0;
+            for (let i = 0; i < Global.generators.length; i++) {
+                let generator = Global.generators[i];
+                generator.x = (i + 1) * MENU_PADDING + widthSum + generator.width * .5;
+                generator.y = Global.menuHeight * .5 + generator.height * .5;
+                widthSum += generator.width;
+            }
+        }
+        window.addEventListener('resize', this.drawMenu, true);
+        this.drawMenu();
+    }
+    static get instance() {
+        return this._instance || (this._instance = new Global());
+    }
+    static get dragging() {
+        return Global._dragging;
+    }
+    static setDragging(target, pivotX, pivotY) {
+        if (target) {
+            Global._dragging = target;
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* moveToTop */])(target);
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["d" /* globalPositionOf */])(target);
+            pivotX = pivotX || globalPosition.x;
+            pivotY = pivotY || globalPosition.y;
+            Global.dragOffset = {
+                offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
+                offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
+            };
+        }
+        else {
+            Global._dragging = null;
+        }
+    }
+    drawMenu() {
+        Global.menu.clear();
+        Global.menu.beginFill(0xCFD8DC);
+        Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
+        Global.menu.endFill();
+        Global.renderer.resize(window.innerWidth, window.innerHeight);
+        Global.runButton.x = MENU_PADDING;
+        Global.runButton.y = window.innerHeight - Global.runButton.height - MENU_PADDING;
+    }
+    update() {
+        if (Global._dragging) {
+            let target = Global._dragging;
+            target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
+            target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
+            let attachInfo = Global.attachController.getNearestAttachPoint(target.x, target.y, target.attachFilter.bind(target));
+            if (attachInfo) {
+                Global.attachController.setHighlight(attachInfo);
+            }
+            else {
+                Global.attachController.removeHighlight();
+            }
+        }
+        Global.renderer.render(Global.stage);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["Global"] = Global;
+
+Global._instance = new Global();
+Global._dragging = null;
+Global.dragOffset = { offsetX: 0, offsetY: 0 };
+let state = Global.instance;
+function loop() {
+    requestAnimationFrame(loop);
+    state.update();
+}
+loop();
+
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19998,7 +20145,7 @@ exports.default = Shader;
 //# sourceMappingURL=Shader.js.map
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20621,7 +20768,7 @@ Container.prototype.containerUpdateTransform = Container.prototype.updateTransfo
 //# sourceMappingURL=Container.js.map
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20940,7 +21087,7 @@ _utils.pluginTarget.mixin(CanvasRenderer);
 //# sourceMappingURL=CanvasRenderer.js.map
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21000,7 +21147,7 @@ exports.default = WebGLManager;
 //# sourceMappingURL=WebGLManager.js.map
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21756,7 +21903,7 @@ exports.default = BaseTexture;
 //# sourceMappingURL=BaseTexture.js.map
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22066,7 +22213,7 @@ Mesh.DRAW_MODES = {
 //# sourceMappingURL=Mesh.js.map
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22102,149 +22249,6 @@ _Loader2.default.base64 = b64;
 module.exports = _Loader2.default; // eslint-disable-line no-undef
 exports.default = _Loader2.default;
 //# sourceMappingURL=index.js.map
-
-/***/ }),
-/* 19 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_Generator__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__ = __webpack_require__(99);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__blockDefinition__ = __webpack_require__(205);
-
-
-
-
-
-
-
-
-const MENU_PADDING = 20;
-const TEXT_PADDING = 14;
-class TextButton extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
-    constructor(msg, color = 0xFFFFFF) {
-        super();
-        this.text = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Text"](msg);
-        this.text.x = TEXT_PADDING;
-        this.text.y = TEXT_PADDING;
-        let backgroundWidth = this.text.width + TEXT_PADDING * 2;
-        let backgroundHeight = this.text.height + TEXT_PADDING * 2;
-        this.background = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
-        this.background.lineStyle(1);
-        this.background.beginFill(color);
-        this.background.drawRect(0, 0, backgroundWidth, backgroundHeight);
-        this.background.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](0, 0, backgroundWidth, backgroundHeight);
-        this.addChild(this.background);
-        this.addChild(this.text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["a" /* makeTargetInteractive */])(this);
-    }
-}
-class Global {
-    constructor() {
-        Global.generators = __WEBPACK_IMPORTED_MODULE_1_lodash__(__WEBPACK_IMPORTED_MODULE_7__blockDefinition__["a" /* activeBlocks */]).map((factory) => new __WEBPACK_IMPORTED_MODULE_2__ui_Generator__["a" /* Generator */](factory)).value();
-        Global.attachController = new __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["a" /* AttachController */]();
-        Global.flowController = new __WEBPACK_IMPORTED_MODULE_4__controllers_FlowController__["a" /* FlowController */]();
-        Global.logicController = new __WEBPACK_IMPORTED_MODULE_5__controllers_LogicController__["a" /* LogicController */]();
-        Global.renderer = __WEBPACK_IMPORTED_MODULE_0_pixi_js__["autoDetectRenderer"](1, 1, { antialias: false, transparent: false, resolution: 2 });
-        Global.renderer.backgroundColor = 0xECEFF1;
-        Global.renderer.view.style.position = "absolute";
-        Global.renderer.view.style.display = "block";
-        Global.renderer.autoResize = true;
-        document.body.appendChild(Global.renderer.view);
-        Global.stage = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"]();
-        Global.menu = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
-        Global.stage.addChild(Global.menu);
-        Global.runButton = new TextButton("RUN", 0xE0F2F1);
-        Global.runButton.on("click", function () {
-            let code = Global.logicController.generateCode();
-            eval(code);
-        });
-        Global.stage.addChild(Global.runButton);
-        {
-            let maxHeight = 0;
-            for (let generator of Global.generators) {
-                Global.menu.addChild(generator);
-                maxHeight = Math.max(maxHeight, generator.height);
-            }
-            Global.menuHeight = maxHeight + 2 * MENU_PADDING;
-            let widthSum = 0;
-            for (let i = 0; i < Global.generators.length; i++) {
-                let generator = Global.generators[i];
-                generator.x = (i + 1) * MENU_PADDING + widthSum + generator.width * .5;
-                generator.y = Global.menuHeight * .5 + generator.height * .5;
-                widthSum += generator.width;
-            }
-        }
-        window.addEventListener('resize', this.drawMenu, true);
-        this.drawMenu();
-    }
-    static get instance() {
-        return this._instance || (this._instance = new Global());
-    }
-    static get dragging() {
-        return Global._dragging;
-    }
-    static setDragging(target, pivotX, pivotY) {
-        if (target) {
-            Global._dragging = target;
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["b" /* moveToTop */])(target);
-            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils__["c" /* globalPositionOf */])(target);
-            pivotX = pivotX || globalPosition.x;
-            pivotY = pivotY || globalPosition.y;
-            Global.dragOffset = {
-                offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
-                offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
-            };
-        }
-        else {
-            Global._dragging = null;
-        }
-    }
-    drawMenu() {
-        Global.menu.clear();
-        Global.menu.beginFill(0xCFD8DC);
-        Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
-        Global.menu.endFill();
-        Global.renderer.resize(window.innerWidth, window.innerHeight);
-        Global.runButton.x = MENU_PADDING;
-        Global.runButton.y = window.innerHeight - Global.runButton.height - MENU_PADDING;
-    }
-    update() {
-        if (Global._dragging) {
-            let target = Global._dragging;
-            target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
-            target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
-            let attachInfo = Global.attachController.getNearestAttachPoint(target.x, target.y, target.attachFilter.bind(target));
-            if (attachInfo) {
-                Global.attachController.setHighlight(attachInfo);
-            }
-            else {
-                Global.attachController.removeHighlight();
-            }
-        }
-        Global.renderer.render(Global.stage);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["Global"] = Global;
-
-Global._instance = new Global();
-Global._dragging = null;
-Global.dragOffset = { offsetX: 0, offsetY: 0 };
-let state = Global.instance;
-function loop() {
-    requestAnimationFrame(loop);
-    state.update();
-}
-loop();
-
 
 /***/ }),
 /* 20 */
@@ -22557,7 +22561,7 @@ var _TextureManager = __webpack_require__(130);
 
 var _TextureManager2 = _interopRequireDefault(_TextureManager);
 
-var _BaseTexture = __webpack_require__(16);
+var _BaseTexture = __webpack_require__(17);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
@@ -23292,7 +23296,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(15);
+var _WebGLManager2 = __webpack_require__(16);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -23705,7 +23709,7 @@ exports.default = RenderTarget;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 /* harmony export (immutable) */ __webpack_exports__["b"] = createLabel;
 
@@ -25526,11 +25530,11 @@ var _utils = __webpack_require__(2);
 
 var _const = __webpack_require__(1);
 
-var _Texture = __webpack_require__(10);
+var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _Container2 = __webpack_require__(13);
+var _Container2 = __webpack_require__(14);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -26391,7 +26395,7 @@ var _BaseRenderTexture = __webpack_require__(74);
 
 var _BaseRenderTexture2 = _interopRequireDefault(_BaseRenderTexture);
 
-var _Texture2 = __webpack_require__(10);
+var _Texture2 = __webpack_require__(11);
 
 var _Texture3 = _interopRequireDefault(_Texture2);
 
@@ -28261,9 +28265,9 @@ function reqType(xhr) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(12);
 /* harmony export (immutable) */ __webpack_exports__["c"] = drawEditPoint;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return noStrategy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return splitJoinStrategy; });
@@ -28419,7 +28423,7 @@ let loopStrategy = function (graphics, start) {
     });
     let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
     let bounds = start.getLocalBounds();
-    bounds.height -= LOOP_TRIANGLE_HEIGHT * .5;
+    bounds.height -= LOOP_TRIANGLE_HEIGHT * .5 + 1;
     let endX, endY;
     graphics.lineStyle(2, 0x616161);
     graphics.beginFill(0x616161);
@@ -28501,7 +28505,7 @@ class FlowHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony export (immutable) */ __webpack_exports__["f"] = typeInfoToColor;
 
@@ -28593,7 +28597,7 @@ function typeInfoToColor(typeInfo) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__ = __webpack_require__(42);
@@ -28605,10 +28609,12 @@ function typeInfoToColor(typeInfo) {
 
 
 class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
-    constructor(numFlow, flowStrategy) {
+    constructor(shape, numFlow, flowStrategy) {
         super();
+        this.shape = shape;
         this.flowStrategy = flowStrategy;
         this.attachParent = null;
+        this.addChild(shape);
         this.flowChildren = [];
         for (let i = 0; i < numFlow + 1; i++) {
             this.flowChildren.push(null);
@@ -28616,6 +28622,8 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.registerFlowControl(this);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.registerControl(this);
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* makeTargetInteractive */])(this.shape);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* enableHighlight */])(this.shape);
         this.on('mousedown', () => {
             if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
                 __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
@@ -28625,7 +28633,7 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         this.on('mouseup', () => {
             if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
                 __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
+                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* hitTestRectangle */])(__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].menu, this)) {
                     this.destroy();
                 }
                 else {
@@ -28690,10 +28698,8 @@ class FlowControl extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 
 class Signal extends FlowControl {
     constructor(logic, shape) {
-        super(1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
+        super(shape, 1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
         this.logic = logic;
-        this.shape = shape;
-        this.addChild(shape);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].logicController.registerSignal(this);
     }
     destroy() {
@@ -28705,11 +28711,10 @@ class Signal extends FlowControl {
 
 class Block extends FlowControl {
     constructor(logic, shape, numFlow, flowStrategy) {
-        super(numFlow, flowStrategy);
+        super(shape, numFlow, flowStrategy);
         this.logic = logic;
         this.shape = shape;
         this.logicChildren = [];
-        this.addChild(shape);
         this.logicHighlights = [];
         for (let offset of shape.highlightOffsets) {
             let highlight = new __WEBPACK_IMPORTED_MODULE_5__shape_Highlight__["b" /* LogicHighlight */]();
@@ -28727,8 +28732,6 @@ class Block extends FlowControl {
     }
     updateControl() {
         super.updateControl();
-        console.log("Block Update");
-        console.trace();
         this.shape.updateShape(this.logicChildren);
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateLogicOffset(this);
         for (let i = 0; i < this.numLogic; i++) {
@@ -28757,13 +28760,10 @@ class Block extends FlowControl {
 
 class Declaration extends FlowControl {
     constructor(logic, shape) {
-        super(1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["b" /* outlineStrategy */]);
+        super(shape, 1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["b" /* outlineStrategy */]);
         this.logic = logic;
-        this.shape = shape;
-        this.addChild(shape);
         this.outline = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChildAt(this.outline, 0);
-        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].flowController.update(this);
     }
     attachFilter(attachInfo) {
         return attachInfo.attachType == __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["b" /* AttachType */].FLOW;
@@ -28791,7 +28791,7 @@ class FlowItemFactory {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_flow__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AttachType; });
 
@@ -28895,7 +28895,7 @@ class AttachController {
         let result = null;
         let resultDist = 0;
         this.logicPoints.forEach((arr, block) => {
-            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* globalPositionOf */])(block);
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* globalPositionOf */])(block);
             for (let candidate of arr) {
                 let candX = globalPosition.x + candidate.offsetX;
                 let candY = globalPosition.y + candidate.offsetY;
@@ -28917,7 +28917,7 @@ class AttachController {
             }
         });
         this.flowPoints.forEach((arr, control) => {
-            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* globalPositionOf */])(control);
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* globalPositionOf */])(control);
             for (let candidate of arr) {
                 if ((candidate.attachIndex == 0 && !control.hasFlowParent())) {
                     continue;
@@ -30838,7 +30838,7 @@ var _utils = __webpack_require__(2);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _CanvasRenderer = __webpack_require__(14);
+var _CanvasRenderer = __webpack_require__(15);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -32435,7 +32435,7 @@ var _settings = __webpack_require__(4);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _Container = __webpack_require__(13);
+var _Container = __webpack_require__(14);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -33910,7 +33910,7 @@ function areArraysEqual(array1, array2) {
 
 exports.__esModule = true;
 
-var _BaseTexture2 = __webpack_require__(16);
+var _BaseTexture2 = __webpack_require__(17);
 
 var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
@@ -34186,7 +34186,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _BaseTexture2 = __webpack_require__(16);
+var _BaseTexture2 = __webpack_require__(17);
 
 var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
@@ -35486,7 +35486,7 @@ var path = _interopRequireWildcard(_path);
 
 var _core = __webpack_require__(0);
 
-var _resourceLoader = __webpack_require__(18);
+var _resourceLoader = __webpack_require__(19);
 
 var _extras = __webpack_require__(39);
 
@@ -35556,7 +35556,7 @@ Object.defineProperty(exports, 'textureParser', {
   }
 });
 
-var _resourceLoader = __webpack_require__(18);
+var _resourceLoader = __webpack_require__(19);
 
 Object.defineProperty(exports, 'Resource', {
   enumerable: true,
@@ -35616,7 +35616,7 @@ exports.default = function () {
     };
 };
 
-var _resourceLoader = __webpack_require__(18);
+var _resourceLoader = __webpack_require__(19);
 
 var _path = __webpack_require__(6);
 
@@ -35646,9 +35646,9 @@ exports.default = function () {
     };
 };
 
-var _resourceLoader = __webpack_require__(18);
+var _resourceLoader = __webpack_require__(19);
 
-var _Texture = __webpack_require__(10);
+var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -35664,7 +35664,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(17);
+var _Mesh2 = __webpack_require__(18);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -35812,7 +35812,7 @@ exports.default = Plane;
 
 exports.__esModule = true;
 
-var _Mesh = __webpack_require__(17);
+var _Mesh = __webpack_require__(18);
 
 Object.defineProperty(exports, 'Mesh', {
   enumerable: true,
@@ -36332,6 +36332,30 @@ module.exports = function(module) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_blocks__ = __webpack_require__(202);
+
+const activeBlocks = [
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["a" /* startSignalFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["b" /* ifBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["c" /* whileBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["d" /* declarationFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["e" /* intBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["f" /* tenBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["g" /* multiplyBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["h" /* yesBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["i" /* noBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["j" /* printStingBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["k" /* binaryBlockFactory */],
+];
+/* harmony export (immutable) */ __webpack_exports__["a"] = activeBlocks;
+
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
 
@@ -36373,7 +36397,7 @@ class FlowController {
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -36400,13 +36424,13 @@ class LogicController {
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
 
 
@@ -36417,6 +36441,7 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         let shape = target.shape.clone();
         this.addChild(shape);
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* enableHighlight */])(this);
         this.on('mousedown', () => {
             let flowItem = target.createFlowItem();
             __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].stage.addChild(flowItem);
@@ -36426,69 +36451,6 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Generator;
 
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__type_type__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__logic_logic__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__entry__ = __webpack_require__(19);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startSignalFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ifBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return whileBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return declarationFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return intBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return tenBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return multiplyBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return yesBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return noBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return printStingBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return binaryBlockFactory; });
-
-
-
-
-
-
-
-
-
-class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
-    constructor(logic, shape) {
-        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["d" /* noStrategy */]);
-    }
-}
-class IfBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
-    constructor(logic, shape) {
-        super(logic, shape, 2, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
-    }
-}
-class WhileBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
-    constructor(logic, shape) {
-        super(logic, shape, 1, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["e" /* loopStrategy */]);
-        __WEBPACK_IMPORTED_MODULE_8__entry__["Global"].flowController.update(this);
-    }
-}
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
-let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](IfBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('if'));
-let whileBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](WhileBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`while (@1) {$1}`), new __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('while'));
-let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert("Not Implemented")`), new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
-let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "User Input"));
-let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`10`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "10"));
-let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "(num) x2"));
-let yesBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"yes"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"yes\""));
-let noBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"no"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"no\""));
-let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TVoid */]()), "print(string)"));
-let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TBoolean */]()), "(num1)<(num2)"));
 
 
 /***/ }),
@@ -37898,7 +37860,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _autoDetectRenderer = __webpack_require__(60);
 
-var _Container = __webpack_require__(13);
+var _Container = __webpack_require__(14);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -38074,7 +38036,7 @@ exports.default = Application;
 
 exports.__esModule = true;
 
-var _Container2 = __webpack_require__(13);
+var _Container2 = __webpack_require__(14);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -38082,7 +38044,7 @@ var _RenderTexture = __webpack_require__(36);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
-var _Texture = __webpack_require__(10);
+var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -38108,7 +38070,7 @@ var _bezierCurveTo2 = __webpack_require__(115);
 
 var _bezierCurveTo3 = _interopRequireDefault(_bezierCurveTo2);
 
-var _CanvasRenderer = __webpack_require__(14);
+var _CanvasRenderer = __webpack_require__(15);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -39241,7 +39203,7 @@ Graphics._SPRITE_TEXTURE = null;
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(14);
+var _CanvasRenderer = __webpack_require__(15);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -39975,7 +39937,7 @@ exports.default = WebGLGraphicsData;
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(12);
+var _Shader2 = __webpack_require__(13);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -42028,7 +41990,7 @@ function calculateSpriteMatrix(outputMatrix, filterArea, textureSize, sprite) {
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(15);
+var _WebGLManager2 = __webpack_require__(16);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -42042,7 +42004,7 @@ var _Quad2 = _interopRequireDefault(_Quad);
 
 var _math = __webpack_require__(3);
 
-var _Shader = __webpack_require__(12);
+var _Shader = __webpack_require__(13);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -42603,7 +42565,7 @@ exports.default = FilterManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(15);
+var _WebGLManager2 = __webpack_require__(16);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -42818,7 +42780,7 @@ exports.default = MaskManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(15);
+var _WebGLManager2 = __webpack_require__(16);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -43144,7 +43106,7 @@ function validateContext(gl) {
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(14);
+var _CanvasRenderer = __webpack_require__(15);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -43897,7 +43859,7 @@ _WebGLRenderer2.default.registerPlugin('sprite', SpriteRenderer);
 exports.__esModule = true;
 exports.default = generateMultiTextureShader;
 
-var _Shader = __webpack_require__(12);
+var _Shader = __webpack_require__(13);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -43970,7 +43932,7 @@ var _Sprite2 = __webpack_require__(34);
 
 var _Sprite3 = _interopRequireDefault(_Sprite2);
 
-var _Texture = __webpack_require__(10);
+var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -45536,7 +45498,7 @@ function canUploadSameBuffer() {
 exports.__esModule = true;
 exports.default = determineCrossOrigin;
 
-var _url2 = __webpack_require__(202);
+var _url2 = __webpack_require__(203);
 
 var _url3 = _interopRequireDefault(_url2);
 
@@ -52071,7 +52033,7 @@ InteractionTrackingData.FLAGS = Object.freeze({
 
 exports.__esModule = true;
 
-var _resourceLoader = __webpack_require__(18);
+var _resourceLoader = __webpack_require__(19);
 
 var _resourceLoader2 = _interopRequireDefault(_resourceLoader);
 
@@ -52634,7 +52596,7 @@ exports.default = NineSlicePlane;
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(17);
+var _Mesh2 = __webpack_require__(18);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -52884,7 +52846,7 @@ var _core = __webpack_require__(0);
 
 var core = _interopRequireWildcard(_core);
 
-var _Mesh = __webpack_require__(17);
+var _Mesh = __webpack_require__(18);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -53157,7 +53119,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _Mesh = __webpack_require__(17);
+var _Mesh = __webpack_require__(18);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -54330,7 +54292,7 @@ core.WebGLRenderer.registerPlugin('particle', ParticleRenderer);
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(12);
+var _Shader2 = __webpack_require__(13);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -56576,6 +56538,62 @@ class Logic {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Highlight__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__type_type__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(8);
+
+
+
+
+
+
+const RADIUS = 20;
+const ANGLE = 50;
+const STEP = 10;
+const top = -2 * RADIUS;
+class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockShape */] {
+    constructor(msg) {
+        super();
+        this.msg = msg;
+        this.returnType = new __WEBPACK_IMPORTED_MODULE_4__type_type__["d" /* TVoid */]();
+        this.highlightOffsets = [{ offsetX: 0, offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */], requiredType: new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]() }];
+        this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
+        this.addChild(this.graphics);
+        this.hitArea = new (__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"].bind.apply(__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"], __WEBPACK_IMPORTED_MODULE_1_lodash__["concat"]([
+            0,
+            -__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
+            0, top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */],
+            __WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top
+        ], __WEBPACK_IMPORTED_MODULE_1_lodash__(__WEBPACK_IMPORTED_MODULE_1_lodash__["range"](ANGLE, 360 - ANGLE, STEP))
+            .map((num) => num / 180 * Math.PI)
+            .flatMap((num) => [RADIUS * Math.sin(num), -RADIUS - RADIUS * Math.cos(num)])
+            .value(), [-__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top])));
+        this.graphics.lineStyle(1, 0x000000);
+        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__type_type__["f" /* typeInfoToColor */])(new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]()));
+        this.graphics.drawShape(this.hitArea);
+        this.graphics.endFill();
+        let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])(msg);
+        this.addChild(text);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["f" /* centerChild */])(text, 0, -RADIUS);
+    }
+    clone() {
+        return new ConditionBlockShape(this.msg);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ConditionBlockShape;
+
+
+
+/***/ }),
+/* 199 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
 
@@ -56601,7 +56619,7 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])("let");
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE - GAP);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE - GAP);
     }
     clone() {
         return new DeclarationShape(this.color);
@@ -56612,13 +56630,13 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape
 
 
 /***/ }),
-/* 199 */
+/* 200 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__type_type__ = __webpack_require__(44);
@@ -56743,7 +56761,7 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             }
         });
         forEachLabel(-widthSum * .5, (nowX, width, label) => {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["e" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["f" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
         });
     }
 }
@@ -56752,7 +56770,6 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
 
 
 /***/ }),
-/* 200 */,
 /* 201 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -56789,7 +56806,7 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])(message);
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* centerChild */])(text, 0, -HEIGHT * .5);
     }
     clone() {
         return new SignalShape(this.message);
@@ -56801,6 +56818,69 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
 
 /***/ }),
 /* 202 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__flow__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__type_type__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__logic_logic__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__entry__ = __webpack_require__(12);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startSignalFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ifBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return whileBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return declarationFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return intBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return tenBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return multiplyBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return yesBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return noBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return printStingBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return binaryBlockFactory; });
+
+
+
+
+
+
+
+
+
+class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
+    constructor(logic, shape) {
+        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["d" /* noStrategy */]);
+    }
+}
+class IfBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
+    constructor(logic, shape) {
+        super(logic, shape, 2, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
+    }
+}
+class WhileBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
+    constructor(logic, shape) {
+        super(logic, shape, 1, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["e" /* loopStrategy */]);
+        __WEBPACK_IMPORTED_MODULE_8__entry__["Global"].flowController.update(this);
+    }
+}
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
+let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](IfBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('if'));
+let whileBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](WhileBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`while (@1) {$1}`), new __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('while'));
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert("Not Implemented")`), new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "User Input"));
+let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`10`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "10"));
+let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "(num) x2"));
+let yesBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"yes"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"yes\""));
+let noBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"no"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"no\""));
+let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TVoid */]()), "print(string)"));
+let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TBoolean */]()), "(num1)<(num2)"));
+
+
+/***/ }),
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56828,7 +56908,7 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
 
 
 var punycode = __webpack_require__(191);
-var util = __webpack_require__(203);
+var util = __webpack_require__(204);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -57539,7 +57619,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 203 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57559,86 +57639,6 @@ module.exports = {
     return arg == null;
   }
 };
-
-
-/***/ }),
-/* 204 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Highlight__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__type_type__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(8);
-
-
-
-
-
-
-const RADIUS = 20;
-const ANGLE = 50;
-const STEP = 10;
-const top = -2 * RADIUS;
-class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockShape */] {
-    constructor(msg) {
-        super();
-        this.msg = msg;
-        this.returnType = new __WEBPACK_IMPORTED_MODULE_4__type_type__["d" /* TVoid */]();
-        this.highlightOffsets = [{ offsetX: 0, offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */], requiredType: new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]() }];
-        this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
-        this.addChild(this.graphics);
-        this.hitArea = new (__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"].bind.apply(__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"], __WEBPACK_IMPORTED_MODULE_1_lodash__["concat"]([
-            0,
-            -__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
-            0, top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */],
-            __WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top
-        ], __WEBPACK_IMPORTED_MODULE_1_lodash__(__WEBPACK_IMPORTED_MODULE_1_lodash__["range"](ANGLE, 360 - ANGLE, STEP))
-            .map((num) => num / 180 * Math.PI)
-            .flatMap((num) => [RADIUS * Math.sin(num), -RADIUS - RADIUS * Math.cos(num)])
-            .value(), [-__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top])));
-        this.graphics.lineStyle(1, 0x000000);
-        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__type_type__["f" /* typeInfoToColor */])(new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]()));
-        this.graphics.drawShape(this.hitArea);
-        this.graphics.endFill();
-        let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])(msg);
-        this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["e" /* centerChild */])(text, 0, -RADIUS);
-    }
-    clone() {
-        return new ConditionBlockShape(this.msg);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = ConditionBlockShape;
-
-
-
-/***/ }),
-/* 205 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ui_blocks__ = __webpack_require__(102);
-
-const activeBlocks = [
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["a" /* startSignalFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["b" /* ifBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["c" /* whileBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["d" /* declarationFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["e" /* intBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["f" /* tenBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["g" /* multiplyBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["h" /* yesBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["i" /* noBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["j" /* printStingBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["k" /* binaryBlockFactory */],
-];
-/* harmony export (immutable) */ __webpack_exports__["a"] = activeBlocks;
-
 
 
 /***/ })

@@ -5,7 +5,7 @@ import {FlowControl} from "./ui/flow";
 import {AttachController, Offset} from "./controllers/AttachController";
 import {FlowController} from "./controllers/FlowController";
 import {LogicController} from "./controllers/LogicController";
-import {globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
+import {enableHighlight, globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
 import {activeBlocks} from "./blockDefinition";
 
 const MENU_PADDING = 20;
@@ -35,6 +35,7 @@ class TextButton extends PIXI.Container {
         this.addChild(this.text);
 
         makeTargetInteractive(this);
+        enableHighlight(this);
     }
 }
 
