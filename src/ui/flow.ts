@@ -3,10 +3,11 @@ import {BlockShape, Shape} from "../shape/shape";
 import {Global} from "../entry";
 import {enableHighlight, hitTestRectangle, makeTargetInteractive} from "../utils";
 import {AttachInfo, AttachType} from "../controllers/AttachController";
-import {FlowStrategy, outlineStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
+import {createParameterStrategy, FlowStrategy, noStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {FlowHighlight, LogicHighlight} from "../shape/Highlight";
-import {TypeInfo} from "../type/type";
+import {TVoid, TypeInfo} from "../type/type";
 import {Logic} from "../logic/logic";
+import {ScopeInformation} from "./ScopeGenerator";
 
 export abstract class FlowControl extends PIXI.Container {
     abstract get logic(): Logic;
@@ -209,17 +210,33 @@ export abstract class Block extends FlowControl {
     }
 }
 
-export class Declaration extends FlowControl {
-    private outline: PIXI.Graphics;
+export class SimpleBlock extends Block {
+    constructor(logic: Logic, shape: BlockShape) {
+        super(logic, shape, 0, noStrategy);
+    }
+}
+
+export class Declaration extends Block {
+    private scopeInfoArr: ScopeInformation[];
 
     constructor(
-        readonly logic: Logic,
-        shape: Shape
+        logic: Logic,
+        shape: BlockShape
     ) {
-        super(shape, 1, outlineStrategy);
+        let scopeInfoArr = [{
+            returnType: new TVoid(),
+            label: `local`,
+        }];
+        super(logic, shape, 1, createParameterStrategy(scopeInfoArr));
 
-        this.outline = new PIXI.Graphics();
-        this.addChildAt(this.outline, 0);
+        this.scopeInfoArr = scopeInfoArr;
+    }
+
+    updateControl() {
+        let logicChild = this.logicChildren[0];
+        this.scopeInfoArr[0].returnType = logicChild ? logicChild.shape.returnType : new TVoid();
+
+        super.updateControl();
     }
 
     attachFilter(attachInfo: AttachInfo): boolean {
@@ -228,7 +245,7 @@ export class Declaration extends FlowControl {
 }
 
 export class FlowItemFactory<F extends FlowControl, L extends Logic, S extends Shape> {
-    constructor(private constructor: {new (logic: L, shape: S): F}, readonly logic: L, readonly shape: S) {
+    constructor(protected constructor: {new (logic: L, shape: S): F}, readonly logic: L, readonly shape: S) {
     }
 
     createFlowItem(): F {

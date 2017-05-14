@@ -9,7 +9,7 @@ export class Flow extends PIXI.Container {
 
         this.graphics = new PIXI.Graphics();
         this.addChild(this.graphics);
-        flowStart.addChild(this);
+        flowStart.addChildAt(this, 0);
 
         this.update();
     }

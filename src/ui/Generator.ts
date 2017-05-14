@@ -16,9 +16,11 @@ export class Generator<F extends FlowControl, L extends Logic, S extends Shape> 
         enableHighlight(this);
 
         this.on('mousedown', () => {
+            let globalPosition = this.getGlobalPosition();
+
             let flowItem = target.createFlowItem();
             Global.stage.addChild(flowItem);
-            Global.setDragging(flowItem, this.x, this.y);
+            Global.setDragging(flowItem, globalPosition.x, globalPosition.y);
         });
     }
 }

@@ -1,6 +1,6 @@
-import {Block, Declaration, FlowItemFactory, Signal} from "./flow";
+import {Block, Declaration, FlowItemFactory, Signal, SimpleBlock} from "./flow";
 import {SignalShape} from "../shape/SignalShape";
-import {loopStrategy, noStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
+import {loopStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {BlockShape} from "../shape/shape";
 import {ConditionBlockShape} from "../shape/ConditionBlockShape";
 import {DeclarationShape} from "../shape/DeclarationShape";
@@ -8,12 +8,6 @@ import {FunctionShape} from "../shape/FunctionShape";
 import {TBoolean, TFunction, TNumber, TString, TVoid} from "../type/type";
 import {Logic} from "../logic/logic";
 import {Global} from "../entry";
-
-class SimpleBlock extends Block {
-    constructor(logic: Logic, shape: BlockShape) {
-        super(logic, shape, 0, noStrategy);
-    }
-}
 
 class IfBlock extends Block {
     constructor(logic: Logic, shape: BlockShape) {
@@ -49,7 +43,7 @@ export let whileBlockFactory = new FlowItemFactory(
 
 export let declarationFactory = new FlowItemFactory(
     Declaration,
-    new Logic(`alert("Not Implemented")`),
+    new Logic(`{let local = (@1); $1}`),  // TODO: fix variable handling
     new DeclarationShape(0xC8E6C9)
 );
 
@@ -60,6 +54,15 @@ export let intBlockFactory = new FlowItemFactory(
     new FunctionShape(
         new TFunction([], new TNumber()),
         "User Input"
+    )
+);
+
+export let randBlockFactory = new FlowItemFactory(
+    SimpleBlock,
+    new Logic(`Math.floor(Math.random()*5)+1`),
+    new FunctionShape(
+        new TFunction([], new TNumber()),
+        "rand 1~5"
     )
 );
 
@@ -81,21 +84,21 @@ export let multiplyBlockFactory = new FlowItemFactory(
     )
 );
 
-export let yesBlockFactory = new FlowItemFactory(
+export let correctBlockFactory = new FlowItemFactory(
     SimpleBlock,
-    new Logic(`"yes"`),
+    new Logic(`"correct"`),
     new FunctionShape(
         new TFunction([], new TString()),
-        "\"yes\""
+        "\"correct\""
     )
 );
 
-export let noBlockFactory = new FlowItemFactory(
+export let wrongBlockFactory = new FlowItemFactory(
     SimpleBlock,
-    new Logic(`"no"`),
+    new Logic(`"wrong"`),
     new FunctionShape(
         new TFunction([], new TString()),
-        "\"no\""
+        "\"wrong\""
     )
 );
 
@@ -108,7 +111,16 @@ export let printStingBlockFactory = new FlowItemFactory(
     )
 );
 
-export let binaryBlockFactory = new FlowItemFactory(
+export let compareBlockFactory = new FlowItemFactory(
+    SimpleBlock,
+    new Logic(`(@1) !== (@2)`),
+    new FunctionShape(
+        new TFunction([new TNumber(), new TNumber()], new TBoolean()),
+        "(num1)!=(num2)"
+    )
+);
+
+export let lessThanBlockFactory = new FlowItemFactory(
     SimpleBlock,
     new Logic(`(@1) < (@2)`),
     new FunctionShape(

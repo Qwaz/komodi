@@ -19955,7 +19955,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-const MENU_PADDING = 20;
+const MENU_PADDING = 12;
 const TEXT_PADDING = 14;
 class TextButton extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
     constructor(msg, color = 0xFFFFFF) {
@@ -19994,6 +19994,7 @@ class Global {
         Global.runButton = new TextButton("RUN", 0xE0F2F1);
         Global.runButton.on("click", function () {
             let code = Global.logicController.generateCode();
+            console.log(code);
             eval(code);
         });
         Global.stage.addChild(Global.runButton);
@@ -28268,11 +28269,13 @@ function reqType(xhr) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__entry__ = __webpack_require__(12);
-/* harmony export (immutable) */ __webpack_exports__["c"] = drawEditPoint;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return noStrategy; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_ScopeGenerator__ = __webpack_require__(206);
+/* harmony export (immutable) */ __webpack_exports__["d"] = drawEditPoint;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return noStrategy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return splitJoinStrategy; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return outlineStrategy; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return createParameterStrategy; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return loopStrategy; });
+
 
 
 const FLOW_VERTICAL_MARGIN = 45;
@@ -28391,22 +28394,30 @@ let splitJoinStrategy = function (graphics, start) {
     }
 };
 const OUTLINE_PADDING = 6;
-let outlineStrategy = function (graphics, start) {
-    setGraphicsStyle(graphics);
-    graphics.moveTo(0, 0);
-    graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
-    drawEditPoint(graphics, 0, FLOW_VERTICAL_MARGIN * .5);
-    __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateFlowOffset(start, 1, {
-        offsetX: 0,
-        offsetY: FLOW_VERTICAL_MARGIN * .5,
-    });
-    let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
-    let bounds = start.getLocalBounds();
-    graphics.lineStyle(1, 0x9E9E9E);
-    graphics.drawRect(bounds.x - OUTLINE_PADDING, -2, bounds.width + OUTLINE_PADDING * 2, bounds.bottom + 2);
-    return {
-        offsetX: offset.offsetX,
-        offsetY: offset.offsetY,
+const GENERATOR_PADDING = 12;
+let createParameterStrategy = function (scopeInfoArr) {
+    let scopeGenerator = new __WEBPACK_IMPORTED_MODULE_2__ui_ScopeGenerator__["a" /* ScopeGenerator */]();
+    return function (graphics, start) {
+        scopeGenerator.update(scopeInfoArr);
+        start.addChild(scopeGenerator);
+        setGraphicsStyle(graphics);
+        let startY = scopeGenerator.height + GENERATOR_PADDING;
+        graphics.moveTo(0, startY);
+        graphics.lineTo(0, startY + FLOW_VERTICAL_MARGIN);
+        drawEditPoint(graphics, 0, startY + FLOW_VERTICAL_MARGIN * .5);
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachController.updateFlowOffset(start, 1, {
+            offsetX: 0,
+            offsetY: startY + FLOW_VERTICAL_MARGIN * .5,
+        });
+        let offset = drawLinear(graphics, 0, startY + FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
+        let bounds = start.getLocalBounds();
+        graphics.lineStyle();
+        graphics.beginFill(0xCFD8DC);
+        graphics.drawRect(bounds.x - OUTLINE_PADDING, -2, bounds.width + OUTLINE_PADDING * 2, 2 + startY);
+        graphics.endFill();
+        graphics.lineStyle(1, 0x9E9E9E);
+        graphics.drawRect(bounds.x - OUTLINE_PADDING, -2, bounds.width + OUTLINE_PADDING * 2, bounds.bottom + 2);
+        return offset;
     };
 };
 const LOOP_HORIZONTAL_PADDING = 10;
@@ -28493,7 +28504,7 @@ class LogicHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
 class FlowHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
     constructor() {
         super();
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__controllers_flowStrategies__["c" /* drawEditPoint */])(this, 0, 0, true);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__controllers_flowStrategies__["d" /* drawEditPoint */])(this, 0, 0, true);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FlowHighlight;
@@ -28507,7 +28518,7 @@ class FlowHighlight extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"] {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
-/* harmony export (immutable) */ __webpack_exports__["f"] = typeInfoToColor;
+/* harmony export (immutable) */ __webpack_exports__["c"] = typeInfoToColor;
 
 class TypeBase {
     fitsTo(typeInfo) {
@@ -28525,7 +28536,7 @@ class TNumber extends TypeBase {
         this.primitive = true;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["b"] = TNumber;
+/* harmony export (immutable) */ __webpack_exports__["d"] = TNumber;
 
 class TString extends TypeBase {
     constructor() {
@@ -28534,7 +28545,7 @@ class TString extends TypeBase {
         this.primitive = true;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["c"] = TString;
+/* harmony export (immutable) */ __webpack_exports__["e"] = TString;
 
 class TBoolean extends TypeBase {
     constructor() {
@@ -28543,7 +28554,7 @@ class TBoolean extends TypeBase {
         this.primitive = true;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["e"] = TBoolean;
+/* harmony export (immutable) */ __webpack_exports__["f"] = TBoolean;
 
 class TVoid extends TypeBase {
     constructor() {
@@ -28552,7 +28563,7 @@ class TVoid extends TypeBase {
         this.primitive = true;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["d"] = TVoid;
+/* harmony export (immutable) */ __webpack_exports__["a"] = TVoid;
 
 class TFunction extends TypeBase {
     constructor(args, returns) {
@@ -28572,7 +28583,7 @@ class TFunction extends TypeBase {
         return false;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = TFunction;
+/* harmony export (immutable) */ __webpack_exports__["b"] = TFunction;
 
 function typeInfoToColor(typeInfo) {
     switch (typeInfo.name) {
@@ -28602,6 +28613,8 @@ function typeInfoToColor(typeInfo) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shape_Highlight__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__type_type__ = __webpack_require__(44);
+
 
 
 
@@ -28707,7 +28720,7 @@ class Signal extends FlowControl {
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].logicController.deleteSignal(this);
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["c"] = Signal;
+/* harmony export (immutable) */ __webpack_exports__["d"] = Signal;
 
 class Block extends FlowControl {
     constructor(logic, shape, numFlow, flowStrategy) {
@@ -28758,18 +28771,32 @@ class Block extends FlowControl {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Block;
 
-class Declaration extends FlowControl {
+class SimpleBlock extends Block {
     constructor(logic, shape) {
-        super(shape, 1, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["b" /* outlineStrategy */]);
-        this.logic = logic;
-        this.outline = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
-        this.addChildAt(this.outline, 0);
+        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["b" /* noStrategy */]);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["c"] = SimpleBlock;
+
+class Declaration extends Block {
+    constructor(logic, shape) {
+        let scopeInfoArr = [{
+                returnType: new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TVoid */](),
+                label: `local`,
+            }];
+        super(logic, shape, 1, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__controllers_flowStrategies__["c" /* createParameterStrategy */])(scopeInfoArr));
+        this.scopeInfoArr = scopeInfoArr;
+    }
+    updateControl() {
+        let logicChild = this.logicChildren[0];
+        this.scopeInfoArr[0].returnType = logicChild ? logicChild.shape.returnType : new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TVoid */]();
+        super.updateControl();
     }
     attachFilter(attachInfo) {
         return attachInfo.attachType == __WEBPACK_IMPORTED_MODULE_3__controllers_AttachController__["b" /* AttachType */].FLOW;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["d"] = Declaration;
+/* harmony export (immutable) */ __webpack_exports__["e"] = Declaration;
 
 class FlowItemFactory {
     constructor(constructor, logic, shape) {
@@ -36340,12 +36367,14 @@ const activeBlocks = [
     __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["c" /* whileBlockFactory */],
     __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["d" /* declarationFactory */],
     __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["e" /* intBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["f" /* tenBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["g" /* multiplyBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["h" /* yesBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["i" /* noBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["j" /* printStingBlockFactory */],
-    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["k" /* binaryBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["f" /* randBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["g" /* tenBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["h" /* multiplyBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["i" /* correctBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["j" /* wrongBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["k" /* printStingBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["l" /* compareBlockFactory */],
+    __WEBPACK_IMPORTED_MODULE_0__ui_blocks__["m" /* lessThanBlockFactory */],
 ];
 /* harmony export (immutable) */ __webpack_exports__["a"] = activeBlocks;
 
@@ -36365,7 +36394,7 @@ class Flow extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         this.flowStart = flowStart;
         this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChild(this.graphics);
-        flowStart.addChild(this);
+        flowStart.addChildAt(this, 0);
         this.update();
     }
     update() {
@@ -36443,9 +36472,10 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* makeTargetInteractive */])(this);
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* enableHighlight */])(this);
         this.on('mousedown', () => {
+            let globalPosition = this.getGlobalPosition();
             let flowItem = target.createFlowItem();
             __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].stage.addChild(flowItem);
-            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(flowItem, this.x, this.y);
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(flowItem, globalPosition.x, globalPosition.y);
         });
     }
 }
@@ -56558,8 +56588,8 @@ class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* Bl
     constructor(msg) {
         super();
         this.msg = msg;
-        this.returnType = new __WEBPACK_IMPORTED_MODULE_4__type_type__["d" /* TVoid */]();
-        this.highlightOffsets = [{ offsetX: 0, offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */], requiredType: new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]() }];
+        this.returnType = new __WEBPACK_IMPORTED_MODULE_4__type_type__["a" /* TVoid */]();
+        this.highlightOffsets = [{ offsetX: 0, offsetY: top + __WEBPACK_IMPORTED_MODULE_3__Highlight__["c" /* TRIANGLE_HEIGHT */], requiredType: new __WEBPACK_IMPORTED_MODULE_4__type_type__["f" /* TBoolean */]() }];
         this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChild(this.graphics);
         this.hitArea = new (__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"].bind.apply(__WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"], __WEBPACK_IMPORTED_MODULE_1_lodash__["concat"]([
@@ -56572,7 +56602,7 @@ class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* Bl
             .flatMap((num) => [RADIUS * Math.sin(num), -RADIUS - RADIUS * Math.cos(num)])
             .value(), [-__WEBPACK_IMPORTED_MODULE_3__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top])));
         this.graphics.lineStyle(1, 0x000000);
-        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__type_type__["f" /* typeInfoToColor */])(new __WEBPACK_IMPORTED_MODULE_4__type_type__["e" /* TBoolean */]()));
+        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__type_type__["c" /* typeInfoToColor */])(new __WEBPACK_IMPORTED_MODULE_4__type_type__["f" /* TBoolean */]()));
         this.graphics.drawShape(this.hitArea);
         this.graphics.endFill();
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])(msg);
@@ -56596,6 +56626,10 @@ class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* Bl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__shape__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__type_type__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Highlight__ = __webpack_require__(43);
+
+
 
 
 
@@ -56604,18 +56638,33 @@ const GAP = 4;
 const WIDTH = 70;
 const HEIGHT = 30;
 const left = -WIDTH * .5;
+const right = -left;
 const top = -HEIGHT - LINE - GAP;
 const bottom = top + HEIGHT;
-class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] {
+class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["a" /* BlockShape */] {
     constructor(color) {
         super();
         this.color = color;
+        this.returnVoid = new __WEBPACK_IMPORTED_MODULE_3__type_type__["a" /* TVoid */]();
+        this._highlightOffsets = [{
+                offsetX: 0,
+                offsetY: top + __WEBPACK_IMPORTED_MODULE_4__Highlight__["c" /* TRIANGLE_HEIGHT */],
+            }];
         this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
         this.addChild(this.graphics);
         this.graphics.lineStyle(1, 0x000000, 1);
         this.graphics.beginFill(color);
-        this.graphics.drawRect(left, top, WIDTH, HEIGHT);
         this.graphics.drawRect(left, bottom + GAP, WIDTH, LINE);
+        this.graphics.drawPolygon([
+            left, top,
+            -__WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
+            0, top + __WEBPACK_IMPORTED_MODULE_4__Highlight__["c" /* TRIANGLE_HEIGHT */],
+            __WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
+            right, top,
+            right, bottom,
+            left, bottom,
+            left, top,
+        ]);
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])("let");
         this.addChild(text);
@@ -56623,6 +56672,12 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape
     }
     clone() {
         return new DeclarationShape(this.color);
+    }
+    get returnType() {
+        return this.returnVoid;
+    }
+    get highlightOffsets() {
+        return this._highlightOffsets;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = DeclarationShape;
@@ -56737,12 +56792,12 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             }
         });
         outlinePath.push(widthSum * .5, top, widthSum * .5, bottom, __WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, bottom, 0, 0, -__WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, bottom, -widthSum * .5, bottom, -widthSum * .5, top);
-        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["f" /* typeInfoToColor */])(this.typeInfo.returns));
+        this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["c" /* typeInfoToColor */])(this.typeInfo.returns));
         this.graphics.drawPolygon(outlinePath);
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Polygon"](outlinePath);
         forEachLabel(-widthSum * .5, (nowX, width, {}, i) => {
             if (i % 2 == 1) {
-                this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["f" /* typeInfoToColor */])(this.typeInfo.args[i >> 1]));
+                this.graphics.beginFill(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__type_type__["c" /* typeInfoToColor */])(this.typeInfo.args[i >> 1]));
                 this.graphics.drawPolygon([
                     nowX, top,
                     nowX + width * .5 - __WEBPACK_IMPORTED_MODULE_4__Highlight__["d" /* TRIANGLE_WIDTH */] * .5, top,
@@ -56835,12 +56890,14 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return whileBlockFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return declarationFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return intBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return tenBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return multiplyBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return yesBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return noBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return printStingBlockFactory; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return binaryBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return randBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return tenBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return multiplyBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return correctBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return wrongBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return printStingBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return compareBlockFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return lessThanBlockFactory; });
 
 
 
@@ -56850,11 +56907,6 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
 
 
 
-class SimpleBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
-    constructor(logic, shape) {
-        super(logic, shape, 0, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["d" /* noStrategy */]);
-    }
-}
 class IfBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
     constructor(logic, shape) {
         super(logic, shape, 2, __WEBPACK_IMPORTED_MODULE_2__controllers_flowStrategies__["a" /* splitJoinStrategy */]);
@@ -56866,17 +56918,19 @@ class WhileBlock extends __WEBPACK_IMPORTED_MODULE_0__flow__["a" /* Block */] {
         __WEBPACK_IMPORTED_MODULE_8__entry__["Global"].flowController.update(this);
     }
 }
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Signal */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
 let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](IfBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('if'));
 let whileBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](WhileBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`while (@1) {$1}`), new __WEBPACK_IMPORTED_MODULE_3__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('while'));
-let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert("Not Implemented")`), new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
-let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "User Input"));
-let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`10`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "10"));
-let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()), "(num) x2"));
-let yesBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"yes"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"yes\""));
-let noBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"no"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()), "\"no\""));
-let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["c" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TVoid */]()), "print(string)"));
-let binaryBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](SimpleBlock, new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TBoolean */]()), "(num1)<(num2)"));
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["e" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`{let local = (@1); $1}`), new __WEBPACK_IMPORTED_MODULE_4__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let intBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()), "User Input"));
+let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`Math.floor(Math.random()*5)+1`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()), "rand 1~5"));
+let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`10`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()), "10"));
+let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()), "(num) x2"));
+let correctBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"correct"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TString */]()), "\"correct\""));
+let wrongBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`"wrong"`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TString */]()), "\"wrong\""));
+let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["e" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["a" /* TVoid */]()), "print(string)"));
+let compareBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1) !== (@2)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["f" /* TBoolean */]()), "(num1)!=(num2)"));
+let lessThanBlockFactory = new __WEBPACK_IMPORTED_MODULE_0__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_0__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_7__logic_logic__["a" /* Logic */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_5__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_6__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_6__type_type__["d" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_6__type_type__["f" /* TBoolean */]()), "(num1)<(num2)"));
 
 
 /***/ }),
@@ -57639,6 +57693,61 @@ module.exports = {
     return arg == null;
   }
 };
+
+
+/***/ }),
+/* 205 */,
+/* 206 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Generator__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__logic_logic__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__flow__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__type_type__ = __webpack_require__(44);
+
+
+
+
+
+
+const GENERATOR_PADDING = 6;
+class ScopeGenerator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
+    constructor() {
+        super();
+        this.generators = [];
+    }
+    update(scopeInformation) {
+        this.reset();
+        let widthSum = 0, maxHeight = 0;
+        for (let info of scopeInformation) {
+            let factory = new __WEBPACK_IMPORTED_MODULE_3__flow__["b" /* FlowItemFactory */](__WEBPACK_IMPORTED_MODULE_3__flow__["c" /* SimpleBlock */], new __WEBPACK_IMPORTED_MODULE_2__logic_logic__["a" /* Logic */](`${info.label}`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], info.returnType), info.label));
+            let generator = new __WEBPACK_IMPORTED_MODULE_1__Generator__["a" /* Generator */](factory);
+            this.generators.push(generator);
+            this.addChild(generator);
+            widthSum += generator.width;
+            maxHeight = Math.max(maxHeight, generator.height);
+        }
+        widthSum += GENERATOR_PADDING * (this.generators.length - 1);
+        let currentX = -widthSum * .5;
+        for (let generator of this.generators) {
+            generator.x = currentX + generator.width * .5;
+            generator.y = GENERATOR_PADDING + maxHeight * .5 + generator.height * .5;
+            currentX += generator.width + GENERATOR_PADDING;
+        }
+    }
+    reset() {
+        for (let generator of this.generators) {
+            this.removeChild(generator);
+        }
+        this.generators.splice(0, this.generators.length);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = ScopeGenerator;
+
 
 
 /***/ })

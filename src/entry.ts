@@ -8,7 +8,7 @@ import {LogicController} from "./controllers/LogicController";
 import {enableHighlight, globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
 import {activeBlocks} from "./blockDefinition";
 
-const MENU_PADDING = 20;
+const MENU_PADDING = 12;
 const TEXT_PADDING = 14;
 
 class TextButton extends PIXI.Container {
@@ -87,6 +87,7 @@ export class Global {
         Global.runButton = new TextButton("RUN", 0xE0F2F1);
         Global.runButton.on("click", function () {
             let code = Global.logicController.generateCode();
+            console.log(code);
             eval(code);
         });
         Global.stage.addChild(Global.runButton);

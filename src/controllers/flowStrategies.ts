@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import {FlowControl} from "../ui/flow";
 import {Global} from "../entry";
 import {Offset} from "./AttachController";
+import {ScopeGenerator, ScopeInformation} from "../ui/ScopeGenerator";
 
 export type FlowStrategy = (graphics: PIXI.Graphics, start: FlowControl) => Offset;
 
@@ -154,31 +155,45 @@ export let splitJoinStrategy: FlowStrategy = function (graphics: PIXI.Graphics, 
 };
 
 const OUTLINE_PADDING = 6;
+const GENERATOR_PADDING = 12;
 
-export let outlineStrategy: FlowStrategy = function (graphics: PIXI.Graphics, start: FlowControl): Offset {
-    setGraphicsStyle(graphics);
+export let createParameterStrategy = function (scopeInfoArr: ScopeInformation[]): FlowStrategy {
+    let scopeGenerator = new ScopeGenerator();
 
-    graphics.moveTo(0, 0);
-    graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+    return function (graphics: PIXI.Graphics, start: FlowControl): Offset {
+        scopeGenerator.update(scopeInfoArr);
+        start.addChild(scopeGenerator);
 
-    drawEditPoint(graphics, 0, FLOW_VERTICAL_MARGIN*.5);
-    Global.attachController.updateFlowOffset(start, 1, {
-        offsetX: 0,
-        offsetY: FLOW_VERTICAL_MARGIN*.5,
-    });
+        setGraphicsStyle(graphics);
+        let startY = scopeGenerator.height + GENERATOR_PADDING;
+        graphics.moveTo(0, startY);
+        graphics.lineTo(0, startY+FLOW_VERTICAL_MARGIN);
 
-    let offset = drawLinear(graphics, 0, FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
+        drawEditPoint(graphics, 0, startY+FLOW_VERTICAL_MARGIN*.5);
+        Global.attachController.updateFlowOffset(start, 1, {
+            offsetX: 0,
+            offsetY: startY+FLOW_VERTICAL_MARGIN*.5,
+        });
 
-    let bounds = start.getLocalBounds();
-    graphics.lineStyle(1, 0x9E9E9E);
-    graphics.drawRect(
-        bounds.x - OUTLINE_PADDING, -2,
-        bounds.width + OUTLINE_PADDING*2, bounds.bottom + 2
-    );
+        let offset = drawLinear(graphics, 0, startY+FLOW_VERTICAL_MARGIN, start.flowChildren[1], true);
 
-    return {
-        offsetX: offset.offsetX,
-        offsetY: offset.offsetY,
+        let bounds = start.getLocalBounds();
+
+        graphics.lineStyle();
+        graphics.beginFill(0xCFD8DC);
+        graphics.drawRect(
+            bounds.x - OUTLINE_PADDING, -2,
+            bounds.width + OUTLINE_PADDING*2, 2+startY
+        );
+        graphics.endFill();
+
+        graphics.lineStyle(1, 0x9E9E9E);
+        graphics.drawRect(
+            bounds.x - OUTLINE_PADDING, -2,
+            bounds.width + OUTLINE_PADDING*2, bounds.bottom + 2
+        );
+
+        return offset;
     };
 };
 

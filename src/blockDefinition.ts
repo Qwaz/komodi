@@ -1,15 +1,17 @@
 import {
-    binaryBlockFactory,
+    compareBlockFactory,
+    correctBlockFactory,
     declarationFactory,
     ifBlockFactory,
     intBlockFactory,
+    lessThanBlockFactory,
     multiplyBlockFactory,
-    noBlockFactory,
     printStingBlockFactory,
+    randBlockFactory,
     startSignalFactory,
     tenBlockFactory,
     whileBlockFactory,
-    yesBlockFactory
+    wrongBlockFactory
 } from "./ui/blocks";
 
 export const activeBlocks = [
@@ -18,10 +20,12 @@ export const activeBlocks = [
     whileBlockFactory,
     declarationFactory,
     intBlockFactory,
+    randBlockFactory,
     tenBlockFactory,
     multiplyBlockFactory,
-    yesBlockFactory,
-    noBlockFactory,
+    correctBlockFactory,
+    wrongBlockFactory,
     printStingBlockFactory,
-    binaryBlockFactory,
+    compareBlockFactory,
+    lessThanBlockFactory,
 ];
