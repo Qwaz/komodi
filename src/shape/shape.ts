@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {TypedOffset} from "../controllers/AttachController";
-import {Block} from "../ui/flow";
+import {Block} from "../ui/controls";
 import {TypeInfo} from "../type/type";
+import {TypedOffset} from "../common";
 
 export type HitArea = PIXI.Rectangle | PIXI.Circle | PIXI.Ellipse | PIXI.Polygon | PIXI.RoundedRectangle;
 
@@ -17,7 +17,7 @@ export abstract class BlockShape extends Shape {
     updateShape(logicChildren: Array<Block | null>): void {
         _(logicChildren).forEach((block) => {
             if (block) {
-                block.updateControl();
+                block.update();
             }
         })
     };

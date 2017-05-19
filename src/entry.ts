@@ -1,12 +1,12 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Generator} from "./ui/Generator";
-import {FlowControl} from "./ui/flow";
-import {AttachController, Offset} from "./controllers/AttachController";
-import {FlowController} from "./controllers/FlowController";
-import {LogicController} from "./controllers/LogicController";
+import {Control} from "./ui/controls";
 import {enableHighlight, globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
 import {activeBlocks} from "./blockDefinition";
+import {AttachManager} from "./managers/AttachManager";
+import {Offset} from "./common";
+import {GlobalManager} from "./managers/GlobalManager";
 
 const MENU_PADDING = 12;
 const TEXT_PADDING = 14;
@@ -41,11 +41,10 @@ class TextButton extends PIXI.Container {
 
 export class Global {
     private static _instance:Global = new Global();
-    // logic related
+    // parser related
     static generators: Array<PIXI.Container>;
-    static attachController: AttachController;
-    static flowController: FlowController;
-    static logicController: LogicController;
+    static attachManager: AttachManager;
+    static globalManager: GlobalManager;
 
     // render related
     static renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
@@ -55,16 +54,15 @@ export class Global {
     static runButton: TextButton;
     static menuHeight: number;  // TODO: menuHeight should not be here
 
-    private static _dragging: FlowControl | null = null;
+    private static _dragging: Control | null = null;
     private static dragOffset: Offset = {offsetX: 0, offsetY: 0};
 
     private constructor() {
-        // logic initialization
+        // parser initialization
         Global.generators = _(activeBlocks).map((factory) => new Generator(factory)).value();
 
-        Global.attachController = new AttachController();
-        Global.flowController = new FlowController();
-        Global.logicController = new LogicController();
+        Global.attachManager = new AttachManager();
+        Global.globalManager = new GlobalManager();
 
         // render initialization
         Global.renderer = PIXI.autoDetectRenderer(
@@ -86,7 +84,7 @@ export class Global {
 
         Global.runButton = new TextButton("RUN", 0xE0F2F1);
         Global.runButton.on("click", function () {
-            let code = Global.logicController.generateCode();
+            let code = Global.globalManager.generateCode();
             console.log(code);
             eval(code);
         });
@@ -122,7 +120,7 @@ export class Global {
         return Global._dragging;
     }
 
-    static setDragging(target: FlowControl | null, pivotX?: number, pivotY?: number) {
+    static setDragging(target: Control | null, pivotX?: number, pivotY?: number) {
         if (target) {
             Global._dragging = target;
             moveToTop(target);
@@ -158,15 +156,15 @@ export class Global {
             target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
             target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
 
-            let attachInfo = Global.attachController.getNearestAttachPoint(
+            let attachInfo = Global.attachManager.getNearestAttachPoint(
                 target.x, target.y,
                 target.attachFilter.bind(target)
             );
 
             if (attachInfo) {
-                Global.attachController.setHighlight(attachInfo);
+                Global.attachManager.setHighlight(attachInfo);
             } else {
-                Global.attachController.removeHighlight();
+                Global.attachManager.removeHighlight();
             }
         }
 

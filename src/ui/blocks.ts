@@ -1,56 +1,58 @@
-import {Block, Declaration, FlowItemFactory, Signal, SimpleBlock} from "./flow";
+import {Block, Declaration, FlowItemFactory, Signal} from "./controls";
 import {SignalShape} from "../shape/SignalShape";
-import {loopStrategy, splitJoinStrategy} from "../controllers/flowStrategies";
 import {BlockShape} from "../shape/shape";
 import {ConditionBlockShape} from "../shape/ConditionBlockShape";
 import {DeclarationShape} from "../shape/DeclarationShape";
 import {FunctionShape} from "../shape/FunctionShape";
 import {TBoolean, TFunction, TNumber, TString, TVoid} from "../type/type";
-import {Logic} from "../logic/logic";
-import {Global} from "../entry";
+import {Parser} from "../parser/parser";
+import {SplitScope} from "../scope/SplitScope";
+import {LoopScope} from "../scope/LoopScope";
 
 class IfBlock extends Block {
-    constructor(logic: Logic, shape: BlockShape) {
-        super(logic, shape, 2, splitJoinStrategy);
+    constructor(logic: Parser, shape: BlockShape) {
+        super(logic, shape);
+
+        this.setScope(new SplitScope(this, 2));
     }
 }
 
 class WhileBlock extends Block {
-    constructor(logic: Logic, shape: BlockShape) {
-        super(logic, shape, 1, loopStrategy);
+    constructor(logic: Parser, shape: BlockShape) {
+        super(logic, shape);
 
-        Global.flowController.update(this);
+        this.setScope(new LoopScope(this));
     }
 }
 
 export let startSignalFactory = new FlowItemFactory(
     Signal,
-    new Logic(`(function () {$1})()`),
+    new Parser(`(function () {$1})()`),
     new SignalShape('Start')
 );
 
 export let ifBlockFactory = new FlowItemFactory(
     IfBlock,
-    new Logic(`if (@1) {$1} else {$2}`),
+    new Parser(`if (@1) {$1} else {$2}`),
     new ConditionBlockShape('if')
 );
 
 export let whileBlockFactory = new FlowItemFactory(
     WhileBlock,
-    new Logic(`while (@1) {$1}`),
+    new Parser(`while (@1) {$1}`),
     new ConditionBlockShape('while')
 );
 
 export let declarationFactory = new FlowItemFactory(
     Declaration,
-    new Logic(`{let local = (@1); $1}`),  // TODO: fix variable handling
+    new Parser(`{let local = (@1); $1}`),  // TODO: fix variable handling
     new DeclarationShape(0xC8E6C9)
 );
 
 // TODO: parse type info and labels at once by jison
 export let intBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`parseInt(prompt("Please Enter a number"))`),
+    Block,
+    new Parser(`parseInt(prompt("Please Enter a number"))`),
     new FunctionShape(
         new TFunction([], new TNumber()),
         "User Input"
@@ -58,8 +60,8 @@ export let intBlockFactory = new FlowItemFactory(
 );
 
 export let randBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`Math.floor(Math.random()*5)+1`),
+    Block,
+    new Parser(`Math.floor(Math.random()*5)+1`),
     new FunctionShape(
         new TFunction([], new TNumber()),
         "rand 1~5"
@@ -67,8 +69,8 @@ export let randBlockFactory = new FlowItemFactory(
 );
 
 export let tenBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`10`),
+    Block,
+    new Parser(`10`),
     new FunctionShape(
         new TFunction([], new TNumber()),
         "10"
@@ -76,8 +78,8 @@ export let tenBlockFactory = new FlowItemFactory(
 );
 
 export let multiplyBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`(@1)*2`),
+    Block,
+    new Parser(`(@1)*2`),
     new FunctionShape(
         new TFunction([new TNumber()], new TNumber()),
         "(num) x2"
@@ -85,8 +87,8 @@ export let multiplyBlockFactory = new FlowItemFactory(
 );
 
 export let correctBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`"correct"`),
+    Block,
+    new Parser(`"correct"`),
     new FunctionShape(
         new TFunction([], new TString()),
         "\"correct\""
@@ -94,8 +96,8 @@ export let correctBlockFactory = new FlowItemFactory(
 );
 
 export let wrongBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`"wrong"`),
+    Block,
+    new Parser(`"wrong"`),
     new FunctionShape(
         new TFunction([], new TString()),
         "\"wrong\""
@@ -103,8 +105,8 @@ export let wrongBlockFactory = new FlowItemFactory(
 );
 
 export let printStingBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`alert(@1)`),
+    Block,
+    new Parser(`alert(@1)`),
     new FunctionShape(
         new TFunction([new TString()], new TVoid()),
         "print(string)"
@@ -112,8 +114,8 @@ export let printStingBlockFactory = new FlowItemFactory(
 );
 
 export let compareBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`(@1) !== (@2)`),
+    Block,
+    new Parser(`(@1) !== (@2)`),
     new FunctionShape(
         new TFunction([new TNumber(), new TNumber()], new TBoolean()),
         "(num1)!=(num2)"
@@ -121,8 +123,8 @@ export let compareBlockFactory = new FlowItemFactory(
 );
 
 export let lessThanBlockFactory = new FlowItemFactory(
-    SimpleBlock,
-    new Logic(`(@1) < (@2)`),
+    Block,
+    new Parser(`(@1) < (@2)`),
     new FunctionShape(
         new TFunction([new TNumber(), new TNumber()], new TBoolean()),
         "(num1)<(num2)"

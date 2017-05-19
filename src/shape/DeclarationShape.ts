@@ -2,17 +2,16 @@ import * as PIXI from "pixi.js";
 import {BlockShape, createLabel} from "./shape";
 import {centerChild} from "../utils";
 import {TVoid, TypeInfo} from "../type/type";
-import {TypedOffset} from "../controllers/AttachController";
-import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
+import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 
 const LINE = 4;
 const GAP = 4;
 const WIDTH = 70;
-const HEIGHT = 30;
+const HEIGHT = 32;
 
 const left = -WIDTH*.5;
 const right = -left;
-const top = -HEIGHT-LINE-GAP;
+const top = -HEIGHT-LINE*.5-GAP;
 const bottom = top+HEIGHT;
 
 export class DeclarationShape extends BlockShape {
@@ -52,7 +51,7 @@ export class DeclarationShape extends BlockShape {
 
         let text = createLabel("let");
         this.addChild(text);
-        centerChild(text, 0, -HEIGHT*.5-LINE-GAP);
+        centerChild(text, 0, -HEIGHT*.5-LINE*.5-GAP);
     }
 
     get returnType(): TypeInfo {

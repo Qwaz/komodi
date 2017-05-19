@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {BlockShape, createLabel} from "./shape";
-import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
 import {TBoolean, TVoid, typeInfoToColor} from "../type/type";
 import {centerChild} from "../utils";
+import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "../common";
 
 const RADIUS = 20;
 const ANGLE = 50;

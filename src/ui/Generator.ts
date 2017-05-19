@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
 import {Global} from "../entry";
-import {FlowControl, FlowItemFactory} from "./flow";
+import {Control, FlowItemFactory} from "./controls";
 import {Shape} from "../shape/shape";
-import {Logic} from "../logic/logic";
+import {Parser} from "../parser/parser";
 import {enableHighlight, makeTargetInteractive} from "../utils";
 
-export class Generator<F extends FlowControl, L extends Logic, S extends Shape> extends PIXI.Container {
+export class Generator<F extends Control, L extends Parser, S extends Shape> extends PIXI.Container {
     constructor(target: FlowItemFactory<F, L, S>) {
         super();
 

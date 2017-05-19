@@ -1,11 +1,10 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {BlockShape, createLabel} from "./shape";
-import {TypedOffset} from "../controllers/AttachController";
-import {Block} from "../ui/flow";
+import {Block} from "../ui/controls";
 import {TFunction, TypeInfo, typeInfoToColor} from "../type/type";
-import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "./Highlight";
 import {centerChild} from "../utils";
+import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 
 const MINIMUM_ARG_WIDTH = 35;
 const PADDING = 5;
@@ -129,7 +128,7 @@ export class FunctionShape extends BlockShape {
         let outlinePath = [
             -widthSum*.5, top,
         ];
-        forEachLabel(-widthSum*.5, (nowX, width, {}, i) => {
+        forEachLabel(-widthSum*.5, (nowX, width, _label, i) => {
             if (i % 2 == 1) {
                 outlinePath.push(
                     nowX+width*.5 - TRIANGLE_WIDTH*.5, top,
@@ -152,7 +151,7 @@ export class FunctionShape extends BlockShape {
         this.hitArea = new PIXI.Polygon(outlinePath);
 
         // draw argument
-        forEachLabel(-widthSum*.5, (nowX, width, {}, i) => {
+        forEachLabel(-widthSum*.5, (nowX, width, _label, i) => {
             if (i % 2 == 1) {
                 this.graphics.beginFill(typeInfoToColor(this.typeInfo.args[i >> 1]));
                 this.graphics.drawPolygon([

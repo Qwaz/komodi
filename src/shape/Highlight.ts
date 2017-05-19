@@ -1,14 +1,21 @@
 import * as PIXI from "pixi.js";
-import {drawEditPoint} from "../controllers/flowStrategies";
+import {EDIT_POINT_RADIUS, TRIANGLE_HEIGHT, TRIANGLE_WIDTH} from "../common";
 
-export const TRIANGLE_WIDTH = 12;
-export const TRIANGLE_HEIGHT = 9;
+function initHighlightGraphics(graphics: PIXI.Graphics) {
+    graphics.beginFill(0xFF0000, 0.7);
+}
+
+function drawHighlight(graphics: PIXI.Graphics, x: number, y: number) {
+    initHighlightGraphics(graphics);
+    graphics.drawCircle(x, y, EDIT_POINT_RADIUS);
+    graphics.endFill();
+}
 
 export class LogicHighlight extends PIXI.Graphics {
     constructor() {
         super();
 
-        this.beginFill(0xFF0000, 0.7);
+        initHighlightGraphics(this);
         this.drawShape(new PIXI.Polygon(
             0, 0,
             -TRIANGLE_WIDTH * .5, -TRIANGLE_HEIGHT,
@@ -16,6 +23,8 @@ export class LogicHighlight extends PIXI.Graphics {
             0, 0,
         ));
         this.endFill();
+
+        this.visible = false;
     }
 }
 
@@ -23,6 +32,8 @@ export class FlowHighlight extends PIXI.Graphics {
     constructor() {
         super();
 
-        drawEditPoint(this, 0, 0, true);
+        drawHighlight(this, 0, 0);
+
+        this.visible = false;
     }
 }
