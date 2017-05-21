@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import {Global} from "./entry";
 
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
@@ -31,8 +32,8 @@ export function centerChild(target: PIXI.DisplayObject, x: number, y: number) {
     target.y = y - localBounds.height*.5;
 }
 
-export function globalPositionOf(target: PIXI.DisplayObject): PIXI.Point {
-    return target.parent.toGlobal(target.position);
+export function stagePositionOf(target: PIXI.DisplayObject): PIXI.Point {
+    return Global.stage.toLocal(target.position, target.parent);
 }
 
 export function enableHighlight(target: PIXI.DisplayObject) {
@@ -43,4 +44,8 @@ export function enableHighlight(target: PIXI.DisplayObject) {
 export function makeTargetInteractive(target: PIXI.DisplayObject) {
     target.interactive = true;
     target.buttonMode = true;
+}
+
+export function getMousePoint() {
+    return Global.renderer.plugins.interaction.mouse.global.clone();
 }

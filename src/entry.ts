@@ -4,7 +4,7 @@ import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Generator} from "./ui/Generator";
 import {Control} from "./controls";
-import {enableHighlight, globalPositionOf, moveToTop} from "./utils";
+import {enableHighlight, getMousePoint, moveToTop, stagePositionOf} from "./utils";
 import {activeBlocks} from "./blockDefinition";
 import {AttachManager} from "./managers/AttachManager";
 import {Offset} from "./common";
@@ -36,6 +36,9 @@ export class Global {
 
     private static _dragging: Control | null = null;
     private static dragOffset: Offset = {offsetX: 0, offsetY: 0};
+
+    private static backgroundDragging: boolean = false;
+    private static backgroundPrevPoint: PIXI.Point = new PIXI.Point();
 
     private constructor() {
         // parser initialization
@@ -80,12 +83,6 @@ export class Global {
         Global.trashButton = new IconButton(Icons.TRASH, 0x757575);
         Global.fixed.addChild(Global.trashButton);
 
-        Global.fixed.on("mouseup", function () {
-            if (Global.dragging) {
-                Control.mouseupHandler(Global.dragging);
-            }
-        });
-
         {
             let maxHeight = 0;
             for (let generator of Global.generators) {
@@ -104,8 +101,23 @@ export class Global {
             }
         }
 
-        window.addEventListener('resize', this.drawMenu, true);
-        this.drawMenu();
+        Global.renderer.plugins.interaction.on('mousedown', function (e: PIXI.interaction.InteractionEvent) {
+            if (!e.target) {
+                Global.backgroundDragging = true;
+                Global.backgroundPrevPoint = getMousePoint();
+            }
+        });
+
+        Global.renderer.plugins.interaction.on('mouseup', function () {
+            if (Global.dragging) {
+                Control.mouseupHandler(Global.dragging);
+            }
+
+            Global.backgroundDragging = false;
+        });
+
+        window.addEventListener('resize', this.updatePosition, true);
+        this.updatePosition();
     }
 
     static get instance() {
@@ -121,20 +133,22 @@ export class Global {
             Global._dragging = target;
             moveToTop(target);
 
-            let globalPosition = globalPositionOf(target);
-            pivotX = pivotX || globalPosition.x;
-            pivotY = pivotY || globalPosition.y;
+            let stagePosition = stagePositionOf(target);
+            pivotX = pivotX || stagePosition.x;
+            pivotY = pivotY || stagePosition.y;
+
+            let mouse = getMousePoint();
 
             Global.dragOffset = {
-                offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
-                offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
+                offsetX: mouse.x - pivotX,
+                offsetY: mouse.y - pivotY,
             };
         } else {
             Global._dragging = null;
         }
     }
 
-    private drawMenu() {
+    private updatePosition() {
         Global.menu.updateRegion(new PIXI.Rectangle(0, 0, window.innerWidth, Global.menuHeight));
 
         Global.renderer.resize(window.innerWidth, window.innerHeight);
@@ -148,9 +162,11 @@ export class Global {
 
     update() {
         if (Global._dragging) {
+            let mouse = getMousePoint();
+
             let target = Global._dragging;
-            target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
-            target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
+            target.x = mouse.x - Global.dragOffset.offsetX;
+            target.y = mouse.y - Global.dragOffset.offsetY;
 
             let attachInfo = Global.attachManager.getNearestAttachPoint(
                 target.x, target.y,
@@ -162,6 +178,15 @@ export class Global {
             } else {
                 Global.attachManager.removeHighlight();
             }
+        }
+
+        if (Global.backgroundDragging) {
+            let prevMouse = Global.backgroundPrevPoint;
+            let nowMouse = getMousePoint();
+
+            Global.stage.x += nowMouse.x - prevMouse.x;
+            Global.stage.y += nowMouse.y - prevMouse.y;
+            Global.backgroundPrevPoint = nowMouse;
         }
 
         Global.renderer.render(Global.container);

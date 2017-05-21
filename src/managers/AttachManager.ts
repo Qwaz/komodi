@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Block, Control} from "../controls";
 import {Global} from "../entry";
-import {globalPositionOf} from "../utils";
+import {stagePositionOf} from "../utils";
 import {Offset, TypedOffset, TypeRequirement} from "../common";
 import {Scope} from "../scope/scope";
 
@@ -177,10 +177,10 @@ export class AttachManager {
         let resultDist = 0;
 
         let isValidCandidate = function (pivot: Control, candidate: AttachCandidate) {
-            let globalPositiion = globalPositionOf(pivot);
+            let stagePosition = stagePositionOf(pivot);
 
-            let candX = globalPositiion.x + candidate.offsetX;
-            let candY = globalPositiion.y + candidate.offsetY;
+            let candX = stagePosition.x + candidate.offsetX;
+            let candY = stagePosition.y + candidate.offsetY;
 
             let deltaX = Math.abs(stageX - candX);
             let deltaY = Math.abs(stageY - candY);
@@ -190,10 +190,10 @@ export class AttachManager {
         };
 
         let candidateDistance = function (pivot: Control, candidate: AttachCandidate) {
-            let globalPositiion = globalPositionOf(pivot);
+            let stagePosition = stagePositionOf(pivot);
 
-            let candX = globalPositiion.x + candidate.offsetX;
-            let candY = globalPositiion.y + candidate.offsetY;
+            let candX = stagePosition.x + candidate.offsetX;
+            let candY = stagePosition.y + candidate.offsetY;
 
             let deltaX = Math.abs(stageX - candX);
             let deltaY = Math.abs(stageY - candY);

@@ -3,7 +3,7 @@ import {Global} from "../entry";
 import {Control} from "../controls";
 import {Shape} from "../shape/shape";
 import {Parser} from "../parser/parser";
-import {enableHighlight, makeTargetInteractive} from "../utils";
+import {enableHighlight, makeTargetInteractive, stagePositionOf} from "../utils";
 import {ControlFactory} from "../factories/ControlFactory";
 
 export class Generator<F extends Control, L extends Parser, S extends Shape> extends PIXI.Container {
@@ -17,11 +17,11 @@ export class Generator<F extends Control, L extends Parser, S extends Shape> ext
         enableHighlight(this);
 
         this.on('mousedown', () => {
-            let globalPosition = this.getGlobalPosition();
+            let stagePosition = stagePositionOf(this);
 
             let flowItem = target.createControl();
             Global.stage.addChild(flowItem);
-            Global.setDragging(flowItem, globalPosition.x, globalPosition.y);
+            Global.setDragging(flowItem, stagePosition.x, stagePosition.y);
         });
     }
 }

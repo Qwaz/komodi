@@ -1554,11 +1554,6 @@ class Global {
         Global.fixed.addChild(Global.runButton);
         Global.trashButton = new __WEBPACK_IMPORTED_MODULE_9__ui_IconButton__["a" /* IconButton */](__WEBPACK_IMPORTED_MODULE_9__ui_IconButton__["b" /* Icons */].TRASH, 0x757575);
         Global.fixed.addChild(Global.trashButton);
-        Global.fixed.on("mouseup", function () {
-            if (Global.dragging) {
-                __WEBPACK_IMPORTED_MODULE_4__controls__["a" /* Control */].mouseupHandler(Global.dragging);
-            }
-        });
         {
             let maxHeight = 0;
             for (let generator of Global.generators) {
@@ -1574,8 +1569,20 @@ class Global {
                 widthSum += generator.width;
             }
         }
-        window.addEventListener('resize', this.drawMenu, true);
-        this.drawMenu();
+        Global.renderer.plugins.interaction.on('mousedown', function (e) {
+            if (!e.target) {
+                Global.backgroundDragging = true;
+                Global.backgroundPrevPoint = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* getMousePoint */])();
+            }
+        });
+        Global.renderer.plugins.interaction.on('mouseup', function () {
+            if (Global.dragging) {
+                __WEBPACK_IMPORTED_MODULE_4__controls__["a" /* Control */].mouseupHandler(Global.dragging);
+            }
+            Global.backgroundDragging = false;
+        });
+        window.addEventListener('resize', this.updatePosition, true);
+        this.updatePosition();
     }
     static get instance() {
         return this._instance || (this._instance = new Global());
@@ -1586,20 +1593,21 @@ class Global {
     static setDragging(target, pivotX, pivotY) {
         if (target) {
             Global._dragging = target;
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* moveToTop */])(target);
-            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* globalPositionOf */])(target);
-            pivotX = pivotX || globalPosition.x;
-            pivotY = pivotY || globalPosition.y;
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* moveToTop */])(target);
+            let stagePosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["d" /* stagePositionOf */])(target);
+            pivotX = pivotX || stagePosition.x;
+            pivotY = pivotY || stagePosition.y;
+            let mouse = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* getMousePoint */])();
             Global.dragOffset = {
-                offsetX: Global.renderer.plugins.interaction.mouse.global.x - pivotX,
-                offsetY: Global.renderer.plugins.interaction.mouse.global.y - pivotY,
+                offsetX: mouse.x - pivotX,
+                offsetY: mouse.y - pivotY,
             };
         }
         else {
             Global._dragging = null;
         }
     }
-    drawMenu() {
+    updatePosition() {
         Global.menu.updateRegion(new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Rectangle"](0, 0, window.innerWidth, Global.menuHeight));
         Global.renderer.resize(window.innerWidth, window.innerHeight);
         Global.runButton.x = MENU_PADDING + Global.runButton.width * .5;
@@ -1609,9 +1617,10 @@ class Global {
     }
     update() {
         if (Global._dragging) {
+            let mouse = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* getMousePoint */])();
             let target = Global._dragging;
-            target.x = Global.renderer.plugins.interaction.mouse.global.x - Global.dragOffset.offsetX;
-            target.y = Global.renderer.plugins.interaction.mouse.global.y - Global.dragOffset.offsetY;
+            target.x = mouse.x - Global.dragOffset.offsetX;
+            target.y = mouse.y - Global.dragOffset.offsetY;
             let attachInfo = Global.attachManager.getNearestAttachPoint(target.x, target.y, target.attachFilter.bind(target));
             if (attachInfo) {
                 Global.attachManager.setHighlight(attachInfo);
@@ -1619,6 +1628,13 @@ class Global {
             else {
                 Global.attachManager.removeHighlight();
             }
+        }
+        if (Global.backgroundDragging) {
+            let prevMouse = Global.backgroundPrevPoint;
+            let nowMouse = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* getMousePoint */])();
+            Global.stage.x += nowMouse.x - prevMouse.x;
+            Global.stage.y += nowMouse.y - prevMouse.y;
+            Global.backgroundPrevPoint = nowMouse;
         }
         Global.renderer.render(Global.container);
     }
@@ -1628,6 +1644,8 @@ class Global {
 Global._instance = new Global();
 Global._dragging = null;
 Global.dragOffset = { offsetX: 0, offsetY: 0 };
+Global.backgroundDragging = false;
+Global.backgroundPrevPoint = new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Point"]();
 __WEBPACK_IMPORTED_MODULE_0_webfontloader__["load"]({
     custom: {
         families: ['FontAwesome'],
@@ -19116,12 +19134,15 @@ const FLOW_VERTICAL_MARGIN = 50;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__entry__ = __webpack_require__(6);
 /* unused harmony export hitTestRectangle */
-/* harmony export (immutable) */ __webpack_exports__["b"] = moveToTop;
-/* harmony export (immutable) */ __webpack_exports__["d"] = centerChild;
-/* harmony export (immutable) */ __webpack_exports__["c"] = globalPositionOf;
+/* harmony export (immutable) */ __webpack_exports__["c"] = moveToTop;
+/* harmony export (immutable) */ __webpack_exports__["e"] = centerChild;
+/* harmony export (immutable) */ __webpack_exports__["d"] = stagePositionOf;
 /* harmony export (immutable) */ __webpack_exports__["a"] = enableHighlight;
-/* harmony export (immutable) */ __webpack_exports__["e"] = makeTargetInteractive;
+/* harmony export (immutable) */ __webpack_exports__["f"] = makeTargetInteractive;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getMousePoint;
+
 function hitTestRectangle(obj1, obj2) {
     let bound1 = obj1.getBounds();
     let bound2 = obj2.getBounds();
@@ -19146,8 +19167,8 @@ function centerChild(target, x, y) {
     target.x = x - localBounds.width * .5;
     target.y = y - localBounds.height * .5;
 }
-function globalPositionOf(target) {
-    return target.parent.toGlobal(target.position);
+function stagePositionOf(target) {
+    return __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].stage.toLocal(target.position, target.parent);
 }
 function enableHighlight(target) {
     target.on('mouseover', () => target.alpha = 0.75);
@@ -19156,6 +19177,9 @@ function enableHighlight(target) {
 function makeTargetInteractive(target) {
     target.interactive = true;
     target.buttonMode = true;
+}
+function getMousePoint() {
+    return __WEBPACK_IMPORTED_MODULE_0__entry__["Global"].renderer.plugins.interaction.mouse.global.clone();
 }
 
 
@@ -28523,8 +28547,8 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.registerFlow(this);
         this.flowHighlight = new __WEBPACK_IMPORTED_MODULE_3__shape_Highlight__["a" /* FlowHighlight */]();
         this.addChild(this.flowHighlight);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* makeTargetInteractive */])(this);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* makeTargetInteractive */])(this.shape);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* makeTargetInteractive */])(this.shape);
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* enableHighlight */])(this.shape);
         this.on('mousedown', () => {
             if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
@@ -28540,9 +28564,7 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
     }
     static mouseupHandler(target) {
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-        let globalMouseX = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].renderer.plugins.interaction.mouse.global.x;
-        let globalMouseY = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].renderer.plugins.interaction.mouse.global.y;
-        let localMouse = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.toLocal(new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Point"](globalMouseX, globalMouseY));
+        let localMouse = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.toLocal(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getMousePoint */])());
         if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
             target.destroy();
         }
@@ -28655,13 +28677,13 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         super();
         let shape = target.shape.clone();
         this.addChild(shape);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["f" /* makeTargetInteractive */])(this);
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* enableHighlight */])(this);
         this.on('mousedown', () => {
-            let globalPosition = this.getGlobalPosition();
+            let stagePosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* stagePositionOf */])(this);
             let flowItem = target.createControl();
             __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].stage.addChild(flowItem);
-            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(flowItem, globalPosition.x, globalPosition.y);
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(flowItem, stagePosition.x, stagePosition.y);
         });
     }
 }
@@ -36200,7 +36222,7 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             }
         });
         forEachLabel(-widthSum * .5, (nowX, width, label) => {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
         });
     }
 }
@@ -36380,18 +36402,18 @@ class AttachManager {
         let result = null;
         let resultDist = 0;
         let isValidCandidate = function (pivot, candidate) {
-            let globalPositiion = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* globalPositionOf */])(pivot);
-            let candX = globalPositiion.x + candidate.offsetX;
-            let candY = globalPositiion.y + candidate.offsetY;
+            let stagePosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* stagePositionOf */])(pivot);
+            let candX = stagePosition.x + candidate.offsetX;
+            let candY = stagePosition.y + candidate.offsetY;
             let deltaX = Math.abs(stageX - candX);
             let deltaY = Math.abs(stageY - candY);
             let distance = deltaX + deltaY;
             return deltaX <= NEAR && deltaY <= NEAR && (result == null || distance <= resultDist);
         };
         let candidateDistance = function (pivot, candidate) {
-            let globalPositiion = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* globalPositionOf */])(pivot);
-            let candX = globalPositiion.x + candidate.offsetX;
-            let candY = globalPositiion.y + candidate.offsetY;
+            let stagePosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["d" /* stagePositionOf */])(pivot);
+            let candX = stagePosition.x + candidate.offsetX;
+            let candY = stagePosition.y + candidate.offsetY;
             let deltaX = Math.abs(stageX - candX);
             let deltaY = Math.abs(stageY - candY);
             return deltaX + deltaY;
@@ -57131,7 +57153,7 @@ class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* Bl
         this.graphics.endFill();
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])(msg);
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* centerChild */])(text, 0, -RADIUS);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* centerChild */])(text, 0, -RADIUS);
     }
     clone() {
         return new ConditionBlockShape(this.msg);
@@ -57192,7 +57214,7 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["a" /* Block
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])("let");
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE * .5 - GAP);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE * .5 - GAP);
     }
     clone() {
         return new DeclarationShape(this.color);
@@ -57245,7 +57267,7 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])(message);
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* centerChild */])(text, 0, -HEIGHT * .5);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5);
     }
     clone() {
         return new SignalShape(this.message);
@@ -58119,8 +58141,8 @@ class IconButton extends PIXI.Container {
         this.hitArea = new PIXI.Circle(0, 0, RADIUS);
         this.addChild(this.background);
         this.addChild(this.text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* centerChild */])(this.text, 0, 0);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* centerChild */])(this.text, 0, 0);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["f" /* makeTargetInteractive */])(this);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = IconButton;

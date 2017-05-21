@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {Shape} from "../shape/shape";
 import {Global} from "../entry";
-import {enableHighlight, makeTargetInteractive} from "../utils";
+import {enableHighlight, getMousePoint, makeTargetInteractive} from "../utils";
 import {FlowHighlight} from "../shape/Highlight";
 import {Parser} from "../parser/Parser";
 import {Scope} from "../scope/scope";
@@ -51,13 +51,7 @@ export abstract class Control extends PIXI.Container {
     static mouseupHandler(target: Control) {
         Global.setDragging(null);
 
-        let globalMouseX = Global.renderer.plugins.interaction.mouse.global.x;
-        let globalMouseY = Global.renderer.plugins.interaction.mouse.global.y;
-
-        let localMouse = Global.trashButton.toLocal(new PIXI.Point(
-            globalMouseX, globalMouseY
-        ));
-
+        let localMouse = Global.trashButton.toLocal(getMousePoint());
         if (Global.trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
             target.destroy();
         } else {
