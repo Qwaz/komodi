@@ -1,4 +1,4 @@
-import {centerChild, enableHighlight, makeTargetInteractive} from "../utils";
+import {centerChild, makeTargetInteractive} from "../utils";
 
 const FONT_SIZE = 38;
 const RADIUS = 34;
@@ -30,8 +30,8 @@ export class IconButton extends PIXI.Container {
         this.addChild(this.background);
         this.addChild(this.text);
 
-        makeTargetInteractive(this);
-        enableHighlight(this);
         centerChild(this.text, 0, 0);
+
+        makeTargetInteractive(this);
     }
 }

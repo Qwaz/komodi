@@ -43,32 +43,35 @@ export abstract class Control extends PIXI.Container {
 
         this.on('mouseup', () => {
             if (Global.dragging == this) {
-                Global.setDragging(null);
-
-                let globalMouseX = Global.renderer.plugins.interaction.mouse.global.x;
-                let globalMouseY = Global.renderer.plugins.interaction.mouse.global.y;
-
-                let localMouse = Global.trashButton.toLocal(new PIXI.Point(
-                    globalMouseX, globalMouseY
-                ));
-
-                debugger;
-                if (Global.trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
-                    this.destroy();
-                } else {
-                    Global.attachManager.removeHighlight();
-
-                    let attachInfo = Global.attachManager.getNearestAttachPoint(
-                        this.x, this.y,
-                        this.attachFilter.bind(this)
-                    );
-
-                    if (attachInfo) {
-                        Global.attachManager.attachControl(this, attachInfo);
-                    }
-                }
+                Control.mouseupHandler(this);
             }
         });
+    }
+
+    static mouseupHandler(target: Control) {
+        Global.setDragging(null);
+
+        let globalMouseX = Global.renderer.plugins.interaction.mouse.global.x;
+        let globalMouseY = Global.renderer.plugins.interaction.mouse.global.y;
+
+        let localMouse = Global.trashButton.toLocal(new PIXI.Point(
+            globalMouseX, globalMouseY
+        ));
+
+        if (Global.trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
+            target.destroy();
+        } else {
+            Global.attachManager.removeHighlight();
+
+            let attachInfo = Global.attachManager.getNearestAttachPoint(
+                target.x, target.y,
+                target.attachFilter.bind(target)
+            );
+
+            if (attachInfo) {
+                Global.attachManager.attachControl(target, attachInfo);
+            }
+        }
     }
 
     get scope() {

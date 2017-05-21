@@ -4,12 +4,13 @@ import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Generator} from "./ui/Generator";
 import {Control} from "./controls";
-import {globalPositionOf, moveToTop} from "./utils";
+import {enableHighlight, globalPositionOf, moveToTop} from "./utils";
 import {activeBlocks} from "./blockDefinition";
 import {AttachManager} from "./managers/AttachManager";
 import {Offset} from "./common";
 import {GlobalManager} from "./managers/GlobalManager";
 import {IconButton, Icons} from "./ui/IconButton";
+import {InteractiveRect} from "./ui/InteractiveRect";
 
 const MENU_PADDING = 12;
 
@@ -23,8 +24,11 @@ export class Global {
     // render related
     static renderer: PIXI.WebGLRenderer | PIXI.CanvasRenderer;
 
+    private static container: PIXI.Container;
     static stage: PIXI.Container;
-    static menu: PIXI.Graphics;
+    static fixed: PIXI.Container;
+
+    static menu: InteractiveRect;
     static menuHeight: number;  // TODO: revise design
 
     static runButton: IconButton;
@@ -53,21 +57,34 @@ export class Global {
 
         document.body.appendChild(Global.renderer.view);
 
-        Global.stage = new PIXI.Container();
+        Global.container = new PIXI.Container();
 
-        Global.menu = new PIXI.Graphics();
-        Global.stage.addChild(Global.menu);
+        Global.stage = new PIXI.Container();
+        Global.fixed = new PIXI.Container();
+        Global.fixed.interactive = true;
+        Global.container.addChild(Global.stage);
+        Global.container.addChild(Global.fixed);
+
+        Global.menu = new InteractiveRect(0xCFD8DC);
+        Global.fixed.addChild(Global.menu);
 
         Global.runButton = new IconButton(Icons.PLAY, 0x2196F3);
+        enableHighlight(Global.runButton);
         Global.runButton.on("click", function () {
             let code = Global.globalManager.generateCode();
             console.log(code);
             eval(code);
         });
-        Global.stage.addChild(Global.runButton);
+        Global.fixed.addChild(Global.runButton);
 
         Global.trashButton = new IconButton(Icons.TRASH, 0x757575);
-        Global.stage.addChild(Global.trashButton);
+        Global.fixed.addChild(Global.trashButton);
+
+        Global.fixed.on("mouseup", function () {
+            if (Global.dragging) {
+                Control.mouseupHandler(Global.dragging);
+            }
+        });
 
         {
             let maxHeight = 0;
@@ -118,10 +135,7 @@ export class Global {
     }
 
     private drawMenu() {
-        Global.menu.clear();
-        Global.menu.beginFill(0xCFD8DC);
-        Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
-        Global.menu.endFill();
+        Global.menu.updateRegion(new PIXI.Rectangle(0, 0, window.innerWidth, Global.menuHeight));
 
         Global.renderer.resize(window.innerWidth, window.innerHeight);
 
@@ -150,7 +164,7 @@ export class Global {
             }
         }
 
-        Global.renderer.render(Global.stage);
+        Global.renderer.render(Global.container);
     }
 }
 

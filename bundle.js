@@ -1506,11 +1506,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_lodash__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_Generator__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__blockDefinition__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__managers_AttachManager__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__managers_GlobalManager__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ui_IconButton__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__controls__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__blockDefinition__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__managers_AttachManager__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__managers_GlobalManager__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ui_IconButton__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ui_InteractiveRect__ = __webpack_require__(219);
+
+
 
 
 
@@ -1523,27 +1527,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 const MENU_PADDING = 12;
 class Global {
     constructor() {
-        Global.generators = __WEBPACK_IMPORTED_MODULE_2_lodash__(__WEBPACK_IMPORTED_MODULE_5__blockDefinition__["a" /* activeBlocks */]).map((factory) => new __WEBPACK_IMPORTED_MODULE_3__ui_Generator__["a" /* Generator */](factory)).value();
-        Global.attachManager = new __WEBPACK_IMPORTED_MODULE_6__managers_AttachManager__["a" /* AttachManager */]();
-        Global.globalManager = new __WEBPACK_IMPORTED_MODULE_7__managers_GlobalManager__["a" /* GlobalManager */]();
+        Global.generators = __WEBPACK_IMPORTED_MODULE_2_lodash__(__WEBPACK_IMPORTED_MODULE_6__blockDefinition__["a" /* activeBlocks */]).map((factory) => new __WEBPACK_IMPORTED_MODULE_3__ui_Generator__["a" /* Generator */](factory)).value();
+        Global.attachManager = new __WEBPACK_IMPORTED_MODULE_7__managers_AttachManager__["a" /* AttachManager */]();
+        Global.globalManager = new __WEBPACK_IMPORTED_MODULE_8__managers_GlobalManager__["a" /* GlobalManager */]();
         Global.renderer = __WEBPACK_IMPORTED_MODULE_1_pixi_js__["autoDetectRenderer"](1, 1, { antialias: false, transparent: false, resolution: 2 });
         Global.renderer.backgroundColor = 0xECEFF1;
         Global.renderer.view.style.position = "absolute";
         Global.renderer.view.style.display = "block";
         Global.renderer.autoResize = true;
         document.body.appendChild(Global.renderer.view);
+        Global.container = new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Container"]();
         Global.stage = new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Container"]();
-        Global.menu = new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Graphics"]();
-        Global.stage.addChild(Global.menu);
-        Global.runButton = new __WEBPACK_IMPORTED_MODULE_8__ui_IconButton__["a" /* IconButton */](__WEBPACK_IMPORTED_MODULE_8__ui_IconButton__["b" /* Icons */].PLAY, 0x2196F3);
+        Global.fixed = new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Container"]();
+        Global.fixed.interactive = true;
+        Global.container.addChild(Global.stage);
+        Global.container.addChild(Global.fixed);
+        Global.menu = new __WEBPACK_IMPORTED_MODULE_10__ui_InteractiveRect__["a" /* InteractiveRect */](0xCFD8DC);
+        Global.fixed.addChild(Global.menu);
+        Global.runButton = new __WEBPACK_IMPORTED_MODULE_9__ui_IconButton__["a" /* IconButton */](__WEBPACK_IMPORTED_MODULE_9__ui_IconButton__["b" /* Icons */].PLAY, 0x2196F3);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["a" /* enableHighlight */])(Global.runButton);
         Global.runButton.on("click", function () {
             let code = Global.globalManager.generateCode();
             console.log(code);
             eval(code);
         });
-        Global.stage.addChild(Global.runButton);
-        Global.trashButton = new __WEBPACK_IMPORTED_MODULE_8__ui_IconButton__["a" /* IconButton */](__WEBPACK_IMPORTED_MODULE_8__ui_IconButton__["b" /* Icons */].TRASH, 0x757575);
-        Global.stage.addChild(Global.trashButton);
+        Global.fixed.addChild(Global.runButton);
+        Global.trashButton = new __WEBPACK_IMPORTED_MODULE_9__ui_IconButton__["a" /* IconButton */](__WEBPACK_IMPORTED_MODULE_9__ui_IconButton__["b" /* Icons */].TRASH, 0x757575);
+        Global.fixed.addChild(Global.trashButton);
+        Global.fixed.on("mouseup", function () {
+            if (Global.dragging) {
+                __WEBPACK_IMPORTED_MODULE_4__controls__["a" /* Control */].mouseupHandler(Global.dragging);
+            }
+        });
         {
             let maxHeight = 0;
             for (let generator of Global.generators) {
@@ -1571,8 +1586,8 @@ class Global {
     static setDragging(target, pivotX, pivotY) {
         if (target) {
             Global._dragging = target;
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["a" /* moveToTop */])(target);
-            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* globalPositionOf */])(target);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["b" /* moveToTop */])(target);
+            let globalPosition = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5__utils__["c" /* globalPositionOf */])(target);
             pivotX = pivotX || globalPosition.x;
             pivotY = pivotY || globalPosition.y;
             Global.dragOffset = {
@@ -1585,10 +1600,7 @@ class Global {
         }
     }
     drawMenu() {
-        Global.menu.clear();
-        Global.menu.beginFill(0xCFD8DC);
-        Global.menu.drawRect(0, 0, window.innerWidth, Global.menuHeight);
-        Global.menu.endFill();
+        Global.menu.updateRegion(new __WEBPACK_IMPORTED_MODULE_1_pixi_js__["Rectangle"](0, 0, window.innerWidth, Global.menuHeight));
         Global.renderer.resize(window.innerWidth, window.innerHeight);
         Global.runButton.x = MENU_PADDING + Global.runButton.width * .5;
         Global.runButton.y = window.innerHeight - MENU_PADDING - Global.runButton.height * .5;
@@ -1608,7 +1620,7 @@ class Global {
                 Global.attachManager.removeHighlight();
             }
         }
-        Global.renderer.render(Global.stage);
+        Global.renderer.render(Global.container);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["Global"] = Global;
@@ -19105,11 +19117,11 @@ const FLOW_VERTICAL_MARGIN = 50;
 
 "use strict";
 /* unused harmony export hitTestRectangle */
-/* harmony export (immutable) */ __webpack_exports__["a"] = moveToTop;
-/* harmony export (immutable) */ __webpack_exports__["e"] = centerChild;
-/* harmony export (immutable) */ __webpack_exports__["b"] = globalPositionOf;
-/* harmony export (immutable) */ __webpack_exports__["d"] = enableHighlight;
-/* harmony export (immutable) */ __webpack_exports__["c"] = makeTargetInteractive;
+/* harmony export (immutable) */ __webpack_exports__["b"] = moveToTop;
+/* harmony export (immutable) */ __webpack_exports__["d"] = centerChild;
+/* harmony export (immutable) */ __webpack_exports__["c"] = globalPositionOf;
+/* harmony export (immutable) */ __webpack_exports__["a"] = enableHighlight;
+/* harmony export (immutable) */ __webpack_exports__["e"] = makeTargetInteractive;
 function hitTestRectangle(obj1, obj2) {
     let bound1 = obj1.getBounds();
     let bound2 = obj2.getBounds();
@@ -23817,13 +23829,13 @@ exports.default = RenderTarget;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Control__ = __webpack_require__(46);
-/* unused harmony reexport Control */
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__Control__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Signal__ = __webpack_require__(204);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__Signal__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__Signal__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Block__ = __webpack_require__(100);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__Block__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_2__Block__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Declaration__ = __webpack_require__(203);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_3__Declaration__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_3__Declaration__["a"]; });
 
 
 
@@ -28511,9 +28523,9 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.registerFlow(this);
         this.flowHighlight = new __WEBPACK_IMPORTED_MODULE_3__shape_Highlight__["a" /* FlowHighlight */]();
         this.addChild(this.flowHighlight);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* makeTargetInteractive */])(this);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* makeTargetInteractive */])(this.shape);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* enableHighlight */])(this.shape);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* makeTargetInteractive */])(this.shape);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* enableHighlight */])(this.shape);
         this.on('mousedown', () => {
             if (!__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging) {
                 __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(this);
@@ -28522,23 +28534,25 @@ class Control extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         });
         this.on('mouseup', () => {
             if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].dragging == this) {
-                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
-                let globalMouseX = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].renderer.plugins.interaction.mouse.global.x;
-                let globalMouseY = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].renderer.plugins.interaction.mouse.global.y;
-                let localMouse = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.toLocal(new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Point"](globalMouseX, globalMouseY));
-                debugger;
-                if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
-                    this.destroy();
-                }
-                else {
-                    __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.removeHighlight();
-                    let attachInfo = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.getNearestAttachPoint(this.x, this.y, this.attachFilter.bind(this));
-                    if (attachInfo) {
-                        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.attachControl(this, attachInfo);
-                    }
-                }
+                Control.mouseupHandler(this);
             }
         });
+    }
+    static mouseupHandler(target) {
+        __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].setDragging(null);
+        let globalMouseX = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].renderer.plugins.interaction.mouse.global.x;
+        let globalMouseY = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].renderer.plugins.interaction.mouse.global.y;
+        let localMouse = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.toLocal(new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Point"](globalMouseX, globalMouseY));
+        if (__WEBPACK_IMPORTED_MODULE_1__entry__["Global"].trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
+            target.destroy();
+        }
+        else {
+            __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.removeHighlight();
+            let attachInfo = __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.getNearestAttachPoint(target.x, target.y, target.attachFilter.bind(target));
+            if (attachInfo) {
+                __WEBPACK_IMPORTED_MODULE_1__entry__["Global"].attachManager.attachControl(target, attachInfo);
+            }
+        }
     }
     get scope() {
         return this._scope;
@@ -28641,8 +28655,8 @@ class Generator extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
         super();
         let shape = target.shape.clone();
         this.addChild(shape);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* makeTargetInteractive */])(this);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* enableHighlight */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* makeTargetInteractive */])(this);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* enableHighlight */])(this);
         this.on('mousedown', () => {
             let globalPosition = this.getGlobalPosition();
             let flowItem = target.createControl();
@@ -36029,7 +36043,7 @@ class Parser {
         let now = control;
         while (now) {
             let pat = now.parser.pattern;
-            if (now instanceof __WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */]) {
+            if (now instanceof __WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */]) {
                 for (let i = now.numLogic - 1; i >= 0; i--) {
                     let child = now.logicChildren[i];
                     pat = pat.replace(`@${i + 1}`, child ? child.parser.parse(child) : "");
@@ -36186,7 +36200,7 @@ class FunctionShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* BlockSha
             }
         });
         forEachLabel(-widthSum * .5, (nowX, width, label) => {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* centerChild */])(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
         });
     }
 }
@@ -36366,7 +36380,7 @@ class AttachManager {
         let result = null;
         let resultDist = 0;
         let isValidCandidate = function (pivot, candidate) {
-            let globalPositiion = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* globalPositionOf */])(pivot);
+            let globalPositiion = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* globalPositionOf */])(pivot);
             let candX = globalPositiion.x + candidate.offsetX;
             let candY = globalPositiion.y + candidate.offsetY;
             let deltaX = Math.abs(stageX - candX);
@@ -36375,7 +36389,7 @@ class AttachManager {
             return deltaX <= NEAR && deltaY <= NEAR && (result == null || distance <= resultDist);
         };
         let candidateDistance = function (pivot, candidate) {
-            let globalPositiion = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* globalPositionOf */])(pivot);
+            let globalPositiion = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* globalPositionOf */])(pivot);
             let candX = globalPositiion.x + candidate.offsetX;
             let candY = globalPositiion.y + candidate.offsetY;
             let deltaX = Math.abs(stageX - candX);
@@ -36465,7 +36479,7 @@ class AttachManager {
                 break;
             }
             case "Logic": {
-                if (target instanceof __WEBPACK_IMPORTED_MODULE_1__controls__["a" /* Block */]) {
+                if (target instanceof __WEBPACK_IMPORTED_MODULE_1__controls__["b" /* Block */]) {
                     let parent = attachInfo.attachTo;
                     parent.logicChildren[attachInfo.attachIndex] = target;
                     target.attachParent = attachInfo;
@@ -56721,7 +56735,7 @@ class Signal extends __WEBPACK_IMPORTED_MODULE_0__Control__["a" /* Control */] {
 
 class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_2__ControlFactory__["a" /* ControlFactory */] {
     constructor(scopeParent, info) {
-        super(__WEBPACK_IMPORTED_MODULE_1__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_0__parser_Parser__["a" /* Parser */](`${info.label}`), new __WEBPACK_IMPORTED_MODULE_3__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_4__type_type__["b" /* TFunction */]([], info.returnType), info.label));
+        super(__WEBPACK_IMPORTED_MODULE_1__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_0__parser_Parser__["a" /* Parser */](`${info.label}`), new __WEBPACK_IMPORTED_MODULE_3__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_4__type_type__["b" /* TFunction */]([], info.returnType), info.label));
         this.scopeParent = scopeParent;
         this.info = info;
         this.generated = new Set();
@@ -56802,33 +56816,33 @@ class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_2__ControlFactory__["a" /*
 
 
 
-class IfBlock extends __WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */] {
+class IfBlock extends __WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */] {
     constructor(logic, shape) {
         super(logic, shape);
         this.setScope(new __WEBPACK_IMPORTED_MODULE_7__scope_SplitScope__["a" /* SplitScope */](this, 2));
     }
 }
-class WhileBlock extends __WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */] {
+class WhileBlock extends __WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */] {
     constructor(logic, shape) {
         super(logic, shape);
         this.setScope(new __WEBPACK_IMPORTED_MODULE_8__scope_LoopScope__["a" /* LoopScope */](this));
     }
 }
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Signal */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
 let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](IfBlock, new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_2__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('if'));
 let whileBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](WhileBlock, new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`while (@1) {$1}`), new __WEBPACK_IMPORTED_MODULE_2__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('while'));
-let trueBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`true`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "true"));
-let declarationFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["c" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`{let local = (@1); $1}`), new __WEBPACK_IMPORTED_MODULE_3__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
-let inputBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "User Input"));
-let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`Math.floor(Math.random()*30)+1`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "rand 1~30"));
-let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`10`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "10"));
-let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "(num) x2"));
-let correctBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"correct"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"correct\""));
-let highBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"high"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"high\""));
-let lowBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"low"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"low\""));
-let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["a" /* TVoid */]()), "print(string)"));
-let compareBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1) === (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)==(num2)"));
-let lessThanBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["a" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)<(num2)"));
+let trueBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`true`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "true"));
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`{let local = (@1); $1}`), new __WEBPACK_IMPORTED_MODULE_3__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let inputBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "User Input"));
+let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`Math.floor(Math.random()*30)+1`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "rand 1~30"));
+let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`10`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "10"));
+let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "(num) x2"));
+let correctBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"correct"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"correct\""));
+let highBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"high"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"high\""));
+let lowBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"low"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"low\""));
+let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["a" /* TVoid */]()), "print(string)"));
+let compareBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1) === (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)==(num2)"));
+let lessThanBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)<(num2)"));
 
 
 /***/ }),
@@ -57117,7 +57131,7 @@ class ConditionBlockShape extends __WEBPACK_IMPORTED_MODULE_2__shape__["a" /* Bl
         this.graphics.endFill();
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shape__["b" /* createLabel */])(msg);
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* centerChild */])(text, 0, -RADIUS);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["d" /* centerChild */])(text, 0, -RADIUS);
     }
     clone() {
         return new ConditionBlockShape(this.msg);
@@ -57178,7 +57192,7 @@ class DeclarationShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["a" /* Block
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])("let");
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE * .5 - GAP);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* centerChild */])(text, 0, -HEIGHT * .5 - LINE * .5 - GAP);
     }
     clone() {
         return new DeclarationShape(this.color);
@@ -57231,7 +57245,7 @@ class SignalShape extends __WEBPACK_IMPORTED_MODULE_1__shape__["c" /* Shape */] 
         this.hitArea = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Rectangle"](left, top, WIDTH, HEIGHT);
         let text = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__shape__["b" /* createLabel */])(message);
         this.addChild(text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["e" /* centerChild */])(text, 0, -HEIGHT * .5);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* centerChild */])(text, 0, -HEIGHT * .5);
     }
     clone() {
         return new SignalShape(this.message);
@@ -58105,12 +58119,39 @@ class IconButton extends PIXI.Container {
         this.hitArea = new PIXI.Circle(0, 0, RADIUS);
         this.addChild(this.background);
         this.addChild(this.text);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["c" /* makeTargetInteractive */])(this);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* enableHighlight */])(this);
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* centerChild */])(this.text, 0, 0);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["d" /* centerChild */])(this.text, 0, 0);
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__utils__["e" /* makeTargetInteractive */])(this);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = IconButton;
+
+
+
+/***/ }),
+/* 219 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_pixi_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_pixi_js__);
+
+class InteractiveRect extends __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Container"] {
+    constructor(color) {
+        super();
+        this.color = color;
+        this.interactive = true;
+        this.graphics = new __WEBPACK_IMPORTED_MODULE_0_pixi_js__["Graphics"]();
+        this.addChild(this.graphics);
+    }
+    updateRegion(rect) {
+        this.graphics.clear();
+        this.graphics.beginFill(this.color);
+        this.graphics.drawShape(rect);
+        this.graphics.endFill();
+        this.hitArea = rect;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = InteractiveRect;
 
 
 
