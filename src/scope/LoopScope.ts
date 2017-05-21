@@ -1,4 +1,4 @@
-import {Control} from "../ui/controls";
+import {Control} from "../controls";
 import {drawEditPoint, drawLinear, initFlowGraphics, Scope} from "./scope";
 import {FLOW_VERTICAL_MARGIN, Offset} from "../common";
 import {Global} from "../entry";

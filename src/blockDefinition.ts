@@ -2,30 +2,34 @@ import {
     compareBlockFactory,
     correctBlockFactory,
     declarationFactory,
+    highBlockFactory,
     ifBlockFactory,
-    intBlockFactory,
+    inputBlockFactory,
     lessThanBlockFactory,
+    lowBlockFactory,
     multiplyBlockFactory,
     printStingBlockFactory,
     randBlockFactory,
     startSignalFactory,
     tenBlockFactory,
-    whileBlockFactory,
-    wrongBlockFactory
-} from "./ui/blocks";
+    trueBlockFactory,
+    whileBlockFactory
+} from "./factories/factories";
 
 export const activeBlocks = [
     startSignalFactory,
+    declarationFactory,
     ifBlockFactory,
     whileBlockFactory,
-    declarationFactory,
-    intBlockFactory,
+    trueBlockFactory,
+    compareBlockFactory,
+    lessThanBlockFactory,
+    inputBlockFactory,
     randBlockFactory,
     tenBlockFactory,
     multiplyBlockFactory,
     correctBlockFactory,
-    wrongBlockFactory,
+    highBlockFactory,
+    lowBlockFactory,
     printStingBlockFactory,
-    compareBlockFactory,
-    lessThanBlockFactory,
 ];

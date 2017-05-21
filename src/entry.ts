@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Generator} from "./ui/Generator";
-import {Control} from "./ui/controls";
+import {Control} from "./controls";
 import {enableHighlight, globalPositionOf, makeTargetInteractive, moveToTop} from "./utils";
 import {activeBlocks} from "./blockDefinition";
 import {AttachManager} from "./managers/AttachManager";
@@ -52,7 +52,7 @@ export class Global {
     static stage: PIXI.Container;
     static menu: PIXI.Graphics;
     static runButton: TextButton;
-    static menuHeight: number;  // TODO: menuHeight should not be here
+    static menuHeight: number;  // TODO: revise design
 
     private static _dragging: Control | null = null;
     private static dragOffset: Offset = {offsetX: 0, offsetY: 0};

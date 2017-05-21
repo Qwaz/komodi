@@ -3,7 +3,7 @@ import * as _ from "lodash";
 abstract class TypeBase {
     abstract get primitive(): boolean;
 
-    fitsTo(typeInfo: TypeInfo): boolean {
+    equals(typeInfo: TypeInfo): boolean {
         if (this.primitive) {
             return typeInfo instanceof this.constructor;
         }
@@ -39,11 +39,11 @@ export class TFunction extends TypeBase {
         super();
     }
 
-    fitsTo(typeInfo: TypeInfo): boolean {
+    equals(typeInfo: TypeInfo): boolean {
         if (typeInfo instanceof TFunction) {
             if (typeInfo.args.length == this.args.length) {
-                return _.every(typeInfo.args, (argType, i) => this.args[i].fitsTo(argType))
-                    && this.returns.fitsTo(typeInfo.returns);
+                return _.every(typeInfo.args, (argType, i) => this.args[i].equals(argType))
+                    && this.returns.equals(typeInfo.returns);
             }
         }
         return false;

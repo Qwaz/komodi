@@ -1,9 +1,10 @@
 import * as PIXI from "pixi.js";
 import {Generator} from "./Generator";
-import {Parser} from "../parser/parser";
-import {Block, FlowItemFactory} from "./controls";
-import {FunctionShape} from "../shape/FunctionShape";
-import {TFunction, TypeInfo} from "../type/type";
+import {Parser} from "../parser/Parser";
+import {Block, Control} from "../controls";
+import {TypeInfo} from "../type/type";
+import {ScopedFactory} from "../factories/ScopedFactory";
+import {BlockShape} from "../shape/shape";
 
 const GENERATOR_PADDING = 6;
 
@@ -13,34 +14,44 @@ export interface ParameterInfo {
 }
 
 export class ParameterRenderer extends PIXI.Container {
-    private generators: Generator<Block, Parser, FunctionShape>[] = [];
+    private factories: ScopedFactory[] = [];
+    private generators: Generator<Block, Parser, BlockShape>[] = [];
 
-    constructor() {
+    constructor(readonly scopeParent: Control) {
         super();
     }
 
-    // TODO: previously created variables are not updated
     update(parameterInfoArr: ParameterInfo[]) {
+        if (parameterInfoArr.length == this.factories.length) {
+            const len = parameterInfoArr.length;
+
+            let i;
+            for (i = 0; i < len; i++) {
+                if (!parameterInfoArr[i].returnType.equals(this.factories[i].info.returnType) ||
+                    parameterInfoArr[i].label != this.factories[i].info.label)
+                    break;
+            }
+
+            // no changes
+            if (i == len) {
+                return;
+            }
+        }
+
         this.reset();
 
         let widthSum = 0, maxHeight = 0;
         for (let info of parameterInfoArr) {
-            // TODO: fix flowControl's attachFilter to check its scope parents
-            let factory = new FlowItemFactory(
-                Block,
-                new Parser(`${info.label}`),
-                new FunctionShape(
-                    new TFunction([], info.returnType),
-                    info.label
-                )
-            );
+            let factory = new ScopedFactory(this.scopeParent, info);
 
             let generator = new Generator(factory);
-            this.generators.push(generator);
             this.addChild(generator);
 
             widthSum += generator.width;
             maxHeight = Math.max(maxHeight, generator.height);
+
+            this.factories.push(factory);
+            this.generators.push(generator);
         }
         widthSum += GENERATOR_PADDING * (this.generators.length - 1);
 
@@ -52,7 +63,17 @@ export class ParameterRenderer extends PIXI.Container {
         }
     }
 
+    destroy() {
+        this.reset();
+        super.destroy();
+    }
+
     reset() {
+        for (let factory of this.factories) {
+            factory.destroyAll();
+        }
+        this.factories.splice(0, this.factories.length);
+
         for (let generator of this.generators) {
             this.removeChild(generator);
         }

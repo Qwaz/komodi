@@ -1,4 +1,4 @@
-import {Block, Control} from "../ui/controls";
+import {Block, Control} from "../controls";
 
 export class Parser {
     constructor(readonly pattern: string) {}

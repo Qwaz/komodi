@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {Block, Control} from "../ui/controls";
+import {Block, Control} from "../controls";
 import {Global} from "../entry";
 import {globalPositionOf} from "../utils";
 import {Offset, TypedOffset, TypeRequirement} from "../common";
@@ -316,8 +316,9 @@ export class AttachManager {
     }
 
     detachControl(target: Control) {
-        let attachInfo = target.attachParent;
+        Global.stage.addChild(target);
 
+        let attachInfo = target.attachParent;
         if (attachInfo) {
             switch (attachInfo.attachType) {
                 case "Scope":{
@@ -349,11 +350,11 @@ export class AttachManager {
                     parent.logicChildren[attachInfo.attachIndex] = null;
                     target.attachParent = null;
 
-                    parent.update();
-                    let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
+                    parent.updateShape();
 
                     let arr = this.logicPoints.get(parent);
                     if (arr) {
+                        let offset = parent.shape.highlightOffsets[attachInfo.attachIndex];
                         arr.push({
                             attachType: "Logic",
                             attachIndex: attachInfo.attachIndex,
@@ -366,7 +367,6 @@ export class AttachManager {
                 }
             }
 
-            Global.stage.addChild(target);
             attachInfo.attachTo.findScopeRoot().update();
         }
     }

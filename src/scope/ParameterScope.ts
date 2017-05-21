@@ -1,5 +1,5 @@
 import {drawEditPoint, drawLinear, initFlowGraphics, Scope} from "./scope";
-import {Control} from "../ui/controls";
+import {Control} from "../controls";
 import {ParameterInfo, ParameterRenderer} from "../ui/ParameterRenderer";
 import {FLOW_VERTICAL_MARGIN, Offset} from "../common";
 import {Global} from "../entry";
@@ -13,7 +13,7 @@ export class ParameterScope extends Scope {
     constructor(control: Control, private parameterInfoArr: ParameterInfo[]) {
         super(control, 1);
 
-        this.parameterRenderer = new ParameterRenderer();
+        this.parameterRenderer = new ParameterRenderer(control);
     }
 
     drawScope(): Offset {
@@ -54,5 +54,11 @@ export class ParameterScope extends Scope {
         );
 
         return offset;
+    }
+
+    destroy() {
+        this.parameterRenderer.destroy();
+
+        super.destroy();
     }
 }

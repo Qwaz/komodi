@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {Control} from "../ui/controls";
+import {Control} from "../controls";
 import {FlowHighlight} from "../shape/Highlight";
 import {EDIT_POINT_RADIUS, FLOW_VERTICAL_MARGIN, Offset} from "../common";
 import {Global} from "../entry";
@@ -99,5 +99,7 @@ export abstract class Scope extends PIXI.Container {
                 child.destroy();
             }
         }
+
+        super.destroy();
     }
 }

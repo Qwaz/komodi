@@ -1,4 +1,4 @@
-import {Control, Signal} from "../ui/controls";
+import {Control, Signal} from "../controls";
 
 export class GlobalManager {
     private globals: Set <Control> = new Set<Signal>();

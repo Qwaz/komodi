@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {Block} from "../ui/controls";
+import {Block} from "../controls";
 import {TypeInfo} from "../type/type";
 import {TypedOffset} from "../common";
 
