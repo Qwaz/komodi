@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {Shape} from "../shape/shape";
 import {Global} from "../entry";
-import {enableHighlight, hitTestRectangle, makeTargetInteractive} from "../utils";
+import {enableHighlight, makeTargetInteractive} from "../utils";
 import {FlowHighlight} from "../shape/Highlight";
 import {Parser} from "../parser/Parser";
 import {Scope} from "../scope/scope";
@@ -45,7 +45,15 @@ export abstract class Control extends PIXI.Container {
             if (Global.dragging == this) {
                 Global.setDragging(null);
 
-                if (hitTestRectangle(Global.menu, this)) {
+                let globalMouseX = Global.renderer.plugins.interaction.mouse.global.x;
+                let globalMouseY = Global.renderer.plugins.interaction.mouse.global.y;
+
+                let localMouse = Global.trashButton.toLocal(new PIXI.Point(
+                    globalMouseX, globalMouseY
+                ));
+
+                debugger;
+                if (Global.trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
                     this.destroy();
                 } else {
                     Global.attachManager.removeHighlight();
