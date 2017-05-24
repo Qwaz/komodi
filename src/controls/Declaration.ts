@@ -1,16 +1,16 @@
 import {Block} from "./Block";
 import {ParameterInfo} from "../ui/ParameterRenderer";
-import {Parser} from "../parser/Parser";
 import {BlockShape} from "../shape/shape";
 import {TVoid} from "../type/type";
 import {ParameterScope} from "../scope/ParameterScope";
 import {AttachInfo} from "../managers/AttachManager";
+import {Parser} from "../parser/Parser";
 
 export class Declaration extends Block {
     private scopeInfoArr: ParameterInfo[];
 
     static counter = 0;
-    private id: number;
+    readonly id: string;
 
     constructor(
         parser: Parser,
@@ -18,11 +18,11 @@ export class Declaration extends Block {
     ) {
         super(parser, shape);
 
-        this.id = Declaration.counter++;
+        this.id = `var${Declaration.counter++}`;
 
         this.scopeInfoArr = [{
             returnType: new TVoid(),
-            label: `var${this.id}`,
+            label: this.id,
         }];
         let scope = new ParameterScope(this, this.scopeInfoArr);
         this.setScope(scope);
@@ -32,7 +32,7 @@ export class Declaration extends Block {
         let logicChild = this.logicChildren[0];
         this.scopeInfoArr[0] = {
             returnType: logicChild ? logicChild.shape.returnType : new TVoid(),
-            label: `var${this.id}`,
+            label: this.id,
         };
 
         super.update();

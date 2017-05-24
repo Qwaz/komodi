@@ -3,9 +3,9 @@ import {Shape} from "../shape/shape";
 import {Global} from "../entry";
 import {enableHighlight, getMousePoint, makeTargetInteractive} from "../utils";
 import {FlowHighlight} from "../shape/Highlight";
-import {Parser} from "../parser/Parser";
 import {Scope} from "../scope/scope";
 import {AttachInfo} from "../managers/AttachManager";
+import {Parser} from "../parser/Parser";
 
 export abstract class Control extends PIXI.Container {
     abstract get parser(): Parser;

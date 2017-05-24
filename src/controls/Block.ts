@@ -1,10 +1,10 @@
 import * as _ from "lodash";
 import {Control} from "./Control";
 import {LogicHighlight} from "../shape/Highlight";
-import {Parser} from "../parser/Parser";
 import {BlockShape} from "../shape/shape";
 import {Global} from "../entry";
 import {AttachInfo} from "../managers/AttachManager";
+import {Parser} from "../parser/Parser";
 
 export class Block extends Control {
     logicChildren: Array<Block | null>;

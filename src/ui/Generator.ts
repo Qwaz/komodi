@@ -2,9 +2,9 @@ import * as PIXI from "pixi.js";
 import {Global} from "../entry";
 import {Control} from "../controls";
 import {Shape} from "../shape/shape";
-import {Parser} from "../parser/parser";
 import {enableHighlight, makeTargetInteractive, stagePositionOf} from "../utils";
 import {ControlFactory} from "../factories/ControlFactory";
+import {Parser} from "../parser/Parser";
 
 export class Generator<F extends Control, L extends Parser, S extends Shape> extends PIXI.Container {
     constructor(target: ControlFactory<F, L, S>) {

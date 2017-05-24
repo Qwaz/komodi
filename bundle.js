@@ -36054,39 +36054,54 @@ class ControlFactory {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__controls__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__controls_Block__ = __webpack_require__(100);
 
 class Parser {
+}
+/* unused harmony export Parser */
+
+function parsePattern(control, pattern) {
+    let ret = '';
+    let now = control;
+    while (now) {
+        let pat = pattern;
+        if (now instanceof __WEBPACK_IMPORTED_MODULE_0__controls_Block__["a" /* Block */]) {
+            for (let i = now.numLogic - 1; i >= 0; i--) {
+                let child = now.logicChildren[i];
+                pat = pat.replace(`@${i + 1}`, child ? child.parser.parse(child) : "");
+            }
+        }
+        if (now.scope) {
+            for (let i = now.scope.numScope; i >= 1; i--) {
+                let child = now.scope.scopeChildren[i - 1];
+                pat = pat.replace(`$${i}`, child ? child.parser.parse(child) : "");
+            }
+        }
+        if (ret != '') {
+            ret += ';';
+        }
+        ret += pat;
+        now = now.flow;
+    }
+    return ret;
+}
+class PatternParser extends Parser {
     constructor(pattern) {
+        super();
         this.pattern = pattern;
     }
     parse(control) {
-        let ret = '';
-        let now = control;
-        while (now) {
-            let pat = now.parser.pattern;
-            if (now instanceof __WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */]) {
-                for (let i = now.numLogic - 1; i >= 0; i--) {
-                    let child = now.logicChildren[i];
-                    pat = pat.replace(`@${i + 1}`, child ? child.parser.parse(child) : "");
-                }
-            }
-            if (now.scope) {
-                for (let i = now.scope.numScope; i >= 1; i--) {
-                    let child = now.scope.scopeChildren[i - 1];
-                    pat = pat.replace(`$${i}`, child ? child.parser.parse(child) : "");
-                }
-            }
-            if (ret != '') {
-                ret += ';';
-            }
-            ret += pat;
-            now = now.flow;
-        }
-        return ret;
+        return parsePattern(control, this.pattern);
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Parser;
+/* harmony export (immutable) */ __webpack_exports__["a"] = PatternParser;
+
+class DeclarationParser extends Parser {
+    parse(declaration) {
+        return parsePattern(declaration, `{let ${declaration.id} = (@1); $1}`);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["b"] = DeclarationParser;
 
 
 
@@ -56752,10 +56767,10 @@ function blobMiddlewareFactory() {
 class Declaration extends __WEBPACK_IMPORTED_MODULE_0__Block__["a" /* Block */] {
     constructor(parser, shape) {
         super(parser, shape);
-        this.id = Declaration.counter++;
+        this.id = `var${Declaration.counter++}`;
         this.scopeInfoArr = [{
                 returnType: new __WEBPACK_IMPORTED_MODULE_1__type_type__["a" /* TVoid */](),
-                label: `var${this.id}`,
+                label: this.id,
             }];
         let scope = new __WEBPACK_IMPORTED_MODULE_2__scope_ParameterScope__["a" /* ParameterScope */](this, this.scopeInfoArr);
         this.setScope(scope);
@@ -56764,7 +56779,7 @@ class Declaration extends __WEBPACK_IMPORTED_MODULE_0__Block__["a" /* Block */] 
         let logicChild = this.logicChildren[0];
         this.scopeInfoArr[0] = {
             returnType: logicChild ? logicChild.shape.returnType : new __WEBPACK_IMPORTED_MODULE_1__type_type__["a" /* TVoid */](),
-            label: `var${this.id}`,
+            label: this.id,
         };
         super.update();
     }
@@ -56809,21 +56824,21 @@ class Signal extends __WEBPACK_IMPORTED_MODULE_0__Control__["a" /* Control */] {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__parser_Parser__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__controls__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ControlFactory__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_FunctionShape__ = __webpack_require__(103);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__type_type__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__entry__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__controls__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ControlFactory__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shape_FunctionShape__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__type_type__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__entry__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__parser_Parser__ = __webpack_require__(102);
 
 
 
 
 
 
-class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_2__ControlFactory__["a" /* ControlFactory */] {
+class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_1__ControlFactory__["a" /* ControlFactory */] {
     constructor(scopeParent, info) {
-        super(__WEBPACK_IMPORTED_MODULE_1__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_0__parser_Parser__["a" /* Parser */](`${info.label}`), new __WEBPACK_IMPORTED_MODULE_3__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_4__type_type__["b" /* TFunction */]([], info.returnType), info.label));
+        super(__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_5__parser_Parser__["a" /* PatternParser */](`${info.label}`), new __WEBPACK_IMPORTED_MODULE_2__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_3__type_type__["b" /* TFunction */]([], info.returnType), info.label));
         this.scopeParent = scopeParent;
         this.info = info;
         this.generated = new Set();
@@ -56855,7 +56870,7 @@ class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_2__ControlFactory__["a" /*
     }
     destroyAll() {
         for (let control of this.generated) {
-            __WEBPACK_IMPORTED_MODULE_5__entry__["Global"].attachManager.detachControl(control);
+            __WEBPACK_IMPORTED_MODULE_4__entry__["Global"].attachManager.detachControl(control);
             control.destroy();
         }
     }
@@ -56875,10 +56890,10 @@ class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_2__ControlFactory__["a" /*
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shape_DeclarationShape__ = __webpack_require__(214);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__type_type__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__parser_Parser__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scope_SplitScope__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__scope_LoopScope__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ControlFactory__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__scope_SplitScope__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__scope_LoopScope__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ControlFactory__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__parser_Parser__ = __webpack_require__(102);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return startSignalFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ifBlockFactory; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return whileBlockFactory; });
@@ -56907,30 +56922,30 @@ class ScopedFactory extends __WEBPACK_IMPORTED_MODULE_2__ControlFactory__["a" /*
 class IfBlock extends __WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */] {
     constructor(logic, shape) {
         super(logic, shape);
-        this.setScope(new __WEBPACK_IMPORTED_MODULE_7__scope_SplitScope__["a" /* SplitScope */](this, 2));
+        this.setScope(new __WEBPACK_IMPORTED_MODULE_6__scope_SplitScope__["a" /* SplitScope */](this, 2));
     }
 }
 class WhileBlock extends __WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */] {
     constructor(logic, shape) {
         super(logic, shape);
-        this.setScope(new __WEBPACK_IMPORTED_MODULE_8__scope_LoopScope__["a" /* LoopScope */](this));
+        this.setScope(new __WEBPACK_IMPORTED_MODULE_7__scope_LoopScope__["a" /* LoopScope */](this));
     }
 }
-let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
-let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](IfBlock, new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_2__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('if'));
-let whileBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](WhileBlock, new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`while (@1) {$1}`), new __WEBPACK_IMPORTED_MODULE_2__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('while'));
-let trueBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`true`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "true"));
-let declarationFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`{let local = (@1); $1}`), new __WEBPACK_IMPORTED_MODULE_3__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
-let inputBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "User Input"));
-let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`Math.floor(Math.random()*30)+1`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "rand 1~30"));
-let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`10`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "10"));
-let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "(num) x2"));
-let correctBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"correct"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"correct\""));
-let highBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"high"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"high\""));
-let lowBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`"low"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"low\""));
-let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["a" /* TVoid */]()), "print(string)"));
-let compareBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1) === (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)==(num2)"));
-let lessThanBlockFactory = new __WEBPACK_IMPORTED_MODULE_9__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_6__parser_Parser__["a" /* Parser */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)<(num2)"));
+let startSignalFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["c" /* Signal */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`(function () {$1})()`), new __WEBPACK_IMPORTED_MODULE_1__shape_SignalShape__["a" /* SignalShape */]('Start'));
+let ifBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](IfBlock, new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`if (@1) {$1} else {$2}`), new __WEBPACK_IMPORTED_MODULE_2__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('if'));
+let whileBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](WhileBlock, new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`while (@1) {$1}`), new __WEBPACK_IMPORTED_MODULE_2__shape_ConditionBlockShape__["a" /* ConditionBlockShape */]('while'));
+let trueBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`true`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "true"));
+let declarationFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["d" /* Declaration */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["b" /* DeclarationParser */](), new __WEBPACK_IMPORTED_MODULE_3__shape_DeclarationShape__["a" /* DeclarationShape */](0xC8E6C9));
+let inputBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "User Input"));
+let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`Math.floor(Math.random()*30)+1`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "rand 1~30"));
+let tenBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`10`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "10"));
+let multiplyBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`(@1)*2`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "(num) x2"));
+let correctBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`"correct"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"correct\""));
+let highBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`"high"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"high\""));
+let lowBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`"low"`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()), "\"low\""));
+let printStingBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`alert(@1)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["f" /* TString */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["a" /* TVoid */]()), "print(string)"));
+let compareBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`(@1) === (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)==(num2)"));
+let lessThanBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__ControlFactory__["a" /* ControlFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`(@1) < (@2)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["d" /* TBoolean */]()), "(num1)<(num2)"));
 
 
 /***/ }),

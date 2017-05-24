@@ -1,8 +1,8 @@
 import {Control} from "./Control";
-import {Parser} from "../parser/Parser";
 import {Shape} from "../shape/shape";
 import {LinearScope} from "../scope/LinearScope";
 import {Global} from "../entry";
+import {Parser} from "../parser/Parser";
 
 export class Signal extends Control {
     constructor(readonly parser: Parser, shape: Shape) {

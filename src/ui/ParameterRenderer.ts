@@ -1,10 +1,10 @@
 import * as PIXI from "pixi.js";
 import {Generator} from "./Generator";
-import {Parser} from "../parser/Parser";
 import {Block, Control} from "../controls";
 import {TypeInfo} from "../type/type";
 import {ScopedFactory} from "../factories/ScopedFactory";
 import {BlockShape} from "../shape/shape";
+import {Parser} from "../parser/Parser";
 
 const GENERATOR_PADDING = 6;
 
