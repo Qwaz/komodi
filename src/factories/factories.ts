@@ -1,4 +1,4 @@
-import {Block, Declaration, Signal} from "../controls";
+import {Block, Declaration, FlowBlock, Signal} from "../controls";
 import {SignalShape} from "../shape/SignalShape";
 import {BlockShape} from "../shape/shape";
 import {ConditionBlockShape} from "../shape/ConditionBlockShape";
@@ -7,10 +7,11 @@ import {FunctionShape} from "../shape/FunctionShape";
 import {TBoolean, TFunction, TNumber, TString, TVoid} from "../type/type";
 import {SplitScope} from "../scope/SplitScope";
 import {LoopScope} from "../scope/LoopScope";
-import {ControlFactory} from "./ControlFactory";
+import {SimpleFactory} from "./SimpleFactory";
 import {DeclarationParser, Parser, PatternParser} from "../parser/Parser";
+import {ParameterFactory} from "./ParameterFactory";
 
-class IfBlock extends Block {
+class IfBlock extends FlowBlock {
     constructor(logic: Parser, shape: BlockShape) {
         super(logic, shape);
 
@@ -18,7 +19,7 @@ class IfBlock extends Block {
     }
 }
 
-class WhileBlock extends Block {
+class WhileBlock extends FlowBlock {
     constructor(logic: Parser, shape: BlockShape) {
         super(logic, shape);
 
@@ -26,25 +27,25 @@ class WhileBlock extends Block {
     }
 }
 
-export let startSignalFactory = new ControlFactory(
+export let startSignalFactory = new SimpleFactory(
     Signal,
     new PatternParser(`(function () {$1})()`),
     new SignalShape('Start')
 );
 
-export let ifBlockFactory = new ControlFactory(
+export let ifBlockFactory = new SimpleFactory(
     IfBlock,
     new PatternParser(`if (@1) {$1} else {$2}`),
     new ConditionBlockShape('if')
 );
 
-export let whileBlockFactory = new ControlFactory(
+export let whileBlockFactory = new SimpleFactory(
     WhileBlock,
     new PatternParser(`while (@1) {$1}`),
     new ConditionBlockShape('while')
 );
 
-export let trueBlockFactory = new ControlFactory(
+export let trueBlockFactory = new SimpleFactory(
     Block,
     new PatternParser(`true`),
     new FunctionShape(
@@ -53,14 +54,19 @@ export let trueBlockFactory = new ControlFactory(
     )
 );
 
-export let declarationFactory = new ControlFactory(
+export let declarationFactory = new ParameterFactory(
     Declaration,
-    new DeclarationParser(),
-    new DeclarationShape(0xC8E6C9)
+    [{name: "variable", initial: 'var'}],
+    (data: any) => {
+        return {
+            parser: new DeclarationParser(),
+            shape: new DeclarationShape(0xC8E6C9, data.variable)
+        }
+    }
 );
 
 // TODO: parse type info and labels at once by jison
-export let inputBlockFactory = new ControlFactory(
+export let inputBlockFactory = new SimpleFactory(
     Block,
     new PatternParser(`parseInt(prompt("Please Enter a number"))`),
     new FunctionShape(
@@ -69,61 +75,54 @@ export let inputBlockFactory = new ControlFactory(
     )
 );
 
-export let randBlockFactory = new ControlFactory(
+export let randBlockFactory = new SimpleFactory(
     Block,
-    new PatternParser(`Math.floor(Math.random()*30)+1`),
+    new PatternParser(`Math.floor(Math.random()*(@2))+(@1)`),
     new FunctionShape(
-        new TFunction([], new TNumber()),
-        "rand 1~30"
+        new TFunction([new TNumber(), new TNumber()], new TNumber()),
+        "random (min)~(max)"
     )
 );
 
-export let tenBlockFactory = new ControlFactory(
+export let numberBlockFactory = new ParameterFactory(
     Block,
-    new PatternParser(`10`),
+    [{name: "value", initial: 10}],
+    (data: any) => {
+        return {
+            parser: new PatternParser(`${data.value}`),
+            shape: new FunctionShape(
+                new TFunction([], new TNumber()),
+                `${data.value}`
+            )
+        }
+    }
+);
+
+export let stringBlockFactory = new ParameterFactory(
+    Block,
+    [{name: "value", initial: "string"}],
+    (data: any) => {
+        return {
+            // TODO: quote the given string
+            parser: new PatternParser(`"${data.value}"`),
+            shape: new FunctionShape(
+                new TFunction([], new TString()),
+                `"${data.value}"`
+            )
+        }
+    }
+);
+
+export let intToStringBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`(@1).toString()`),
     new FunctionShape(
-        new TFunction([], new TNumber()),
-        "10"
+        new TFunction([new TNumber()], new TString()),
+        "toString (num)"
     )
 );
 
-export let multiplyBlockFactory = new ControlFactory(
-    Block,
-    new PatternParser(`(@1)*2`),
-    new FunctionShape(
-        new TFunction([new TNumber()], new TNumber()),
-        "(num) x2"
-    )
-);
-
-export let correctBlockFactory = new ControlFactory(
-    Block,
-    new PatternParser(`"correct"`),
-    new FunctionShape(
-        new TFunction([], new TString()),
-        "\"correct\""
-    )
-);
-
-export let highBlockFactory = new ControlFactory(
-    Block,
-    new PatternParser(`"high"`),
-    new FunctionShape(
-        new TFunction([], new TString()),
-        "\"high\""
-    )
-);
-
-export let lowBlockFactory = new ControlFactory(
-    Block,
-    new PatternParser(`"low"`),
-    new FunctionShape(
-        new TFunction([], new TString()),
-        "\"low\""
-    )
-);
-
-export let printStingBlockFactory = new ControlFactory(
+export let printStingBlockFactory = new SimpleFactory(
     Block,
     new PatternParser(`alert(@1)`),
     new FunctionShape(
@@ -132,7 +131,7 @@ export let printStingBlockFactory = new ControlFactory(
     )
 );
 
-export let compareBlockFactory = new ControlFactory(
+export let compareBlockFactory = new SimpleFactory(
     Block,
     new PatternParser(`(@1) === (@2)`),
     new FunctionShape(
@@ -141,7 +140,7 @@ export let compareBlockFactory = new ControlFactory(
     )
 );
 
-export let lessThanBlockFactory = new ControlFactory(
+export let lessThanBlockFactory = new SimpleFactory(
     Block,
     new PatternParser(`(@1) < (@2)`),
     new FunctionShape(

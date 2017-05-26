@@ -1,28 +1,24 @@
 import {Block} from "./Block";
 import {ParameterInfo} from "../ui/ParameterRenderer";
-import {BlockShape} from "../shape/shape";
 import {TVoid} from "../type/type";
 import {ParameterScope} from "../scope/ParameterScope";
 import {AttachInfo} from "../managers/AttachManager";
-import {Parser} from "../parser/Parser";
+import {DeclarationParser} from "../parser/Parser";
+import {DeclarationShape} from "../shape/DeclarationShape";
 
 export class Declaration extends Block {
     private scopeInfoArr: ParameterInfo[];
 
-    static counter = 0;
-    readonly id: string;
-
     constructor(
-        parser: Parser,
-        shape: BlockShape
+        readonly parser: DeclarationParser,
+        readonly shape: DeclarationShape
     ) {
         super(parser, shape);
 
-        this.id = `var${Declaration.counter++}`;
-
         this.scopeInfoArr = [{
             returnType: new TVoid(),
-            label: this.id,
+            label: shape.variableName,
+            value: parser.id,
         }];
         let scope = new ParameterScope(this, this.scopeInfoArr);
         this.setScope(scope);
@@ -32,7 +28,8 @@ export class Declaration extends Block {
         let logicChild = this.logicChildren[0];
         this.scopeInfoArr[0] = {
             returnType: logicChild ? logicChild.shape.returnType : new TVoid(),
-            label: this.id,
+            label: this.shape.variableName,
+            value: this.parser.id,
         };
 
         super.update();

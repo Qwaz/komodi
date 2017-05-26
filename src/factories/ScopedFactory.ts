@@ -1,6 +1,6 @@
 import {BlockShape} from "../shape/shape";
 import {Block, Control} from "../controls";
-import {ControlFactory} from "./ControlFactory";
+import {SimpleFactory} from "./SimpleFactory";
 import {AttachInfo} from "../managers/AttachManager";
 import {ParameterInfo} from "../ui/ParameterRenderer";
 import {FunctionShape} from "../shape/FunctionShape";
@@ -8,13 +8,13 @@ import {TFunction} from "../type/type";
 import {Global} from "../entry";
 import {Parser, PatternParser} from "../parser/Parser";
 
-export class ScopedFactory extends ControlFactory<Block, Parser, BlockShape> {
+export class ScopedFactory extends SimpleFactory<Block, Parser, BlockShape> {
     private generated = new Set<Block>();
 
     constructor(private scopeParent: Control, readonly info: ParameterInfo) {
         super(
             Block,
-            new PatternParser(`${info.label}`),
+            new PatternParser(`${info.value}`),
             new FunctionShape(
                 new TFunction([], info.returnType),
                 info.label,

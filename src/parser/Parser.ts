@@ -46,7 +46,16 @@ export class PatternParser extends Parser {
 }
 
 export class DeclarationParser extends Parser {
+    private static counter = 0;
+    readonly id: string;
+
+    constructor() {
+        super();
+
+         this.id = `var${DeclarationParser.counter++}`;
+    }
+
     parse(declaration: Declaration): string {
-        return parsePattern(declaration, `{let ${declaration.id} = (@1); $1}`);
+        return parsePattern(declaration, `{let ${this.id} = (@1); $1}`);
     }
 }

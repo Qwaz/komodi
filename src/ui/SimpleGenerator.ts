@@ -3,11 +3,11 @@ import {Global} from "../entry";
 import {Control} from "../controls";
 import {Shape} from "../shape/shape";
 import {enableHighlight, makeTargetInteractive, stagePositionOf} from "../utils";
-import {ControlFactory} from "../factories/ControlFactory";
 import {Parser} from "../parser/Parser";
+import {SimpleFactory} from "../factories/SimpleFactory";
 
-export class Generator<F extends Control, L extends Parser, S extends Shape> extends PIXI.Container {
-    constructor(target: ControlFactory<F, L, S>) {
+export class SimpleGenerator<F extends Control, P extends Parser, S extends Shape> extends PIXI.Container {
+    constructor(target: SimpleFactory<F, P, S>) {
         super();
 
         let shape = target.shape.clone();

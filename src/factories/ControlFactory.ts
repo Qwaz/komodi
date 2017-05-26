@@ -1,12 +1,15 @@
 import {Shape} from "../shape/shape";
-import {Control} from "../controls";
 import {Parser} from "../parser/Parser";
+import {Control} from "../controls";
 
-export class ControlFactory<F extends Control, L extends Parser, S extends Shape> {
-    constructor(protected constructor: {new (parser: L, shape: S): F}, readonly parser: L, readonly shape: S) {
+export abstract class ControlFactory<F extends Control, P extends Parser, S extends Shape> {
+    constructor(protected constructor: {new (parser: P, shape: S): F}) {
     }
 
-    createControl(): F {
-        return new this.constructor(this.parser, this.shape.clone());
-    }
+    abstract createControl(): F;
+
+    abstract get generator(): {new (factory: ControlFactory<F, P, S>): void};
+
+    abstract get parser(): P;
+    abstract get shape(): S;
 }

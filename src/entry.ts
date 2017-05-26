@@ -2,7 +2,6 @@ import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {Generator} from "./ui/Generator";
 import {Control} from "./controls";
 import {enableHighlight, getMousePoint, moveToTop, stagePositionOf} from "./utils";
 import {activeBlocks} from "./blockDefinition";
@@ -11,8 +10,14 @@ import {Offset} from "./common";
 import {GlobalManager} from "./managers/GlobalManager";
 import {IconButton, Icons} from "./ui/IconButton";
 import {InteractiveRect} from "./ui/InteractiveRect";
+import {UPDATE_SHAPE} from "./ui/customEvents";
+
+const MODAL_NODE_ID = "modal";
 
 const MENU_PADDING = 12;
+
+const MENU_RADIUS = 34;
+const MENU_FONT_SIZE = 38;
 
 export class Global {
     private static _instance:Global = new Global();
@@ -29,7 +34,6 @@ export class Global {
     static fixed: PIXI.Container;
 
     static menu: InteractiveRect;
-    static menuHeight: number;  // TODO: revise design
 
     static runButton: IconButton;
     static trashButton: IconButton;
@@ -42,7 +46,15 @@ export class Global {
 
     private constructor() {
         // parser initialization
-        Global.generators = _(activeBlocks).map((factory) => new Generator(factory)).value();
+        Global.generators = _(activeBlocks).map(
+            (factory) => {
+                let generator = new factory.generator(factory);
+                generator.on(UPDATE_SHAPE, () => {
+                    this.updateGenerators();
+                });
+                return generator;
+            }
+        ).value();
 
         Global.attachManager = new AttachManager();
         Global.globalManager = new GlobalManager();
@@ -71,7 +83,12 @@ export class Global {
         Global.menu = new InteractiveRect(0xCFD8DC);
         Global.fixed.addChild(Global.menu);
 
-        Global.runButton = new IconButton(Icons.PLAY, 0x2196F3);
+        Global.runButton = new IconButton(Icons.PLAY, {
+            radius: MENU_RADIUS,
+            fontSize: MENU_FONT_SIZE,
+            fontColor: 0xFFFFFF,
+            color: 0x2196F3
+        });
         enableHighlight(Global.runButton);
         Global.runButton.on("click", function () {
             let code = Global.globalManager.generateCode();
@@ -80,26 +97,19 @@ export class Global {
         });
         Global.fixed.addChild(Global.runButton);
 
-        Global.trashButton = new IconButton(Icons.TRASH, 0x757575);
+        Global.trashButton = new IconButton(Icons.TRASH, {
+            radius: MENU_RADIUS,
+            fontSize: MENU_FONT_SIZE,
+            fontColor: 0xFFFFFF,
+            color: 0x757575
+        });
         Global.fixed.addChild(Global.trashButton);
 
-        {
-            let maxHeight = 0;
-            for (let generator of Global.generators) {
-                Global.menu.addChild(generator);
-                maxHeight = Math.max(maxHeight, generator.height);
-            }
-
-            Global.menuHeight = maxHeight + 2*MENU_PADDING;
-
-            let widthSum = 0;
-            for (let i = 0; i < Global.generators.length; i++) {
-                let generator = Global.generators[i];
-                generator.x = (i+1)*MENU_PADDING + widthSum + generator.width * .5;
-                generator.y = Global.menuHeight * .5 + generator.height * .5;
-                widthSum += generator.width;
-            }
+        for (let generator of Global.generators) {
+            Global.menu.addChild(generator);
         }
+
+        this.updateGenerators();
 
         Global.renderer.plugins.interaction.on('mousedown', function (e: PIXI.interaction.InteractionEvent) {
             if (!e.target) {
@@ -148,8 +158,45 @@ export class Global {
         }
     }
 
+    private static gui: any;
+
+    // TODO: update any type
+    static showModal(newGui: any) {
+        let modalNode = document.getElementById(MODAL_NODE_ID);
+
+        if (modalNode) {
+            if (Global.gui !== undefined) {
+                modalNode.removeChild(Global.gui.domElement);
+                Global.gui.destroy();
+            }
+            Global.gui = newGui;
+
+            modalNode.appendChild(Global.gui.domElement);
+            modalNode.classList.add("active");
+        }
+    }
+
+    private updateGenerators() {
+        let top = 0, bottom = 0;
+        for (let generator of Global.generators) {
+            let localBounds = generator.getLocalBounds();
+            top = Math.min(top, localBounds.top);
+            bottom = Math.max(bottom, localBounds.bottom);
+        }
+
+        let widthSum = 0;
+        for (let i = 0; i < Global.generators.length; i++) {
+            let generator = Global.generators[i];
+            generator.x = (i+1)*MENU_PADDING + widthSum + generator.width * .5;
+            generator.y = -top + MENU_PADDING;
+            widthSum += generator.width;
+        }
+
+        Global.menu.updateHeight(bottom-top + 2*MENU_PADDING);
+    }
+
     private updatePosition() {
-        Global.menu.updateRegion(new PIXI.Rectangle(0, 0, window.innerWidth, Global.menuHeight));
+        Global.menu.updateWidth(window.innerWidth);
 
         Global.renderer.resize(window.innerWidth, window.innerHeight);
 
@@ -192,6 +239,48 @@ export class Global {
         Global.renderer.render(Global.container);
     }
 }
+
+let modalNode = document.createElement("div");
+modalNode.id = MODAL_NODE_ID;
+modalNode.classList.add("modalDialog");
+document.body.appendChild(modalNode);
+
+let styleNode = document.createElement("style");
+styleNode.type = 'text/css';
+styleNode.appendChild(document.createTextNode(`
+    .modalDialog {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 99999;
+        opacity:0;
+        -webkit-transition: opacity 300ms ease-in;
+        -moz-transition: opacity 300ms ease-in;
+        transition: opacity 300ms ease-in;
+        pointer-events: none;
+    }
+    
+    .modalDialog.active {
+        opacity:1;
+        pointer-events: auto;
+    }
+    
+    .modalDialog > div {
+        margin-top: 10%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+`));
+document.head.appendChild(styleNode);
+
+window.addEventListener("click", (e: MouseEvent) => {
+    if (e.target === modalNode) {
+        modalNode.classList.remove("active");
+    }
+});
 
 WebFont.load({
     custom: {

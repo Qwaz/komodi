@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Generator} from "./Generator";
+import {SimpleGenerator} from "./SimpleGenerator";
 import {Block, Control} from "../controls";
 import {TypeInfo} from "../type/type";
 import {ScopedFactory} from "../factories/ScopedFactory";
@@ -11,11 +11,12 @@ const GENERATOR_PADDING = 6;
 export interface ParameterInfo {
     returnType: TypeInfo,
     label: string,
+    value: string,
 }
 
 export class ParameterRenderer extends PIXI.Container {
     private factories: ScopedFactory[] = [];
-    private generators: Generator<Block, Parser, BlockShape>[] = [];
+    private generators: SimpleGenerator<Block, Parser, BlockShape>[] = [];
 
     constructor(readonly scopeParent: Control) {
         super();
@@ -44,7 +45,7 @@ export class ParameterRenderer extends PIXI.Container {
         for (let info of parameterInfoArr) {
             let factory = new ScopedFactory(this.scopeParent, info);
 
-            let generator = new Generator(factory);
+            let generator = new SimpleGenerator(factory);
             this.addChild(generator);
 
             widthSum += generator.width;

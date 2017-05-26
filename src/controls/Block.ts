@@ -75,3 +75,9 @@ export class Block extends Control {
         }
     }
 }
+
+export class FlowBlock extends Block {
+    attachFilter(attachInfo: AttachInfo): boolean {
+        return attachInfo.attachType != "Logic";
+    }
+}

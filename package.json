@@ -11,6 +11,7 @@
   },
   "author": "Yechan Bae <qwazpia@gmail.com>",
   "devDependencies": {
+    "@types/dat-gui": "^0.6.2",
     "@types/lodash": "^4.14.62",
     "@types/pixi.js": "^4.4.0",
     "@types/webfontloader": "^1.6.28",
@@ -21,7 +22,6 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "font-awesome": "^4.7.0",
     "lodash": "^4.17.4",
     "pixi.js": "^4.4.2",
     "webfontloader": "^1.6.27"

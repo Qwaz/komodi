@@ -6,11 +6,9 @@ import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 
 const LINE = 4;
 const GAP = 4;
-const WIDTH = 70;
-const HEIGHT = 32;
+const PAD_HORIZONTAL = 12;
+const HEIGHT = 33;
 
-const left = -WIDTH*.5;
-const right = -left;
 const top = -HEIGHT-LINE*.5-GAP;
 const bottom = top+HEIGHT;
 
@@ -24,18 +22,25 @@ export class DeclarationShape extends BlockShape {
     }];
 
     clone() {
-        return new DeclarationShape(this.color);
+        return new DeclarationShape(this.color, this.variableName);
     }
 
-    constructor(private color: number) {
+    constructor(private color: number, readonly variableName: string) {
         super();
 
         this.graphics = new PIXI.Graphics();
         this.addChild(this.graphics);
 
+        let text = createLabel(`let ${variableName} =`);
+        this.addChild(text);
+        centerChild(text, 0, -HEIGHT*.5-LINE*.5-GAP);
+
+        const left = -text.width*.5 - PAD_HORIZONTAL;
+        const right = text.width*.5 + PAD_HORIZONTAL;
+
         this.graphics.lineStyle(1, 0x000000, 1);
         this.graphics.beginFill(color);
-        this.graphics.drawRect(left, bottom+GAP, WIDTH, LINE);
+        this.graphics.drawRect(left, bottom+GAP, right-left, LINE);
         this.graphics.drawPolygon([
             left, top,
             -TRIANGLE_WIDTH*.5, top,
@@ -47,11 +52,7 @@ export class DeclarationShape extends BlockShape {
             left, top,
         ]);
 
-        this.hitArea = new PIXI.Rectangle(left, top, WIDTH, HEIGHT);
-
-        let text = createLabel("let");
-        this.addChild(text);
-        centerChild(text, 0, -HEIGHT*.5-LINE*.5-GAP);
+        this.hitArea = new PIXI.Rectangle(left, top, right-left, HEIGHT);
     }
 
     get returnType(): TypeInfo {
