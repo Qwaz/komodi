@@ -1,16 +1,14 @@
 import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
-import * as _ from "lodash";
 import {Control} from "./controls";
 import {enableHighlight, getMousePoint, moveToTop, stagePositionOf} from "./utils";
-import {activeBlocks} from "./blockDefinition";
+import {ACTIVE_BLOCKS} from "./blockDefinition";
 import {AttachManager} from "./managers/AttachManager";
 import {Offset} from "./common";
 import {GlobalManager} from "./managers/GlobalManager";
 import {IconButton, Icons} from "./ui/IconButton";
-import {InteractiveRect} from "./ui/InteractiveRect";
-import {UPDATE_SHAPE} from "./ui/customEvents";
+import {SideMenu} from "./ui/sideMenu";
 
 const MODAL_NODE_ID = "modal";
 
@@ -22,7 +20,6 @@ const MENU_FONT_SIZE = 38;
 export class Global {
     private static _instance:Global = new Global();
     // parser related
-    static generators: Array<PIXI.Container>;
     static attachManager: AttachManager;
     static globalManager: GlobalManager;
 
@@ -33,7 +30,7 @@ export class Global {
     static stage: PIXI.Container;
     static fixed: PIXI.Container;
 
-    static menu: InteractiveRect;
+    static sideMenu: SideMenu;
 
     static runButton: IconButton;
     static trashButton: IconButton;
@@ -46,16 +43,6 @@ export class Global {
 
     private constructor() {
         // parser initialization
-        Global.generators = _(activeBlocks).map(
-            (factory) => {
-                let generator = new factory.generator(factory);
-                generator.on(UPDATE_SHAPE, () => {
-                    this.updateGenerators();
-                });
-                return generator;
-            }
-        ).value();
-
         Global.attachManager = new AttachManager();
         Global.globalManager = new GlobalManager();
 
@@ -80,8 +67,8 @@ export class Global {
         Global.container.addChild(Global.stage);
         Global.container.addChild(Global.fixed);
 
-        Global.menu = new InteractiveRect(0xCFD8DC);
-        Global.fixed.addChild(Global.menu);
+        Global.sideMenu = new SideMenu(ACTIVE_BLOCKS);
+        Global.fixed.addChild(Global.sideMenu);
 
         Global.runButton = new IconButton(Icons.PLAY, {
             radius: MENU_RADIUS,
@@ -104,12 +91,6 @@ export class Global {
             color: 0x757575
         });
         Global.fixed.addChild(Global.trashButton);
-
-        for (let generator of Global.generators) {
-            Global.menu.addChild(generator);
-        }
-
-        this.updateGenerators();
 
         Global.renderer.plugins.interaction.on('mousedown', function (e: PIXI.interaction.InteractionEvent) {
             if (!e.target) {
@@ -176,28 +157,7 @@ export class Global {
         }
     }
 
-    private updateGenerators() {
-        let top = 0, bottom = 0;
-        for (let generator of Global.generators) {
-            let localBounds = generator.getLocalBounds();
-            top = Math.min(top, localBounds.top);
-            bottom = Math.max(bottom, localBounds.bottom);
-        }
-
-        let widthSum = 0;
-        for (let i = 0; i < Global.generators.length; i++) {
-            let generator = Global.generators[i];
-            generator.x = (i+1)*MENU_PADDING + widthSum + generator.width * .5;
-            generator.y = -top + MENU_PADDING;
-            widthSum += generator.width;
-        }
-
-        Global.menu.updateHeight(bottom-top + 2*MENU_PADDING);
-    }
-
     private updatePosition() {
-        Global.menu.updateWidth(window.innerWidth);
-
         Global.renderer.resize(window.innerWidth, window.innerHeight);
 
         Global.runButton.x = MENU_PADDING + Global.runButton.width*.5;

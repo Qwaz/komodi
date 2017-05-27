@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import {createLabel, Shape} from "./shape";
-import {centerChild} from "../utils";
+import {Shape} from "./shape";
+import {centerChild, createLabel} from "../utils";
 
 const BEZIER_X = 5;
 const BEZIER_Y = 18;

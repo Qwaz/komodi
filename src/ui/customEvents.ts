@@ -1,1 +1,3 @@
-export const UPDATE_SHAPE = "updateShape";
+export const GeneratorEventType = {
+    UPDATE_SHAPE: "updateShape",
+};

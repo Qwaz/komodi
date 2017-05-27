@@ -22,6 +22,12 @@ export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObj
         && Math.abs(vy) < (bound1.height+bound2.height)*.5;
 }
 
+export function createLabel(text: string): PIXI.Text {
+    return new PIXI.Text(text, {
+        fontSize: 14, align : 'center'
+    })
+}
+
 export function moveToTop(target: PIXI.DisplayObject) {
     target.parent.setChildIndex(target, target.parent.children.length-1);
 }

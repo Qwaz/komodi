@@ -6,7 +6,7 @@ import {ParameterFactory} from "../factories/ParameterFactory";
 import {IconButton, Icons} from "./IconButton";
 import {enableHighlight, makeTargetInteractive, stagePositionOf} from "../utils";
 import {Global} from "../entry";
-import {UPDATE_SHAPE} from "./customEvents";
+import {GeneratorEventType} from "./customEvents";
 
 const ICON_Y = 18;
 
@@ -68,6 +68,6 @@ export class ParameterGenerator<F extends Control, P extends Parser, S extends S
             Global.setDragging(flowItem, stagePosition.x, stagePosition.y);
         });
 
-        this.emit(UPDATE_SHAPE, this);
+        this.emit(GeneratorEventType.UPDATE_SHAPE, this);
     }
 }

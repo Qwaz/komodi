@@ -22,9 +22,3 @@ export abstract class BlockShape extends Shape {
         })
     };
 }
-
-export function createLabel(text: string): PIXI.Text {
-    return new PIXI.Text(text, {
-        fontSize: 14, align : 'center'
-    })
-}

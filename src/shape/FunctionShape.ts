@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
-import {BlockShape, createLabel} from "./shape";
+import {BlockShape} from "./shape";
 import {Block} from "../controls";
 import {TFunction, TypeInfo, typeInfoToColor} from "../type/type";
-import {centerChild} from "../utils";
+import {centerChild, createLabel} from "../utils";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 
 const MINIMUM_ARG_WIDTH = 35;
