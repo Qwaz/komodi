@@ -77,7 +77,7 @@ export let inputBlockFactory = new SimpleFactory(
 
 export let randBlockFactory = new SimpleFactory(
     Block,
-    new PatternParser(`Math.floor(Math.random()*(@2))+(@1)`),
+    new PatternParser(`Math.floor(Math.random()*((@2)-(@1)+1))+(@1)`),
     new FunctionShape(
         new TFunction([new TNumber(), new TNumber()], new TNumber()),
         "random (min)~(max)"

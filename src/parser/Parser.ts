@@ -15,14 +15,14 @@ function parsePattern(control: Control, pattern: string) {
         if (now instanceof Block) {
             for (let i = now.numLogic-1; i >= 0; i--) {
                 let child = now.logicChildren[i];
-                pat = pat.replace(`@${i+1}`,
+                pat = pat.replace(new RegExp(`@${i+1}`, 'g'),
                     child ? child.parser.parse(child) : "");
             }
         }
         if (now.scope) {
             for (let i = now.scope.numScope; i >= 1; i--) {
                 let child = now.scope.scopeChildren[i-1];
-                pat = pat.replace(`$${i}`,
+                pat = pat.replace(new RegExp(`\\$${i}`, 'g'),
                     child ? child.parser.parse(child) : "");
             }
         }

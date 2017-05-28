@@ -36159,13 +36159,13 @@ function parsePattern(control, pattern) {
         if (now instanceof __WEBPACK_IMPORTED_MODULE_0__controls_Block__["a" /* Block */]) {
             for (let i = now.numLogic - 1; i >= 0; i--) {
                 let child = now.logicChildren[i];
-                pat = pat.replace(`@${i + 1}`, child ? child.parser.parse(child) : "");
+                pat = pat.replace(new RegExp(`@${i + 1}`, 'g'), child ? child.parser.parse(child) : "");
             }
         }
         if (now.scope) {
             for (let i = now.scope.numScope; i >= 1; i--) {
                 let child = now.scope.scopeChildren[i - 1];
-                pat = pat.replace(`$${i}`, child ? child.parser.parse(child) : "");
+                pat = pat.replace(new RegExp(`\\$${i}`, 'g'), child ? child.parser.parse(child) : "");
             }
         }
         if (ret != '') {
@@ -57215,7 +57215,7 @@ let declarationFactory = new __WEBPACK_IMPORTED_MODULE_10__ParameterFactory__["a
     };
 });
 let inputBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__SimpleFactory__["a" /* SimpleFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`parseInt(prompt("Please Enter a number"))`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "User Input"));
-let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__SimpleFactory__["a" /* SimpleFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`Math.floor(Math.random()*(@2))+(@1)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "random (min)~(max)"));
+let randBlockFactory = new __WEBPACK_IMPORTED_MODULE_8__SimpleFactory__["a" /* SimpleFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`Math.floor(Math.random()*((@2)-(@1)+1))+(@1)`), new __WEBPACK_IMPORTED_MODULE_4__shape_FunctionShape__["a" /* FunctionShape */](new __WEBPACK_IMPORTED_MODULE_5__type_type__["b" /* TFunction */]([new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */](), new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()], new __WEBPACK_IMPORTED_MODULE_5__type_type__["e" /* TNumber */]()), "random (min)~(max)"));
 let numberBlockFactory = new __WEBPACK_IMPORTED_MODULE_10__ParameterFactory__["a" /* ParameterFactory */](__WEBPACK_IMPORTED_MODULE_0__controls__["b" /* Block */], [{ name: "value", initial: 10 }], (data) => {
     return {
         parser: new __WEBPACK_IMPORTED_MODULE_9__parser_Parser__["a" /* PatternParser */](`${data.value}`),
