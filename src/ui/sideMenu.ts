@@ -35,6 +35,13 @@ class MenuItem extends StateSprite {
         let active = new PIXI.Graphics();
         active.beginFill(ACTIVE_COLOR);
         active.drawPolygon(MENU_ITEM_PATH);
+        active.lineStyle(1);
+        active.moveTo(0, 0);
+        active.lineTo(MENU_ITEM_WIDTH, 0);
+        active.moveTo(0, 0);
+        active.lineTo(0, MENU_ITEM_HEIGHT);
+        active.moveTo(0, MENU_ITEM_HEIGHT);
+        active.lineTo(MENU_ITEM_WIDTH, MENU_ITEM_HEIGHT);
 
         this.addState("inactive", inactive);
         this.addState("active", active);
@@ -94,6 +101,17 @@ class GeneratorList extends PIXI.Container {
         this.background.updateRegion(new PIXI.Rectangle(
             0, 0, backgroundWidth, backgroundHeight
         ));
+
+        let graphics = this.background.graphics;
+        graphics.lineStyle(1);
+        graphics.moveTo(0, 0);
+        graphics.lineTo(backgroundWidth, 0);
+        graphics.moveTo(backgroundWidth, 0);
+        graphics.lineTo(backgroundWidth, backgroundHeight);
+        graphics.moveTo(backgroundWidth, backgroundHeight);
+        graphics.lineTo(0, backgroundHeight);
+        graphics.moveTo(0, backgroundHeight);
+        graphics.lineTo(0, this.minHeight);
     }
 }
 

@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 
 export class InteractiveRect extends PIXI.Container {
-    private graphics: PIXI.Graphics;
+    readonly graphics: PIXI.Graphics;
     private rect: PIXI.Rectangle;
 
     constructor(private color: number) {
