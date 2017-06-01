@@ -7,13 +7,15 @@ import {AbsControlFactory, AbsGenerator} from "../factories/ControlFactory";
 import {InteractiveRect} from "./InteractiveRect";
 import {GeneratorEventType} from "./customEvents";
 
-const ACTIVE_COLOR = 0xBBDEFB;
-const INACTIVE_COLOR = 0xE3F2FD;
+const ACTIVE_COLOR = 0xF2F2F2;
+const ACTIVE_HIGHLIGHT_COLOR = 0xBDBDBD;
+const INACTIVE_COLOR = 0xFCFCFC;
 
 const MENU_ITEM_WIDTH = 70;
 const MENU_ITEM_HEIGHT = 70;
 
-const GENERATOR_PADDING = 12;
+const GENERATOR_MARGIN = 10;
+const GENERATOR_PADDING = 22;
 
 const MENU_ITEM_PATH = [
     0, 0,
@@ -22,6 +24,8 @@ const MENU_ITEM_PATH = [
     0, MENU_ITEM_HEIGHT,
     0, 0,
 ];
+
+const INSIDE_PADDING = 8;
 
 class MenuItem extends StateSprite {
     constructor(msg: string) {
@@ -35,6 +39,14 @@ class MenuItem extends StateSprite {
         let active = new PIXI.Graphics();
         active.beginFill(ACTIVE_COLOR);
         active.drawPolygon(MENU_ITEM_PATH);
+        active.beginFill(ACTIVE_HIGHLIGHT_COLOR);
+        active.drawPolygon([
+            0, 0,
+            INSIDE_PADDING, 0,
+            INSIDE_PADDING, MENU_ITEM_HEIGHT,
+            0, MENU_ITEM_HEIGHT,
+            0, 0,
+        ]);
         active.lineStyle(1);
         active.moveTo(0, 0);
         active.lineTo(MENU_ITEM_WIDTH, 0);
@@ -85,11 +97,11 @@ class GeneratorList extends PIXI.Container {
             backgroundWidth = Math.max(backgroundWidth, generator.width);
             backgroundHeight += generator.height;
         });
-        backgroundWidth += 2*GENERATOR_PADDING;
+        backgroundWidth += 2*GENERATOR_MARGIN;
         backgroundHeight += GENERATOR_PADDING * (this.generators.length + 1);
         backgroundHeight = Math.max(backgroundHeight, this.minHeight);
 
-        let currentY = GENERATOR_PADDING;
+        let currentY = GENERATOR_MARGIN;
         _.forEach(this.generators, (generator) => {
             generator.x = backgroundWidth * .5;
 

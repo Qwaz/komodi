@@ -47,17 +47,20 @@ export class Global {
         Global.globalManager = new GlobalManager();
 
         // render initialization
+        let komodiDiv = document.createElement("div");
+        komodiDiv.classList.add("komodi-container");
+        document.body.appendChild(komodiDiv);
+
         Global.renderer = PIXI.autoDetectRenderer(
             1, 1,
-            {antialias: false, transparent: false, resolution: 2}
+            {antialias: false, transparent: true, resolution: 2}
         );
 
-        Global.renderer.backgroundColor = 0xECEFF1;
         Global.renderer.view.style.position = "absolute";
         Global.renderer.view.style.display = "block";
+        Global.renderer.view.style.background = "transparent";
         Global.renderer.autoResize = true;
-
-        document.body.appendChild(Global.renderer.view);
+        komodiDiv.appendChild(Global.renderer.view);
 
         Global.container = new PIXI.Container();
 
@@ -202,13 +205,13 @@ export class Global {
 
 let modalNode = document.createElement("div");
 modalNode.id = MODAL_NODE_ID;
-modalNode.classList.add("modalDialog");
+modalNode.classList.add("modal-dialog");
 document.body.appendChild(modalNode);
 
 let styleNode = document.createElement("style");
 styleNode.type = 'text/css';
 styleNode.appendChild(document.createTextNode(`
-    .modalDialog {
+    .modal-dialog {
         position: fixed;
         top: 0;
         right: 0;
@@ -217,21 +220,51 @@ styleNode.appendChild(document.createTextNode(`
         background: rgba(0,0,0,0.5);
         z-index: 99999;
         opacity:0;
-        -webkit-transition: opacity 300ms ease-in;
-        -moz-transition: opacity 300ms ease-in;
-        transition: opacity 300ms ease-in;
+        -webkit-transition: opacity 180ms ease-in;
+        -moz-transition: opacity 180ms ease-in;
+        transition: opacity 180ms ease-in;
         pointer-events: none;
     }
     
-    .modalDialog.active {
+    .modal-dialog.active {
         opacity:1;
         pointer-events: auto;
     }
     
-    .modalDialog > div {
+    .modal-dialog > div {
         margin-top: 10%;
         margin-left: auto;
         margin-right: auto;
+    }
+    
+    .komodi-container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            0deg,
+            transparent 24%,
+            rgba(0, 0, 0, .15) 25%,
+            rgba(0, 0, 0, .15) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(0, 0, 0, .15) 75%,
+            rgba(0, 0, 0, .15) 76%,
+            transparent 77%, transparent
+        ), linear-gradient(
+            90deg,
+            transparent 24%,
+            rgba(0, 0, 0, .15) 25%,
+            rgba(0, 0, 0, .15) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(0, 0, 0, .15) 75%,
+            rgba(0, 0, 0, .15) 76%,
+            transparent 77%,
+            transparent
+        );
+        background-size:50px 50px;
     }
 `));
 document.head.appendChild(styleNode);
@@ -260,6 +293,6 @@ WebFont.load({
         loop();
     },
     inactive: function() {
-        alert("Oh No!");
+        alert("Komodi initialization failed");
     },
 });
