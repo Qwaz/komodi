@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import {Control} from "./Control";
 import {LogicHighlight} from "../shape/Highlight";
 import {BlockShape} from "../shape/shape";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 import {AttachInfo} from "../managers/AttachManager";
 import {Parser} from "../parser/Parser";
 
@@ -31,12 +31,12 @@ export class Block extends Control {
 
         this.logicChildren = _.times(shape.highlightOffsets.length, _.constant(null));
 
-        Global.attachManager.registerLogic(this);
+        Komodi.attachManager.registerLogic(this);
     }
 
     updateShape() {
         this.shape.updateShape(this.logicChildren);
-        Global.attachManager.updateLogic(this);
+        Komodi.attachManager.updateLogic(this);
     }
 
     update() {
@@ -56,7 +56,7 @@ export class Block extends Control {
     }
 
     destroy() {
-        Global.attachManager.deleteLogic(this);
+        Komodi.attachManager.deleteLogic(this);
 
         for (let block of this.logicChildren) {
             if (block) {

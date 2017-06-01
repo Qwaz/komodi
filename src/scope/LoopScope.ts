@@ -1,7 +1,7 @@
 import {Control} from "../controls";
 import {drawEditPoint, drawLinear, initFlowGraphics, Scope} from "./scope";
 import {FLOW_VERTICAL_MARGIN, Offset} from "../common";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 
 const LOOP_HORIZONTAL_PADDING = 10;
 const LOOP_TRIANGLE_WIDTH = 6;
@@ -19,7 +19,7 @@ export class LoopScope extends Scope {
         this.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
 
         drawEditPoint(this.graphics, 0, FLOW_VERTICAL_MARGIN*.5);
-        Global.attachManager.updateScope(this, 0, {
+        Komodi.attachManager.updateScope(this, 0, {
             offsetX: 0,
             offsetY: FLOW_VERTICAL_MARGIN*.5,
         });

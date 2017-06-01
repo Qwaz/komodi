@@ -1,7 +1,7 @@
 import {drawEditPoint, drawLinear, initFlowGraphics, Scope} from "./scope";
 import {Control} from "../controls";
 import {FLOW_VERTICAL_MARGIN, Offset} from "../common";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 
 export class LinearScope extends Scope {
     constructor(control: Control) {
@@ -15,7 +15,7 @@ export class LinearScope extends Scope {
         this.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
 
         drawEditPoint(this.graphics, 0, FLOW_VERTICAL_MARGIN*.5);
-        Global.attachManager.updateScope(this, 0, {
+        Komodi.attachManager.updateScope(this, 0, {
             offsetX: 0,
             offsetY: FLOW_VERTICAL_MARGIN*.5,
         });

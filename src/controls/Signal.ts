@@ -1,7 +1,7 @@
 import {Control} from "./Control";
 import {Shape} from "../shape/shape";
 import {LinearScope} from "../scope/LinearScope";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 import {Parser} from "../parser/Parser";
 
 export class Signal extends Control {
@@ -10,11 +10,11 @@ export class Signal extends Control {
 
         this.setScope(new LinearScope(this));
 
-        Global.globalManager.registerGlobal(this);
+        Komodi.globalManager.registerGlobal(this);
     }
 
     destroy() {
-        Global.globalManager.deleteGlobal(this);
+        Komodi.globalManager.deleteGlobal(this);
 
         super.destroy();
     }

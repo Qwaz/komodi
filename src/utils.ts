@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Global} from "./entry";
+import {Komodi} from "./Global";
 
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
@@ -39,7 +39,7 @@ export function centerChild(target: PIXI.DisplayObject, x: number, y: number) {
 }
 
 export function stagePositionOf(target: PIXI.DisplayObject): PIXI.Point {
-    return Global.stage.toLocal(target.position, target.parent);
+    return Komodi.stage.toLocal(target.position, target.parent);
 }
 
 export function enableHighlight(target: PIXI.DisplayObject) {
@@ -53,5 +53,5 @@ export function makeTargetInteractive(target: PIXI.DisplayObject) {
 }
 
 export function getMousePoint() {
-    return Global.renderer.plugins.interaction.mouse.global.clone();
+    return Komodi.renderer.plugins.interaction.mouse.global.clone();
 }

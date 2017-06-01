@@ -2,7 +2,7 @@ import {drawEditPoint, drawLinear, initFlowGraphics, Scope} from "./scope";
 import {Control} from "../controls";
 import {ParameterInfo, ParameterRenderer} from "../ui/ParameterRenderer";
 import {FLOW_VERTICAL_MARGIN, Offset} from "../common";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 
 const OUTLINE_PADDING = 6;
 const GENERATOR_VERTICAL_PADDING = 6;
@@ -28,7 +28,7 @@ export class ParameterScope extends Scope {
         this.graphics.lineTo(0, startY+FLOW_VERTICAL_MARGIN);
 
         drawEditPoint(this.graphics, 0, startY+FLOW_VERTICAL_MARGIN*.5);
-        Global.attachManager.updateScope(this, 0, {
+        Komodi.attachManager.updateScope(this, 0, {
             offsetX: 0,
             offsetY: startY+FLOW_VERTICAL_MARGIN*.5,
         });

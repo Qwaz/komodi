@@ -54,24 +54,42 @@ export let trueBlockFactory = new SimpleFactory(
     )
 );
 
+export let falseBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`false`),
+    new FunctionShape(
+        new TFunction([], new TBoolean()),
+        "false"
+    )
+);
+
 export let declarationFactory = new ParameterFactory(
     Declaration,
     [{name: "variable", initial: 'var'}],
     (data: any) => {
         return {
             parser: new DeclarationParser(),
-            shape: new DeclarationShape(0xC8E6C9, data.variable)
+            shape: new DeclarationShape(0xFFFFFF, data.variable)
         }
     }
 );
 
 // TODO: parse type info and labels at once by jison
-export let inputBlockFactory = new SimpleFactory(
+export let readIntegerBlockFactory = new SimpleFactory(
     Block,
-    new PatternParser(`parseInt(prompt("Please Enter a number"))`),
+    new PatternParser(`Komodi.io.readInt()`),
     new FunctionShape(
         new TFunction([], new TNumber()),
-        "User Input"
+        "Read Integer"
+    )
+);
+
+export let readStringBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`Komodi.io.readString()`),
+    new FunctionShape(
+        new TFunction([], new TString()),
+        "Read String"
     )
 );
 

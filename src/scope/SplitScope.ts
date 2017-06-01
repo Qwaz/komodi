@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import {drawEditPoint, drawLinear, initFlowGraphics, Scope} from "./scope";
 import {Control} from "../controls";
 import {FLOW_VERTICAL_MARGIN, Offset} from "../common";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 
 const SPLIT_VERTICAL_PADDING = 15;
 const SPLIT_HORIZONTAL_PADDING = 40;
@@ -50,7 +50,7 @@ export class SplitScope extends Scope {
             this.graphics.lineTo(splitX, nextY);
 
             drawEditPoint(this.graphics, splitX, editY);
-            Global.attachManager.updateScope(this, flowIndex, {
+            Komodi.attachManager.updateScope(this, flowIndex, {
                 offsetX: splitX,
                 offsetY: editY,
             });

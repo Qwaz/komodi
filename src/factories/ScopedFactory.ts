@@ -5,7 +5,7 @@ import {AttachInfo} from "../managers/AttachManager";
 import {ParameterInfo} from "../ui/ParameterRenderer";
 import {FunctionShape} from "../shape/FunctionShape";
 import {TFunction} from "../type/type";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 import {Parser, PatternParser} from "../parser/Parser";
 
 export class ScopedFactory extends SimpleFactory<Block, Parser, BlockShape> {
@@ -58,7 +58,7 @@ export class ScopedFactory extends SimpleFactory<Block, Parser, BlockShape> {
 
     destroyAll() {
         for (let control of this.generated) {
-            Global.attachManager.detachControl(control);
+            Komodi.attachManager.detachControl(control);
             control.destroy();
         }
     }

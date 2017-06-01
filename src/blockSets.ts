@@ -1,26 +1,23 @@
 import {
     compareBlockFactory,
     declarationFactory,
+    falseBlockFactory,
     ifBlockFactory,
-    inputBlockFactory,
     intToStringBlockFactory,
     lessThanBlockFactory,
     numberBlockFactory,
     printStingBlockFactory,
     randBlockFactory,
+    readIntegerBlockFactory,
+    readStringBlockFactory,
     startSignalFactory,
     stringBlockFactory,
     trueBlockFactory,
     whileBlockFactory
 } from "./factories/factories";
-import {AbsControlFactory} from "./factories/ControlFactory";
+import {SideMenuInfo} from "./ui/sideMenu";
 
-export interface SideMenuInfo {
-    name: string,
-    factories: AbsControlFactory[],
-}
-
-export const ACTIVE_BLOCKS: SideMenuInfo[] = [
+export const STANDARD_BLOCK_SET: SideMenuInfo[] = [
     {
         name: "Signals",
         factories: [
@@ -39,6 +36,7 @@ export const ACTIVE_BLOCKS: SideMenuInfo[] = [
         name: "Logic",
         factories: [
             trueBlockFactory,
+            falseBlockFactory,
             compareBlockFactory,
             lessThanBlockFactory,
         ]
@@ -46,7 +44,7 @@ export const ACTIVE_BLOCKS: SideMenuInfo[] = [
     {
         name: "Number",
         factories: [
-            inputBlockFactory,
+            readIntegerBlockFactory,
             randBlockFactory,
             numberBlockFactory,
         ]
@@ -54,6 +52,7 @@ export const ACTIVE_BLOCKS: SideMenuInfo[] = [
     {
         name: "String",
         factories: [
+            readStringBlockFactory,
             intToStringBlockFactory,
             stringBlockFactory,
             printStingBlockFactory,

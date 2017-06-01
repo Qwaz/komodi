@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Block, Control} from "../controls";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 import {stagePositionOf} from "../utils";
 import {Offset, TypedOffset, TypeRequirement} from "../common";
 import {Scope} from "../scope/scope";
@@ -316,7 +316,7 @@ export class AttachManager {
     }
 
     detachControl(target: Control) {
-        Global.stage.addChild(target);
+        Komodi.stage.addChild(target);
 
         let attachInfo = target.attachParent;
         if (attachInfo) {

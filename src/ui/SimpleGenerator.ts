@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 import {Control} from "../controls";
 import {Shape} from "../shape/shape";
 import {enableHighlight, makeTargetInteractive, stagePositionOf} from "../utils";
@@ -20,8 +20,8 @@ export class SimpleGenerator<F extends Control, P extends Parser, S extends Shap
             let stagePosition = stagePositionOf(this);
 
             let flowItem = target.createControl();
-            Global.stage.addChild(flowItem);
-            Global.setDragging(flowItem, stagePosition.x, stagePosition.y);
+            Komodi.stage.addChild(flowItem);
+            Komodi.setDragging(flowItem, stagePosition.x, stagePosition.y);
         });
     }
 }

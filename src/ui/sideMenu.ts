@@ -1,13 +1,17 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {StateSprite} from "./StateSprite";
-import {SideMenuInfo} from "../blockDefinition";
 import {centerChild, createLabel} from "../utils";
 import {AbsControlFactory, AbsGenerator} from "../factories/ControlFactory";
 import {InteractiveRect} from "./InteractiveRect";
 import {GeneratorEventType} from "./customEvents";
 
-const ACTIVE_COLOR = 0xF2F2F2;
+export interface SideMenuInfo {
+    name: string,
+    factories: AbsControlFactory[],
+}
+
+const ACTIVE_COLOR = 0xF7F7F7;
 const ACTIVE_HIGHLIGHT_COLOR = 0xBDBDBD;
 const INACTIVE_COLOR = 0xFCFCFC;
 

@@ -55,13 +55,13 @@ export type TypeInfo = TNumber | TString | TBoolean | TVoid | TFunction;
 export function typeInfoToColor(typeInfo: TypeInfo): number {
     switch (typeInfo.name) {
         case "integer":
-            return 0xC5CAE9;
+            return 0xC5EFF7;
         case "string":
-            return 0xE1BEE7;
+            return 0xF1A9A0;
         case "boolean":
-            return 0xBCAAA4;
+            return 0xDCC6E0;
         case "void":
-            return 0xe8e8e8;
+            return 0xFFFFFF;
         case "Function":
             return 0;
     }

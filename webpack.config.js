@@ -2,7 +2,9 @@
 module.exports = {
     entry: './src/entry.ts',
     output: {
-        filename: 'bundle.js'
+        filename: 'komodi.js',
+        library: 'Komodi',
+        libraryTarget: "umd"
     },
     resolve: {
         // Add '.ts' and '.tsx' as a resolvable extension.

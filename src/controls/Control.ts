@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import {Shape} from "../shape/shape";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 import {enableHighlight, getMousePoint, makeTargetInteractive} from "../utils";
 import {FlowHighlight} from "../shape/Highlight";
 import {Scope} from "../scope/scope";
@@ -24,7 +24,7 @@ export abstract class Control extends PIXI.Container {
         // UI Setup
         this.addChild(shape);
 
-        Global.attachManager.registerFlow(this);
+        Komodi.attachManager.registerFlow(this);
 
         this.flowHighlight = new FlowHighlight();
         this.addChild(this.flowHighlight);
@@ -35,35 +35,35 @@ export abstract class Control extends PIXI.Container {
         enableHighlight(this.shape);
 
         this.on('mousedown', () => {
-            if (!Global.dragging) {
-                Global.setDragging(this);
-                Global.attachManager.detachControl(this);
+            if (!Komodi.dragging) {
+                Komodi.setDragging(this);
+                Komodi.attachManager.detachControl(this);
             }
         });
 
         this.on('mouseup', () => {
-            if (Global.dragging == this) {
+            if (Komodi.dragging == this) {
                 Control.mouseupHandler(this);
             }
         });
     }
 
     static mouseupHandler(target: Control) {
-        Global.setDragging(null);
+        Komodi.setDragging(null);
 
-        let localMouse = Global.trashButton.toLocal(getMousePoint());
-        if (Global.trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
+        let localMouse = Komodi.trashButton.toLocal(getMousePoint());
+        if (Komodi.trashButton.hitArea.contains(localMouse.x, localMouse.y)) {
             target.destroy();
         } else {
-            Global.attachManager.removeHighlight();
+            Komodi.attachManager.removeHighlight();
 
-            let attachInfo = Global.attachManager.getNearestAttachPoint(
+            let attachInfo = Komodi.attachManager.getNearestAttachPoint(
                 target.x, target.y,
                 target.attachFilter.bind(target)
             );
 
             if (attachInfo) {
-                Global.attachManager.attachControl(target, attachInfo);
+                Komodi.attachManager.attachControl(target, attachInfo);
             }
         }
     }
@@ -78,7 +78,7 @@ export abstract class Control extends PIXI.Container {
         }
         this._scope = scope;
         this.addChildAt(scope, 0);
-        Global.attachManager.registerScope(this._scope);
+        Komodi.attachManager.registerScope(this._scope);
 
         this.update();
     }
@@ -101,13 +101,13 @@ export abstract class Control extends PIXI.Container {
     destroy() {
         this.parent.removeChild(this);
 
-        Global.attachManager.deleteFlow(this);
+        Komodi.attachManager.deleteFlow(this);
 
         if (this.flow) {
             this.flow.destroy();
         }
         if (this.scope) {
-            Global.attachManager.deleteScope(this.scope);
+            Komodi.attachManager.deleteScope(this.scope);
             this.scope.destroy();
         }
 

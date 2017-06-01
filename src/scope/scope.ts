@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import {Control} from "../controls";
 import {FlowHighlight} from "../shape/Highlight";
 import {EDIT_POINT_RADIUS, FLOW_VERTICAL_MARGIN, Offset} from "../common";
-import {Global} from "../entry";
+import {Komodi} from "../Global";
 
 export function initFlowGraphics(graphics: PIXI.Graphics) {
     graphics.clear();
@@ -47,7 +47,7 @@ export function drawLinear(graphics: PIXI.Graphics, startX: number, startY: numb
         let flowY = (nowY + prevY)*.5;
         drawEditPoint(graphics, flowX, flowY);
 
-        Global.attachManager.updateFlow(now, {
+        Komodi.attachManager.updateFlow(now, {
             offsetX: 0,
             offsetY: size.bottom + FLOW_VERTICAL_MARGIN * .5,
         });
