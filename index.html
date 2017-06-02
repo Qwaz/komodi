@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Komodi</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         * {padding: 0; margin: 0}
@@ -13,9 +14,17 @@
             left: 0;
             right: 0;
         }
+        #more {
+            position: absolute;
+            font-size: 20px;
+            top: 16px;
+            right: 16px;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
+<span id="more"><a href="./demo">More Demos</a></span>
 <div id="komodi"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
 <script src="komodi.js"></script>
