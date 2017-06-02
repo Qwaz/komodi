@@ -4,7 +4,7 @@ import {SimpleFactory} from "./SimpleFactory";
 import {AttachInfo} from "../managers/AttachManager";
 import {ParameterInfo} from "../ui/ParameterRenderer";
 import {FunctionShape} from "../shape/FunctionShape";
-import {TFunction} from "../type/type";
+import {TFunction} from "../type";
 import {Komodi} from "../Global";
 import {Parser, PatternParser} from "../parser/Parser";
 

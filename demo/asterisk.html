@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Komodi</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {padding: 0; margin: 0}
+        body {
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            height: 100%;
+        }
+        #komodi {
+            flex: 3;
+        }
+        #workspace {
+            flex: 1;
+            border-right: 1px dashed #000000;
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+        }
+        .flex1 {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="workspace">
+        <div class="flex1">
+            <h2 class="ui dividing header">Goal</h2>
+            <span>Select Problem: <select id="probSelector">
+                <option value="triangle1">Triangle1</option>
+                <option value="triangle2">Triangle2</option>
+            </select></span>
+            <div class="ui segment">
+                <pre id="answer"></pre>
+            </div>
+        </div>
+        <div class="flex1">
+            <h2 class="ui dividing header">Output</h2>
+            <div class="ui segment">
+            <pre id="output"></pre>
+            </div>
+        </div>
+    </div>
+    <div id="komodi"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
+<script src="/komodi.js"></script>
+<script>
+    let probSelector = document.getElementById("probSelector");
+
+    function valueToProblem(value) {
+        switch (value) {
+            case "triangle1":
+                return `
+*
+**
+***
+****
+*****
+******`;
+            case "triangle2":
+                return `
+*
+**
+***
+****
+***
+**
+*`;
+            default: return "";
+        }
+    }
+
+    let pure = false;
+    function updateProblem() {
+        document.getElementById("answer").innerText = valueToProblem(probSelector.value).slice(1);
+        document.getElementById("output").innerText = "(Your program output)";
+        pure = true;
+    }
+
+    function putchar(char) {
+        let output = document.getElementById("output");
+        if (pure) {
+            pure = false;
+            output.innerText = "";
+        }
+        output.innerText += char;
+    }
+
+    probSelector.addEventListener("change", function () {
+        updateProblem();
+    });
+    updateProblem();
+
+    let blockSet = Komodi.blockSets.noStringBlockSet;
+    blockSet = blockSet.concat([{
+        name: "Asterisk",
+        factories: [
+            new Komodi.factories.SimpleFactory(
+                Komodi.controls.Block,
+                new Komodi.parser.PatternParser(`putchar('*')`),
+                new Komodi.shape.FunctionShape(
+                    new Komodi.type.TFunction([], new Komodi.type.TString()),
+                    `print [ * ]`
+                )
+            ),
+            new Komodi.factories.SimpleFactory(
+                Komodi.controls.Block,
+                new Komodi.parser.PatternParser(`putchar(' ')`),
+                new Komodi.shape.FunctionShape(
+                    new Komodi.type.TFunction([], new Komodi.type.TString()),
+                    `print [space]`
+                )
+            ),
+            new Komodi.factories.SimpleFactory(
+                Komodi.controls.Block,
+                new Komodi.parser.PatternParser(`putchar('\n')`),
+                new Komodi.shape.FunctionShape(
+                    new Komodi.type.TFunction([], new Komodi.type.TString()),
+                    `print [new line]`
+                )
+            ),
+        ]
+    }]);
+
+    Komodi.setBlocks(blockSet);
+    Komodi.initializeDOM(document.getElementById("komodi"));
+
+    Komodi.hook.initHook = () => {
+        Komodi.stopCode();
+    };
+
+    Komodi.start();
+</script>
+</body>
+</html>

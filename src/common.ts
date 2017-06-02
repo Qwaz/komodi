@@ -1,4 +1,4 @@
-import {TypeInfo} from "./type/type";
+import {TypeInfo} from "./type";
 export const EDIT_POINT_RADIUS = 6;
 
 export const TRIANGLE_WIDTH = 12;

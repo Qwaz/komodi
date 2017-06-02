@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {BlockShape} from "./shape";
 import {Block} from "../controls";
-import {TFunction, TypeInfo, typeInfoToColor} from "../type/type";
+import {TFunction, TypeInfo, typeInfoToColor} from "../type";
 import {centerChild, createLabel} from "../utils";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 

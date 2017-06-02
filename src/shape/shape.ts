@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import * as _ from "lodash";
 import {Block} from "../controls";
-import {TypeInfo} from "../type/type";
+import {TypeInfo} from "../type";
 import {TypedOffset} from "../common";
 
 export type HitArea = PIXI.Rectangle | PIXI.Circle | PIXI.Ellipse | PIXI.Polygon | PIXI.RoundedRectangle;

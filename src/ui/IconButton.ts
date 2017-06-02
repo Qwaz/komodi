@@ -5,6 +5,7 @@ export const Icons = {
     TRASH: '\uf1f8',
     PLAY: '\uf04b',
     PLAY_CIRCLE_O: '\uf01d',
+    PAUSE: '\uf04c',
     WRENCH: '\uf0ad',
 };
 

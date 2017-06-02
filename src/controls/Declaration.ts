@@ -1,6 +1,6 @@
 import {Block} from "./Block";
 import {ParameterInfo} from "../ui/ParameterRenderer";
-import {TVoid} from "../type/type";
+import {TVoid} from "../type";
 import {ParameterScope} from "../scope/ParameterScope";
 import {AttachInfo} from "../managers/AttachManager";
 import {DeclarationParser} from "../parser/Parser";

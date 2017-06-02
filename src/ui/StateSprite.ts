@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 export class StateSprite extends PIXI.Container {
     private stateMap: Map<string, PIXI.DisplayObject> = new Map();
 
-    private currentState: string;
+    private _currentState: string;
 
     constructor() {
         super();
@@ -19,7 +19,7 @@ export class StateSprite extends PIXI.Container {
     }
 
     setState(stateName: string) {
-        if (stateName == this.currentState) {
+        if (stateName == this._currentState) {
             return true;
         }
 
@@ -27,14 +27,18 @@ export class StateSprite extends PIXI.Container {
         if (newObj !== undefined) {
             newObj.visible = true;
 
-            let prevObj = this.stateMap.get(this.currentState);
+            let prevObj = this.stateMap.get(this._currentState);
             if (prevObj !== undefined) {
                 prevObj.visible = false;
             }
 
-            this.currentState = stateName;
+            this._currentState = stateName;
             return true;
         }
         return false;
+    }
+
+    get currentState() {
+        return this._currentState;
     }
 }

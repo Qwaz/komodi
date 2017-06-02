@@ -7,32 +7,30 @@ export abstract class Parser {
 }
 
 function parsePattern(control: Control, pattern: string) {
-    let ret = '';
-
     let now: Control | null = control;
-    while (now) {
-        let pat = pattern;
-        if (now instanceof Block) {
-            for (let i = now.numLogic-1; i >= 0; i--) {
-                let child = now.logicChildren[i];
-                pat = pat.replace(new RegExp(`@${i+1}`, 'g'),
-                    child ? child.parser.parse(child) : "");
-            }
+
+    let pat = pattern;
+    if (now instanceof Block) {
+        for (let i = now.numLogic-1; i >= 0; i--) {
+            let child = now.logicChildren[i];
+            pat = pat.replace(new RegExp(`@${i+1}`, 'g'),
+                child ? child.parser.parse(child) : "");
         }
-        if (now.scope) {
-            for (let i = now.scope.numScope; i >= 1; i--) {
-                let child = now.scope.scopeChildren[i-1];
-                pat = pat.replace(new RegExp(`\\$${i}`, 'g'),
-                    child ? child.parser.parse(child) : "");
-            }
-        }
-        if (ret != '') {
-            ret += ';';
-        }
-        ret += pat;
-        now = now.flow;
     }
-    return ret;
+    if (now.scope) {
+        for (let i = now.scope.numScope; i >= 1; i--) {
+            let child = now.scope.scopeChildren[i-1];
+            pat = pat.replace(new RegExp(`\\$${i}`, 'g'),
+                child ? child.parser.parse(child) : "");
+        }
+    }
+
+    if (now.flow) {
+        let next = now.flow;
+        pat += ';' + next.parser.parse(next);
+    }
+
+    return pat;
 }
 
 export class PatternParser extends Parser {

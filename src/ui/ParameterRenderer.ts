@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {SimpleGenerator} from "./SimpleGenerator";
 import {Block, Control} from "../controls";
-import {TypeInfo} from "../type/type";
+import {TypeInfo} from "../type";
 import {ScopedFactory} from "../factories/ScopedFactory";
 import {BlockShape} from "../shape/shape";
 import {Parser} from "../parser/Parser";

@@ -1,15 +1,15 @@
-import {Block, Declaration, FlowBlock, Signal} from "../controls";
-import {SignalShape} from "../shape/SignalShape";
-import {BlockShape} from "../shape/shape";
-import {ConditionBlockShape} from "../shape/ConditionBlockShape";
-import {DeclarationShape} from "../shape/DeclarationShape";
-import {FunctionShape} from "../shape/FunctionShape";
-import {TBoolean, TFunction, TNumber, TString, TVoid} from "../type/type";
-import {SplitScope} from "../scope/SplitScope";
-import {LoopScope} from "../scope/LoopScope";
-import {SimpleFactory} from "./SimpleFactory";
-import {DeclarationParser, Parser, PatternParser} from "../parser/Parser";
-import {ParameterFactory} from "./ParameterFactory";
+import {Block, Declaration, FlowBlock, Signal} from "./controls";
+import {SignalShape} from "./shape/SignalShape";
+import {BlockShape} from "./shape/shape";
+import {ConditionBlockShape} from "./shape/ConditionBlockShape";
+import {DeclarationShape} from "./shape/DeclarationShape";
+import {FunctionShape} from "./shape/FunctionShape";
+import {TBoolean, TFunction, TNumber, TString, TVoid} from "./type";
+import {SplitScope} from "./scope/SplitScope";
+import {LoopScope} from "./scope/LoopScope";
+import {SimpleFactory} from "./factories/SimpleFactory";
+import {DeclarationParser, Parser, PatternParser} from "./parser/Parser";
+import {ParameterFactory} from "./factories/ParameterFactory";
 
 class IfBlock extends FlowBlock {
     constructor(logic: Parser, shape: BlockShape) {
@@ -77,6 +77,7 @@ export let declarationFactory = new ParameterFactory(
 // TODO: parse type info and labels at once by jison
 export let readIntegerBlockFactory = new SimpleFactory(
     Block,
+    // TODO: Code generation should not depend on global Komodi object
     new PatternParser(`Komodi.io.readInt()`),
     new FunctionShape(
         new TFunction([], new TNumber()),
@@ -86,6 +87,7 @@ export let readIntegerBlockFactory = new SimpleFactory(
 
 export let readStringBlockFactory = new SimpleFactory(
     Block,
+    // TODO: Code generation should not depend on global Komodi object
     new PatternParser(`Komodi.io.readString()`),
     new FunctionShape(
         new TFunction([], new TString()),

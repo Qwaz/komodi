@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import {BlockShape} from "./shape";
 import {centerChild, createLabel} from "../utils";
-import {TVoid, TypeInfo} from "../type/type";
+import {TVoid, TypeInfo} from "../type";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 
 const LINE = 4;

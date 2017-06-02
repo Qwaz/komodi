@@ -2,12 +2,13 @@ import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
 import {Control} from "./controls";
-import {enableHighlight, getMousePoint, moveToTop, stagePositionOf} from "./utils";
+import {enableHighlight, getMousePoint, makeTargetInteractive, moveToTop, stagePositionOf} from "./utils";
 import {AttachManager} from "./managers/AttachManager";
 import {Offset} from "./common";
 import {GlobalManager} from "./managers/GlobalManager";
 import {IconButton, Icons} from "./ui/IconButton";
 import {SideMenu, SideMenuInfo} from "./ui/sideMenu";
+import {StateSprite} from "./ui/StateSprite";
 
 const KOMODI_STYLE = `
 .modal-dialog {
@@ -71,7 +72,6 @@ const MODAL_NODE_ID = "komodi-modal";
 const MENU_PADDING = 12;
 
 const MENU_RADIUS = 34;
-const MENU_FONT_SIZE = 38;
 
 class KomodiClass {
     // drag related
@@ -96,7 +96,7 @@ class KomodiClass {
     readonly stage: PIXI.Container;
     private fixed: PIXI.Container;
 
-    readonly runButton: IconButton;
+    readonly runButton: StateSprite;
     readonly trashButton: IconButton;
 
     constructor() {
@@ -113,23 +113,35 @@ class KomodiClass {
         this.container.addChild(this.fixed);
 
         // other ui setup
-        this.runButton = new IconButton(Icons.PLAY, {
+        this.runButton = new StateSprite();
+        this.runButton.addState("run", new IconButton(Icons.PLAY, {
             radius: MENU_RADIUS,
-            fontSize: MENU_FONT_SIZE,
+            fontSize: 36,
             fontColor: 0xFFFFFF,
             color: 0x2196F3
-        });
+        }));
+        this.runButton.addState("stop", new IconButton(Icons.PAUSE, {
+            radius: MENU_RADIUS,
+            fontSize: 34,
+            fontColor: 0xFFFFFF,
+            color: 0xF22613
+        }));
+        this.runButton.setState("run");
+        makeTargetInteractive(this.runButton);
         enableHighlight(this.runButton);
         this.runButton.on("click", () => {
-            let code = this.globalManager.generateCode();
-            console.log(code);
-            eval(code);
+            debugger;
+            if (this.runButton.currentState == "run") {
+                this.runCode();
+            } else {
+                this.stopCode();
+            }
         });
         this.fixed.addChild(this.runButton);
 
         this.trashButton = new IconButton(Icons.TRASH, {
             radius: MENU_RADIUS,
-            fontSize: MENU_FONT_SIZE,
+            fontSize: 36,
             fontColor: 0xFFFFFF,
             color: 0x757575
         });
@@ -199,6 +211,18 @@ class KomodiClass {
         }
     }
 
+    // exposed member variables
+    io = {
+        readInt: () => parseInt(prompt("Please enter a number") || "0"),
+        readString: () => prompt("Please enter a string"),
+    };
+
+    hook = {
+        startHook: null,
+        stopHook: null,
+        initHook: null,
+    };
+
     // external API
     setBlocks(sideMenuInfo: SideMenuInfo[]) {
         let sideMenu = new SideMenu(sideMenuInfo);
@@ -216,10 +240,6 @@ class KomodiClass {
             this.trashButton.y = this.runButton.y - MENU_PADDING - this.trashButton.height;
         };
 
-        this.renderer.view.style.position = "absolute";
-        this.renderer.view.style.display = "block";
-        this.renderer.view.style.top = "0";
-        this.renderer.view.style.left = "0";
         this.renderer.autoResize = true;
         this.komodiDiv.appendChild(this.renderer.view);
         parent.appendChild(this.komodiDiv);
@@ -296,6 +316,18 @@ class KomodiClass {
                 alert("Komodi initialization failed");
             },
         });
+    }
+
+    runCode() {
+        this.runButton.setState("stop");
+        let code = this.globalManager.generateCode();
+        console.log(code);
+        eval(code);
+    }
+
+    stopCode() {
+        this.runButton.setState("run");
+        // TODO: remove all event listeners
     }
 }
 

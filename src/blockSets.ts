@@ -14,10 +14,10 @@ import {
     stringBlockFactory,
     trueBlockFactory,
     whileBlockFactory
-} from "./factories/factories";
+} from "./builtinFactories";
 import {SideMenuInfo} from "./ui/sideMenu";
 
-export const STANDARD_BLOCK_SET: SideMenuInfo[] = [
+export const NO_STRING_BLOCK_SET: SideMenuInfo[] = [
     {
         name: "Signals",
         factories: [
@@ -49,6 +49,9 @@ export const STANDARD_BLOCK_SET: SideMenuInfo[] = [
             numberBlockFactory,
         ]
     },
+];
+
+export const STANDARD_BLOCK_SET: SideMenuInfo[] = NO_STRING_BLOCK_SET.concat([
     {
         name: "String",
         factories: [
@@ -58,4 +61,4 @@ export const STANDARD_BLOCK_SET: SideMenuInfo[] = [
             printStingBlockFactory,
         ]
     },
-];
+]);
