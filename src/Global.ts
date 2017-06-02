@@ -130,7 +130,6 @@ class KomodiClass {
         makeTargetInteractive(this.runButton);
         enableHighlight(this.runButton);
         this.runButton.on("click", () => {
-            debugger;
             if (this.runButton.currentState == "run") {
                 this.runCode();
             } else {

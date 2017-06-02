@@ -37,6 +37,9 @@
             <span>Select Problem: <select id="probSelector">
                 <option value="triangle1">Triangle1</option>
                 <option value="triangle2">Triangle2</option>
+                <option value="butterfly">Butterfly</option>
+                <option value="box">Box</option>
+                <option value="carpet">Carpet</option>
             </select></span>
             <div class="ui segment">
                 <pre id="answer"></pre>
@@ -47,6 +50,8 @@
             <div class="ui segment">
             <pre id="output"></pre>
             </div>
+            <div class="ui compact message" id="result">
+            </div>
         </div>
     </div>
     <div id="komodi"></div>
@@ -54,95 +59,150 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.5/dat.gui.min.js"></script>
 <script src="/komodi.js"></script>
 <script>
-    let probSelector = document.getElementById("probSelector");
+    (function () {
+        let answer = document.getElementById("answer");
+        let output = document.getElementById("output");
+        let result = document.getElementById("result");
 
-    function valueToProblem(value) {
-        switch (value) {
-            case "triangle1":
-                return `
+        let probSelector = document.getElementById("probSelector");
+
+        function valueToProblem(value) {
+            switch (value) {
+                case "triangle1":
+                    return `
 *
 **
 ***
 ****
 *****
 ******`;
-            case "triangle2":
-                return `
-*
-**
-***
-****
-***
-**
-*`;
-            default: return "";
+                case "triangle2":
+                    return `
+    *
+   ***
+  *****
+ *******
+*********`;
+                case "butterfly":
+                    return `
+*     *
+**   **
+*** ***
+*******
+*** ***
+**   **
+*     *`;
+                case "box":
+                    return `
+*******
+*******
+*******
+*******
+*******
+*******
+*******`;
+                case "box":
+                    return `
+*******
+*******
+*******
+*******
+*******
+*******
+*******`;
+                case "carpet":
+                    return `
+*********
+* ** ** *
+*********
+***   ***
+* *   * *
+***   ***
+*********
+* ** ** *
+*********`;
+                default: return "";
+            }
         }
-    }
 
-    let pure = false;
-    function updateProblem() {
-        document.getElementById("answer").innerText = valueToProblem(probSelector.value).slice(1);
-        document.getElementById("output").innerText = "(Your program output)";
-        pure = true;
-    }
-
-    function putchar(char) {
-        let output = document.getElementById("output");
-        if (pure) {
-            pure = false;
-            output.innerText = "";
+        function updateProblem() {
+            answer.innerText = valueToProblem(probSelector.value).slice(1);
+            output.innerText = "(Your program output)";
+            result.style.display = "none";
+            result.classList.remove("success");
+            result.classList.remove("error");
+            result.innerHTML = '';
         }
-        output.innerText += char;
-    }
 
-    probSelector.addEventListener("change", function () {
+        probSelector.addEventListener("change", function () {
+            updateProblem();
+        });
         updateProblem();
-    });
-    updateProblem();
 
-    let blockSet = Komodi.blockSets.noStringBlockSet;
-    blockSet.push({
-        name: "Asterisk",
-        factories: [
-            new Komodi.factories.SimpleFactory(
-                Komodi.controls.Block,
-                new Komodi.parser.PatternParser(`putchar('*')`),
-                new Komodi.shape.FunctionShape(
-                    new Komodi.type.TFunction([], new Komodi.type.TString()),
-                    `print [ * ]`
-                )
-            ),
-            new Komodi.factories.SimpleFactory(
-                Komodi.controls.Block,
-                new Komodi.parser.PatternParser(`putchar(' ')`),
-                new Komodi.shape.FunctionShape(
-                    new Komodi.type.TFunction([], new Komodi.type.TString()),
-                    `print [space]`
-                )
-            ),
-            new Komodi.factories.SimpleFactory(
-                Komodi.controls.Block,
-                new Komodi.parser.PatternParser(`putchar('\\n')`),
-                new Komodi.shape.FunctionShape(
-                    new Komodi.type.TFunction([], new Komodi.type.TString()),
-                    `print [new line]`
-                )
-            ),
-        ]
-    });
+        window.putchar = function (char) {
+            output.innerText += char;
+        };
 
-    Komodi.setBlocks(blockSet);
-    Komodi.initializeDOM(document.getElementById("komodi"));
 
-    Komodi.hook.startHook = () => {
-        pure = true;
-    };
+        let blockSet = Komodi.blockSets.noStringBlockSet;
+        blockSet.push({
+            name: "Asterisk",
+            factories: [
+                new Komodi.factories.SimpleFactory(
+                    Komodi.controls.Block,
+                    new Komodi.parser.PatternParser(`putchar('*')`),
+                    new Komodi.shape.FunctionShape(
+                        new Komodi.type.TFunction([], new Komodi.type.TString()),
+                        `print [ * ]`
+                    )
+                ),
+                new Komodi.factories.SimpleFactory(
+                    Komodi.controls.Block,
+                    new Komodi.parser.PatternParser(`putchar(' ')`),
+                    new Komodi.shape.FunctionShape(
+                        new Komodi.type.TFunction([], new Komodi.type.TString()),
+                        `print [space]`
+                    )
+                ),
+                new Komodi.factories.SimpleFactory(
+                    Komodi.controls.Block,
+                    new Komodi.parser.PatternParser(`putchar('\\n')`),
+                    new Komodi.shape.FunctionShape(
+                        new Komodi.type.TFunction([], new Komodi.type.TString()),
+                        `print [new line]`
+                    )
+                ),
+            ]
+        });
 
-    Komodi.hook.initHook = () => {
-        Komodi.stopCode();
-    };
+        Komodi.setBlocks(blockSet);
+        Komodi.initializeDOM(document.getElementById("komodi"));
 
-    Komodi.start();
+        Komodi.hook.startHook = () => {
+            output.innerText = "";
+        };
+
+        Komodi.hook.initHook = () => {
+            Komodi.stopCode();
+
+            result.style.display = "";
+            let lastIndex = output.innerText.length-1;
+            if (answer.innerText === output.innerText || (
+                output.innerText.charAt(lastIndex) === '\n' &&
+                answer.innerText === output.innerText.slice(0, lastIndex))
+            ) {
+                result.classList.add("success");
+                result.classList.remove("error");
+                result.innerHTML = "<p>You are correct!</p>"
+            } else {
+                result.classList.remove("success");
+                result.classList.add("error");
+                result.innerHTML = "<p>Try again...</p>"
+            }
+        };
+
+        Komodi.start();
+    })();
 </script>
 </body>
 </html>

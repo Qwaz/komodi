@@ -102,7 +102,8 @@ class GeneratorList extends PIXI.Container {
             backgroundHeight += generator.height;
         });
         backgroundWidth += 2*GENERATOR_MARGIN;
-        backgroundHeight += GENERATOR_PADDING * (this.generators.length + 1);
+        backgroundHeight += 2*GENERATOR_MARGIN;
+        backgroundHeight += GENERATOR_PADDING * (this.generators.length - 1);
         backgroundHeight = Math.max(backgroundHeight, this.minHeight);
 
         let currentY = GENERATOR_MARGIN;

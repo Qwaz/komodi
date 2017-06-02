@@ -1709,7 +1709,6 @@ class KomodiClass {
         utils_1.makeTargetInteractive(this.runButton);
         utils_1.enableHighlight(this.runButton);
         this.runButton.on("click", () => {
-            debugger;
             if (this.runButton.currentState == "run") {
                 this.runCode();
             }
@@ -36611,6 +36610,11 @@ exports.NO_STRING_BLOCK_SET = [
             builtinFactories_1.readIntegerBlockFactory,
             builtinFactories_1.randBlockFactory,
             builtinFactories_1.numberBlockFactory,
+            builtinFactories_1.addBlockFactory,
+            builtinFactories_1.subBlockFactory,
+            builtinFactories_1.multBlockFactory,
+            builtinFactories_1.divBlockFactory,
+            builtinFactories_1.modBlockFactory,
         ]
     },
 ];
@@ -56819,6 +56823,11 @@ exports.numberBlockFactory = new ParameterFactory_1.ParameterFactory(controls_1.
         shape: new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TNumber()), `${data.value}`)
     };
 });
+exports.addBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1)+(@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "(num1) + (num2)"));
+exports.subBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1)-(@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "(num1) - (num2)"));
+exports.multBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1)*(@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "(num1) * (num2)"));
+exports.divBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`Math.floor((@1)/(@2))`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "(num1) / (num2)"));
+exports.modBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1)%(@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "(num1) mod (num2)"));
 exports.stringBlockFactory = new ParameterFactory_1.ParameterFactory(controls_1.Block, [{ name: "value", initial: "string" }], (data) => {
     return {
         parser: new parser_1.PatternParser(`"${data.value}"`),
@@ -57783,7 +57792,8 @@ class GeneratorList extends PIXI.Container {
             backgroundHeight += generator.height;
         });
         backgroundWidth += 2 * GENERATOR_MARGIN;
-        backgroundHeight += GENERATOR_PADDING * (this.generators.length + 1);
+        backgroundHeight += 2 * GENERATOR_MARGIN;
+        backgroundHeight += GENERATOR_PADDING * (this.generators.length - 1);
         backgroundHeight = Math.max(backgroundHeight, this.minHeight);
         let currentY = GENERATOR_MARGIN;
         _.forEach(this.generators, (generator) => {

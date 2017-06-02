@@ -150,6 +150,51 @@ export let numberBlockFactory = new ParameterFactory(
     }
 );
 
+export let addBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`(@1)+(@2)`),
+    new FunctionShape(
+        new TFunction([new TNumber(), new TNumber()], new TNumber()),
+        "(num1) + (num2)"
+    )
+);
+
+export let subBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`(@1)-(@2)`),
+    new FunctionShape(
+        new TFunction([new TNumber(), new TNumber()], new TNumber()),
+        "(num1) - (num2)"
+    )
+);
+
+export let multBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`(@1)*(@2)`),
+    new FunctionShape(
+        new TFunction([new TNumber(), new TNumber()], new TNumber()),
+        "(num1) * (num2)"
+    )
+);
+
+export let divBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`Math.floor((@1)/(@2))`),
+    new FunctionShape(
+        new TFunction([new TNumber(), new TNumber()], new TNumber()),
+        "(num1) / (num2)"
+    )
+);
+
+export let modBlockFactory = new SimpleFactory(
+    Block,
+    new PatternParser(`(@1)%(@2)`),
+    new FunctionShape(
+        new TFunction([new TNumber(), new TNumber()], new TNumber()),
+        "(num1) mod (num2)"
+    )
+);
+
 export let stringBlockFactory = new ParameterFactory(
     Block,
     [{name: "value", initial: "string"}],

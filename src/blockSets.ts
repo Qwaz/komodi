@@ -1,11 +1,15 @@
 import {
+    addBlockFactory,
     compareBlockFactory,
     declarationFactory,
+    divBlockFactory,
     falseBlockFactory,
     forBlockFactory,
     ifBlockFactory,
     intToStringBlockFactory,
     lessThanBlockFactory,
+    modBlockFactory,
+    multBlockFactory,
     numberBlockFactory,
     printStingBlockFactory,
     randBlockFactory,
@@ -14,6 +18,7 @@ import {
     repeatBlockFactory,
     startSignalFactory,
     stringBlockFactory,
+    subBlockFactory,
     trueBlockFactory,
     whileBlockFactory
 } from "./builtinFactories";
@@ -51,6 +56,11 @@ export const NO_STRING_BLOCK_SET: SideMenuInfo[] = [
             readIntegerBlockFactory,
             randBlockFactory,
             numberBlockFactory,
+            addBlockFactory,
+            subBlockFactory,
+            multBlockFactory,
+            divBlockFactory,
+            modBlockFactory,
         ]
     },
 ];
