@@ -2,14 +2,17 @@ import {Block, Declaration, FlowBlock, Signal} from "./controls";
 import {SignalShape} from "./shape/SignalShape";
 import {BlockShape} from "./shape/shape";
 import {ConditionBlockShape} from "./shape/ConditionBlockShape";
-import {DeclarationShape} from "./shape/DeclarationShape";
+import {DefineShape} from "./shape/DefineShape";
 import {FunctionShape} from "./shape/FunctionShape";
 import {TBoolean, TFunction, TNumber, TString, TVoid} from "./type";
 import {SplitScope} from "./scope/SplitScope";
 import {LoopScope} from "./scope/LoopScope";
 import {SimpleFactory} from "./factories/SimpleFactory";
-import {DeclarationParser, Parser, PatternParser} from "./parser/Parser";
+import {ParameterParser, Parser, PatternParser} from "./parser";
 import {ParameterFactory} from "./factories/ParameterFactory";
+import {CurvedFunctionShape} from "./shape/CurvedFunctionShape";
+import {generateToken} from "./utils";
+import {ForBlock} from "./controls/ForBlock";
 
 class IfBlock extends FlowBlock {
     constructor(logic: Parser, shape: BlockShape) {
@@ -19,7 +22,7 @@ class IfBlock extends FlowBlock {
     }
 }
 
-class WhileBlock extends FlowBlock {
+class LoopBlock extends FlowBlock {
     constructor(logic: Parser, shape: BlockShape) {
         super(logic, shape);
 
@@ -40,9 +43,25 @@ export let ifBlockFactory = new SimpleFactory(
 );
 
 export let whileBlockFactory = new SimpleFactory(
-    WhileBlock,
+    LoopBlock,
     new PatternParser(`while (@1) {$1}`),
     new ConditionBlockShape('while')
+);
+
+export let forBlockFactory = new ParameterFactory(
+    ForBlock,
+    [{name: "variable", initial: 'i'}],
+    (data: any) => {
+        let token = generateToken();
+        return {
+            parser: new ParameterParser(`for (let ${token} = (@1); ${token} <= (@2); ${token}++) {$1}`, token),
+            shape: new CurvedFunctionShape(
+                [new TNumber(), new TNumber()],
+                `for ${data.variable} in (min)~(max)`,
+                data.variable
+            )
+        }
+    }
 );
 
 export let trueBlockFactory = new SimpleFactory(
@@ -67,9 +86,10 @@ export let declarationFactory = new ParameterFactory(
     Declaration,
     [{name: "variable", initial: 'var'}],
     (data: any) => {
+        let token = generateToken();
         return {
-            parser: new DeclarationParser(),
-            shape: new DeclarationShape(0xFFFFFF, data.variable)
+            parser: new ParameterParser(`{let ${token} = (@1); $1}`, token),
+            shape: new DefineShape(data.variable)
         }
     }
 );

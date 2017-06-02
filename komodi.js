@@ -2183,6 +2183,12 @@ function getMousePoint() {
     return Global_1.Komodi.renderer.plugins.interaction.mouse.global.clone();
 }
 exports.getMousePoint = getMousePoint;
+let tokenCount = 0;
+function generateToken() {
+    tokenCount++;
+    return `var${tokenCount}`;
+}
+exports.generateToken = generateToken;
 
 
 /***/ }),
@@ -20329,6 +20335,8 @@ removeAllHandlers(Texture.WHITE);
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var ForBlock_1 = __webpack_require__(230);
+exports.ForBlock = ForBlock_1.ForBlock;
 var Control_1 = __webpack_require__(47);
 exports.Control = Control_1.Control;
 var Signal_1 = __webpack_require__(213);
@@ -28814,61 +28822,7 @@ exports.SimpleFactory = SimpleFactory;
 
 
 /***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const Block_1 = __webpack_require__(46);
-class Parser {
-}
-exports.Parser = Parser;
-function parsePattern(control, pattern) {
-    let now = control;
-    let pat = pattern;
-    if (now instanceof Block_1.Block) {
-        for (let i = now.numLogic - 1; i >= 0; i--) {
-            let child = now.logicChildren[i];
-            pat = pat.replace(new RegExp(`@${i + 1}`, 'g'), child ? child.parser.parse(child) : "");
-        }
-    }
-    if (now.scope) {
-        for (let i = now.scope.numScope; i >= 1; i--) {
-            let child = now.scope.scopeChildren[i - 1];
-            pat = pat.replace(new RegExp(`\\$${i}`, 'g'), child ? child.parser.parse(child) : "");
-        }
-    }
-    if (now.flow) {
-        let next = now.flow;
-        pat += ';' + next.parser.parse(next);
-    }
-    return pat;
-}
-class PatternParser extends Parser {
-    constructor(pattern) {
-        super();
-        this.pattern = pattern;
-    }
-    parse(control) {
-        return parsePattern(control, this.pattern);
-    }
-}
-exports.PatternParser = PatternParser;
-class DeclarationParser extends Parser {
-    constructor() {
-        super();
-        this.id = `var${DeclarationParser.counter++}`;
-    }
-    parse(declaration) {
-        return parsePattern(declaration, `{let ${this.id} = (@1); $1}`);
-    }
-}
-DeclarationParser.counter = 0;
-exports.DeclarationParser = DeclarationParser;
-
-
-/***/ }),
+/* 50 */,
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28881,7 +28835,7 @@ const shape_1 = __webpack_require__(28);
 const type_1 = __webpack_require__(13);
 const utils_1 = __webpack_require__(9);
 const common_1 = __webpack_require__(11);
-const MINIMUM_ARG_WIDTH = 35;
+const MINIMUM_ARG_WIDTH = 26;
 const PADDING = 5;
 const BLOCK_HEIGHT = 33;
 const top = -BLOCK_HEIGHT - common_1.TRIANGLE_HEIGHT;
@@ -28931,8 +28885,7 @@ class FunctionShape extends shape_1.BlockShape {
     get highlightOffsets() {
         return this._highlightOffsets;
     }
-    updateShape(logicChildren) {
-        super.updateShape(logicChildren);
+    drawShape(logicChildren, bottomOutline) {
         this._highlightOffsets = [];
         this.graphics.clear();
         this.graphics.lineStyle(1, 0x000000);
@@ -28942,6 +28895,9 @@ class FunctionShape extends shape_1.BlockShape {
                 let width = 0;
                 if (i % 2 == 0) {
                     width = label.text == " " ? PADDING : label.width + PADDING * 2;
+                    if (labels.length == 1) {
+                        width = Math.max(width, MINIMUM_ARG_WIDTH);
+                    }
                 }
                 else {
                     let child = logicChildren[i >> 1];
@@ -28952,7 +28908,7 @@ class FunctionShape extends shape_1.BlockShape {
                     else {
                         childWidth = MINIMUM_ARG_WIDTH;
                     }
-                    width = Math.max(label.width, childWidth) + PADDING * 2;
+                    width = Math.max(label.width + PADDING * 2, childWidth);
                 }
                 if (func) {
                     func(nowX, width, label, i);
@@ -28969,7 +28925,9 @@ class FunctionShape extends shape_1.BlockShape {
                 outlinePath.push(nowX + width * .5 - common_1.TRIANGLE_WIDTH * .5, top, nowX + width * .5, top + common_1.TRIANGLE_HEIGHT, nowX + width * .5 + common_1.TRIANGLE_WIDTH * .5, top);
             }
         });
-        outlinePath.push(widthSum * .5, top, widthSum * .5, bottom, common_1.TRIANGLE_WIDTH * .5, bottom, 0, 0, -common_1.TRIANGLE_WIDTH * .5, bottom, -widthSum * .5, bottom, -widthSum * .5, top);
+        outlinePath.push(widthSum * .5, top);
+        outlinePath = outlinePath.concat(bottomOutline(widthSum));
+        outlinePath.push(-widthSum * .5, top);
         this.graphics.beginFill(type_1.typeInfoToColor(this.typeInfo.returns));
         this.graphics.drawPolygon(outlinePath);
         this.hitArea = new PIXI.Polygon(outlinePath);
@@ -28995,6 +28953,18 @@ class FunctionShape extends shape_1.BlockShape {
         });
         forEachLabel(-widthSum * .5, (nowX, width, label) => {
             utils_1.centerChild(label, nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+        });
+    }
+    updateShape(logicChildren) {
+        super.updateShape(logicChildren);
+        this.drawShape(logicChildren, (widthSum) => {
+            return [
+                widthSum * .5, bottom,
+                common_1.TRIANGLE_WIDTH * .5, bottom,
+                0, 0,
+                -common_1.TRIANGLE_WIDTH * .5, bottom,
+                -widthSum * .5, bottom,
+            ];
         });
     }
 }
@@ -36398,69 +36368,7 @@ exports.ConditionBlockShape = ConditionBlockShape;
 
 
 /***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(5);
-const shape_1 = __webpack_require__(28);
-const utils_1 = __webpack_require__(9);
-const type_1 = __webpack_require__(13);
-const common_1 = __webpack_require__(11);
-const LINE = 4;
-const GAP = 4;
-const PAD_HORIZONTAL = 12;
-const HEIGHT = 33;
-const top = -HEIGHT - LINE * .5 - GAP;
-const bottom = top + HEIGHT;
-class DeclarationShape extends shape_1.BlockShape {
-    constructor(color, variableName) {
-        super();
-        this.color = color;
-        this.variableName = variableName;
-        this.returnVoid = new type_1.TVoid();
-        this._highlightOffsets = [{
-                offsetX: 0,
-                offsetY: top + common_1.TRIANGLE_HEIGHT,
-            }];
-        this.graphics = new PIXI.Graphics();
-        this.addChild(this.graphics);
-        let text = utils_1.createLabel(`let ${variableName} =`);
-        this.addChild(text);
-        utils_1.centerChild(text, 0, -HEIGHT * .5 - LINE * .5 - GAP);
-        const left = -text.width * .5 - PAD_HORIZONTAL;
-        const right = text.width * .5 + PAD_HORIZONTAL;
-        this.graphics.lineStyle(1, 0x000000, 1);
-        this.graphics.beginFill(color);
-        this.graphics.drawRect(left, bottom + GAP, right - left, LINE);
-        this.graphics.drawPolygon([
-            left, top,
-            -common_1.TRIANGLE_WIDTH * .5, top,
-            0, top + common_1.TRIANGLE_HEIGHT,
-            common_1.TRIANGLE_WIDTH * .5, top,
-            right, top,
-            right, bottom,
-            left, bottom,
-            left, top,
-        ]);
-        this.hitArea = new PIXI.Rectangle(left, top, right - left, HEIGHT);
-    }
-    clone() {
-        return new DeclarationShape(this.color, this.variableName);
-    }
-    get returnType() {
-        return this.returnVoid;
-    }
-    get highlightOffsets() {
-        return this._highlightOffsets;
-    }
-}
-exports.DeclarationShape = DeclarationShape;
-
-
-/***/ }),
+/* 106 */,
 /* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -36684,6 +36592,7 @@ exports.NO_STRING_BLOCK_SET = [
             builtinFactories_1.declarationFactory,
             builtinFactories_1.ifBlockFactory,
             builtinFactories_1.whileBlockFactory,
+            builtinFactories_1.forBlockFactory,
         ]
     },
     {
@@ -36739,9 +36648,48 @@ exports.ControlFactory = ControlFactory_1.ControlFactory;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var Parser_1 = __webpack_require__(50);
-exports.DeclarationParser = Parser_1.DeclarationParser;
-exports.PatternParser = Parser_1.PatternParser;
+const Block_1 = __webpack_require__(46);
+class Parser {
+}
+exports.Parser = Parser;
+function parsePattern(control, pattern) {
+    let now = control;
+    let pat = pattern;
+    if (now instanceof Block_1.Block) {
+        for (let i = now.numLogic - 1; i >= 0; i--) {
+            let child = now.logicChildren[i];
+            pat = pat.replace(new RegExp(`@${i + 1}`, 'g'), child ? child.parser.parse(child) : "");
+        }
+    }
+    if (now.scope) {
+        for (let i = now.scope.numScope; i >= 1; i--) {
+            let child = now.scope.scopeChildren[i - 1];
+            pat = pat.replace(new RegExp(`\\$${i}`, 'g'), child ? child.parser.parse(child) : "");
+        }
+    }
+    if (now.flow) {
+        let next = now.flow;
+        pat += ';' + next.parser.parse(next);
+    }
+    return pat;
+}
+class PatternParser extends Parser {
+    constructor(pattern) {
+        super();
+        this.pattern = pattern;
+    }
+    parse(control) {
+        return parsePattern(control, this.pattern);
+    }
+}
+exports.PatternParser = PatternParser;
+class ParameterParser extends PatternParser {
+    constructor(pattern, id) {
+        super(pattern);
+        this.id = id;
+    }
+}
+exports.ParameterParser = ParameterParser;
 
 
 /***/ }),
@@ -36751,12 +36699,16 @@ exports.PatternParser = Parser_1.PatternParser;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var shape_1 = __webpack_require__(28);
+exports.BlockShape = shape_1.BlockShape;
+var CurvedFunctionShape_1 = __webpack_require__(229);
+exports.CurvedFunctionShape = CurvedFunctionShape_1.CurvedFunctionShape;
 var SignalShape_1 = __webpack_require__(107);
 exports.SignalShape = SignalShape_1.SignalShape;
 var FunctionShape_1 = __webpack_require__(51);
 exports.FunctionShape = FunctionShape_1.FunctionShape;
-var DeclarationShape_1 = __webpack_require__(106);
-exports.DeclarationShape = DeclarationShape_1.DeclarationShape;
+var DefineShape_1 = __webpack_require__(231);
+exports.DefineShape = DefineShape_1.DefineShape;
 var ConditionBlockShape_1 = __webpack_require__(105);
 exports.ConditionBlockShape = ConditionBlockShape_1.ConditionBlockShape;
 
@@ -56810,56 +56762,67 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const controls_1 = __webpack_require__(15);
 const SignalShape_1 = __webpack_require__(107);
 const ConditionBlockShape_1 = __webpack_require__(105);
-const DeclarationShape_1 = __webpack_require__(106);
+const DefineShape_1 = __webpack_require__(231);
 const FunctionShape_1 = __webpack_require__(51);
 const type_1 = __webpack_require__(13);
 const SplitScope_1 = __webpack_require__(221);
 const LoopScope_1 = __webpack_require__(219);
 const SimpleFactory_1 = __webpack_require__(49);
-const Parser_1 = __webpack_require__(50);
+const parser_1 = __webpack_require__(115);
 const ParameterFactory_1 = __webpack_require__(104);
+const CurvedFunctionShape_1 = __webpack_require__(229);
+const utils_1 = __webpack_require__(9);
+const ForBlock_1 = __webpack_require__(230);
 class IfBlock extends controls_1.FlowBlock {
     constructor(logic, shape) {
         super(logic, shape);
         this.setScope(new SplitScope_1.SplitScope(this, 2));
     }
 }
-class WhileBlock extends controls_1.FlowBlock {
+class LoopBlock extends controls_1.FlowBlock {
     constructor(logic, shape) {
         super(logic, shape);
         this.setScope(new LoopScope_1.LoopScope(this));
     }
 }
-exports.startSignalFactory = new SimpleFactory_1.SimpleFactory(controls_1.Signal, new Parser_1.PatternParser(`(function () {$1})()`), new SignalShape_1.SignalShape('Start'));
-exports.ifBlockFactory = new SimpleFactory_1.SimpleFactory(IfBlock, new Parser_1.PatternParser(`if (@1) {$1} else {$2}`), new ConditionBlockShape_1.ConditionBlockShape('if'));
-exports.whileBlockFactory = new SimpleFactory_1.SimpleFactory(WhileBlock, new Parser_1.PatternParser(`while (@1) {$1}`), new ConditionBlockShape_1.ConditionBlockShape('while'));
-exports.trueBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`true`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TBoolean()), "true"));
-exports.falseBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`false`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TBoolean()), "false"));
-exports.declarationFactory = new ParameterFactory_1.ParameterFactory(controls_1.Declaration, [{ name: "variable", initial: 'var' }], (data) => {
+exports.startSignalFactory = new SimpleFactory_1.SimpleFactory(controls_1.Signal, new parser_1.PatternParser(`(function () {$1})()`), new SignalShape_1.SignalShape('Start'));
+exports.ifBlockFactory = new SimpleFactory_1.SimpleFactory(IfBlock, new parser_1.PatternParser(`if (@1) {$1} else {$2}`), new ConditionBlockShape_1.ConditionBlockShape('if'));
+exports.whileBlockFactory = new SimpleFactory_1.SimpleFactory(LoopBlock, new parser_1.PatternParser(`while (@1) {$1}`), new ConditionBlockShape_1.ConditionBlockShape('while'));
+exports.forBlockFactory = new ParameterFactory_1.ParameterFactory(ForBlock_1.ForBlock, [{ name: "variable", initial: 'i' }], (data) => {
+    let token = utils_1.generateToken();
     return {
-        parser: new Parser_1.DeclarationParser(),
-        shape: new DeclarationShape_1.DeclarationShape(0xFFFFFF, data.variable)
+        parser: new parser_1.ParameterParser(`for (let ${token} = (@1); ${token} <= (@2); ${token}++) {$1}`, token),
+        shape: new CurvedFunctionShape_1.CurvedFunctionShape([new type_1.TNumber(), new type_1.TNumber()], `for ${data.variable} in (min)~(max)`, data.variable)
     };
 });
-exports.readIntegerBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`Komodi.io.readInt()`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TNumber()), "Read Integer"));
-exports.readStringBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`Komodi.io.readString()`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TString()), "Read String"));
-exports.randBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`Math.floor(Math.random()*((@2)-(@1)+1))+(@1)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "random (min)~(max)"));
+exports.trueBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`true`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TBoolean()), "true"));
+exports.falseBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`false`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TBoolean()), "false"));
+exports.declarationFactory = new ParameterFactory_1.ParameterFactory(controls_1.Declaration, [{ name: "variable", initial: 'var' }], (data) => {
+    let token = utils_1.generateToken();
+    return {
+        parser: new parser_1.ParameterParser(`{let ${token} = (@1); $1}`, token),
+        shape: new DefineShape_1.DefineShape(data.variable)
+    };
+});
+exports.readIntegerBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`Komodi.io.readInt()`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TNumber()), "Read Integer"));
+exports.readStringBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`Komodi.io.readString()`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TString()), "Read String"));
+exports.randBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`Math.floor(Math.random()*((@2)-(@1)+1))+(@1)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TNumber()), "random (min)~(max)"));
 exports.numberBlockFactory = new ParameterFactory_1.ParameterFactory(controls_1.Block, [{ name: "value", initial: 10 }], (data) => {
     return {
-        parser: new Parser_1.PatternParser(`${data.value}`),
+        parser: new parser_1.PatternParser(`${data.value}`),
         shape: new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TNumber()), `${data.value}`)
     };
 });
 exports.stringBlockFactory = new ParameterFactory_1.ParameterFactory(controls_1.Block, [{ name: "value", initial: "string" }], (data) => {
     return {
-        parser: new Parser_1.PatternParser(`"${data.value}"`),
+        parser: new parser_1.PatternParser(`"${data.value}"`),
         shape: new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TString()), `"${data.value}"`)
     };
 });
-exports.intToStringBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`(@1).toString()`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber()], new type_1.TString()), "toString (num)"));
-exports.printStingBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`alert(@1)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TString()], new type_1.TVoid()), "print(string)"));
-exports.compareBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`(@1) === (@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TBoolean()), "(num1)==(num2)"));
-exports.lessThanBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new Parser_1.PatternParser(`(@1) < (@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TBoolean()), "(num1)<(num2)"));
+exports.intToStringBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1).toString()`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber()], new type_1.TString()), "toString (num)"));
+exports.printStingBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`alert(@1)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TString()], new type_1.TVoid()), "print(string)"));
+exports.compareBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1) === (@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TBoolean()), "(num1)==(num2)"));
+exports.lessThanBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`(@1) < (@2)`), new FunctionShape_1.FunctionShape(new type_1.TFunction([new type_1.TNumber(), new type_1.TNumber()], new type_1.TBoolean()), "(num1)<(num2)"));
 
 
 /***/ }),
@@ -56869,10 +56832,10 @@ exports.lessThanBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Bloc
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Block_1 = __webpack_require__(46);
 const type_1 = __webpack_require__(13);
 const ParameterScope_1 = __webpack_require__(220);
-class Declaration extends Block_1.Block {
+const Block_1 = __webpack_require__(46);
+class Declaration extends Block_1.FlowBlock {
     constructor(parser, shape) {
         super(parser, shape);
         this.parser = parser;
@@ -56893,9 +56856,6 @@ class Declaration extends Block_1.Block {
             value: this.parser.id,
         };
         super.update();
-    }
-    attachFilter(attachInfo) {
-        return attachInfo.attachType != "Logic";
     }
 }
 exports.Declaration = Declaration;
@@ -56971,10 +56931,10 @@ const SimpleFactory_1 = __webpack_require__(49);
 const FunctionShape_1 = __webpack_require__(51);
 const type_1 = __webpack_require__(13);
 const Global_1 = __webpack_require__(6);
-const Parser_1 = __webpack_require__(50);
+const parser_1 = __webpack_require__(115);
 class ScopedFactory extends SimpleFactory_1.SimpleFactory {
     constructor(scopeParent, info) {
-        super(controls_1.Block, new Parser_1.PatternParser(`${info.value}`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], info.returnType), info.label));
+        super(controls_1.Block, new parser_1.PatternParser(`${info.value}`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], info.returnType), info.label));
         this.scopeParent = scopeParent;
         this.info = info;
         this.generated = new Set();
@@ -58654,6 +58614,131 @@ Ea=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra
 function Fa(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var k=d[1];g=[];if(k)for(var k=k.split(","),h=k.length,m=0;m<h;m++){var l;l=k[m];if(l.match(/^[\w-]+$/)){var n=Ea.exec(l.toLowerCase());if(null==n)l="";else{l=n[2];l=null==l||""==l?"n":Da[l];n=n[1];if(null==n||""==n)n="4";else var r=Ca[n],n=r?r:isNaN(n)?"4":n.substr(0,1);l=[l,n].join("")}}else l="";l&&g.push(l)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=Ba[d[0]])&&(a.c[e]=d))}a.c[e]||(d=Ba[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new H(e,f[d]))}};function Ga(a,b){this.c=a;this.a=b}var Ha={Arimo:!0,Cousine:!0,Tinos:!0};Ga.prototype.load=function(a){var b=new C,c=this.c,d=new va(this.a.api,z(c),this.a.text),e=this.a.families;xa(d,e);var f=new Aa(e);Fa(f);A(c,za(d),D(b));F(b,function(){a(f.a,f.c,Ha)})};function Ia(a,b){this.c=a;this.a=b}Ia.prototype.load=function(a){var b=this.a.id,c=this.c.m;b?B(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],k=b[f+1],h=0;h<k.length;h++)e.push(new H(g,k[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(m){}a(e)}},2E3):a([])};function Ja(a,b){this.c=a;this.f=b;this.a=[]}Ja.prototype.load=function(a){var b=this.f.id,c=this.c.m,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,k=c.fonts.length;g<k;++g){var h=c.fonts[g];d.a.push(new H(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},B(this.c,z(this.c)+(this.f.api||"//f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new pa(window);Y.a.c.custom=function(a,b){return new ua(b,a)};Y.a.c.fontdeck=function(a,b){return new Ja(b,a)};Y.a.c.monotype=function(a,b){return new sa(b,a)};Y.a.c.typekit=function(a,b){return new Ia(b,a)};Y.a.c.google=function(a,b){return new Ga(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
+
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(10);
+const shape_1 = __webpack_require__(28);
+const type_1 = __webpack_require__(13);
+const FunctionShape_1 = __webpack_require__(51);
+const CURVE_HEIGHT = 6;
+const bottom = -CURVE_HEIGHT;
+class CurvedFunctionShape extends FunctionShape_1.FunctionShape {
+    constructor(argTypes, description, variableName) {
+        super(new type_1.TFunction(argTypes, new type_1.TVoid()), description);
+        this.argTypes = argTypes;
+        this.variableName = variableName;
+    }
+    clone() {
+        return new CurvedFunctionShape(this.argTypes, this.description, this.variableName);
+    }
+    updateShape(logicChildren) {
+        shape_1.BlockShape.prototype.updateShape.call(this, logicChildren);
+        this.drawShape(logicChildren, (widthSum) => {
+            let ret = _(_.range(0, Math.PI, 0.05)).flatMap((num) => {
+                return [widthSum * .5 - num / Math.PI * widthSum, bottom + Math.sin(num) * CURVE_HEIGHT];
+            }).value();
+            ret.push(-widthSum * .5, bottom);
+            return ret;
+        });
+    }
+}
+exports.CurvedFunctionShape = CurvedFunctionShape;
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const type_1 = __webpack_require__(13);
+const ParameterScope_1 = __webpack_require__(220);
+const Block_1 = __webpack_require__(46);
+class ForBlock extends Block_1.FlowBlock {
+    constructor(parser, shape) {
+        super(parser, shape);
+        this.parser = parser;
+        this.shape = shape;
+        this.scopeInfoArr = [{
+                returnType: new type_1.TNumber(),
+                label: shape.variableName,
+                value: parser.id,
+            }];
+        let scope = new ParameterScope_1.ParameterScope(this, this.scopeInfoArr);
+        this.setScope(scope);
+    }
+}
+exports.ForBlock = ForBlock;
+
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const PIXI = __webpack_require__(5);
+const shape_1 = __webpack_require__(28);
+const utils_1 = __webpack_require__(9);
+const type_1 = __webpack_require__(13);
+const common_1 = __webpack_require__(11);
+const LINE = 4;
+const GAP = 4;
+const PAD_HORIZONTAL = 12;
+const HEIGHT = 33;
+const top = -HEIGHT - LINE * .5 - GAP;
+const bottom = top + HEIGHT;
+class DefineShape extends shape_1.BlockShape {
+    constructor(variableName) {
+        super();
+        this.variableName = variableName;
+        this.returnVoid = new type_1.TVoid();
+        this._highlightOffsets = [{
+                offsetX: 0,
+                offsetY: top + common_1.TRIANGLE_HEIGHT,
+            }];
+        this.graphics = new PIXI.Graphics();
+        this.addChild(this.graphics);
+        let text = utils_1.createLabel(`define ${variableName}`);
+        this.addChild(text);
+        utils_1.centerChild(text, 0, -HEIGHT * .5 - LINE * .5 - GAP);
+        const left = -text.width * .5 - PAD_HORIZONTAL;
+        const right = text.width * .5 + PAD_HORIZONTAL;
+        this.graphics.lineStyle(1, 0x000000, 1);
+        this.graphics.beginFill(0xFFFFFF);
+        this.graphics.drawRect(left, bottom + GAP, right - left, LINE);
+        this.graphics.drawPolygon([
+            left, top,
+            -common_1.TRIANGLE_WIDTH * .5, top,
+            0, top + common_1.TRIANGLE_HEIGHT,
+            common_1.TRIANGLE_WIDTH * .5, top,
+            right, top,
+            right, bottom,
+            left, bottom,
+            left, top,
+        ]);
+        this.hitArea = new PIXI.Rectangle(left, top, right - left, HEIGHT);
+    }
+    clone() {
+        return new DefineShape(this.variableName);
+    }
+    get returnType() {
+        return this.returnVoid;
+    }
+    get highlightOffsets() {
+        return this._highlightOffsets;
+    }
+}
+exports.DefineShape = DefineShape;
 
 
 /***/ })

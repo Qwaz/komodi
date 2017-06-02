@@ -4,7 +4,7 @@ import {LogicHighlight} from "../shape/Highlight";
 import {BlockShape} from "../shape/shape";
 import {Komodi} from "../Global";
 import {AttachInfo} from "../managers/AttachManager";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 
 export class Block extends Control {
     logicChildren: Array<Block | null>;

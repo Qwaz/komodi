@@ -101,7 +101,7 @@
     updateProblem();
 
     let blockSet = Komodi.blockSets.noStringBlockSet;
-    blockSet = blockSet.concat([{
+    blockSet.push({
         name: "Asterisk",
         factories: [
             new Komodi.factories.SimpleFactory(
@@ -122,17 +122,21 @@
             ),
             new Komodi.factories.SimpleFactory(
                 Komodi.controls.Block,
-                new Komodi.parser.PatternParser(`putchar('\n')`),
+                new Komodi.parser.PatternParser(`putchar('\\n')`),
                 new Komodi.shape.FunctionShape(
                     new Komodi.type.TFunction([], new Komodi.type.TString()),
                     `print [new line]`
                 )
             ),
         ]
-    }]);
+    });
 
     Komodi.setBlocks(blockSet);
     Komodi.initializeDOM(document.getElementById("komodi"));
+
+    Komodi.hook.startHook = () => {
+        pure = true;
+    };
 
     Komodi.hook.initHook = () => {
         Komodi.stopCode();

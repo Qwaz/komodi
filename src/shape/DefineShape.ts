@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {BlockShape} from "./shape";
+import {BlockShape, DeclarationShape} from "./shape";
 import {centerChild, createLabel} from "../utils";
 import {TVoid, TypeInfo} from "../type";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
@@ -12,7 +12,7 @@ const HEIGHT = 33;
 const top = -HEIGHT-LINE*.5-GAP;
 const bottom = top+HEIGHT;
 
-export class DeclarationShape extends BlockShape {
+export class DefineShape extends BlockShape implements DeclarationShape {
     private graphics: PIXI.Graphics;
 
     private returnVoid: TypeInfo = new TVoid();
@@ -22,16 +22,16 @@ export class DeclarationShape extends BlockShape {
     }];
 
     clone() {
-        return new DeclarationShape(this.color, this.variableName);
+        return new DefineShape(this.variableName);
     }
 
-    constructor(private color: number, readonly variableName: string) {
+    constructor(readonly variableName: string) {
         super();
 
         this.graphics = new PIXI.Graphics();
         this.addChild(this.graphics);
 
-        let text = createLabel(`let ${variableName} =`);
+        let text = createLabel(`define ${variableName}`);
         this.addChild(text);
         centerChild(text, 0, -HEIGHT*.5-LINE*.5-GAP);
 
@@ -39,7 +39,7 @@ export class DeclarationShape extends BlockShape {
         const right = text.width*.5 + PAD_HORIZONTAL;
 
         this.graphics.lineStyle(1, 0x000000, 1);
-        this.graphics.beginFill(color);
+        this.graphics.beginFill(0xFFFFFF);
         this.graphics.drawRect(left, bottom+GAP, right-left, LINE);
         this.graphics.drawPolygon([
             left, top,

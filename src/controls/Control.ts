@@ -5,7 +5,7 @@ import {enableHighlight, getMousePoint, makeTargetInteractive} from "../utils";
 import {FlowHighlight} from "../shape/Highlight";
 import {Scope} from "../scope/scope";
 import {AttachInfo} from "../managers/AttachManager";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 
 export abstract class Control extends PIXI.Container {
     abstract get parser(): Parser;

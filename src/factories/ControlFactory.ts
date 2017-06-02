@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import {Shape} from "../shape/shape";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 import {Control} from "../controls";
 
 export interface AbsGenerator extends PIXI.Container {

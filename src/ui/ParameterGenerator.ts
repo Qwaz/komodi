@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import {Shape} from "../shape/shape";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 import {Control} from "../controls/Control";
 import {ParameterFactory} from "../factories/ParameterFactory";
 import {IconButton, Icons} from "./IconButton";

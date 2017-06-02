@@ -6,7 +6,7 @@ import {TFunction, TypeInfo, typeInfoToColor} from "../type";
 import {centerChild, createLabel} from "../utils";
 import {TRIANGLE_HEIGHT, TRIANGLE_WIDTH, TypedOffset} from "../common";
 
-const MINIMUM_ARG_WIDTH = 35;
+const MINIMUM_ARG_WIDTH = 26;
 const PADDING = 5;
 const BLOCK_HEIGHT = 33;
 
@@ -26,8 +26,8 @@ export class FunctionShape extends BlockShape {
 
     // TODO: Apply lexer to type info
     constructor(
-        private typeInfo: TFunction,
-        private description: string,
+        protected typeInfo: TFunction,
+        protected description: string,
     ) {
         super();
 
@@ -80,9 +80,7 @@ export class FunctionShape extends BlockShape {
         return this._highlightOffsets;
     }
 
-    updateShape(logicChildren: Array<Block | null>) {
-        super.updateShape(logicChildren);
-
+    protected drawShape(logicChildren: Array<Block | null>, bottomOutline: (widthSum: number) => number[]) {
         this._highlightOffsets = [];
 
         this.graphics.clear();
@@ -100,6 +98,9 @@ export class FunctionShape extends BlockShape {
                     // text label
                     // TODO: PIXI.Text seems to convert empty string to a space
                     width = label.text == " " ? PADDING : label.width + PADDING*2;
+                    if (labels.length == 1) {
+                        width = Math.max(width, MINIMUM_ARG_WIDTH);
+                    }
                 } else {
                     // argument label
                     let child = logicChildren[i >> 1];
@@ -111,7 +112,7 @@ export class FunctionShape extends BlockShape {
                         childWidth = MINIMUM_ARG_WIDTH;
                     }
 
-                    width = Math.max(label.width, childWidth) + PADDING*2;
+                    width = Math.max(label.width + PADDING*2, childWidth);
                 }
 
                 if (func) {
@@ -139,11 +140,9 @@ export class FunctionShape extends BlockShape {
         });
         outlinePath.push(
             widthSum*.5, top,
-            widthSum*.5, bottom,
-            TRIANGLE_WIDTH*.5, bottom,
-            0, 0,
-            -TRIANGLE_WIDTH*.5, bottom,
-            -widthSum*.5, bottom,
+        );
+        outlinePath = outlinePath.concat(bottomOutline(widthSum));
+        outlinePath.push(
             -widthSum*.5, top,
         );
         this.graphics.beginFill(typeInfoToColor(this.typeInfo.returns));
@@ -174,7 +173,21 @@ export class FunctionShape extends BlockShape {
 
         // position labels
         forEachLabel(-widthSum*.5, (nowX, width, label) => {
-           centerChild(label, nowX+width*.5, bottom-BLOCK_HEIGHT*.5);
+            centerChild(label, nowX+width*.5, bottom-BLOCK_HEIGHT*.5);
+        });
+    }
+
+    updateShape(logicChildren: Array<Block | null>) {
+        super.updateShape(logicChildren);
+
+        this.drawShape(logicChildren, (widthSum) => {
+            return [
+                widthSum*.5, bottom,
+                TRIANGLE_WIDTH*.5, bottom,
+                0, 0,
+                -TRIANGLE_WIDTH*.5, bottom,
+                -widthSum*.5, bottom,
+            ];
         });
     }
 }

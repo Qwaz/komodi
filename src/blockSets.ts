@@ -2,6 +2,7 @@ import {
     compareBlockFactory,
     declarationFactory,
     falseBlockFactory,
+    forBlockFactory,
     ifBlockFactory,
     intToStringBlockFactory,
     lessThanBlockFactory,
@@ -30,6 +31,7 @@ export const NO_STRING_BLOCK_SET: SideMenuInfo[] = [
             declarationFactory,
             ifBlockFactory,
             whileBlockFactory,
+            forBlockFactory,
         ]
     },
     {

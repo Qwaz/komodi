@@ -1,6 +1,6 @@
 import {Shape} from "../shape/shape";
 import {Control} from "../controls";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 import {ControlFactory} from "./ControlFactory";
 import {SimpleGenerator} from "../ui/SimpleGenerator";
 

@@ -4,7 +4,7 @@ import {Block, Control} from "../controls";
 import {TypeInfo} from "../type";
 import {ScopedFactory} from "../factories/ScopedFactory";
 import {BlockShape} from "../shape/shape";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 
 const GENERATOR_PADDING = 6;
 

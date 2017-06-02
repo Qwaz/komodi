@@ -55,3 +55,9 @@ export function makeTargetInteractive(target: PIXI.DisplayObject) {
 export function getMousePoint() {
     return Komodi.renderer.plugins.interaction.mouse.global.clone();
 }
+
+let tokenCount = 0;
+export function generateToken() {
+    tokenCount++;
+    return `var${tokenCount}`;
+}

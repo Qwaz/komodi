@@ -6,7 +6,7 @@ import {ParameterInfo} from "../ui/ParameterRenderer";
 import {FunctionShape} from "../shape/FunctionShape";
 import {TFunction} from "../type";
 import {Komodi} from "../Global";
-import {Parser, PatternParser} from "../parser/Parser";
+import {Parser, PatternParser} from "../parser";
 
 export class ScopedFactory extends SimpleFactory<Block, Parser, BlockShape> {
     private generated = new Set<Block>();

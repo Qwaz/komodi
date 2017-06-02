@@ -2,7 +2,7 @@ import {Control} from "./Control";
 import {Shape} from "../shape/shape";
 import {LinearScope} from "../scope/LinearScope";
 import {Komodi} from "../Global";
-import {Parser} from "../parser/Parser";
+import {Parser} from "../parser";
 
 export class Signal extends Control {
     constructor(readonly parser: Parser, shape: Shape) {
