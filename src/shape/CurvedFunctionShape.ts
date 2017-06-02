@@ -8,16 +8,15 @@ const CURVE_HEIGHT = 6;
 
 const bottom = -CURVE_HEIGHT;
 
-export class CurvedFunctionShape extends FunctionShape implements DeclarationShape {
+export class CurvedFunctionShape extends FunctionShape {
     clone() {
-        return new CurvedFunctionShape(this.argTypes, this.description, this.variableName);
+        return new CurvedFunctionShape(this.argTypes, this.description);
     }
 
     // TODO: Apply lexer to type info
     constructor(
-        private argTypes: TypeInfo[],
-        description: string,
-        readonly variableName: string,
+        protected argTypes: TypeInfo[],
+        description: string
     ) {
         super(new TFunction(argTypes, new TVoid()), description);
     }
@@ -34,5 +33,20 @@ export class CurvedFunctionShape extends FunctionShape implements DeclarationSha
             );
             return ret;
         })
+    }
+}
+
+export class CurvedDeclarationShape extends CurvedFunctionShape implements DeclarationShape {
+    clone() {
+        return new CurvedDeclarationShape(this.argTypes, this.description, this.variableName);
+    }
+
+    // TODO: Apply lexer to type info
+    constructor(
+        argTypes: TypeInfo[],
+        description: string,
+        readonly variableName: string,
+    ) {
+        super(argTypes, description);
     }
 }

@@ -10,7 +10,7 @@ import {LoopScope} from "./scope/LoopScope";
 import {SimpleFactory} from "./factories/SimpleFactory";
 import {ParameterParser, Parser, PatternParser} from "./parser";
 import {ParameterFactory} from "./factories/ParameterFactory";
-import {CurvedFunctionShape} from "./shape/CurvedFunctionShape";
+import {CurvedDeclarationShape, CurvedFunctionShape} from "./shape/CurvedFunctionShape";
 import {generateToken} from "./utils";
 import {ForBlock} from "./controls/ForBlock";
 
@@ -55,7 +55,7 @@ export let forBlockFactory = new ParameterFactory(
         let token = generateToken();
         return {
             parser: new ParameterParser(`for (let ${token} = (@1); ${token} <= (@2); ${token}++) {$1}`, token),
-            shape: new CurvedFunctionShape(
+            shape: new CurvedDeclarationShape(
                 [new TNumber(), new TNumber()],
                 `for ${data.variable} in (min)~(max)`,
                 data.variable
@@ -63,6 +63,18 @@ export let forBlockFactory = new ParameterFactory(
         }
     }
 );
+
+export let repeatBlockFactory = (function () {
+    let token = generateToken();
+    return new SimpleFactory(
+        LoopBlock,
+        new PatternParser(`for (let ${token} = 0; ${token} < (@1); ${token}++) {$1}`),
+        new CurvedFunctionShape(
+            [new TNumber()],
+            `reapet (N) times`
+        )
+    );
+})();
 
 export let trueBlockFactory = new SimpleFactory(
     Block,

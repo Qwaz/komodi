@@ -36590,9 +36590,10 @@ exports.NO_STRING_BLOCK_SET = [
         name: "Flow",
         factories: [
             builtinFactories_1.declarationFactory,
+            builtinFactories_1.forBlockFactory,
+            builtinFactories_1.repeatBlockFactory,
             builtinFactories_1.ifBlockFactory,
             builtinFactories_1.whileBlockFactory,
-            builtinFactories_1.forBlockFactory,
         ]
     },
     {
@@ -36703,6 +36704,7 @@ var shape_1 = __webpack_require__(28);
 exports.BlockShape = shape_1.BlockShape;
 var CurvedFunctionShape_1 = __webpack_require__(229);
 exports.CurvedFunctionShape = CurvedFunctionShape_1.CurvedFunctionShape;
+exports.CurvedDeclarationShape = CurvedFunctionShape_1.CurvedDeclarationShape;
 var SignalShape_1 = __webpack_require__(107);
 exports.SignalShape = SignalShape_1.SignalShape;
 var FunctionShape_1 = __webpack_require__(51);
@@ -56792,9 +56794,13 @@ exports.forBlockFactory = new ParameterFactory_1.ParameterFactory(ForBlock_1.For
     let token = utils_1.generateToken();
     return {
         parser: new parser_1.ParameterParser(`for (let ${token} = (@1); ${token} <= (@2); ${token}++) {$1}`, token),
-        shape: new CurvedFunctionShape_1.CurvedFunctionShape([new type_1.TNumber(), new type_1.TNumber()], `for ${data.variable} in (min)~(max)`, data.variable)
+        shape: new CurvedFunctionShape_1.CurvedDeclarationShape([new type_1.TNumber(), new type_1.TNumber()], `for ${data.variable} in (min)~(max)`, data.variable)
     };
 });
+exports.repeatBlockFactory = (function () {
+    let token = utils_1.generateToken();
+    return new SimpleFactory_1.SimpleFactory(LoopBlock, new parser_1.PatternParser(`for (let ${token} = 0; ${token} < (@1); ${token}++) {$1}`), new CurvedFunctionShape_1.CurvedFunctionShape([new type_1.TNumber()], `reapet (N) times`));
+})();
 exports.trueBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`true`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TBoolean()), "true"));
 exports.falseBlockFactory = new SimpleFactory_1.SimpleFactory(controls_1.Block, new parser_1.PatternParser(`false`), new FunctionShape_1.FunctionShape(new type_1.TFunction([], new type_1.TBoolean()), "false"));
 exports.declarationFactory = new ParameterFactory_1.ParameterFactory(controls_1.Declaration, [{ name: "variable", initial: 'var' }], (data) => {
@@ -58630,13 +58636,12 @@ const FunctionShape_1 = __webpack_require__(51);
 const CURVE_HEIGHT = 6;
 const bottom = -CURVE_HEIGHT;
 class CurvedFunctionShape extends FunctionShape_1.FunctionShape {
-    constructor(argTypes, description, variableName) {
+    constructor(argTypes, description) {
         super(new type_1.TFunction(argTypes, new type_1.TVoid()), description);
         this.argTypes = argTypes;
-        this.variableName = variableName;
     }
     clone() {
-        return new CurvedFunctionShape(this.argTypes, this.description, this.variableName);
+        return new CurvedFunctionShape(this.argTypes, this.description);
     }
     updateShape(logicChildren) {
         shape_1.BlockShape.prototype.updateShape.call(this, logicChildren);
@@ -58650,6 +58655,16 @@ class CurvedFunctionShape extends FunctionShape_1.FunctionShape {
     }
 }
 exports.CurvedFunctionShape = CurvedFunctionShape;
+class CurvedDeclarationShape extends CurvedFunctionShape {
+    constructor(argTypes, description, variableName) {
+        super(argTypes, description);
+        this.variableName = variableName;
+    }
+    clone() {
+        return new CurvedDeclarationShape(this.argTypes, this.description, this.variableName);
+    }
+}
+exports.CurvedDeclarationShape = CurvedDeclarationShape;
 
 
 /***/ }),

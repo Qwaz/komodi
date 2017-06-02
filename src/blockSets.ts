@@ -11,6 +11,7 @@ import {
     randBlockFactory,
     readIntegerBlockFactory,
     readStringBlockFactory,
+    repeatBlockFactory,
     startSignalFactory,
     stringBlockFactory,
     trueBlockFactory,
@@ -29,9 +30,10 @@ export const NO_STRING_BLOCK_SET: SideMenuInfo[] = [
         name: "Flow",
         factories: [
             declarationFactory,
+            forBlockFactory,
+            repeatBlockFactory,
             ifBlockFactory,
             whileBlockFactory,
-            forBlockFactory,
         ]
     },
     {
