@@ -10,7 +10,7 @@ const bottom = -CURVE_HEIGHT;
 
 export class CurvedFunctionShape extends FunctionShape {
     clone() {
-        return new CurvedFunctionShape(this.argTypes, this.description);
+        return <this>new CurvedFunctionShape(this.argTypes, this.description);
     }
 
     // TODO: Apply lexer to type info
@@ -38,7 +38,7 @@ export class CurvedFunctionShape extends FunctionShape {
 
 export class CurvedDeclarationShape extends CurvedFunctionShape implements DeclarationShape {
     clone() {
-        return new CurvedDeclarationShape(this.argTypes, this.description, this.variableName);
+        return <this>new CurvedDeclarationShape(this.argTypes, this.description, this.variableName);
     }
 
     // TODO: Apply lexer to type info

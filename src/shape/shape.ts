@@ -5,7 +5,7 @@ import {TypeInfo} from "../type";
 import {TypedOffset} from "../common";
 
 export abstract class Shape extends PIXI.Container {
-    abstract clone<T>(this: T): T;
+    abstract clone(): this;
 }
 
 export abstract class BlockShape extends Shape {

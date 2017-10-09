@@ -18,7 +18,7 @@ export class ConditionBlockShape extends BlockShape {
     readonly highlightOffsets = [{offsetX: 0, offsetY: top+TRIANGLE_HEIGHT, requiredType: new TBoolean()}];
 
     clone() {
-        return new ConditionBlockShape(this.msg);
+        return <this>new ConditionBlockShape(this.msg);
     }
 
     constructor(readonly msg: string) {

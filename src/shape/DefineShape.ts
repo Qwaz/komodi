@@ -22,7 +22,7 @@ export class DefineShape extends BlockShape implements DeclarationShape {
     }];
 
     clone() {
-        return new DefineShape(this.variableName);
+        return <this>new DefineShape(this.variableName);
     }
 
     constructor(readonly variableName: string) {

@@ -21,7 +21,7 @@ export class FunctionShape extends BlockShape {
     private textLabels: PIXI.Text[] = [];
 
     clone() {
-        return new FunctionShape(this.typeInfo, this.description);
+        return <this>new FunctionShape(this.typeInfo, this.description);
     }
 
     // TODO: Apply lexer to type info

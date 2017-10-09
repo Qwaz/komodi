@@ -17,7 +17,7 @@ export class SignalShape extends Shape {
     private graphics: PIXI.Graphics;
 
     clone() {
-        return new SignalShape(this.message);
+        return <this>new SignalShape(this.message);
     }
 
     constructor(private message: string) {

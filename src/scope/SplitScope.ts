@@ -63,7 +63,7 @@ export class SplitScope extends Scope {
         }
 
         // Join
-        let maxY = _(endOffset).map((obj: Offset) => obj.offsetY).max();
+        let maxY = <number>_(endOffset).map((obj: Offset) => obj.offsetY).max();
         for (let flowIndex = 0; flowIndex < this.numScope; flowIndex++) {
             const offset = endOffset[flowIndex];
             this.graphics.moveTo(offset.offsetX, offset.offsetY);
