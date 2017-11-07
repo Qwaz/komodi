@@ -11,8 +11,8 @@
   },
   "author": "Yechan Bae <qwazpia@gmail.com>",
   "devDependencies": {
-    "@types/dat-gui": "^0.6.3",
     "@types/lodash": "^4.14.77",
+    "@types/pegjs": "^0.10.0",
     "@types/pixi.js": "^4.5.6",
     "@types/webfontloader": "^1.6.29",
     "npm-run-all": "^4.1.1",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
+    "pegjs": "^0.10.0",
     "pixi.js": "^4.5.6",
     "webfontloader": "^1.6.28"
   }

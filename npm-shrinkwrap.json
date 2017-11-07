@@ -4,16 +4,16 @@
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
-    "@types/dat-gui": {
-      "version": "0.6.3",
-      "resolved": "https://registry.npmjs.org/@types/dat-gui/-/dat-gui-0.6.3.tgz",
-      "integrity": "sha512-N0JUd1/jrKQ00w0lz6uyx/4XhJ+qQb9Ir05DEzP4YS5N+vQUyKtcyVBG/u+NF7EkAkHHYDyzpvYf0AMS89R2OQ==",
-      "dev": true
-    },
     "@types/lodash": {
       "version": "4.14.77",
       "resolved": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.77.tgz",
       "integrity": "sha512-sRCTcVQkIiQqRoQcazgN2PvRLS7d9BnSl8elRZR5UYlpm6XgU8F4j/0csz8WoaKKTUqa6rSuOy3Vph7AHfX7KQ==",
+      "dev": true
+    },
+    "@types/pegjs": {
+      "version": "0.10.0",
+      "resolved": "https://registry.npmjs.org/@types/pegjs/-/pegjs-0.10.0.tgz",
+      "integrity": "sha1-oUc2Ii5iCOHGjAviMascU93FU5I=",
       "dev": true
     },
     "@types/pixi.js": {
@@ -2417,6 +2417,11 @@
         "safe-buffer": "5.1.1",
         "sha.js": "2.4.9"
       }
+    },
+    "pegjs": {
+      "version": "0.10.0",
+      "resolved": "https://registry.npmjs.org/pegjs/-/pegjs-0.10.0.tgz",
+      "integrity": "sha1-z4uvrm7d/0tafvsYUmnqr0YQ3b0="
     },
     "pify": {
       "version": "2.3.0",

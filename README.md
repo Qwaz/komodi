@@ -1,2 +1,2 @@
 # komodi
-Visual Educational Dataflow Programming  Language
+Modern Visual PL for Education

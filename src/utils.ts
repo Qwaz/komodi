@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Komodi} from "./Global";
+import {Komodi} from "./global";
 
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
@@ -22,12 +22,6 @@ export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObj
         && Math.abs(vy) < (bound1.height+bound2.height)*.5;
 }
 
-export function createLabel(text: string): PIXI.Text {
-    return new PIXI.Text(text, {
-        fontSize: 14, align : 'center'
-    })
-}
-
 export function moveToTop(target: PIXI.DisplayObject) {
     target.parent.setChildIndex(target, target.parent.children.length-1);
 }
@@ -40,11 +34,6 @@ export function centerChild(target: PIXI.DisplayObject, x: number, y: number) {
 
 export function stagePositionOf(target: PIXI.DisplayObject): PIXI.Point {
     return Komodi.stage.toLocal(target.position, target.parent);
-}
-
-export function enableHighlight(target: PIXI.DisplayObject) {
-    target.on('mouseover', () => target.alpha = 0.75);
-    target.on('mouseout', () => target.alpha = 1);
 }
 
 export function makeTargetInteractive(target: PIXI.DisplayObject) {
