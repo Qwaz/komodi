@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 213);
+/******/ 	return __webpack_require__(__webpack_require__.s = 214);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -467,7 +467,7 @@ Object.defineProperty(exports, 'glCore', {
   }
 });
 
-var _Bounds = __webpack_require__(30);
+var _Bounds = __webpack_require__(31);
 
 Object.defineProperty(exports, 'Bounds', {
   enumerable: true,
@@ -512,7 +512,7 @@ Object.defineProperty(exports, 'TransformStatic', {
   }
 });
 
-var _TransformBase = __webpack_require__(31);
+var _TransformBase = __webpack_require__(32);
 
 Object.defineProperty(exports, 'TransformBase', {
   enumerable: true,
@@ -521,7 +521,7 @@ Object.defineProperty(exports, 'TransformBase', {
   }
 });
 
-var _Sprite = __webpack_require__(35);
+var _Sprite = __webpack_require__(36);
 
 Object.defineProperty(exports, 'Sprite', {
   enumerable: true,
@@ -539,7 +539,7 @@ Object.defineProperty(exports, 'CanvasSpriteRenderer', {
   }
 });
 
-var _CanvasTinter = __webpack_require__(36);
+var _CanvasTinter = __webpack_require__(37);
 
 Object.defineProperty(exports, 'CanvasTinter', {
   enumerable: true,
@@ -647,7 +647,7 @@ Object.defineProperty(exports, 'BaseTexture', {
   }
 });
 
-var _RenderTexture = __webpack_require__(37);
+var _RenderTexture = __webpack_require__(38);
 
 Object.defineProperty(exports, 'RenderTexture', {
   enumerable: true,
@@ -777,7 +777,7 @@ var _utils = __webpack_require__(2);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _ticker = __webpack_require__(38);
+var _ticker = __webpack_require__(39);
 
 var ticker = _interopRequireWildcard(_ticker);
 
@@ -852,7 +852,7 @@ var _mixin = __webpack_require__(161);
 
 var mixins = _interopRequireWildcard(_mixin);
 
-var _ismobilejs = __webpack_require__(28);
+var _ismobilejs = __webpack_require__(29);
 
 var isMobile = _interopRequireWildcard(_ismobilejs);
 
@@ -1534,7 +1534,7 @@ exports.default = {
 
 exports.__esModule = true;
 
-var _Point = __webpack_require__(33);
+var _Point = __webpack_require__(34);
 
 Object.defineProperty(exports, 'Point', {
   enumerable: true,
@@ -1552,7 +1552,7 @@ Object.defineProperty(exports, 'ObservablePoint', {
   }
 });
 
-var _Matrix = __webpack_require__(32);
+var _Matrix = __webpack_require__(33);
 
 Object.defineProperty(exports, 'Matrix', {
   enumerable: true,
@@ -1597,7 +1597,7 @@ Object.defineProperty(exports, 'Polygon', {
   }
 });
 
-var _Rectangle = __webpack_require__(34);
+var _Rectangle = __webpack_require__(35);
 
 Object.defineProperty(exports, 'Rectangle', {
   enumerable: true,
@@ -3196,7 +3196,7 @@ var _determineCrossOrigin = __webpack_require__(158);
 
 var _determineCrossOrigin2 = _interopRequireDefault(_determineCrossOrigin);
 
-var _bitTwiddle = __webpack_require__(27);
+var _bitTwiddle = __webpack_require__(28);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -5228,7 +5228,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _TextureTransform = __webpack_require__(40);
+var _TextureTransform = __webpack_require__(41);
 
 var _TextureTransform2 = _interopRequireDefault(_TextureTransform);
 
@@ -5601,7 +5601,7 @@ Mesh.DRAW_MODES = {
 /* eslint-disable no-undef */
 
 var Loader = __webpack_require__(211).default;
-var Resource = __webpack_require__(42).default;
+var Resource = __webpack_require__(43).default;
 var async = __webpack_require__(95);
 var b64 = __webpack_require__(96);
 
@@ -24246,6 +24246,158 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const WebFont = __webpack_require__(223);
+const PIXI = __webpack_require__(182);
+const common_1 = __webpack_require__(219);
+const io_1 = __webpack_require__(220);
+const string_1 = __webpack_require__(221);
+const attacher_1 = __webpack_require__(217);
+const KOMODI_STYLE = `
+.komodi-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(
+        0deg,
+        transparent 24%,
+        rgba(0, 0, 0, .15) 25%,
+        rgba(0, 0, 0, .15) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(0, 0, 0, .15) 75%,
+        rgba(0, 0, 0, .15) 76%,
+        transparent 77%, transparent
+    ), linear-gradient(
+        90deg,
+        transparent 24%,
+        rgba(0, 0, 0, .15) 25%,
+        rgba(0, 0, 0, .15) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(0, 0, 0, .15) 75%,
+        rgba(0, 0, 0, .15) 76%,
+        transparent 77%,
+        transparent
+    );
+    background-size:50px 50px;
+}`;
+class KomodiClass {
+    constructor() {
+        this.container = new PIXI.Container();
+        this.stage = new PIXI.Container();
+        this.fixed = new PIXI.Container();
+        this.background = new PIXI.Graphics();
+        this.attacher = new attacher_1.Attacher();
+        this.komodiDiv = document.createElement("div");
+        this.komodiDiv.classList.add("komodi-container");
+        this.container.interactive = true;
+        this.container.addChild(this.stage);
+        this.container.addChild(this.fixed);
+        this.container.addChild(this.background);
+        this.background.alpha = 0;
+        this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2 });
+    }
+    init() {
+        this.attacher.init();
+        let ifElse = new common_1.CmdIfElse();
+        ifElse.attachBlock({
+            attachType: "argument",
+            target: ifElse,
+            argumentName: "condition"
+        }, new string_1.ExpCompareString());
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "ifBranch",
+            scopeIndex: 0
+        }, new io_1.CmdPrintLine());
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "ifBranch",
+            scopeIndex: 1
+        }, new io_1.CmdPrintLine());
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "elseBranch",
+            scopeIndex: 0
+        }, new io_1.CmdPrintLine());
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "elseBranch",
+            scopeIndex: 1
+        }, new io_1.CmdPrintLine());
+        let cmd2 = new io_1.CmdPrintLine();
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "elseBranch",
+            scopeIndex: 2
+        }, cmd2);
+        cmd2.attachBlock({
+            attachType: "argument",
+            target: cmd2,
+            argumentName: "str"
+        }, new string_1.ExpConstantString());
+        ifElse.updateGraphic();
+        this.stage.addChild(ifElse.graphic);
+        ifElse.graphic.x = 300;
+        ifElse.graphic.y = 100;
+    }
+    initializeDOM(parent) {
+        let updatePosition = () => {
+            this.renderer.resize(parent.clientWidth, parent.clientHeight);
+            this.background.clear();
+            this.background.drawRect(0, 0, parent.clientWidth, parent.clientHeight);
+        };
+        this.renderer.autoResize = true;
+        this.komodiDiv.appendChild(this.renderer.view);
+        parent.appendChild(this.komodiDiv);
+        window.addEventListener('resize', updatePosition, true);
+        updatePosition();
+        let styleNode = document.createElement("style");
+        styleNode.type = 'text/css';
+        styleNode.appendChild(document.createTextNode(KOMODI_STYLE));
+        document.head.appendChild(styleNode);
+    }
+    start() {
+        let update = () => {
+            this.renderer.render(this.container);
+        };
+        WebFont.load({
+            custom: {
+                families: ['FontAwesome'],
+                testStrings: {
+                    'FontAwesome': '\uF13b'
+                },
+            },
+            active: function () {
+                function loop() {
+                    requestAnimationFrame(loop);
+                    update();
+                }
+                loop();
+            },
+            inactive: function () {
+                alert("Komodi initialization failed");
+            },
+        });
+    }
+}
+exports.Komodi = new KomodiClass();
+exports.Komodi.init();
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /**
  * Bit twiddling hacks for JavaScript.
  *
@@ -24453,7 +24605,7 @@ exports.nextCombination = function(v) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -24599,7 +24751,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 
@@ -24651,7 +24803,7 @@ module.exports = mapSize;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24999,7 +25151,7 @@ exports.default = Bounds;
 //# sourceMappingURL=Bounds.js.map
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25091,7 +25243,7 @@ TransformBase.IDENTITY = new TransformBase();
 //# sourceMappingURL=TransformBase.js.map
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25101,7 +25253,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Point = __webpack_require__(33);
+var _Point = __webpack_require__(34);
 
 var _Point2 = _interopRequireDefault(_Point);
 
@@ -25627,7 +25779,7 @@ exports.default = Matrix;
 //# sourceMappingURL=Matrix.js.map
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25723,7 +25875,7 @@ exports.default = Point;
 //# sourceMappingURL=Point.js.map
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25991,7 +26143,7 @@ exports.default = Rectangle;
 //# sourceMappingURL=Rectangle.js.map
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26619,7 +26771,7 @@ exports.default = Sprite;
 //# sourceMappingURL=Sprite.js.map
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26875,7 +27027,7 @@ exports.default = CanvasTinter;
 //# sourceMappingURL=CanvasTinter.js.map
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27031,7 +27183,7 @@ exports.default = RenderTexture;
 //# sourceMappingURL=RenderTexture.js.map
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27116,7 +27268,7 @@ exports.Ticker = _Ticker2.default;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27155,7 +27307,7 @@ function createIndicesForQuads(size) {
 //# sourceMappingURL=createIndicesForQuads.js.map
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27165,7 +27317,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Matrix = __webpack_require__(32);
+var _Matrix = __webpack_require__(33);
 
 var _Matrix2 = _interopRequireDefault(_Matrix);
 
@@ -27319,7 +27471,7 @@ exports.default = TextureTransform;
 //# sourceMappingURL=TextureTransform.js.map
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27812,7 +27964,7 @@ function findTextStyle(item, queue) {
 //# sourceMappingURL=BasePrepare.js.map
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28973,13 +29125,14 @@ function reqType(xhr) {
 //# sourceMappingURL=Resource.js.map
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(21);
+const global_1 = __webpack_require__(27);
 let labelPool = [];
 function getLabel(text) {
     if (labelPool.length == 0) {
@@ -28997,18 +29150,31 @@ function releaseLabel(label) {
 }
 exports.releaseLabel = releaseLabel;
 class BlockGraphic extends PIXI.Container {
-    constructor(nodeDrawer, scopeDrawer) {
+    constructor(logic, nodeDrawer, scopeDrawer) {
         super();
+        this.logic = logic;
         this.nodeDrawer = nodeDrawer;
         this.scopeDrawer = scopeDrawer;
         this.graphics = new PIXI.Graphics();
         this.assignedLabels = [];
         this.addChild(this.graphics);
+        this.interactive = true;
+        this.on('mousedown', (e) => {
+            if (e.target == this) {
+                let position = this.getGlobalPosition();
+                if (this.logic.attachInfo != null) {
+                    this.logic.attachInfo.target.detachBlock(this.logic);
+                }
+                global_1.Komodi.stage.addChild(this);
+                this.position = global_1.Komodi.stage.toLocal(position);
+                global_1.Komodi.attacher.setDragging(this.logic);
+            }
+        });
     }
-    update(definition, getArgumentGraphics, getScopeGraphics) {
+    update(getArgumentGraphics, getScopeGraphics) {
         this.graphics.clear();
-        this.scopeDrawer.drawScope(definition, this, getScopeGraphics);
-        this.nodeDrawer.drawNode(definition, this, getArgumentGraphics);
+        this.scopeDrawer.drawScope(this.logic, getScopeGraphics);
+        this.nodeDrawer.drawNode(this.logic, getArgumentGraphics);
     }
     assignLabel(text) {
         let label = getLabel(text);
@@ -29058,18 +29224,19 @@ exports.ExpressionToken = ExpressionToken;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(21);
-const index_1 = __webpack_require__(43);
+const index_1 = __webpack_require__(44);
 const type_1 = __webpack_require__(97);
-const definition_parser_1 = __webpack_require__(216);
-const node_drawer_1 = __webpack_require__(214);
-const scope_drawer_1 = __webpack_require__(215);
+const definition_parser_1 = __webpack_require__(218);
+const node_drawer_1 = __webpack_require__(215);
+const scope_drawer_1 = __webpack_require__(216);
+const global_1 = __webpack_require__(27);
 class Program {
     constructor(freeBlocks) {
         this.freeBlocks = freeBlocks;
@@ -29103,6 +29270,7 @@ class Block {
     constructor(definition) {
         this.definition = definition;
         this.attachInfo = null;
+        global_1.Komodi.attacher.registerBlock(this);
         this.initGraphic();
     }
     initFinished() {
@@ -29184,15 +29352,20 @@ class Block {
                 break;
         }
         this.graphic.removeChild(block.graphic);
+        this.updateGraphic();
     }
     updateGraphic() {
         let now = this;
         while (true) {
-            now.graphic.update(now.definition, argumentGraphicsGenerator(now), scopeGraphicsGenerator(now));
+            now.graphic.update(argumentGraphicsGenerator(now), scopeGraphicsGenerator(now));
             if (now.attachInfo == null)
                 break;
             now = now.attachInfo.target;
         }
+    }
+    destroy() {
+        this.graphic.destroy();
+        global_1.Komodi.attacher.removeBlock(this);
     }
 }
 exports.Block = Block;
@@ -29204,7 +29377,7 @@ class Expression extends Block {
         super(def);
     }
     initGraphic() {
-        this._graphic = new index_1.BlockGraphic(node_drawer_1.functionNodeDrawer, scope_drawer_1.lineScopeDrawer);
+        this._graphic = new index_1.BlockGraphic(this, node_drawer_1.functionNodeDrawer, scope_drawer_1.lineScopeDrawer);
     }
 }
 exports.Expression = Expression;
@@ -29216,7 +29389,7 @@ class Command extends Block {
         super(def);
     }
     initGraphic() {
-        this._graphic = new index_1.BlockGraphic(node_drawer_1.commandNodeDrawer, scope_drawer_1.boxScopeDrawer);
+        this._graphic = new index_1.BlockGraphic(this, node_drawer_1.commandNodeDrawer, scope_drawer_1.boxScopeDrawer);
     }
 }
 exports.Command = Command;
@@ -29228,7 +29401,7 @@ class Signal extends Block {
         super(def);
     }
     initGraphic() {
-        this._graphic = new index_1.BlockGraphic(node_drawer_1.signalNodeDrawer, scope_drawer_1.lineScopeDrawer);
+        this._graphic = new index_1.BlockGraphic(this, node_drawer_1.signalNodeDrawer, scope_drawer_1.lineScopeDrawer);
     }
 }
 exports.Signal = Signal;
@@ -29245,7 +29418,6 @@ function scopeGraphicsGenerator(block) {
     return function* () {
         for (let scopeName of block.definition.scopeNames) {
             let scopeBlocks = block.getScope(scopeName);
-            debugger;
             yield (function* () {
                 for (let block of scopeBlocks) {
                     yield block.graphic;
@@ -29255,149 +29427,6 @@ function scopeGraphicsGenerator(block) {
     };
 }
 exports.scopeGraphicsGenerator = scopeGraphicsGenerator;
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const WebFont = __webpack_require__(222);
-const PIXI = __webpack_require__(182);
-const common_1 = __webpack_require__(217);
-const io_1 = __webpack_require__(218);
-const string_1 = __webpack_require__(219);
-const KOMODI_STYLE = `
-.komodi-container {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(
-        0deg,
-        transparent 24%,
-        rgba(0, 0, 0, .15) 25%,
-        rgba(0, 0, 0, .15) 26%,
-        transparent 27%,
-        transparent 74%,
-        rgba(0, 0, 0, .15) 75%,
-        rgba(0, 0, 0, .15) 76%,
-        transparent 77%, transparent
-    ), linear-gradient(
-        90deg,
-        transparent 24%,
-        rgba(0, 0, 0, .15) 25%,
-        rgba(0, 0, 0, .15) 26%,
-        transparent 27%,
-        transparent 74%,
-        rgba(0, 0, 0, .15) 75%,
-        rgba(0, 0, 0, .15) 76%,
-        transparent 77%,
-        transparent
-    );
-    background-size:50px 50px;
-}`;
-class KomodiClass {
-    constructor() {
-        this.komodiDiv = document.createElement("div");
-        this.komodiDiv.classList.add("komodi-container");
-        this.container = new PIXI.Container();
-        this.stage = new PIXI.Container();
-        this.fixed = new PIXI.Container();
-        this.fixed.interactive = true;
-        this.container.addChild(this.stage);
-        this.container.addChild(this.fixed);
-        {
-            let ifElse = new common_1.CmdIfElse();
-            ifElse.attachBlock({
-                attachType: "argument",
-                target: ifElse,
-                argumentName: "condition"
-            }, new string_1.ExpCompareString());
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "ifBranch",
-                scopeIndex: 0
-            }, new io_1.CmdPrintLine());
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "ifBranch",
-                scopeIndex: 1
-            }, new io_1.CmdPrintLine());
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "elseBranch",
-                scopeIndex: 0
-            }, new io_1.CmdPrintLine());
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "elseBranch",
-                scopeIndex: 1
-            }, new io_1.CmdPrintLine());
-            let cmd2 = new io_1.CmdPrintLine();
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "elseBranch",
-                scopeIndex: 2
-            }, cmd2);
-            cmd2.attachBlock({
-                attachType: "argument",
-                target: cmd2,
-                argumentName: "str"
-            }, new string_1.ExpConstantString());
-            ifElse.updateGraphic();
-            this.stage.addChild(ifElse.graphic);
-            ifElse.graphic.x = 300;
-            ifElse.graphic.y = 100;
-        }
-        this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2 });
-    }
-    initializeDOM(parent) {
-        let updatePosition = () => {
-            this.renderer.resize(parent.clientWidth, parent.clientHeight);
-        };
-        this.renderer.autoResize = true;
-        this.komodiDiv.appendChild(this.renderer.view);
-        parent.appendChild(this.komodiDiv);
-        window.addEventListener('resize', updatePosition, true);
-        updatePosition();
-        let styleNode = document.createElement("style");
-        styleNode.type = 'text/css';
-        styleNode.appendChild(document.createTextNode(KOMODI_STYLE));
-        document.head.appendChild(styleNode);
-    }
-    start() {
-        let update = () => {
-            this.renderer.render(this.container);
-        };
-        WebFont.load({
-            custom: {
-                families: ['FontAwesome'],
-                testStrings: {
-                    'FontAwesome': '\uF13b'
-                },
-            },
-            active: function () {
-                function loop() {
-                    requestAnimationFrame(loop);
-                    update();
-                }
-                loop();
-            },
-            inactive: function () {
-                alert("Komodi initialization failed");
-            },
-        });
-    }
-}
-exports.Komodi = new KomodiClass();
 
 
 /***/ }),
@@ -30961,7 +30990,7 @@ module.exports = defaultValue;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var mapType = __webpack_require__(29);
+var mapType = __webpack_require__(30);
 var mapSize = __webpack_require__(58);
 
 /**
@@ -31007,7 +31036,7 @@ module.exports = extractAttributes;
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapType = __webpack_require__(29);
+var mapType = __webpack_require__(30);
 var defaultValue = __webpack_require__(54);
 
 /**
@@ -31337,7 +31366,7 @@ var _Container = __webpack_require__(16);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _ticker = __webpack_require__(38);
+var _ticker = __webpack_require__(39);
 
 var _settings = __webpack_require__(3);
 
@@ -31651,7 +31680,7 @@ var _Transform = __webpack_require__(64);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Bounds = __webpack_require__(30);
+var _Bounds = __webpack_require__(31);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
@@ -32332,7 +32361,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _math = __webpack_require__(4);
 
-var _TransformBase2 = __webpack_require__(31);
+var _TransformBase2 = __webpack_require__(32);
 
 var _TransformBase3 = _interopRequireDefault(_TransformBase2);
 
@@ -32518,7 +32547,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _math = __webpack_require__(4);
 
-var _TransformBase2 = __webpack_require__(31);
+var _TransformBase2 = __webpack_require__(32);
 
 var _TransformBase3 = _interopRequireDefault(_TransformBase2);
 
@@ -32856,7 +32885,7 @@ exports.default = GraphicsData;
 
 exports.__esModule = true;
 
-var _Matrix = __webpack_require__(32);
+var _Matrix = __webpack_require__(33);
 
 var _Matrix2 = _interopRequireDefault(_Matrix);
 
@@ -33191,7 +33220,7 @@ var _Container = __webpack_require__(16);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _RenderTexture = __webpack_require__(37);
+var _RenderTexture = __webpack_require__(38);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
@@ -34020,7 +34049,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _createIndicesForQuads = __webpack_require__(39);
+var _createIndicesForQuads = __webpack_require__(40);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -35580,7 +35609,7 @@ var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
 var _utils = __webpack_require__(2);
 
-var _ticker = __webpack_require__(38);
+var _ticker = __webpack_require__(39);
 
 var _const = __webpack_require__(0);
 
@@ -35912,7 +35941,7 @@ Object.defineProperty(exports, 'AnimatedSprite', {
   }
 });
 
-var _TextureTransform = __webpack_require__(40);
+var _TextureTransform = __webpack_require__(41);
 
 Object.defineProperty(exports, 'TextureTransform', {
   enumerable: true,
@@ -37798,7 +37827,7 @@ exports.typeToColor = typeToColor;
 
 
 var punycode = __webpack_require__(206);
-var util = __webpack_require__(221);
+var util = __webpack_require__(222);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -46929,7 +46958,7 @@ module.exports = {
     generateUniformAccessObject: __webpack_require__(57),
     setPrecision: __webpack_require__(59),
     mapSize: __webpack_require__(58),
-    mapType: __webpack_require__(29)
+    mapType: __webpack_require__(30)
 };
 
 /***/ }),
@@ -46945,7 +46974,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _ismobilejs = __webpack_require__(28);
+var _ismobilejs = __webpack_require__(29);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
@@ -47474,7 +47503,7 @@ var _Container2 = __webpack_require__(16);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
-var _RenderTexture = __webpack_require__(37);
+var _RenderTexture = __webpack_require__(38);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
@@ -47486,7 +47515,7 @@ var _GraphicsData = __webpack_require__(66);
 
 var _GraphicsData2 = _interopRequireDefault(_GraphicsData);
 
-var _Sprite = __webpack_require__(35);
+var _Sprite = __webpack_require__(36);
 
 var _Sprite2 = _interopRequireDefault(_Sprite);
 
@@ -47496,7 +47525,7 @@ var _utils = __webpack_require__(2);
 
 var _const = __webpack_require__(0);
 
-var _Bounds = __webpack_require__(30);
+var _Bounds = __webpack_require__(31);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
@@ -49875,7 +49904,7 @@ function quadraticBezierCurve(fromX, fromY, cpX, cpY, toX, toY) {
 
 exports.__esModule = true;
 
-var _Rectangle = __webpack_require__(34);
+var _Rectangle = __webpack_require__(35);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
 
@@ -49994,7 +50023,7 @@ exports.default = Circle;
 
 exports.__esModule = true;
 
-var _Rectangle = __webpack_require__(34);
+var _Rectangle = __webpack_require__(35);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
 
@@ -50121,7 +50150,7 @@ exports.default = Ellipse;
 
 exports.__esModule = true;
 
-var _Point = __webpack_require__(33);
+var _Point = __webpack_require__(34);
 
 var _Point2 = _interopRequireDefault(_Point);
 
@@ -51470,7 +51499,7 @@ var _filterTransforms = __webpack_require__(141);
 
 var filterTransforms = _interopRequireWildcard(_filterTransforms);
 
-var _bitTwiddle = __webpack_require__(27);
+var _bitTwiddle = __webpack_require__(28);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -52620,7 +52649,7 @@ var _const = __webpack_require__(0);
 
 var _math = __webpack_require__(4);
 
-var _CanvasTinter = __webpack_require__(36);
+var _CanvasTinter = __webpack_require__(37);
 
 var _CanvasTinter2 = _interopRequireDefault(_CanvasTinter);
 
@@ -52836,7 +52865,7 @@ var _WebGLRenderer = __webpack_require__(23);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
-var _createIndicesForQuads = __webpack_require__(39);
+var _createIndicesForQuads = __webpack_require__(40);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -52862,7 +52891,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _bitTwiddle = __webpack_require__(27);
+var _bitTwiddle = __webpack_require__(28);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -53445,7 +53474,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Sprite2 = __webpack_require__(35);
+var _Sprite2 = __webpack_require__(36);
 
 var _Sprite3 = _interopRequireDefault(_Sprite2);
 
@@ -55156,7 +55185,7 @@ function mapPremultipliedBlendModes() {
 exports.__esModule = true;
 exports.default = maxRecommendedTextures;
 
-var _ismobilejs = __webpack_require__(28);
+var _ismobilejs = __webpack_require__(29);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
@@ -57958,11 +57987,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _CanvasTinter = __webpack_require__(36);
+var _CanvasTinter = __webpack_require__(37);
 
 var _CanvasTinter2 = _interopRequireDefault(_CanvasTinter);
 
-var _TextureTransform = __webpack_require__(40);
+var _TextureTransform = __webpack_require__(41);
 
 var _TextureTransform2 = _interopRequireDefault(_TextureTransform);
 
@@ -64018,7 +64047,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _createIndicesForQuads = __webpack_require__(39);
+var _createIndicesForQuads = __webpack_require__(40);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -64949,7 +64978,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BasePrepare2 = __webpack_require__(41);
+var _BasePrepare2 = __webpack_require__(42);
 
 var _BasePrepare3 = _interopRequireDefault(_BasePrepare2);
 
@@ -65088,7 +65117,7 @@ Object.defineProperty(exports, 'canvas', {
   }
 });
 
-var _BasePrepare = __webpack_require__(41);
+var _BasePrepare = __webpack_require__(42);
 
 Object.defineProperty(exports, 'BasePrepare', {
   enumerable: true,
@@ -65194,7 +65223,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BasePrepare2 = __webpack_require__(41);
+var _BasePrepare2 = __webpack_require__(42);
 
 var _BasePrepare3 = _interopRequireDefault(_BasePrepare2);
 
@@ -66289,7 +66318,7 @@ var _async = __webpack_require__(95);
 
 var async = _interopRequireWildcard(_async);
 
-var _Resource = __webpack_require__(42);
+var _Resource = __webpack_require__(43);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
@@ -66902,7 +66931,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.blobMiddlewareFactory = blobMiddlewareFactory;
 
-var _Resource = __webpack_require__(42);
+var _Resource = __webpack_require__(43);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
@@ -66988,402 +67017,8 @@ function blobMiddlewareFactory() {
 
 "use strict";
 
-const global_1 = __webpack_require__(45);
-module.exports = {
-    initializeDOM: global_1.Komodi.initializeDOM.bind(global_1.Komodi),
-    start: global_1.Komodi.start.bind(global_1.Komodi),
-};
-
-
-/***/ }),
-/* 214 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(21);
-const index_1 = __webpack_require__(43);
-const type_1 = __webpack_require__(97);
-const utils_1 = __webpack_require__(220);
-const MINIMUM_ARG_WIDTH = 26;
-const PADDING = 5;
-const ROUNDED_RADIUS = 7;
-const BLOCK_HEIGHT = 33;
-const TIP_WIDTH = 12;
-const TIP_HEIGHT = 9;
-const CURVE_HEIGHT = 6;
-const SIGNAL_GAP = 4;
-const SIGNAL_LINE = 4;
-function defaultDrawNode(definition, target, getArgumentGraphics, bottom, bottomOutline) {
-    const top = bottom - BLOCK_HEIGHT;
-    target.graphics.lineStyle(1, 0);
-    let tokenStrings = _.map(definition.tokens, (token) => {
-        switch (token.kind) {
-            case "placeholder":
-                return token.text;
-            case "user_input":
-                return token.identifier;
-            case "expression":
-                return token.identifier;
-        }
-    });
-    target.releaseLabels();
-    let labels = _.map(tokenStrings, (str) => target.assignLabel(str));
-    let cnt = 0;
-    let tokenToWidth = (token, index) => {
-        if (index == undefined) {
-            index = cnt++;
-        }
-        switch (token.kind) {
-            case "placeholder":
-                return labels[index].width + PADDING;
-            case "user_input":
-                return labels[index].width + PADDING * 2;
-            case "expression":
-                let child = argumentIterator.next().value;
-                let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
-                return Math.max(labels[index].width + PADDING * 2, childWidth);
-        }
-    };
-    let argumentIterator = getArgumentGraphics();
-    let widthSum = _.sumBy(definition.tokens, tokenToWidth) + PADDING * 2;
-    argumentIterator = getArgumentGraphics();
-    let nowX = -widthSum * .5 + PADDING;
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        utils_1.centerChild(labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
-        nowX += width;
-    });
-    cnt = 0;
-    argumentIterator = getArgumentGraphics();
-    nowX = -widthSum * .5 + PADDING;
-    let outlinePath = [-widthSum * .5, top];
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        switch (token.kind) {
-            case "expression":
-                outlinePath.push(nowX + width * .5 - TIP_WIDTH * .5, top, nowX + width * .5, top + TIP_HEIGHT, nowX + width * .5 + TIP_WIDTH * .5, top);
-        }
-        nowX += width;
-    });
-    outlinePath.push(widthSum * .5, top);
-    outlinePath = outlinePath.concat(bottomOutline(widthSum));
-    outlinePath.push(-widthSum * .5, top);
-    target.graphics.beginFill(type_1.typeToColor(definition.returnType));
-    target.graphics.drawPolygon(outlinePath);
-    target.hitArea = new PIXI.Polygon(outlinePath);
-    argumentIterator = getArgumentGraphics();
-    let secondIterator = getArgumentGraphics();
-    nowX = -widthSum * .5 + PADDING;
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        switch (token.kind) {
-            case "user_input":
-                target.graphics.beginFill(type_1.typeToColor(token.type));
-                target.graphics.drawRoundedRect(nowX, top + PADDING, width, BLOCK_HEIGHT - 2 * PADDING, ROUNDED_RADIUS);
-                break;
-            case "expression":
-                let graphic = secondIterator.next().value;
-                target.graphics.beginFill(type_1.typeToColor(token.type));
-                target.graphics.drawPolygon([
-                    nowX, top,
-                    nowX + width * .5 - TIP_WIDTH * .5, top,
-                    nowX + width * .5, top + TIP_HEIGHT,
-                    nowX + width * .5 + TIP_WIDTH * .5, top,
-                    nowX + width, top,
-                    nowX + width, bottom - PADDING,
-                    nowX, bottom - PADDING,
-                    nowX, top,
-                ]);
-                if (graphic) {
-                    graphic.x = nowX + width * .5;
-                    graphic.y = top + TIP_HEIGHT;
-                }
-                break;
-        }
-        nowX += width;
-    });
-    return widthSum;
-}
-class FunctionNodeDrawer extends index_1.NodeDrawer {
-    drawNode(definition, target, getArgumentGraphics) {
-        defaultDrawNode(definition, target, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
-            widthSum * .5, -TIP_HEIGHT,
-            TIP_WIDTH * .5, -TIP_HEIGHT,
-            0, 0,
-            -TIP_WIDTH * .5, -TIP_HEIGHT,
-            -widthSum * .5, -TIP_HEIGHT,
-        ]);
-    }
-}
-exports.functionNodeDrawer = new FunctionNodeDrawer();
-class CommandNodeDrawer extends index_1.NodeDrawer {
-    drawNode(definition, target, getArgumentGraphics) {
-        defaultDrawNode(definition, target, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
-            let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
-                return [widthSum * .5 - num * widthSum, -CURVE_HEIGHT + Math.sin(num * Math.PI) * CURVE_HEIGHT];
-            }).value();
-            ret.push(-widthSum * .5, -CURVE_HEIGHT);
-            return ret;
-        });
-    }
-}
-exports.commandNodeDrawer = new CommandNodeDrawer();
-class SignalNodeDrawer extends index_1.NodeDrawer {
-    drawNode(definition, target, getArgumentGraphics) {
-        let widthSum = defaultDrawNode(definition, target, getArgumentGraphics, -SIGNAL_GAP - SIGNAL_LINE, (widthSum) => [
-            widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
-            -widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
-        ]);
-        target.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
-    }
-}
-exports.signalNodeDrawer = new SignalNodeDrawer();
-
-
-/***/ }),
-/* 215 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(21);
-const index_1 = __webpack_require__(43);
-const FLOW_VERTICAL_MARGIN = 20;
-const SPLIT_VERTICAL_MARGIN = 15;
-const SPLIT_HORIZONTAL_MARGIN = 40;
-const OUTLINE_PADDING = 6;
-function defaultDrawScope(definition, target, getScopeGraphics) {
-    target.graphics.lineStyle(3, 0);
-    let widthList = Array.from(function* () {
-        for (let scopeGraphics of getScopeGraphics()) {
-            let width = 0;
-            for (let graphic of scopeGraphics) {
-                width = Math.max(width, graphic.width);
-            }
-            yield width;
-        }
-    }());
-    let widthSum = _.sum(widthList) + SPLIT_HORIZONTAL_MARGIN * (widthList.length - 1);
-    if (definition.scopeNames.length == 1) {
-        target.graphics.moveTo(0, 0);
-        target.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
-        let nowY = FLOW_VERTICAL_MARGIN;
-        for (let scope of getScopeGraphics()) {
-            for (let block of scope) {
-                let rect = block.getLocalBounds();
-                block.x = 0;
-                block.y = nowY + (-rect.top);
-                target.graphics.moveTo(0, nowY);
-                target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
-                nowY += rect.height + FLOW_VERTICAL_MARGIN;
-            }
-        }
-        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
-    }
-    else if (definition.scopeNames.length >= 2) {
-        target.graphics.moveTo(0, 0);
-        target.graphics.lineTo(0, SPLIT_VERTICAL_MARGIN);
-        let endOffset = [];
-        let nowX = -widthSum * .5;
-        let scopeIterator = getScopeGraphics();
-        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
-            let currentScope = scopeIterator.next().value;
-            nowX += widthList[scopeIndex] * .5;
-            let nowY = SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN;
-            target.graphics.moveTo(0, SPLIT_VERTICAL_MARGIN);
-            target.graphics.lineTo(nowX, SPLIT_VERTICAL_MARGIN);
-            target.graphics.moveTo(nowX, SPLIT_VERTICAL_MARGIN);
-            target.graphics.lineTo(nowX, nowY);
-            for (let block of currentScope) {
-                let rect = block.getLocalBounds();
-                block.x = nowX;
-                block.y = nowY + (-rect.top);
-                target.graphics.moveTo(nowX, nowY);
-                target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
-                nowY += rect.height + FLOW_VERTICAL_MARGIN;
-            }
-            endOffset.push({
-                x: nowX,
-                y: nowY,
-            });
-            nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
-        }
-        let maxY = _(endOffset).map((coord) => coord.y).max();
-        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
-            const offset = endOffset[scopeIndex];
-            target.graphics.moveTo(offset.x, offset.y);
-            target.graphics.lineTo(offset.x, maxY);
-            target.graphics.moveTo(offset.x, maxY);
-            target.graphics.lineTo(0, maxY);
-        }
-        target.graphics.moveTo(0, maxY);
-        target.graphics.lineTo(0, maxY + SPLIT_VERTICAL_MARGIN);
-        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, maxY + SPLIT_VERTICAL_MARGIN);
-    }
-    else {
-        return new PIXI.Rectangle();
-    }
-}
-class LineScopeDrawer extends index_1.ScopeDrawer {
-    drawScope(definition, target, getScopeGraphics) {
-        defaultDrawScope(definition, target, getScopeGraphics);
-    }
-}
-exports.lineScopeDrawer = new LineScopeDrawer();
-class BoxScopeDrawer extends index_1.ScopeDrawer {
-    drawScope(definition, target, getScopeGraphics) {
-        let rect = defaultDrawScope(definition, target, getScopeGraphics);
-        target.graphics.lineStyle(1, 0x9E9E9E);
-        target.graphics.drawRect(rect.x - OUTLINE_PADDING, rect.y, rect.width + OUTLINE_PADDING * 2, rect.height);
-    }
-}
-exports.boxScopeDrawer = new BoxScopeDrawer();
-
-
-/***/ }),
-/* 216 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const peg = __webpack_require__(111);
-const PARSER_DEFINITION = `
-start = tokens: token+ returnType:(":" t:type { return t; })? {
-    return {
-        tokens: tokens,
-        returnType: returnType
-    };
-}
-
-SPACE = " "*
-PLACEHOLDER = $[^:\\[\\]\\{\\}]+
-IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
-
-type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
-
-token
-    = str: PLACEHOLDER
-        { return {tokenType: "placeholder", value: str}; }
-    / "[" identifier:IDENTIFIER ":" type: type "]"
-        { return {tokenType: "expression", identifier: identifier, type: type}; }
-    / "{" identifier:IDENTIFIER ":" type: type "}"
-        { return {tokenType: "user_input", identifier: identifier, type: type}; }
-`;
-exports.blockDefinitionParser = peg.generate(PARSER_DEFINITION);
-
-
-/***/ }),
-/* 217 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(44);
-class CmdIfElse extends index_1.Command {
-    constructor() {
-        super({
-            id: CmdIfElse.name, definition: "if [condition: bool]", scopeNames: ["ifBranch", "elseBranch"]
-        });
-        this.condition = null;
-        this.ifBranch = [];
-        this.elseBranch = [];
-    }
-}
-exports.CmdIfElse = CmdIfElse;
-class SignalStart extends index_1.Signal {
-    constructor() {
-        super({
-            id: SignalStart.name, definition: "start", scopeNames: ["body"]
-        });
-        this.body = [];
-    }
-}
-exports.SignalStart = SignalStart;
-
-
-/***/ }),
-/* 218 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(44);
-class ExpReadLine extends index_1.Expression {
-    constructor() {
-        super({
-            id: ExpReadLine.name, definition: "read line: string"
-        });
-        this.initFinished();
-    }
-}
-exports.ExpReadLine = ExpReadLine;
-class CmdPrintLine extends index_1.Command {
-    constructor() {
-        super({
-            id: CmdPrintLine.name, definition: "print line [str: string]", scopeNames: []
-        });
-        this.str = null;
-        this.initFinished();
-    }
-}
-exports.CmdPrintLine = CmdPrintLine;
-
-
-/***/ }),
-/* 219 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(44);
-class ExpConstantString extends index_1.Expression {
-    constructor() {
-        super({
-            id: ExpConstantString.name, definition: "{str: string}: string"
-        });
-        this.initFinished();
-    }
-}
-exports.ExpConstantString = ExpConstantString;
-class ExpConcatString extends index_1.Expression {
-    constructor() {
-        super({
-            id: ExpConcatString.name, definition: "concat [str1: string] + [str2: string]: string"
-        });
-        this.str1 = null;
-        this.str2 = null;
-        this.initFinished();
-    }
-}
-exports.ExpConcatString = ExpConcatString;
-class ExpCompareString extends index_1.Expression {
-    constructor() {
-        super({
-            id: ExpCompareString.name, definition: "is same [str1: string], [str2: string]: bool"
-        });
-        this.str1 = null;
-        this.str2 = null;
-        this.initFinished();
-    }
-}
-exports.ExpCompareString = ExpCompareString;
-
-
-/***/ }),
-/* 220 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const global_1 = __webpack_require__(45);
+const global_1 = __webpack_require__(27);
 function hitTestRectangle(obj1, obj2) {
     let bound1 = obj1.getBounds();
     let bound2 = obj2.getBounds();
@@ -67433,7 +67068,546 @@ exports.generateToken = generateToken;
 
 
 /***/ }),
+/* 214 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+const global_1 = __webpack_require__(27);
+module.exports = {
+    initializeDOM: global_1.Komodi.initializeDOM.bind(global_1.Komodi),
+    start: global_1.Komodi.start.bind(global_1.Komodi),
+};
+
+
+/***/ }),
+/* 215 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(21);
+const index_1 = __webpack_require__(44);
+const type_1 = __webpack_require__(97);
+const utils_1 = __webpack_require__(213);
+const global_1 = __webpack_require__(27);
+const MINIMUM_ARG_WIDTH = 26;
+const PADDING = 5;
+const ROUNDED_RADIUS = 7;
+const BLOCK_HEIGHT = 33;
+const TIP_WIDTH = 12;
+const TIP_HEIGHT = 9;
+const CURVE_HEIGHT = 6;
+const SIGNAL_GAP = 4;
+const SIGNAL_LINE = 4;
+function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
+    const top = bottom - BLOCK_HEIGHT;
+    let definition = block.definition;
+    let target = block.graphic;
+    target.graphics.lineStyle(1, 0);
+    let tokenStrings = _.map(definition.tokens, (token) => {
+        switch (token.kind) {
+            case "placeholder":
+                return token.text;
+            case "user_input":
+                return token.identifier;
+            case "expression":
+                return token.identifier;
+        }
+    });
+    target.releaseLabels();
+    let labels = _.map(tokenStrings, (str) => target.assignLabel(str));
+    let argumentGraphics = Array.from(getArgumentGraphics());
+    let expressionCnt = 0;
+    let graphicsIndex = definition.tokens.map((token) => token.kind == "expression" ? expressionCnt++ : null);
+    let tokenToWidth = (token, index) => {
+        switch (token.kind) {
+            case "placeholder":
+                return labels[index].width + PADDING;
+            case "user_input":
+                return labels[index].width + PADDING * 2;
+            case "expression":
+                let child = argumentGraphics[graphicsIndex[index]];
+                let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
+                return Math.max(labels[index].width + PADDING * 2, childWidth);
+        }
+    };
+    let widthSum = PADDING * 2 + _.sum(definition.tokens.map((token, i) => tokenToWidth(token, i)));
+    let nowX = -widthSum * .5 + PADDING;
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        utils_1.centerChild(labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+        nowX += width;
+    });
+    nowX = -widthSum * .5 + PADDING;
+    let outlinePath = [-widthSum * .5, top];
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        switch (token.kind) {
+            case "expression":
+                outlinePath.push(nowX + width * .5 - TIP_WIDTH * .5, top, nowX + width * .5, top + TIP_HEIGHT, nowX + width * .5 + TIP_WIDTH * .5, top);
+        }
+        nowX += width;
+    });
+    outlinePath.push(widthSum * .5, top);
+    outlinePath = outlinePath.concat(bottomOutline(widthSum));
+    outlinePath.push(-widthSum * .5, top);
+    target.graphics.beginFill(type_1.typeToColor(definition.returnType));
+    target.graphics.drawPolygon(outlinePath);
+    target.hitArea = new PIXI.Polygon(outlinePath);
+    let secondIterator = getArgumentGraphics();
+    nowX = -widthSum * .5 + PADDING;
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        switch (token.kind) {
+            case "user_input":
+                target.graphics.beginFill(type_1.typeToColor(token.type));
+                target.graphics.drawRoundedRect(nowX, top + PADDING, width, BLOCK_HEIGHT - 2 * PADDING, ROUNDED_RADIUS);
+                break;
+            case "expression":
+                let graphic = secondIterator.next().value;
+                target.graphics.beginFill(type_1.typeToColor(token.type));
+                target.graphics.drawPolygon([
+                    nowX, top,
+                    nowX + width * .5 - TIP_WIDTH * .5, top,
+                    nowX + width * .5, top + TIP_HEIGHT,
+                    nowX + width * .5 + TIP_WIDTH * .5, top,
+                    nowX + width, top,
+                    nowX + width, bottom - PADDING,
+                    nowX, bottom - PADDING,
+                    nowX, top,
+                ]);
+                if (graphic) {
+                    graphic.x = nowX + width * .5;
+                    graphic.y = top + TIP_HEIGHT;
+                    global_1.Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
+                }
+                else {
+                    global_1.Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
+                }
+                break;
+        }
+        nowX += width;
+    });
+    return widthSum;
+}
+class FunctionNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
+            widthSum * .5, -TIP_HEIGHT,
+            TIP_WIDTH * .5, -TIP_HEIGHT,
+            0, 0,
+            -TIP_WIDTH * .5, -TIP_HEIGHT,
+            -widthSum * .5, -TIP_HEIGHT,
+        ]);
+    }
+}
+exports.functionNodeDrawer = new FunctionNodeDrawer();
+class CommandNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
+            let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
+                return [widthSum * .5 - num * widthSum, -CURVE_HEIGHT + Math.sin(num * Math.PI) * CURVE_HEIGHT];
+            }).value();
+            ret.push(-widthSum * .5, -CURVE_HEIGHT);
+            return ret;
+        });
+    }
+}
+exports.commandNodeDrawer = new CommandNodeDrawer();
+class SignalNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        let widthSum = defaultDrawNode(block, getArgumentGraphics, -SIGNAL_GAP - SIGNAL_LINE, (widthSum) => [
+            widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
+            -widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
+        ]);
+        block.graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
+    }
+}
+exports.signalNodeDrawer = new SignalNodeDrawer();
+
+
+/***/ }),
+/* 216 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(21);
+const index_1 = __webpack_require__(44);
+const global_1 = __webpack_require__(27);
+const FLOW_VERTICAL_MARGIN = 20;
+const SPLIT_VERTICAL_MARGIN = 15;
+const SPLIT_HORIZONTAL_MARGIN = 40;
+const OUTLINE_PADDING = 6;
+function defaultDrawScope(block, getScopeGraphics) {
+    let definition = block.definition;
+    let target = block.graphic;
+    target.graphics.lineStyle(3, 0);
+    let widthList = Array.from(function* () {
+        for (let scopeGraphics of getScopeGraphics()) {
+            let width = 0;
+            for (let graphic of scopeGraphics) {
+                width = Math.max(width, graphic.width);
+            }
+            yield width;
+        }
+    }());
+    let widthSum = _.sum(widthList) + SPLIT_HORIZONTAL_MARGIN * (widthList.length - 1);
+    if (definition.scopeNames.length == 1) {
+        let attachPoints = [];
+        target.graphics.moveTo(0, 0);
+        target.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+        attachPoints.push({ x: 0, y: FLOW_VERTICAL_MARGIN * .5 });
+        let nowY = FLOW_VERTICAL_MARGIN;
+        for (let scope of getScopeGraphics()) {
+            for (let block of scope) {
+                let rect = block.getLocalBounds();
+                block.x = 0;
+                block.y = nowY + (-rect.top);
+                target.graphics.moveTo(0, nowY);
+                target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
+                attachPoints.push({ x: 0, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
+                nowY += rect.height + FLOW_VERTICAL_MARGIN;
+            }
+        }
+        global_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
+    }
+    else if (definition.scopeNames.length >= 2) {
+        target.graphics.moveTo(0, 0);
+        target.graphics.lineTo(0, SPLIT_VERTICAL_MARGIN);
+        let endOffset = [];
+        let nowX = -widthSum * .5;
+        let scopeIterator = getScopeGraphics();
+        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
+            let attachPoints = [];
+            let currentScope = scopeIterator.next().value;
+            nowX += widthList[scopeIndex] * .5;
+            let nowY = SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN;
+            target.graphics.moveTo(0, SPLIT_VERTICAL_MARGIN);
+            target.graphics.lineTo(nowX, SPLIT_VERTICAL_MARGIN);
+            target.graphics.moveTo(nowX, SPLIT_VERTICAL_MARGIN);
+            target.graphics.lineTo(nowX, nowY);
+            attachPoints.push({ x: nowX, y: SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN * .5 });
+            for (let block of currentScope) {
+                let rect = block.getLocalBounds();
+                block.x = nowX;
+                block.y = nowY + (-rect.top);
+                target.graphics.moveTo(nowX, nowY);
+                target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
+                attachPoints.push({ x: nowX, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
+                nowY += rect.height + FLOW_VERTICAL_MARGIN;
+            }
+            endOffset.push({
+                x: nowX,
+                y: nowY,
+            });
+            global_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
+        }
+        let maxY = _(endOffset).map((coord) => coord.y).max();
+        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
+            const offset = endOffset[scopeIndex];
+            target.graphics.moveTo(offset.x, offset.y);
+            target.graphics.lineTo(offset.x, maxY);
+            target.graphics.moveTo(offset.x, maxY);
+            target.graphics.lineTo(0, maxY);
+        }
+        target.graphics.moveTo(0, maxY);
+        target.graphics.lineTo(0, maxY + SPLIT_VERTICAL_MARGIN);
+        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, maxY + SPLIT_VERTICAL_MARGIN);
+    }
+    else {
+        return new PIXI.Rectangle();
+    }
+}
+class LineScopeDrawer extends index_1.ScopeDrawer {
+    drawScope(block, getScopeGraphics) {
+        defaultDrawScope(block, getScopeGraphics);
+    }
+}
+exports.lineScopeDrawer = new LineScopeDrawer();
+class BoxScopeDrawer extends index_1.ScopeDrawer {
+    drawScope(block, getScopeGraphics) {
+        let rect = defaultDrawScope(block, getScopeGraphics);
+        block.graphic.graphics.lineStyle(1, 0x9E9E9E);
+        block.graphic.graphics.drawRect(rect.x - OUTLINE_PADDING, rect.y, rect.width + OUTLINE_PADDING * 2, rect.height);
+    }
+}
+exports.boxScopeDrawer = new BoxScopeDrawer();
+
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(21);
+const utils_1 = __webpack_require__(213);
+const global_1 = __webpack_require__(27);
+class Attacher {
+    constructor() {
+        this.dragging = null;
+        this.mouseOffset = { x: 0, y: 0 };
+        this.map = new Map();
+    }
+    init() {
+        global_1.Komodi.container.on('mousemove', () => {
+            if (this.dragging != null) {
+                let mouse = utils_1.getMousePoint();
+                this.dragging.graphic.position = global_1.Komodi.stage.toLocal(new PIXI.Point(mouse.x - this.mouseOffset.x, mouse.y - this.mouseOffset.y));
+            }
+        });
+        global_1.Komodi.container.on('mouseup', () => {
+            if (this.dragging != null) {
+                let globalPosition = this.dragging.graphic.getGlobalPosition();
+                let attachInfo = this.getNearestAttachPoint(globalPosition.x, globalPosition.y);
+                if (attachInfo != null) {
+                    attachInfo.target.attachBlock(attachInfo, this.dragging);
+                }
+                this.dragging = null;
+            }
+        });
+    }
+    registerBlock(block) {
+        this.map.set(block, {
+            argumentAttach: new Map(),
+            scopeAttach: new Map(),
+        });
+    }
+    removeBlock(block) {
+        this.map.delete(block);
+    }
+    setArgumentCoordinate(block, argumentName, coord) {
+        let argumentAttach = this.map.get(block).argumentAttach;
+        if (argumentAttach.has(argumentName)) {
+            let targetCoord = argumentAttach.get(argumentName);
+            targetCoord.x = coord.x;
+            targetCoord.y = coord.y;
+        }
+        else {
+            argumentAttach.set(argumentName, {
+                attachType: "argument",
+                target: block,
+                argumentName: argumentName,
+                x: coord.x,
+                y: coord.y
+            });
+        }
+    }
+    removeArgumentCoordinate(block, argumentName) {
+        let argumentAttach = this.map.get(block).argumentAttach;
+        if (argumentAttach.has(argumentName)) {
+            this.map.get(block).argumentAttach.delete(argumentName);
+        }
+    }
+    setScopeCoordinate(block, scopeName, coordinates) {
+        let scopeAttach = this.map.get(block).scopeAttach;
+        if (!scopeAttach.has(scopeName)) {
+            scopeAttach.set(scopeName, []);
+        }
+        let scopeAttachArray = scopeAttach.get(scopeName);
+        let finishIndex = Math.min(scopeAttachArray.length, coordinates.length);
+        if (scopeAttachArray.length < coordinates.length) {
+            for (let i = scopeAttachArray.length; i < coordinates.length; i++) {
+                scopeAttachArray.push({
+                    attachType: "scope",
+                    target: block,
+                    scopeName: scopeName,
+                    scopeIndex: i,
+                    x: coordinates[i].x,
+                    y: coordinates[i].y
+                });
+            }
+        }
+        for (let i = 0; i < finishIndex; i++) {
+            scopeAttachArray[i].x = coordinates[i].x;
+            scopeAttachArray[i].y = coordinates[i].y;
+        }
+        scopeAttachArray.length = coordinates.length;
+    }
+    getNearestAttachPoint(stageX, stageY) {
+        const NEAR = 20;
+        let distance = Infinity;
+        let attachPoint = null;
+        const updateDistance = (info) => {
+            let candidateDistance = Math.abs(info.x - stageX) + Math.abs(info.y - stageY);
+            if (candidateDistance < NEAR && candidateDistance < distance) {
+                distance = candidateDistance;
+                attachPoint = info;
+            }
+        };
+        this.map.forEach((attach) => {
+            for (let [_block, info] of attach.argumentAttach) {
+                updateDistance(info);
+            }
+            for (let [_block, infoArr] of attach.scopeAttach) {
+                for (let info of infoArr) {
+                    updateDistance(info);
+                }
+            }
+        });
+        return _.clone(attachPoint);
+    }
+    setDragging(block) {
+        if (this.dragging != null) {
+            return;
+        }
+        if (block.graphic.parent != global_1.Komodi.stage) {
+            throw new Error("block.graphic should be a direct child of Komodi.stage");
+        }
+        let blockGlobal = block.graphic.getGlobalPosition();
+        let currentMouse = utils_1.getMousePoint();
+        this.mouseOffset.x = currentMouse.x - blockGlobal.x;
+        this.mouseOffset.y = currentMouse.y - blockGlobal.y;
+        this.dragging = block;
+    }
+}
+exports.Attacher = Attacher;
+
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const peg = __webpack_require__(111);
+const PARSER_DEFINITION = `
+start = tokens: token+ returnType:(":" t:type { return t; })? {
+    return {
+        tokens: tokens,
+        returnType: returnType
+    };
+}
+
+SPACE = " "*
+PLACEHOLDER = $[^:\\[\\]\\{\\}]+
+IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
+
+type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
+
+token
+    = str: PLACEHOLDER
+        { return {tokenType: "placeholder", value: str}; }
+    / "[" identifier:IDENTIFIER ":" type: type "]"
+        { return {tokenType: "expression", identifier: identifier, type: type}; }
+    / "{" identifier:IDENTIFIER ":" type: type "}"
+        { return {tokenType: "user_input", identifier: identifier, type: type}; }
+`;
+exports.blockDefinitionParser = peg.generate(PARSER_DEFINITION);
+
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __webpack_require__(45);
+class CmdIfElse extends index_1.Command {
+    constructor() {
+        super({
+            id: CmdIfElse.name, definition: "if [condition: bool]", scopeNames: ["ifBranch", "elseBranch"]
+        });
+        this.condition = null;
+        this.ifBranch = [];
+        this.elseBranch = [];
+        this.initFinished();
+    }
+}
+exports.CmdIfElse = CmdIfElse;
+class SignalStart extends index_1.Signal {
+    constructor() {
+        super({
+            id: SignalStart.name, definition: "start", scopeNames: ["body"]
+        });
+        this.body = [];
+        this.initFinished();
+    }
+}
+exports.SignalStart = SignalStart;
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __webpack_require__(45);
+class ExpReadLine extends index_1.Expression {
+    constructor() {
+        super({
+            id: ExpReadLine.name, definition: "read line: string"
+        });
+        this.initFinished();
+    }
+}
+exports.ExpReadLine = ExpReadLine;
+class CmdPrintLine extends index_1.Command {
+    constructor() {
+        super({
+            id: CmdPrintLine.name, definition: "print line [str: string]", scopeNames: []
+        });
+        this.str = null;
+        this.initFinished();
+    }
+}
+exports.CmdPrintLine = CmdPrintLine;
+
+
+/***/ }),
 /* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __webpack_require__(45);
+class ExpConstantString extends index_1.Expression {
+    constructor() {
+        super({
+            id: ExpConstantString.name, definition: "{str: string}: string"
+        });
+        this.initFinished();
+    }
+}
+exports.ExpConstantString = ExpConstantString;
+class ExpConcatString extends index_1.Expression {
+    constructor() {
+        super({
+            id: ExpConcatString.name, definition: "concat [str1: string] + [str2: string]: string"
+        });
+        this.str1 = null;
+        this.str2 = null;
+        this.initFinished();
+    }
+}
+exports.ExpConcatString = ExpConcatString;
+class ExpCompareString extends index_1.Expression {
+    constructor() {
+        super({
+            id: ExpCompareString.name, definition: "is same [str1: string], [str2: string]: bool"
+        });
+        this.str1 = null;
+        this.str2 = null;
+        this.initFinished();
+    }
+}
+exports.ExpCompareString = ExpCompareString;
+
+
+/***/ }),
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67456,7 +67630,7 @@ module.exports = {
 
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}

@@ -1,10 +1,10 @@
 import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
-import {Program} from "./program/index";
 import {CmdIfElse} from "./program/lib/common";
 import {CmdPrintLine} from "./program/lib/io";
 import {ExpCompareString, ExpConstantString} from "./program/lib/string";
+import {Attacher} from "./program/attacher";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -42,82 +42,22 @@ class KomodiClass {
 
     private komodiDiv: HTMLDivElement;
 
-    private container: PIXI.Container;
-    readonly stage: PIXI.Container;
-    private fixed: PIXI.Container;
+    readonly container: PIXI.Container = new PIXI.Container();
+    readonly stage: PIXI.Container = new PIXI.Container();
+    private fixed: PIXI.Container = new PIXI.Container();
+    private background: PIXI.Graphics = new PIXI.Graphics();
 
-    tmpProgram: Program;
+    attacher: Attacher = new Attacher();
 
     constructor() {
         this.komodiDiv = document.createElement("div");
         this.komodiDiv.classList.add("komodi-container");
 
-        this.container = new PIXI.Container();
-
-        this.stage = new PIXI.Container();
-        this.fixed = new PIXI.Container();
-        this.fixed.interactive = true;
-
+        this.container.interactive = true;
         this.container.addChild(this.stage);
         this.container.addChild(this.fixed);
-
-        // temporary program
-        {
-            let ifElse = new CmdIfElse();
-            ifElse.attachBlock({
-                attachType: "argument",
-                target: ifElse,
-                argumentName: "condition"
-            }, new ExpCompareString());
-
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "ifBranch",
-                scopeIndex: 0
-            }, new CmdPrintLine());
-
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "ifBranch",
-                scopeIndex: 1
-            }, new CmdPrintLine());
-
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "elseBranch",
-                scopeIndex: 0
-            }, new CmdPrintLine());
-
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "elseBranch",
-                scopeIndex: 1
-            }, new CmdPrintLine());
-
-            let cmd2 = new CmdPrintLine();
-            ifElse.attachBlock({
-                attachType: "scope",
-                target: ifElse,
-                scopeName: "elseBranch",
-                scopeIndex: 2
-            }, cmd2);
-
-            cmd2.attachBlock({
-                attachType: "argument",
-                target: cmd2,
-                argumentName: "str"
-            }, new ExpConstantString());
-
-            ifElse.updateGraphic();
-
-            this.stage.addChild(ifElse.graphic);
-            ifElse.graphic.x = 300;
-            ifElse.graphic.y = 100;
-        }
+        this.container.addChild(this.background);
+        this.background.alpha = 0;
 
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
@@ -126,9 +66,71 @@ class KomodiClass {
         );
     }
 
+    init() {
+        this.attacher.init();
+
+        // temporary program
+        let ifElse = new CmdIfElse();
+        ifElse.attachBlock({
+            attachType: "argument",
+            target: ifElse,
+            argumentName: "condition"
+        }, new ExpCompareString());
+
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "ifBranch",
+            scopeIndex: 0
+        }, new CmdPrintLine());
+
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "ifBranch",
+            scopeIndex: 1
+        }, new CmdPrintLine());
+
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "elseBranch",
+            scopeIndex: 0
+        }, new CmdPrintLine());
+
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "elseBranch",
+            scopeIndex: 1
+        }, new CmdPrintLine());
+
+        let cmd2 = new CmdPrintLine();
+        ifElse.attachBlock({
+            attachType: "scope",
+            target: ifElse,
+            scopeName: "elseBranch",
+            scopeIndex: 2
+        }, cmd2);
+
+        cmd2.attachBlock({
+            attachType: "argument",
+            target: cmd2,
+            argumentName: "str"
+        }, new ExpConstantString());
+
+        ifElse.updateGraphic();
+
+        this.stage.addChild(ifElse.graphic);
+        ifElse.graphic.x = 300;
+        ifElse.graphic.y = 100;
+    }
+
     initializeDOM(parent: HTMLElement) {
         let updatePosition = () => {
             this.renderer.resize(parent.clientWidth, parent.clientHeight);
+            this.background.clear();
+            this.background.drawRect(0, 0, parent.clientWidth, parent.clientHeight);
         };
 
         this.renderer.autoResize = true;
@@ -172,3 +174,4 @@ class KomodiClass {
 }
 
 export const Komodi = new KomodiClass();
+Komodi.init();

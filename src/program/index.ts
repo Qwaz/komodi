@@ -1,10 +1,11 @@
 import * as _ from "lodash";
-import {Coordinate} from "../common";
+import {Coordinate} from "../common/definition";
 import {BlockGraphic, ExpressionToken, PlaceholderToken, Token, UserInputToken} from "../graphic/index";
 import {KomodiType, typeFromString} from "../type";
 import {BlockDefinition, blockDefinitionParser} from "./definition_parser";
 import {commandNodeDrawer, functionNodeDrawer, signalNodeDrawer} from "../graphic/node_drawer";
 import {boxScopeDrawer, lineScopeDrawer} from "../graphic/scope_drawer";
+import {Komodi} from "../global";
 
 interface FreeBlock {
     coordinate: Coordinate;
@@ -12,7 +13,7 @@ interface FreeBlock {
 }
 
 export class Program {
-    constructor(readonly freeBlocks: FreeBlock[]) {
+    constructor(readonly freeBlocks: Set <FreeBlock>) {
     }
 }
 
@@ -47,14 +48,14 @@ function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinit
     }
 }
 
-interface ArgumentAttach {
+export interface ArgumentAttach {
     attachType: "argument";
 
     target: Block;
     argumentName: string;
 }
 
-interface ScopeAttach {
+export interface ScopeAttach {
     attachType: "scope";
 
     target: Block;
@@ -62,7 +63,7 @@ interface ScopeAttach {
     scopeIndex: number;
 }
 
-type AttachInfo = ArgumentAttach | ScopeAttach;
+export type AttachInfo = ArgumentAttach | ScopeAttach;
 
 export abstract class Block {
     // parental attach information
@@ -70,6 +71,7 @@ export abstract class Block {
     protected _graphic: BlockGraphic;
 
     constructor(readonly definition: BlockDefinition) {
+        Komodi.attacher.registerBlock(this);
         this.initGraphic();
     }
 
@@ -168,16 +170,22 @@ export abstract class Block {
         }
 
         this.graphic.removeChild(block.graphic);
+        this.updateGraphic();
     }
 
     updateGraphic() {
         let now: Block = this;
         while (true) {
-            now.graphic.update(now.definition, argumentGraphicsGenerator(now), scopeGraphicsGenerator(now));
+            now.graphic.update(argumentGraphicsGenerator(now), scopeGraphicsGenerator(now));
             if (now.attachInfo == null)
                 break;
             now = now.attachInfo.target;
         }
+    }
+
+    destroy() {
+        this.graphic.destroy();
+        Komodi.attacher.removeBlock(this);
     }
 }
 
@@ -191,7 +199,7 @@ export abstract class Expression extends Block {
     }
 
     protected initGraphic() {
-        this._graphic = new BlockGraphic(functionNodeDrawer, lineScopeDrawer);
+        this._graphic = new BlockGraphic(this, functionNodeDrawer, lineScopeDrawer);
     }
 }
 
@@ -205,7 +213,7 @@ export abstract class Command extends Block {
     }
 
     protected initGraphic() {
-        this._graphic = new BlockGraphic(commandNodeDrawer, boxScopeDrawer);
+        this._graphic = new BlockGraphic(this, commandNodeDrawer, boxScopeDrawer);
     }
 }
 
@@ -219,7 +227,7 @@ export abstract class Signal extends Block {
     }
 
     protected initGraphic() {
-        this._graphic = new BlockGraphic(signalNodeDrawer, lineScopeDrawer);
+        this._graphic = new BlockGraphic(this, signalNodeDrawer, lineScopeDrawer);
     }
 }
 
@@ -238,7 +246,6 @@ export function scopeGraphicsGenerator(block: Block) {
     return function *() {
         for (let scopeName of block.definition.scopeNames) {
             let scopeBlocks = block.getScope(scopeName)!;
-            debugger;
             yield (function *() {
                 for (let block of scopeBlocks) {
                     yield block.graphic;

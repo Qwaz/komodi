@@ -9,6 +9,7 @@ export class CmdIfElse extends Command {
         super({
             id: CmdIfElse.name, definition: "if [condition: bool]", scopeNames: ["ifBranch", "elseBranch"]
         });
+        this.initFinished();
     }
 }
 
@@ -19,5 +20,6 @@ export class SignalStart extends Signal {
         super({
             id: SignalStart.name, definition: "start", scopeNames: ["body"]
         });
+        this.initFinished();
     }
 }

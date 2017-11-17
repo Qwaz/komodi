@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Komodi} from "./global";
+import {Komodi} from "../global";
 
 export function hitTestRectangle(obj1: PIXI.DisplayObject, obj2: PIXI.DisplayObject) {
     let bound1 = obj1.getBounds();
