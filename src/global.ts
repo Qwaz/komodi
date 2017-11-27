@@ -5,6 +5,7 @@ import {CmdIfElse} from "./program/lib/common";
 import {CmdPrintLine} from "./program/lib/io";
 import {ExpCompareString, ExpConstantString} from "./program/lib/string";
 import {Attacher} from "./program/attacher";
+import {BottomMenu, SideMenu} from "./menu";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -47,6 +48,9 @@ class KomodiClass {
     private fixed: PIXI.Container = new PIXI.Container();
     private background: PIXI.Graphics = new PIXI.Graphics();
 
+    sideMenu: SideMenu = new SideMenu();
+    bottomMenu: BottomMenu = new BottomMenu();
+
     attacher: Attacher = new Attacher();
 
     constructor() {
@@ -58,6 +62,8 @@ class KomodiClass {
         this.container.addChild(this.fixed);
         this.container.addChild(this.background);
         this.background.alpha = 0;
+
+        this.fixed.addChild(this.sideMenu, this.bottomMenu);
 
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
@@ -122,23 +128,29 @@ class KomodiClass {
         ifElse.updateGraphic();
 
         this.stage.addChild(ifElse.graphic);
-        ifElse.graphic.x = 300;
+        ifElse.graphic.x = 700;
         ifElse.graphic.y = 100;
     }
 
     initializeDOM(parent: HTMLElement) {
-        let updatePosition = () => {
-            this.renderer.resize(parent.clientWidth, parent.clientHeight);
+        let resize = () => {
+            let screenWidth = parent.clientWidth;
+            let screenHeight = parent.clientHeight;
+
+            this.renderer.resize(screenWidth, screenHeight);
             this.background.clear();
-            this.background.drawRect(0, 0, parent.clientWidth, parent.clientHeight);
+            this.background.drawRect(0, 0, screenWidth, screenHeight);
+
+            this.sideMenu.update(screenWidth, screenHeight);
+            this.bottomMenu.update(screenWidth, screenHeight);
         };
 
         this.renderer.autoResize = true;
         this.komodiDiv.appendChild(this.renderer.view);
         parent.appendChild(this.komodiDiv);
 
-        window.addEventListener('resize', updatePosition, true);
-        updatePosition();
+        window.addEventListener('resize', resize, true);
+        resize();
 
         let styleNode = document.createElement("style");
         styleNode.type = 'text/css';

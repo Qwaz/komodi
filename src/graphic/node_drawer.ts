@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import {BlockGraphic, NodeDrawer, Token} from "./index";
+import {BlockGenerator, BlockGraphic, NodeDrawer, Token} from "./index";
 import {typeToColor} from "../type";
 import {centerChild} from "../common/utils";
 import {Block} from "../program/index";
@@ -17,7 +17,7 @@ const SIGNAL_GAP = 4;
 const SIGNAL_LINE = 4;
 
 function defaultDrawNode(
-    block: Block,
+    block: Block | BlockGenerator,
     getArgumentGraphics: () => IterableIterator<BlockGraphic | null>,
     bottom: number,
     bottomOutline: (widthSum: number) => number[]
@@ -25,7 +25,7 @@ function defaultDrawNode(
     const top = bottom - BLOCK_HEIGHT;
 
     let definition = block.definition;
-    let target = block.graphic;
+    let target = block instanceof Block ? block.graphic : block;
 
     target.graphics.lineStyle(1, 0);
 
@@ -124,9 +124,13 @@ function defaultDrawNode(
                 if (graphic) {
                     graphic.x = nowX+width*.5;
                     graphic.y = top+TIP_HEIGHT;
-                    Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
+                    if (block instanceof Block) {
+                        Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
+                    }
                 } else {
-                    Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX+width*.5, y: top+TIP_HEIGHT });
+                    if (block instanceof Block) {
+                        Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX+width*.5, y: top+TIP_HEIGHT });
+                    }
                 }
                 break;
         }
@@ -137,7 +141,7 @@ function defaultDrawNode(
 }
 
 class FunctionNodeDrawer extends NodeDrawer {
-    drawNode(block: Block, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
+    drawNode(block: Block | BlockGenerator, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
         defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
             widthSum*.5, -TIP_HEIGHT,
             TIP_WIDTH*.5, -TIP_HEIGHT,
@@ -150,7 +154,7 @@ class FunctionNodeDrawer extends NodeDrawer {
 export const functionNodeDrawer = new FunctionNodeDrawer();
 
 class CommandNodeDrawer extends NodeDrawer {
-    drawNode(block: Block, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
+    drawNode(block: Block | BlockGenerator, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
         defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
             let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
                 return [widthSum*.5 - num*widthSum, -CURVE_HEIGHT+Math.sin(num * Math.PI)*CURVE_HEIGHT];
@@ -165,13 +169,14 @@ class CommandNodeDrawer extends NodeDrawer {
 export const commandNodeDrawer = new CommandNodeDrawer();
 
 class SignalNodeDrawer extends NodeDrawer {
-    drawNode(block: Block, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
+    drawNode(block: Block | BlockGenerator, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
         let widthSum = defaultDrawNode(block, getArgumentGraphics, -SIGNAL_GAP-SIGNAL_LINE, (widthSum) => [
             widthSum * .5, -SIGNAL_GAP-SIGNAL_LINE,
             -widthSum * .5, -SIGNAL_GAP-SIGNAL_LINE,
         ]);
 
-        block.graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
+        let graphic = block instanceof Block ? block.graphic : block;
+        graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
     }
 }
 export const signalNodeDrawer = new SignalNodeDrawer();

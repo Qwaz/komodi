@@ -1,5 +1,5 @@
 import peg = require("pegjs");
-import {Token} from "../graphic/index";
+import {NodeDrawer, ScopeDrawer, Token} from "../graphic/index";
 import {KomodiType} from "../type";
 
 const PARSER_DEFINITION = `
@@ -34,4 +34,6 @@ export interface BlockDefinition {
     returnType: KomodiType;
     argumentNames: string[];
     scopeNames: string[];
+    nodeDrawer: NodeDrawer;
+    scopeDrawer: ScopeDrawer;
 }

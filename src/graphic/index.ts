@@ -2,10 +2,11 @@ import * as _ from "lodash";
 import {KomodiType} from "../type";
 import {Block} from "../program/index";
 import {Komodi} from "../global";
+import {BlockDefinition} from "../program/definition_parser";
 
 let labelPool: PIXI.Text[] = [];
 
-export function getLabel(text: string): PIXI.Text {
+function getLabel(text: string): PIXI.Text {
     if (labelPool.length == 0) {
         return new PIXI.Text(text, {
             fontSize: 14, align : 'center'
@@ -16,14 +17,54 @@ export function getLabel(text: string): PIXI.Text {
     return label;
 }
 
-export function releaseLabel(label: PIXI.Text) {
+function releaseLabel(label: PIXI.Text) {
     labelPool.push(label);
 }
 
-export class BlockGraphic extends PIXI.Container {
-    readonly graphics: PIXI.Graphics = new PIXI.Graphics();
-
+class LabelManager extends PIXI.Container {
     assignedLabels: PIXI.Text[] = [];
+
+    assignLabel(text: string) {
+        let label = getLabel(text);
+        this.addChild(label);
+        this.assignedLabels.push(label);
+        return label;
+    }
+
+    releaseLabels() {
+        _.forEach(this.assignedLabels, (label) => releaseLabel(label));
+        this.assignedLabels.length = 0;
+    }
+
+    destroy() {
+        this.releaseLabels();
+        super.destroy();
+    }
+}
+
+function emptyArgumentGraphicsGenerator(block: BlockGenerator) {
+    return function *() {
+        for (let _argumentName of block.definition.argumentNames) {
+            yield null;
+        }
+    };
+}
+
+export class BlockGenerator extends LabelManager {
+    graphics: PIXI.Graphics = new PIXI.Graphics();
+
+    constructor(public definition: BlockDefinition) {
+        super();
+
+        this.addChild(this.graphics);
+        this.interactive = true;
+
+        this.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
+    }
+}
+
+export class BlockGraphic extends LabelManager {
+    readonly graphics: PIXI.Graphics = new PIXI.Graphics();
 
     constructor(private logic: Block, private nodeDrawer: NodeDrawer, private scopeDrawer: ScopeDrawer) {
         super();
@@ -50,27 +91,10 @@ export class BlockGraphic extends PIXI.Container {
         this.scopeDrawer.drawScope(this.logic, getScopeGraphics);
         this.nodeDrawer.drawNode(this.logic, getArgumentGraphics);
     }
-
-    assignLabel(text: string) {
-        let label = getLabel(text);
-        this.addChild(label);
-        this.assignedLabels.push(label);
-        return label;
-    }
-
-    releaseLabels() {
-        _.forEach(this.assignedLabels, (label) => releaseLabel(label));
-        this.assignedLabels.length = 0;
-    }
-
-    destroy() {
-        this.releaseLabels();
-        super.destroy();
-    }
 }
 
 export abstract class NodeDrawer {
-    abstract drawNode(block: Block, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>): void;
+    abstract drawNode(block: Block | BlockGenerator, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>): void;
 }
 
 export abstract class ScopeDrawer {

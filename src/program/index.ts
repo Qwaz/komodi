@@ -1,10 +1,16 @@
 import * as _ from "lodash";
 import {Coordinate} from "../common/definition";
-import {BlockGraphic, ExpressionToken, PlaceholderToken, Token, UserInputToken} from "../graphic/index";
+import {
+    BlockGraphic,
+    ExpressionToken,
+    NodeDrawer,
+    PlaceholderToken,
+    ScopeDrawer,
+    Token,
+    UserInputToken
+} from "../graphic/index";
 import {KomodiType, typeFromString} from "../type";
 import {BlockDefinition, blockDefinitionParser} from "./definition_parser";
-import {commandNodeDrawer, functionNodeDrawer, signalNodeDrawer} from "../graphic/node_drawer";
-import {boxScopeDrawer, lineScopeDrawer} from "../graphic/scope_drawer";
 import {Komodi} from "../global";
 
 interface FreeBlock {
@@ -21,9 +27,11 @@ interface BlockDefinitionBase {
     id: string;
     definition: string;
     scopeNames?: string[];
+    nodeDrawer: NodeDrawer;
+    scopeDrawer: ScopeDrawer;
 }
 
-function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinition {
+export function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinition {
     let parsed = blockDefinitionParser.parse(definitionBase.definition);
     let tokens = _.map(parsed.tokens, (token: any) => {
         switch (token.tokenType) {
@@ -44,7 +52,9 @@ function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinit
         tokens: tokens,
         returnType: parsed.returnType ? typeFromString(parsed.returnType) : KomodiType.empty,
         argumentNames: _.filter(tokens, <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : []
+        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
+        nodeDrawer: definitionBase.nodeDrawer,
+        scopeDrawer: definitionBase.scopeDrawer
     }
 }
 
@@ -72,10 +82,8 @@ export abstract class Block {
 
     constructor(readonly definition: BlockDefinition) {
         Komodi.attacher.registerBlock(this);
-        this.initGraphic();
+        this._graphic = new BlockGraphic(this, definition.nodeDrawer, definition.scopeDrawer);
     }
-
-    protected abstract initGraphic(): void;
 
     initFinished(): void {
         this.updateGraphic();
@@ -190,44 +198,29 @@ export abstract class Block {
 }
 
 export abstract class Expression extends Block {
-    constructor(defBase: BlockDefinitionBase) {
-        let def = parseBlockDefinition(defBase);
+    constructor(def: BlockDefinition) {
         if (def.returnType == KomodiType.empty)
             throw new Error(`Error in definition "${def.definition}": Expression must have a return type`);
 
         super(def);
     }
-
-    protected initGraphic() {
-        this._graphic = new BlockGraphic(this, functionNodeDrawer, lineScopeDrawer);
-    }
 }
 
 export abstract class Command extends Block {
-    constructor(defBase: BlockDefinitionBase) {
-        let def = parseBlockDefinition(defBase);
+    constructor(def: BlockDefinition) {
         if (def.returnType != KomodiType.empty)
             throw new Error(`Error in definition "${def.definition}": Command must not have a return type`);
 
         super(def);
     }
-
-    protected initGraphic() {
-        this._graphic = new BlockGraphic(this, commandNodeDrawer, boxScopeDrawer);
-    }
 }
 
 export abstract class Signal extends Block {
-    constructor(defBase: BlockDefinitionBase) {
-        let def = parseBlockDefinition(defBase);
+    constructor(def: BlockDefinition) {
         if (def.returnType != KomodiType.empty)
             throw new Error(`Error in definition "${def.definition}": Signal must not have a return type`);
 
         super(def);
-    }
-
-    protected initGraphic() {
-        this._graphic = new BlockGraphic(this, signalNodeDrawer, lineScopeDrawer);
     }
 }
 

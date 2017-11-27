@@ -14,7 +14,7 @@ function defaultDrawScope(
     getScopeGraphics: () => IterableIterator<IterableIterator<BlockGraphic>>,
 ): PIXI.Rectangle {
     let definition = block.definition;
-    let target = block.graphic;
+    let target = block instanceof Block ? block.graphic : block;
 
     target.graphics.lineStyle(3, 0);
 
