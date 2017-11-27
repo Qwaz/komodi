@@ -9,16 +9,31 @@ const BOTTOM_MENU_HEIGHT = 200;
 const BOTTOM_MENU_TIP_WIDTH = 120;
 const BOTTOM_MENU_TIP_HEIGHT = 30;
 
-let selectedModule: BlockClass[] | null = null;
+let selectedModuleButton: ModuleButton | null = null;
 
 class ModuleButton extends PIXI.Text {
-    constructor(text: string) {
+    private static NORMAL_COLOR = 0x0366d6;
+    private static HIGHLIGHT_COLOR = 0x84a3d6;
+
+    constructor(text: string, public blockSet: BlockClass[]) {
         super(text, {
-            fontSize: 18, align: 'center', fill: 0x0366d6
+            fontSize: 18, align: 'center', fill: ModuleButton.NORMAL_COLOR
         });
 
         this.interactive = true;
         this.buttonMode = true;
+
+        this.on('click', () => {
+            Komodi.sideMenu.changeBlockSet(selectedModuleButton, this);
+        });
+    }
+
+    highlight(apply: boolean) {
+        if (apply) {
+            this.style.fill = ModuleButton.HIGHLIGHT_COLOR;
+        } else {
+            this.style.fill = ModuleButton.NORMAL_COLOR;
+        }
     }
 }
 
@@ -47,15 +62,10 @@ export class BlockModuleSelector extends PIXI.Container {
     private arrangeModuleButton(startX: number, startY: number, set: Map<string, BlockClass[]>) {
         let cnt = 0;
         for (let [setName, blocks] of set) {
-            let label = new ModuleButton(setName);
+            let label = new ModuleButton(setName, blocks);
             this.addChild(label);
             label.x = startX;
             label.y = startY + label.height*(cnt++);
-
-            label.on('click', () => {
-                selectedModule = blocks;
-                Komodi.sideMenu.updateBlock();
-            });
         }
     }
 }
@@ -82,7 +92,7 @@ export class BlockViewer extends PIXI.Container {
 
             let currentY = 0;
             for (let blockClass of blockSet) {
-                let generator = new BlockGenerator(blockClass.definition);
+                let generator = new BlockGenerator(blockClass);
                 this.addChild(generator);
                 generator.x = SIDE_MENU_WIDTH*.5;
                 generator.y = currentY + VERTICAL_PADDING + generator.height;
@@ -94,7 +104,6 @@ export class BlockViewer extends PIXI.Container {
 }
 
 export class SideMenu extends PIXI.Container {
-    bottomMask: PIXI.Graphics = new PIXI.Graphics();
     background: PIXI.Graphics = new PIXI.Graphics();
 
     topContent: BlockModuleSelector = new BlockModuleSelector();
@@ -104,15 +113,24 @@ export class SideMenu extends PIXI.Container {
         super();
         this.interactive = true;
 
-        this.addChild(this.background, this.bottomMask, this.topContent, this.bottomContent);
-
-        this.bottomContent.mask = this.bottomMask;
+        this.addChild(this.background, this.topContent, this.bottomContent);
 
         this.bottomContent.y = TOP_MENU_HEIGHT;
     }
 
-    updateBlock() {
-        this.bottomContent.update(selectedModule);
+    changeBlockSet(prevModuleButton: ModuleButton | null, newModuleButton: ModuleButton | null) {
+        if (prevModuleButton) {
+            prevModuleButton.highlight(false);
+        }
+
+        if (newModuleButton) {
+            newModuleButton.highlight(true);
+            this.bottomContent.update(newModuleButton.blockSet);
+        } else {
+            this.bottomContent.update(null);
+        }
+
+        selectedModuleButton = newModuleButton;
     }
 
     update(_width: number, height: number) {
@@ -124,11 +142,6 @@ export class SideMenu extends PIXI.Container {
         this.background.lineTo(SIDE_MENU_WIDTH, TOP_MENU_HEIGHT);
         this.background.moveTo(SIDE_MENU_WIDTH, 0);
         this.background.lineTo(SIDE_MENU_WIDTH, height);
-
-        this.bottomMask.clear();
-        this.bottomMask.drawRect(0, TOP_MENU_HEIGHT, SIDE_MENU_WIDTH, height - TOP_MENU_HEIGHT);
-
-        this.updateBlock();
     }
 }
 

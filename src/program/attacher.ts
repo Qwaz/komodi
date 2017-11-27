@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import {ArgumentAttach, AttachInfo, Block, ScopeAttach} from "./index";
+import {ArgumentAttach, AttachInfo, Block, ScopeAttach, Signal} from "./index";
 import {Coordinate} from "../common/definition";
 import {getMousePoint} from "../common/utils";
 import {Komodi} from "../global";
@@ -103,8 +103,12 @@ export class Attacher {
 
     getNearestAttachPoint(
         stageX: number, stageY: number
-    ): AttachInfo | null {
+    ): AttachInfo & Coordinate | null {
         const NEAR = 20;
+
+        if (this.dragging instanceof Signal) {
+            return null;
+        }
 
         let distance = Infinity;
         let attachPoint: AttachInfo | null = null;
@@ -113,7 +117,7 @@ export class Attacher {
             let globalPosition = info.target.graphic.toGlobal(new PIXI.Point(info.x, info.y));
             let candidateDistance = Math.abs(globalPosition.x - stageX) + Math.abs(globalPosition.y - stageY);
 
-            if (candidateDistance < NEAR && candidateDistance < distance) {
+            if (candidateDistance < NEAR && candidateDistance < distance && info.target != this.dragging) {
                 distance = candidateDistance;
                 attachPoint = info;
             }

@@ -45,6 +45,8 @@ function defaultDrawScope(
                 block.y = nowY + (-rect.top);
 
                 target.graphics.moveTo(0, nowY);
+                target.graphics.lineTo(0, nowY+(-rect.top));
+                target.graphics.moveTo(0, nowY+rect.height);
                 target.graphics.lineTo(0, nowY+rect.height+FLOW_VERTICAL_MARGIN);
                 attachPoints.push({ x: 0, y: nowY+rect.height + FLOW_VERTICAL_MARGIN * .5 });
 
@@ -85,6 +87,8 @@ function defaultDrawScope(
                 block.y = nowY + (-rect.top);
 
                 target.graphics.moveTo(nowX, nowY);
+                target.graphics.lineTo(nowX, nowY+(-rect.top));
+                target.graphics.moveTo(nowX, nowY+rect.height);
                 target.graphics.lineTo(nowX, nowY+rect.height+FLOW_VERTICAL_MARGIN);
                 attachPoints.push({ x: nowX, y: nowY+rect.height + FLOW_VERTICAL_MARGIN * .5 });
 

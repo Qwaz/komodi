@@ -2083,9 +2083,6 @@ module.exports = arrays;
 Object.defineProperty(exports, "__esModule", { value: true });
 const WebFont = __webpack_require__(225);
 const PIXI = __webpack_require__(86);
-const common_1 = __webpack_require__(99);
-const io_1 = __webpack_require__(100);
-const string_1 = __webpack_require__(101);
 const attacher_1 = __webpack_require__(221);
 const menu_1 = __webpack_require__(220);
 const KOMODI_STYLE = `
@@ -2139,52 +2136,6 @@ class KomodiClass {
     }
     init() {
         this.attacher.init();
-        let ifElse = new common_1.CmdIfElse();
-        ifElse.attachBlock({
-            attachType: "argument",
-            target: ifElse,
-            argumentName: "condition"
-        }, new string_1.ExpCompareString());
-        ifElse.attachBlock({
-            attachType: "scope",
-            target: ifElse,
-            scopeName: "ifBranch",
-            scopeIndex: 0
-        }, new io_1.CmdPrintLine());
-        ifElse.attachBlock({
-            attachType: "scope",
-            target: ifElse,
-            scopeName: "ifBranch",
-            scopeIndex: 1
-        }, new io_1.CmdPrintLine());
-        ifElse.attachBlock({
-            attachType: "scope",
-            target: ifElse,
-            scopeName: "elseBranch",
-            scopeIndex: 0
-        }, new io_1.CmdPrintLine());
-        ifElse.attachBlock({
-            attachType: "scope",
-            target: ifElse,
-            scopeName: "elseBranch",
-            scopeIndex: 1
-        }, new io_1.CmdPrintLine());
-        let cmd2 = new io_1.CmdPrintLine();
-        ifElse.attachBlock({
-            attachType: "scope",
-            target: ifElse,
-            scopeName: "elseBranch",
-            scopeIndex: 2
-        }, cmd2);
-        cmd2.attachBlock({
-            attachType: "argument",
-            target: cmd2,
-            argumentName: "str"
-        }, new string_1.ExpConstantString());
-        ifElse.updateGraphic();
-        this.stage.addChild(ifElse.graphic);
-        ifElse.graphic.x = 700;
-        ifElse.graphic.y = 100;
     }
     initializeDOM(parent) {
         let resize = () => {
@@ -29183,13 +29134,23 @@ function emptyArgumentGraphicsGenerator(block) {
     };
 }
 class BlockGenerator extends LabelManager {
-    constructor(definition) {
+    constructor(blockClass) {
         super();
-        this.definition = definition;
+        this.blockClass = blockClass;
         this.graphics = new PIXI.Graphics();
+        this.definition = blockClass.definition;
         this.addChild(this.graphics);
         this.interactive = true;
-        this.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
+        this.buttonMode = true;
+        blockClass.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
+        this.on('mousedown', () => {
+            let block = new blockClass();
+            global_1.Komodi.stage.addChild(block.graphic);
+            let globalPosition = this.getGlobalPosition();
+            block.graphic.x = globalPosition.x;
+            block.graphic.y = globalPosition.y;
+            global_1.Komodi.attacher.setDragging(block);
+        });
     }
 }
 exports.BlockGenerator = BlockGenerator;
@@ -67424,6 +67385,8 @@ function defaultDrawScope(block, getScopeGraphics) {
                 block.x = 0;
                 block.y = nowY + (-rect.top);
                 target.graphics.moveTo(0, nowY);
+                target.graphics.lineTo(0, nowY + (-rect.top));
+                target.graphics.moveTo(0, nowY + rect.height);
                 target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
                 attachPoints.push({ x: 0, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
                 nowY += rect.height + FLOW_VERTICAL_MARGIN;
@@ -67453,6 +67416,8 @@ function defaultDrawScope(block, getScopeGraphics) {
                 block.x = nowX;
                 block.y = nowY + (-rect.top);
                 target.graphics.moveTo(nowX, nowY);
+                target.graphics.lineTo(nowX, nowY + (-rect.top));
+                target.graphics.moveTo(nowX, nowY + rect.height);
                 target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
                 attachPoints.push({ x: nowX, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
                 nowY += rect.height + FLOW_VERTICAL_MARGIN;
@@ -67512,16 +67477,30 @@ const TOP_MENU_HEIGHT = 350;
 const BOTTOM_MENU_HEIGHT = 200;
 const BOTTOM_MENU_TIP_WIDTH = 120;
 const BOTTOM_MENU_TIP_HEIGHT = 30;
-let selectedModule = null;
+let selectedModuleButton = null;
 class ModuleButton extends PIXI.Text {
-    constructor(text) {
+    constructor(text, blockSet) {
         super(text, {
-            fontSize: 18, align: 'center', fill: 0x0366d6
+            fontSize: 18, align: 'center', fill: ModuleButton.NORMAL_COLOR
         });
+        this.blockSet = blockSet;
         this.interactive = true;
         this.buttonMode = true;
+        this.on('click', () => {
+            global_1.Komodi.sideMenu.changeBlockSet(selectedModuleButton, this);
+        });
+    }
+    highlight(apply) {
+        if (apply) {
+            this.style.fill = ModuleButton.HIGHLIGHT_COLOR;
+        }
+        else {
+            this.style.fill = ModuleButton.NORMAL_COLOR;
+        }
     }
 }
+ModuleButton.NORMAL_COLOR = 0x0366d6;
+ModuleButton.HIGHLIGHT_COLOR = 0x84a3d6;
 class BlockModuleSelector extends PIXI.Container {
     constructor() {
         const PADDING = 10;
@@ -67541,14 +67520,10 @@ class BlockModuleSelector extends PIXI.Container {
     arrangeModuleButton(startX, startY, set) {
         let cnt = 0;
         for (let [setName, blocks] of set) {
-            let label = new ModuleButton(setName);
+            let label = new ModuleButton(setName, blocks);
             this.addChild(label);
             label.x = startX;
             label.y = startY + label.height * (cnt++);
-            label.on('click', () => {
-                selectedModule = blocks;
-                global_1.Komodi.sideMenu.updateBlock();
-            });
         }
     }
 }
@@ -67571,7 +67546,7 @@ class BlockViewer extends PIXI.Container {
             const VERTICAL_PADDING = 10;
             let currentY = 0;
             for (let blockClass of blockSet) {
-                let generator = new index_2.BlockGenerator(blockClass.definition);
+                let generator = new index_2.BlockGenerator(blockClass);
                 this.addChild(generator);
                 generator.x = SIDE_MENU_WIDTH * .5;
                 generator.y = currentY + VERTICAL_PADDING + generator.height;
@@ -67585,17 +67560,25 @@ exports.BlockViewer = BlockViewer;
 class SideMenu extends PIXI.Container {
     constructor() {
         super();
-        this.bottomMask = new PIXI.Graphics();
         this.background = new PIXI.Graphics();
         this.topContent = new BlockModuleSelector();
         this.bottomContent = new BlockViewer();
         this.interactive = true;
-        this.addChild(this.background, this.bottomMask, this.topContent, this.bottomContent);
-        this.bottomContent.mask = this.bottomMask;
+        this.addChild(this.background, this.topContent, this.bottomContent);
         this.bottomContent.y = TOP_MENU_HEIGHT;
     }
-    updateBlock() {
-        this.bottomContent.update(selectedModule);
+    changeBlockSet(prevModuleButton, newModuleButton) {
+        if (prevModuleButton) {
+            prevModuleButton.highlight(false);
+        }
+        if (newModuleButton) {
+            newModuleButton.highlight(true);
+            this.bottomContent.update(newModuleButton.blockSet);
+        }
+        else {
+            this.bottomContent.update(null);
+        }
+        selectedModuleButton = newModuleButton;
     }
     update(_width, height) {
         this.background.clear();
@@ -67606,9 +67589,6 @@ class SideMenu extends PIXI.Container {
         this.background.lineTo(SIDE_MENU_WIDTH, TOP_MENU_HEIGHT);
         this.background.moveTo(SIDE_MENU_WIDTH, 0);
         this.background.lineTo(SIDE_MENU_WIDTH, height);
-        this.bottomMask.clear();
-        this.bottomMask.drawRect(0, TOP_MENU_HEIGHT, SIDE_MENU_WIDTH, height - TOP_MENU_HEIGHT);
-        this.updateBlock();
     }
 }
 exports.SideMenu = SideMenu;
@@ -67652,6 +67632,7 @@ exports.BottomMenu = BottomMenu;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(15);
+const index_1 = __webpack_require__(45);
 const utils_1 = __webpack_require__(98);
 const global_1 = __webpack_require__(9);
 class Attacher {
@@ -67737,12 +67718,15 @@ class Attacher {
     }
     getNearestAttachPoint(stageX, stageY) {
         const NEAR = 20;
+        if (this.dragging instanceof index_1.Signal) {
+            return null;
+        }
         let distance = Infinity;
         let attachPoint = null;
         const updateDistance = (info) => {
             let globalPosition = info.target.graphic.toGlobal(new PIXI.Point(info.x, info.y));
             let candidateDistance = Math.abs(globalPosition.x - stageX) + Math.abs(globalPosition.y - stageY);
-            if (candidateDistance < NEAR && candidateDistance < distance) {
+            if (candidateDistance < NEAR && candidateDistance < distance && info.target != this.dragging) {
                 distance = candidateDistance;
                 attachPoint = info;
             }
