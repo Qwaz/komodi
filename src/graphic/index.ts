@@ -69,7 +69,7 @@ export class BlockGenerator extends LabelManager {
 
         this.on('mousedown', () => {
             let block = new blockClass();
-            Komodi.container.addChild(block.graphic);
+            Komodi.fixed.addChild(block.graphic);
 
             let globalPosition = this.getGlobalPosition();
             block.graphic.x = globalPosition.x;

@@ -24581,7 +24581,7 @@ class BlockGenerator extends LabelManager {
         blockClass.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
         this.on('mousedown', () => {
             let block = new blockClass();
-            global_1.Komodi.container.addChild(block.graphic);
+            global_1.Komodi.fixed.addChild(block.graphic);
             let globalPosition = this.getGlobalPosition();
             block.graphic.x = globalPosition.x;
             block.graphic.y = globalPosition.y;
@@ -67508,14 +67508,16 @@ class Attacher {
         this.initialDrag = false;
         this.dragging = null;
         this.mouseOffset = { x: 0, y: 0 };
+        this.indicator = new PIXI.Graphics();
         this.map = new Map();
     }
     init() {
+        global_1.Komodi.container.addChild(this.indicator);
+        this.indicator.alpha = 0.6;
         global_1.Komodi.container.on('mousemove', () => {
             this.updateDragging();
         });
         global_1.Komodi.fixed.on('mouseover', () => {
-            console.log('over');
             if (!this.initialDrag) {
                 this.stopDragging();
             }
@@ -67582,7 +67584,7 @@ class Attacher {
         scopeAttachArray.length = coordinates.length;
     }
     getNearestAttachPoint(stageX, stageY) {
-        const NEAR = 20;
+        const NEAR = 60;
         if (this.dragging instanceof index_1.Signal) {
             return null;
         }
@@ -67596,13 +67598,20 @@ class Attacher {
                 attachPoint = info;
             }
         };
-        this.map.forEach((attach) => {
-            for (let [_argumentName, info] of attach.argumentAttach) {
-                updateDistance(info);
+        this.map.forEach((attach, target) => {
+            if (this.dragging instanceof index_1.Expression) {
+                for (let [argumentName, info] of attach.argumentAttach) {
+                    let token = target.definition.tokens.find((token) => token.kind == "expression" && token.identifier == argumentName);
+                    if (token.type == this.dragging.definition.returnType) {
+                        updateDistance(info);
+                    }
+                }
             }
-            for (let [_scopeName, infoArr] of attach.scopeAttach) {
-                for (let info of infoArr) {
-                    updateDistance(info);
+            if (this.dragging instanceof index_1.Command) {
+                for (let [_scopeName, infoArr] of attach.scopeAttach) {
+                    for (let info of infoArr) {
+                        updateDistance(info);
+                    }
                 }
             }
         });
@@ -67618,11 +67627,23 @@ class Attacher {
         this.mouseOffset.y = currentMouse.y - blockGlobal.y;
         this.dragging = block;
         this.initialDrag = initialDrag;
+        block.graphic.alpha = 0.8;
     }
     updateDragging() {
         if (this.dragging != null) {
             let mouse = utils_1.getMousePoint();
-            this.dragging.graphic.position = global_1.Komodi.stage.toLocal(new PIXI.Point(mouse.x - this.mouseOffset.x, mouse.y - this.mouseOffset.y));
+            let globalX = mouse.x - this.mouseOffset.x;
+            let globalY = mouse.y - this.mouseOffset.y;
+            this.dragging.graphic.position = global_1.Komodi.stage.toLocal(new PIXI.Point(globalX, globalY));
+            let attachInfo = this.getNearestAttachPoint(globalX, globalY);
+            if (attachInfo != null) {
+                let globalPosition = attachInfo.target.graphic.getGlobalPosition();
+                this.updateIndicator(globalX, globalY, globalPosition.x + attachInfo.x, globalPosition.y + attachInfo.y);
+            }
+            else {
+                console.log('out');
+                this.indicator.clear();
+            }
         }
     }
     stopDragging() {
@@ -67637,8 +67658,24 @@ class Attacher {
                 global_1.Komodi.stage.addChild(this.dragging.graphic);
                 this.dragging.graphic.position = global_1.Komodi.stage.toLocal(position);
             }
+            this.dragging.graphic.alpha = 1;
             this.dragging = null;
+            this.indicator.clear();
         }
+    }
+    updateIndicator(sx, sy, ex, ey) {
+        const RADIUS = 5;
+        this.indicator.clear();
+        this.indicator.x = sx;
+        this.indicator.y = sy;
+        this.indicator.beginFill(0xFF0000);
+        this.indicator.drawCircle(0, 0, RADIUS);
+        let dx = ex - sx, dy = ey - sy;
+        let radian = Math.atan2(dy, dx);
+        this.indicator.moveTo(dx, dy);
+        this.indicator.lineTo(Math.cos(radian + Math.PI / 2) * RADIUS, Math.sin(radian + Math.PI / 2) * RADIUS);
+        this.indicator.lineTo(Math.cos(radian - Math.PI / 2) * RADIUS, Math.sin(radian - Math.PI / 2) * RADIUS);
+        this.indicator.lineTo(dx, dy);
     }
 }
 exports.Attacher = Attacher;
