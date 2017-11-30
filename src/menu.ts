@@ -37,7 +37,7 @@ class ModuleButton extends PIXI.Text {
     }
 }
 
-export class BlockModuleSelector extends PIXI.Container {
+export class ModuleSelector extends PIXI.Container {
     builtinModules: Map<string, BlockClass[]>;
 
     constructor() {
@@ -70,7 +70,7 @@ export class BlockModuleSelector extends PIXI.Container {
     }
 }
 
-export class BlockViewer extends PIXI.Container {
+export class BlockGeneratorList extends PIXI.Container {
     blockList: BlockGenerator[] = [];
 
     constructor() {
@@ -106,8 +106,8 @@ export class BlockViewer extends PIXI.Container {
 export class SideMenu extends PIXI.Container {
     background: PIXI.Graphics = new PIXI.Graphics();
 
-    topContent: BlockModuleSelector = new BlockModuleSelector();
-    bottomContent: BlockViewer = new BlockViewer();
+    topContent: ModuleSelector = new ModuleSelector();
+    bottomContent: BlockGeneratorList = new BlockGeneratorList();
 
     constructor() {
         super();

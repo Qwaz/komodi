@@ -42,7 +42,7 @@ class KomodiClass {
 
     readonly container: PIXI.Container = new PIXI.Container();
     readonly stage: PIXI.Container = new PIXI.Container();
-    private fixed: PIXI.Container = new PIXI.Container();
+    readonly fixed: PIXI.Container = new PIXI.Container();
     private background: PIXI.Graphics = new PIXI.Graphics();
 
     sideMenu: SideMenu = new SideMenu();
@@ -55,11 +55,11 @@ class KomodiClass {
         this.komodiDiv.classList.add("komodi-container");
 
         this.container.interactive = true;
-        this.container.addChild(this.stage);
-        this.container.addChild(this.fixed);
-        this.container.addChild(this.background);
+        this.container.addChild(this.stage, this.fixed, this.background);
+
         this.background.alpha = 0;
 
+        this.fixed.interactive = true;
         this.fixed.addChild(this.sideMenu, this.bottomMenu);
 
         // renderer initialization

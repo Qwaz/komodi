@@ -69,12 +69,12 @@ export class BlockGenerator extends LabelManager {
 
         this.on('mousedown', () => {
             let block = new blockClass();
-            Komodi.stage.addChild(block.graphic);
+            Komodi.container.addChild(block.graphic);
 
             let globalPosition = this.getGlobalPosition();
             block.graphic.x = globalPosition.x;
             block.graphic.y = globalPosition.y;
-            Komodi.attacher.setDragging(block);
+            Komodi.attacher.setDragging(block, true);
         });
     }
 }

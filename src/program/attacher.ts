@@ -10,6 +10,7 @@ interface AttachSet {
 }
 
 export class Attacher {
+    initialDrag: boolean = false;
     dragging: Block | null = null;
     mouseOffset: Coordinate = { x: 0, y: 0 };
 
@@ -17,24 +18,18 @@ export class Attacher {
 
     init() {
         Komodi.container.on('mousemove', () => {
-            if (this.dragging != null) {
-                let mouse = getMousePoint();
-                this.dragging.graphic.position = Komodi.stage.toLocal(new PIXI.Point(
-                    mouse.x - this.mouseOffset.x,
-                    mouse.y - this.mouseOffset.y
-                ));
+            this.updateDragging();
+        });
+
+        Komodi.fixed.on('mouseover', () => {
+            console.log('over');
+            if (!this.initialDrag) {
+                this.stopDragging();
             }
         });
 
         Komodi.container.on('mouseup', () => {
-            if (this.dragging != null) {
-                let globalPosition = this.dragging.graphic.getGlobalPosition();
-                let attachInfo = this.getNearestAttachPoint(globalPosition.x, globalPosition.y);
-                if (attachInfo != null) {
-                    attachInfo.target.attachBlock(attachInfo, this.dragging);
-                }
-                this.dragging = null;
-            }
+            this.stopDragging();
         });
     }
 
@@ -137,12 +132,9 @@ export class Attacher {
         return _.clone(attachPoint);
     }
 
-    setDragging(block: Block) {
+    setDragging(block: Block, initialDrag: boolean = false) {
         if (this.dragging != null) {
             return;
-        }
-        if (block.graphic.parent != Komodi.stage) {
-            throw new Error("block.graphic should be a direct child of Komodi.stage")
         }
 
         let blockGlobal = block.graphic.getGlobalPosition();
@@ -150,5 +142,31 @@ export class Attacher {
         this.mouseOffset.x = currentMouse.x - blockGlobal.x;
         this.mouseOffset.y = currentMouse.y - blockGlobal.y;
         this.dragging = block;
+        this.initialDrag = initialDrag;
+    }
+
+    updateDragging() {
+        if (this.dragging != null) {
+            let mouse = getMousePoint();
+            this.dragging.graphic.position = Komodi.stage.toLocal(new PIXI.Point(
+                mouse.x - this.mouseOffset.x,
+                mouse.y - this.mouseOffset.y
+            ));
+        }
+    }
+
+    stopDragging() {
+        if (this.dragging != null) {
+            let globalPosition = this.dragging.graphic.getGlobalPosition();
+            let attachInfo = this.getNearestAttachPoint(globalPosition.x, globalPosition.y);
+            if (attachInfo != null) {
+                attachInfo.target.attachBlock(attachInfo, this.dragging);
+            } else if (this.initialDrag) {
+                let position = this.dragging.graphic.getGlobalPosition();
+                Komodi.stage.addChild(this.dragging.graphic);
+                this.dragging.graphic.position = Komodi.stage.toLocal(position);
+            }
+            this.dragging = null;
+        }
     }
 }
