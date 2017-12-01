@@ -67717,6 +67717,15 @@ class Attacher {
         const updateDistance = (info) => {
             let globalPosition = info.target.graphic.toGlobal(new PIXI.Point(info.x, info.y));
             let candidateDistance = Math.abs(globalPosition.x - stageX) + Math.abs(globalPosition.y - stageY);
+            let now = info.target;
+            while (now) {
+                if (now == this.dragging)
+                    return;
+                if (now.attachInfo)
+                    now = now.attachInfo.target;
+                else
+                    break;
+            }
             if (candidateDistance < NEAR && candidateDistance < distance && info.target != this.dragging) {
                 distance = candidateDistance;
                 attachPoint = info;
