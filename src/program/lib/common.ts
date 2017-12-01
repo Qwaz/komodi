@@ -3,6 +3,20 @@ import {BlockClass} from "./index";
 import {boxScopeDrawer, lineScopeDrawer} from "../../graphic/scope_drawer";
 import {commandNodeDrawer, signalNodeDrawer} from "../../graphic/node_drawer";
 
+export class SignalStart extends Signal {
+    static definition = parseBlockDefinition({
+        id: SignalStart.name, definition: "start", scopeNames: ["body"],
+        nodeDrawer: signalNodeDrawer, scopeDrawer: lineScopeDrawer
+    });
+
+    body: Scope = [];
+
+    constructor() {
+        super(SignalStart.definition);
+        this.initFinished();
+    }
+}
+
 export class CmdIfElse extends Command {
     static definition = parseBlockDefinition({
         id: CmdIfElse.name, definition: "if [condition: bool]", scopeNames: ["ifBranch", "elseBranch"],
@@ -19,20 +33,6 @@ export class CmdIfElse extends Command {
     }
 }
 
-export class SignalStart extends Signal {
-    static definition = parseBlockDefinition({
-        id: SignalStart.name, definition: "start", scopeNames: ["body"],
-        nodeDrawer: signalNodeDrawer, scopeDrawer: lineScopeDrawer
-    });
-
-    body: Scope = [];
-
-    constructor() {
-        super(SignalStart.definition);
-        this.initFinished();
-    }
-}
-
 export let blockList: BlockClass[] = [
-    CmdIfElse, SignalStart
+    SignalStart, CmdIfElse
 ];

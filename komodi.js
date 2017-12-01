@@ -2091,6 +2091,7 @@ const KOMODI_STYLE = `
     padding: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     background-image: linear-gradient(
         0deg,
         transparent 24%,
@@ -2121,8 +2122,9 @@ class KomodiClass {
         this.stage = new PIXI.Container();
         this.fixed = new PIXI.Container();
         this.background = new PIXI.Graphics();
+        this.topMenu = new menu_1.TopMenu();
         this.sideMenu = new menu_1.SideMenu();
-        this.bottomMenu = new menu_1.BottomMenu();
+        this.bottomMenu = new menu_1.ConsoleMenu();
         this.attacher = new attacher_1.Attacher();
         this.komodiDiv = document.createElement("div");
         this.komodiDiv.classList.add("komodi-container");
@@ -2130,7 +2132,11 @@ class KomodiClass {
         this.container.addChild(this.stage, this.fixed, this.background);
         this.background.alpha = 0;
         this.fixed.interactive = true;
-        this.fixed.addChild(this.sideMenu, this.bottomMenu);
+        this.fixed.addChild(this.sideMenu, this.bottomMenu, this.topMenu);
+        this.topMenu.addMenu('Open', () => {
+        });
+        this.topMenu.addMenu('Save', () => {
+        });
         this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2 });
     }
     init() {
@@ -2143,6 +2149,7 @@ class KomodiClass {
             this.renderer.resize(screenWidth, screenHeight);
             this.background.clear();
             this.background.drawRect(0, 0, screenWidth, screenHeight);
+            this.topMenu.update(screenWidth, screenHeight);
             this.sideMenu.update(screenWidth, screenHeight);
             this.bottomMenu.update(screenWidth, screenHeight);
         };
@@ -24581,8 +24588,8 @@ class BlockGenerator extends LabelManager {
         blockClass.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
         this.on('mousedown', () => {
             let block = new blockClass();
-            global_1.Komodi.fixed.addChild(block.graphic);
             let globalPosition = this.getGlobalPosition();
+            global_1.Komodi.fixed.addChild(block.graphic);
             block.graphic.x = globalPosition.x;
             block.graphic.y = globalPosition.y;
             global_1.Komodi.attacher.setDragging(block, true);
@@ -67340,42 +67347,169 @@ const PIXI = __webpack_require__(88);
 const index_1 = __webpack_require__(221);
 const global_1 = __webpack_require__(9);
 const index_2 = __webpack_require__(28);
-const SIDE_MENU_WIDTH = 330;
-const TOP_MENU_HEIGHT = 350;
-const BOTTOM_MENU_HEIGHT = 200;
+const TOP_MENU_HEIGHT = 85;
+const TOP_MENU_BUTTON_HEIGHT = 30;
+const SIDE_MENU_WIDTH = 240;
+const MODULE_MENU_END_Y = 350;
+const BOTTOM_MENU_HEIGHT = 140;
 const BOTTOM_MENU_TIP_WIDTH = 120;
 const BOTTOM_MENU_TIP_HEIGHT = 30;
-let selectedModuleButton = null;
-class ModuleButton extends PIXI.Text {
-    constructor(text, blockSet) {
-        super(text, {
-            fontSize: 18, align: 'center', fill: ModuleButton.NORMAL_COLOR
+var MENU_COLOR;
+(function (MENU_COLOR) {
+    MENU_COLOR[MENU_COLOR["BACKGROUND_GREY"] = 15921906] = "BACKGROUND_GREY";
+    MENU_COLOR[MENU_COLOR["BACKGROUND_WHITE"] = 16579836] = "BACKGROUND_WHITE";
+    MENU_COLOR[MENU_COLOR["BUTTON_NORMAL"] = 16579836] = "BUTTON_NORMAL";
+    MENU_COLOR[MENU_COLOR["BUTTON_HOVER"] = 15264493] = "BUTTON_HOVER";
+    MENU_COLOR[MENU_COLOR["BUTTON_SELECTED"] = 1736132] = "BUTTON_SELECTED";
+    MENU_COLOR[MENU_COLOR["OUTLINE"] = 13158600] = "OUTLINE";
+    MENU_COLOR[MENU_COLOR["TEXT_WHITE"] = 16777215] = "TEXT_WHITE";
+    MENU_COLOR[MENU_COLOR["TEXT_SEMI_BLACK"] = 3158064] = "TEXT_SEMI_BLACK";
+    MENU_COLOR[MENU_COLOR["TEXT_BLUE"] = 222934] = "TEXT_BLUE";
+})(MENU_COLOR || (MENU_COLOR = {}));
+class TopMenu extends PIXI.Container {
+    constructor() {
+        super();
+        this.background = new PIXI.Graphics();
+        this.buttonList = [];
+        this.buttonX = 0;
+        this.addChild(this.background);
+        this.label = new PIXI.Text("Untitled Komodi Project", {
+            fontSize: 26, fill: MENU_COLOR.TEXT_SEMI_BLACK
         });
-        this.blockSet = blockSet;
-        this.interactive = true;
-        this.buttonMode = true;
-        this.on('click', () => {
-            global_1.Komodi.sideMenu.changeBlockSet(selectedModuleButton, this);
-        });
+        this.addChild(this.label);
+        this.label.x = 16;
+        this.label.y = (TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT) * .5 - this.label.height * .5;
     }
-    highlight(apply) {
-        if (apply) {
-            this.style.fill = ModuleButton.HIGHLIGHT_COLOR;
-        }
-        else {
-            this.style.fill = ModuleButton.NORMAL_COLOR;
-        }
+    update(width, _height) {
+        this.background.clear();
+        this.background.beginFill(MENU_COLOR.BACKGROUND_GREY);
+        this.background.drawRect(0, 0, width, TOP_MENU_HEIGHT);
+        this.background.lineStyle(0.5, MENU_COLOR.OUTLINE);
+        this.background.moveTo(0, TOP_MENU_HEIGHT);
+        this.background.lineTo(width, TOP_MENU_HEIGHT);
+        this.background.moveTo(0, TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT);
+        this.background.lineTo(width, TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT);
+    }
+    addMenu(text, callback) {
+        const PADDING = 16;
+        let label = new PIXI.Text(text, {
+            fontSize: 12
+        });
+        let background = new PIXI.Graphics();
+        let button = new PIXI.Container();
+        button.addChild(background, label);
+        this.addChild(button);
+        let setStyleNormal = () => {
+            background.clear();
+            background.beginFill(MENU_COLOR.BUTTON_NORMAL);
+            background.lineStyle(0.5, MENU_COLOR.OUTLINE);
+            background.drawRect(0, 0, label.width + 2 * PADDING, TOP_MENU_BUTTON_HEIGHT);
+        };
+        let setStyleHover = () => {
+            background.clear();
+            background.beginFill(MENU_COLOR.BUTTON_HOVER);
+            background.lineStyle(0.5, MENU_COLOR.OUTLINE);
+            background.drawRect(0, 0, label.width + 2 * PADDING, TOP_MENU_BUTTON_HEIGHT);
+        };
+        setStyleNormal();
+        label.x = background.width * .5 - label.width * .5;
+        label.y = background.height * .5 - label.height * .5;
+        button.x = this.buttonX;
+        button.y = TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT;
+        this.buttonX += button.width;
+        button.interactive = true;
+        button.buttonMode = true;
+        button.on('mouseover', setStyleHover);
+        button.on('mouseout', setStyleNormal);
+        this.buttonList.push(button);
     }
 }
-ModuleButton.NORMAL_COLOR = 0x0366d6;
-ModuleButton.HIGHLIGHT_COLOR = 0x84a3d6;
+exports.TopMenu = TopMenu;
+class ListSelector extends PIXI.Container {
+    constructor(backgroundWidth) {
+        super();
+        this.backgroundWidth = backgroundWidth;
+        this._selectedIndex = -1;
+        this.buttonList = [];
+        this.dataList = [];
+    }
+    get selectedIndex() {
+        return this._selectedIndex;
+    }
+    set selectedIndex(value) {
+        if (this.onChange) {
+            this.onChange(value, value == -1 ? null : this.dataList[value]);
+        }
+        this._selectedIndex = value;
+    }
+    addButton(text, data) {
+        const LIST_BUTTON_HEIGHT = 35;
+        let currentIndex = this.buttonList.length;
+        let label = new PIXI.Text(text, {
+            fontSize: 16, fill: MENU_COLOR.TEXT_BLUE
+        });
+        let background = new PIXI.Graphics();
+        let button = new PIXI.Container();
+        button.addChild(background, label);
+        this.addChild(button);
+        let setStyleNormal = () => {
+            background.clear();
+            background.beginFill(MENU_COLOR.BUTTON_NORMAL);
+            background.drawRect(0, 0, this.backgroundWidth, LIST_BUTTON_HEIGHT);
+            label.style.fill = MENU_COLOR.TEXT_BLUE;
+        };
+        let setStyleHover = () => {
+            background.clear();
+            background.beginFill(MENU_COLOR.BUTTON_HOVER);
+            background.drawRect(0, 0, this.backgroundWidth, LIST_BUTTON_HEIGHT);
+            label.style.fill = MENU_COLOR.TEXT_BLUE;
+        };
+        let setStyleSelected = () => {
+            background.clear();
+            background.beginFill(MENU_COLOR.BUTTON_SELECTED);
+            background.drawRect(0, 0, this.backgroundWidth, LIST_BUTTON_HEIGHT);
+            label.style.fill = MENU_COLOR.TEXT_WHITE;
+        };
+        setStyleNormal();
+        label.x = 20;
+        label.y = background.height * .5 - label.height * .5;
+        button.y = LIST_BUTTON_HEIGHT * currentIndex;
+        button.interactive = true;
+        button.buttonMode = true;
+        button.on('mouseover', () => {
+            if (this.selectedIndex != currentIndex) {
+                setStyleHover();
+            }
+        });
+        button.on('mouseout', () => {
+            if (this.selectedIndex != currentIndex) {
+                setStyleNormal();
+            }
+        });
+        button.on('click', () => {
+            let prevIndex = this.selectedIndex;
+            if (prevIndex == currentIndex) {
+                this.selectedIndex = -1;
+                setStyleHover();
+            }
+            else {
+                this.selectedIndex = currentIndex;
+                if (prevIndex != -1) {
+                    this.buttonList[prevIndex].emit('mouseout');
+                }
+                setStyleSelected();
+            }
+        });
+        this.buttonList.push(button);
+        this.dataList.push(data);
+    }
+}
 class ModuleSelector extends PIXI.Container {
     constructor() {
         const PADDING = 10;
-        const LEFT_INDENT = 30;
         const HEADING_STYLE = {
             fontFamily: 'FontAwesome',
-            fontSize: 18, fontWeight: 'bold'
+            fill: MENU_COLOR.TEXT_SEMI_BLACK, fontSize: 18, fontWeight: 'bold'
         };
         super();
         this.builtinModules = index_1.builtinModules;
@@ -67383,16 +67517,15 @@ class ModuleSelector extends PIXI.Container {
         this.addChild(builtinLabel);
         builtinLabel.x = PADDING;
         builtinLabel.y = PADDING;
-        this.arrangeModuleButton(LEFT_INDENT, PADDING + builtinLabel.height + PADDING, this.builtinModules);
-    }
-    arrangeModuleButton(startX, startY, set) {
-        let cnt = 0;
-        for (let [setName, blocks] of set) {
-            let label = new ModuleButton(setName, blocks);
-            this.addChild(label);
-            label.x = startX;
-            label.y = startY + label.height * (cnt++);
+        this.moduleSelector = new ListSelector(SIDE_MENU_WIDTH);
+        this.addChild(this.moduleSelector);
+        this.moduleSelector.y = PADDING * 2 + builtinLabel.height;
+        for (let [setName, blocks] of this.builtinModules) {
+            this.moduleSelector.addButton(setName, blocks);
         }
+        this.moduleSelector.onChange = (_index, set) => {
+            global_1.Komodi.sideMenu.changeBlockSet(set);
+        };
     }
 }
 exports.ModuleSelector = ModuleSelector;
@@ -67433,63 +67566,53 @@ class SideMenu extends PIXI.Container {
         this.bottomContent = new BlockGeneratorList();
         this.interactive = true;
         this.addChild(this.background, this.topContent, this.bottomContent);
-        this.bottomContent.y = TOP_MENU_HEIGHT;
+        this.topContent.y = TOP_MENU_HEIGHT;
+        this.bottomContent.y = MODULE_MENU_END_Y;
     }
-    changeBlockSet(prevModuleButton, newModuleButton) {
-        if (prevModuleButton) {
-            prevModuleButton.highlight(false);
-        }
-        if (newModuleButton) {
-            newModuleButton.highlight(true);
-            this.bottomContent.update(newModuleButton.blockSet);
-        }
-        else {
-            this.bottomContent.update(null);
-        }
-        selectedModuleButton = newModuleButton;
+    changeBlockSet(blockSet) {
+        this.bottomContent.update(blockSet);
     }
     update(_width, height) {
         this.background.clear();
-        this.background.beginFill(0xfcfcfc);
-        this.background.drawRect(0, 0, SIDE_MENU_WIDTH, height);
-        this.background.lineStyle(2, 0xc0c0c0);
-        this.background.moveTo(0, TOP_MENU_HEIGHT);
-        this.background.lineTo(SIDE_MENU_WIDTH, TOP_MENU_HEIGHT);
-        this.background.moveTo(SIDE_MENU_WIDTH, 0);
+        this.background.beginFill(MENU_COLOR.BACKGROUND_WHITE);
+        this.background.drawRect(0, TOP_MENU_HEIGHT, SIDE_MENU_WIDTH, height - TOP_MENU_HEIGHT);
+        this.background.lineStyle(1, MENU_COLOR.OUTLINE);
+        this.background.moveTo(0, MODULE_MENU_END_Y);
+        this.background.lineTo(SIDE_MENU_WIDTH, MODULE_MENU_END_Y);
+        this.background.moveTo(SIDE_MENU_WIDTH, TOP_MENU_HEIGHT);
         this.background.lineTo(SIDE_MENU_WIDTH, height);
     }
 }
 exports.SideMenu = SideMenu;
-class BottomMenu extends PIXI.Container {
+class ConsoleMenu extends PIXI.Container {
     constructor() {
         super();
         this.background = new PIXI.Graphics();
         this.interactive = true;
-        this.label = new PIXI.Text('Console', {
+        this.label = new PIXI.Text('Output', {
             fontSize: 16, align: 'center'
         });
         this.addChild(this.background);
         this.addChild(this.label);
     }
     update(width, height) {
+        const DIAGONAL_WIDTH = 10;
         const tipTop = height - BOTTOM_MENU_HEIGHT - BOTTOM_MENU_TIP_HEIGHT;
-        this.label.x = SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH * .5 - this.label.width * .5;
+        this.label.x = SIDE_MENU_WIDTH + (BOTTOM_MENU_TIP_WIDTH - DIAGONAL_WIDTH) * .5 - this.label.width * .5;
         this.label.y = height - BOTTOM_MENU_HEIGHT - BOTTOM_MENU_TIP_HEIGHT * .5 - this.label.height * .5;
         this.background.clear();
-        this.background.beginFill(0xfcfcfc);
-        this.background.lineStyle(2, 0xc0c0c0);
-        this.background.moveTo(SIDE_MENU_WIDTH, height - BOTTOM_MENU_HEIGHT);
-        this.background.quadraticCurveTo(SIDE_MENU_WIDTH, tipTop, SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_HEIGHT, tipTop);
-        this.background.moveTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_HEIGHT, tipTop);
-        this.background.lineTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH - BOTTOM_MENU_TIP_HEIGHT, tipTop);
-        this.background.quadraticCurveTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH, tipTop, SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH, height - BOTTOM_MENU_HEIGHT);
+        this.background.beginFill(MENU_COLOR.BACKGROUND_WHITE);
+        this.background.lineStyle(1, MENU_COLOR.OUTLINE);
+        this.background.moveTo(SIDE_MENU_WIDTH, tipTop);
+        this.background.lineTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH - DIAGONAL_WIDTH, tipTop);
+        this.background.lineTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH, height - BOTTOM_MENU_HEIGHT);
         this.background.lineTo(width, height - BOTTOM_MENU_HEIGHT);
         this.background.lineTo(width, height);
         this.background.lineTo(SIDE_MENU_WIDTH, height);
-        this.background.lineTo(SIDE_MENU_WIDTH, height - BOTTOM_MENU_HEIGHT);
+        this.background.lineTo(SIDE_MENU_WIDTH, tipTop);
     }
 }
-exports.BottomMenu = BottomMenu;
+exports.ConsoleMenu = ConsoleMenu;
 
 
 /***/ }),
@@ -67503,6 +67626,9 @@ const _ = __webpack_require__(16);
 const index_1 = __webpack_require__(15);
 const utils_1 = __webpack_require__(100);
 const global_1 = __webpack_require__(9);
+const INDICATOR_COLOR = 0x505050;
+const INDICATOR_RADIUS = 3;
+const NEAR = 120;
 class Attacher {
     constructor() {
         this.initialDrag = false;
@@ -67512,8 +67638,7 @@ class Attacher {
         this.map = new Map();
     }
     init() {
-        global_1.Komodi.container.addChild(this.indicator);
-        this.indicator.alpha = 0.6;
+        global_1.Komodi.stage.addChild(this.indicator);
         global_1.Komodi.container.on('mousemove', () => {
             this.updateDragging();
         });
@@ -67584,7 +67709,6 @@ class Attacher {
         scopeAttachArray.length = coordinates.length;
     }
     getNearestAttachPoint(stageX, stageY) {
-        const NEAR = 60;
         if (this.dragging instanceof index_1.Signal) {
             return null;
         }
@@ -67621,6 +67745,12 @@ class Attacher {
         if (this.dragging != null) {
             return;
         }
+        if (block.graphic.parent == global_1.Komodi.fixed) {
+            global_1.Komodi.stage.setChildIndex(this.indicator, global_1.Komodi.stage.children.length - 1);
+        }
+        else {
+            global_1.Komodi.stage.setChildIndex(this.indicator, global_1.Komodi.stage.getChildIndex(block.graphic) - 1);
+        }
         let blockGlobal = block.graphic.getGlobalPosition();
         let currentMouse = utils_1.getMousePoint();
         this.mouseOffset.x = currentMouse.x - blockGlobal.x;
@@ -67641,7 +67771,6 @@ class Attacher {
                 this.updateIndicator(globalX, globalY, globalPosition.x + attachInfo.x, globalPosition.y + attachInfo.y);
             }
             else {
-                console.log('out');
                 this.indicator.clear();
             }
         }
@@ -67664,17 +67793,16 @@ class Attacher {
         }
     }
     updateIndicator(sx, sy, ex, ey) {
-        const RADIUS = 5;
         this.indicator.clear();
-        this.indicator.x = sx;
-        this.indicator.y = sy;
-        this.indicator.beginFill(0xFF0000);
-        this.indicator.drawCircle(0, 0, RADIUS);
-        let dx = ex - sx, dy = ey - sy;
+        this.indicator.x = ex;
+        this.indicator.y = ey;
+        this.indicator.beginFill(INDICATOR_COLOR);
+        this.indicator.drawCircle(0, 0, INDICATOR_RADIUS);
+        let dx = sx - ex, dy = sy - ey;
         let radian = Math.atan2(dy, dx);
         this.indicator.moveTo(dx, dy);
-        this.indicator.lineTo(Math.cos(radian + Math.PI / 2) * RADIUS, Math.sin(radian + Math.PI / 2) * RADIUS);
-        this.indicator.lineTo(Math.cos(radian - Math.PI / 2) * RADIUS, Math.sin(radian - Math.PI / 2) * RADIUS);
+        this.indicator.lineTo(Math.cos(radian + Math.PI / 2) * INDICATOR_RADIUS, Math.sin(radian + Math.PI / 2) * INDICATOR_RADIUS);
+        this.indicator.lineTo(Math.cos(radian - Math.PI / 2) * INDICATOR_RADIUS, Math.sin(radian - Math.PI / 2) * INDICATOR_RADIUS);
         this.indicator.lineTo(dx, dy);
     }
 }
@@ -67724,6 +67852,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __webpack_require__(15);
 const scope_drawer_1 = __webpack_require__(47);
 const node_drawer_1 = __webpack_require__(46);
+class SignalStart extends index_1.Signal {
+    constructor() {
+        super(SignalStart.definition);
+        this.body = [];
+        this.initFinished();
+    }
+}
+SignalStart.definition = index_1.parseBlockDefinition({
+    id: SignalStart.name, definition: "start", scopeNames: ["body"],
+    nodeDrawer: node_drawer_1.signalNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+});
+exports.SignalStart = SignalStart;
 class CmdIfElse extends index_1.Command {
     constructor() {
         super(CmdIfElse.definition);
@@ -67738,20 +67878,8 @@ CmdIfElse.definition = index_1.parseBlockDefinition({
     nodeDrawer: node_drawer_1.commandNodeDrawer, scopeDrawer: scope_drawer_1.boxScopeDrawer
 });
 exports.CmdIfElse = CmdIfElse;
-class SignalStart extends index_1.Signal {
-    constructor() {
-        super(SignalStart.definition);
-        this.body = [];
-        this.initFinished();
-    }
-}
-SignalStart.definition = index_1.parseBlockDefinition({
-    id: SignalStart.name, definition: "start", scopeNames: ["body"],
-    nodeDrawer: node_drawer_1.signalNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
-});
-exports.SignalStart = SignalStart;
 exports.blockList = [
-    CmdIfElse, SignalStart
+    SignalStart, CmdIfElse
 ];
 
 

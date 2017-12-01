@@ -10,6 +10,10 @@ interface AttachSet {
     scopeAttach: Map <string, (ScopeAttach & Coordinate)[]>;
 }
 
+const INDICATOR_COLOR = 0x505050;
+const INDICATOR_RADIUS = 3;
+const NEAR = 120;
+
 export class Attacher {
     initialDrag: boolean = false;
     dragging: Block | null = null;
@@ -20,8 +24,7 @@ export class Attacher {
     private map: Map <Block, AttachSet> = new Map();
 
     init() {
-        Komodi.container.addChild(this.indicator);
-        this.indicator.alpha = 0.6;
+        Komodi.stage.addChild(this.indicator);
 
         Komodi.container.on('mousemove', () => {
             this.updateDragging();
@@ -104,8 +107,6 @@ export class Attacher {
     getNearestAttachPoint(
         stageX: number, stageY: number
     ): AttachInfo & Coordinate | null {
-        const NEAR = 60;
-
         if (this.dragging instanceof Signal) {
             return null;
         }
@@ -151,6 +152,12 @@ export class Attacher {
             return;
         }
 
+        if (block.graphic.parent == Komodi.fixed) {
+            Komodi.stage.setChildIndex(this.indicator, Komodi.stage.children.length-1);
+        } else {
+            Komodi.stage.setChildIndex(this.indicator, Komodi.stage.getChildIndex(block.graphic)-1);
+        }
+
         let blockGlobal = block.graphic.getGlobalPosition();
         let currentMouse = getMousePoint();
         this.mouseOffset.x = currentMouse.x - blockGlobal.x;
@@ -175,7 +182,6 @@ export class Attacher {
                 let globalPosition = attachInfo.target.graphic.getGlobalPosition();
                 this.updateIndicator(globalX, globalY, globalPosition.x + attachInfo.x, globalPosition.y + attachInfo.y);
             } else {
-                console.log('out');
                 this.indicator.clear();
             }
         }
@@ -200,20 +206,18 @@ export class Attacher {
     }
 
     private updateIndicator(sx: number, sy: number, ex: number, ey: number) {
-        const RADIUS = 5;
-
         this.indicator.clear();
 
-        this.indicator.x = sx;
-        this.indicator.y = sy;
-        this.indicator.beginFill(0xFF0000);
-        this.indicator.drawCircle(0, 0, RADIUS);
+        this.indicator.x = ex;
+        this.indicator.y = ey;
+        this.indicator.beginFill(INDICATOR_COLOR);
+        this.indicator.drawCircle(0, 0, INDICATOR_RADIUS);
 
-        let dx = ex-sx, dy = ey-sy;
+        let dx = sx-ex, dy = sy-ey;
         let radian = Math.atan2(dy, dx);
         this.indicator.moveTo(dx, dy);
-        this.indicator.lineTo(Math.cos(radian + Math.PI/2) * RADIUS, Math.sin(radian + Math.PI/2) * RADIUS);
-        this.indicator.lineTo(Math.cos(radian - Math.PI/2) * RADIUS, Math.sin(radian - Math.PI/2) * RADIUS);
+        this.indicator.lineTo(Math.cos(radian + Math.PI/2) * INDICATOR_RADIUS, Math.sin(radian + Math.PI/2) * INDICATOR_RADIUS);
+        this.indicator.lineTo(Math.cos(radian - Math.PI/2) * INDICATOR_RADIUS, Math.sin(radian - Math.PI/2) * INDICATOR_RADIUS);
         this.indicator.lineTo(dx, dy);
     }
 }

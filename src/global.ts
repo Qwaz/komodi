@@ -2,7 +2,7 @@ import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
 import {Attacher} from "./program/attacher";
-import {BottomMenu, SideMenu} from "./menu";
+import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -10,6 +10,7 @@ const KOMODI_STYLE = `
     padding: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
     background-image: linear-gradient(
         0deg,
         transparent 24%,
@@ -45,8 +46,9 @@ class KomodiClass {
     readonly fixed: PIXI.Container = new PIXI.Container();
     private background: PIXI.Graphics = new PIXI.Graphics();
 
+    topMenu: TopMenu = new TopMenu();
     sideMenu: SideMenu = new SideMenu();
-    bottomMenu: BottomMenu = new BottomMenu();
+    bottomMenu: ConsoleMenu = new ConsoleMenu();
 
     attacher: Attacher = new Attacher();
 
@@ -60,7 +62,16 @@ class KomodiClass {
         this.background.alpha = 0;
 
         this.fixed.interactive = true;
-        this.fixed.addChild(this.sideMenu, this.bottomMenu);
+        this.fixed.addChild(this.sideMenu, this.bottomMenu, this.topMenu);
+
+        // setup top menu
+        this.topMenu.addMenu('Open', () => {
+
+        });
+
+        this.topMenu.addMenu('Save', () => {
+
+        });
 
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
@@ -82,6 +93,7 @@ class KomodiClass {
             this.background.clear();
             this.background.drawRect(0, 0, screenWidth, screenHeight);
 
+            this.topMenu.update(screenWidth, screenHeight);
             this.sideMenu.update(screenWidth, screenHeight);
             this.bottomMenu.update(screenWidth, screenHeight);
         };
