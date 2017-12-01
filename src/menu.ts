@@ -46,6 +46,14 @@ export class TopMenu extends PIXI.Container {
         this.label.y = (TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT)*.5 - this.label.height*.5;
     }
 
+    get projectName(): string {
+        return this.label.text;
+    }
+
+    set projectName(text: string) {
+        this.label.text = text;
+    }
+
     update(width: number, _height: number) {
         this.background.clear();
         this.background.beginFill(MENU_COLOR.BACKGROUND_GREY);
@@ -88,13 +96,14 @@ export class TopMenu extends PIXI.Container {
 
         button.x = this.buttonX;
         button.y = TOP_MENU_HEIGHT-TOP_MENU_BUTTON_HEIGHT;
-        this.buttonX += button.width;
+        this.buttonX += label.width + 2*PADDING;
 
         // interaction
         button.interactive = true;
         button.buttonMode = true;
         button.on('mouseover', setStyleHover);
         button.on('mouseout', setStyleNormal);
+        button.on('click', callback);
 
         this.buttonList.push(button);
     }

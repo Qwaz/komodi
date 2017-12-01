@@ -14,3 +14,11 @@ export const builtinModules: Map<string, BlockClass[]> = new Map();
 builtinModules.set('common', commonBlockList);
 builtinModules.set('io', ioBlockList);
 builtinModules.set('string', stringBlockList);
+
+export let blockClassDictionary: Map<string, BlockClass> = new Map();
+
+for (let [_set, blocks] of builtinModules.entries()) {
+    for (let blockClass of blocks) {
+        blockClassDictionary.set(blockClass.definition.id, blockClass);
+    }
+}

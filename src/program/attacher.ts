@@ -1,9 +1,26 @@
 import * as _ from "lodash";
-import {ArgumentAttach, AttachInfo, Block, Command, Expression, ScopeAttach, Signal} from "./index";
+import {Block, Command, Expression, Signal} from "./index";
 import {Coordinate} from "../common/definition";
 import {getMousePoint} from "../common/utils";
 import {Komodi} from "../global";
 import {ExpressionToken} from "../graphic/index";
+
+export interface ArgumentAttach {
+    attachType: "argument";
+
+    target: Block;
+    argumentName: string;
+}
+
+export interface ScopeAttach {
+    attachType: "scope";
+
+    target: Block;
+    scopeName: string;
+    scopeIndex: number;
+}
+
+export type AttachInfo = ArgumentAttach | ScopeAttach;
 
 interface AttachSet {
     argumentAttach: Map <string, ArgumentAttach & Coordinate>;

@@ -1,5 +1,4 @@
 import * as _ from "lodash";
-import {Coordinate} from "../common/definition";
 import {
     BlockGraphic,
     ExpressionToken,
@@ -12,16 +11,7 @@ import {
 import {KomodiType, typeFromString} from "../type";
 import {BlockDefinition, blockDefinitionParser} from "./definition_parser";
 import {Komodi} from "../global";
-
-interface FreeBlock {
-    coordinate: Coordinate;
-    block: Block;
-}
-
-export class Program {
-    constructor(readonly freeBlocks: Set <FreeBlock>) {
-    }
-}
+import {AttachInfo, ScopeAttach} from "./attacher";
 
 interface BlockDefinitionBase {
     id: string;
@@ -57,23 +47,6 @@ export function parseBlockDefinition(definitionBase: BlockDefinitionBase): Block
         scopeDrawer: definitionBase.scopeDrawer
     }
 }
-
-export interface ArgumentAttach {
-    attachType: "argument";
-
-    target: Block;
-    argumentName: string;
-}
-
-export interface ScopeAttach {
-    attachType: "scope";
-
-    target: Block;
-    scopeName: string;
-    scopeIndex: number;
-}
-
-export type AttachInfo = ArgumentAttach | ScopeAttach;
 
 export abstract class Block {
     // parental attach information
@@ -192,6 +165,19 @@ export abstract class Block {
     }
 
     destroy() {
+        for (let argumentName of this.definition.argumentNames) {
+            let argumentBlock = this.getArgument(argumentName);
+            if (argumentBlock) {
+                argumentBlock.destroy();
+            }
+        }
+
+        for (let scopeName of this.definition.scopeNames) {
+            for (let scopeBlock of this.getScope(scopeName)) {
+                scopeBlock.destroy();
+            }
+        }
+
         this.graphic.destroy();
         Komodi.attacher.removeBlock(this);
     }

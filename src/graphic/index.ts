@@ -82,7 +82,7 @@ export class BlockGenerator extends LabelManager {
 export class BlockGraphic extends LabelManager {
     readonly graphics: PIXI.Graphics = new PIXI.Graphics();
 
-    constructor(private logic: Block, private nodeDrawer: NodeDrawer, private scopeDrawer: ScopeDrawer) {
+    constructor(readonly logic: Block, private nodeDrawer: NodeDrawer, private scopeDrawer: ScopeDrawer) {
         super();
 
         this.addChild(this.graphics);

@@ -3,6 +3,8 @@ import * as WebFont from "webfontloader";
 import * as PIXI from "pixi.js";
 import {Attacher} from "./program/attacher";
 import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
+import {deserializeProgram, serializeProgram} from "./program/serializer";
+import {BlockGraphic} from "./graphic/index";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -66,11 +68,37 @@ class KomodiClass {
 
         // setup top menu
         this.topMenu.addMenu('Open', () => {
+            if (window.confirm('Current progress will be lost')) {
+                let fakeInput = document.createElement('input');
+                fakeInput.setAttribute('type', 'file');
+                fakeInput.setAttribute('accept', '.komodi');
+                fakeInput.click();
+                fakeInput.addEventListener('change', () => {
+                    if (fakeInput.files && fakeInput.files[0]) {
+                        let file = fakeInput.files[0];
 
+                        // TODO: contents validation
+                        let reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.clearStage();
+                            this.topMenu.projectName = file.name.slice(0, -7);
+                            deserializeProgram(JSON.parse(reader.result));
+                        };
+                        reader.readAsText(file);
+                    }
+                });
+            }
         });
 
         this.topMenu.addMenu('Save', () => {
-
+            let serialized = serializeProgram(),
+                blob = new Blob([JSON.stringify(serialized)], {type: 'octet/stream'}),
+                url = URL.createObjectURL(blob);
+            let fakeLink = document.createElement('a');
+            fakeLink.href = url;
+            fakeLink.download = this.topMenu.projectName + '.komodi';
+            fakeLink.click();
+            URL.revokeObjectURL(url);
         });
 
         // renderer initialization
@@ -82,6 +110,15 @@ class KomodiClass {
 
     init() {
         this.attacher.init();
+    }
+
+    clearStage() {
+        for (let index = this.stage.children.length-1; index >= 0; index--) {
+            let child = this.stage.getChildAt(index);
+            if (child instanceof BlockGraphic) {
+                child.logic.destroy();
+            }
+        }
     }
 
     initializeDOM(parent: HTMLElement) {

@@ -2085,6 +2085,8 @@ const WebFont = __webpack_require__(225);
 const PIXI = __webpack_require__(88);
 const attacher_1 = __webpack_require__(218);
 const menu_1 = __webpack_require__(217);
+const serializer_1 = __webpack_require__(226);
+const index_1 = __webpack_require__(28);
 const KOMODI_STYLE = `
 .komodi-container {
     margin: 0;
@@ -2134,13 +2136,45 @@ class KomodiClass {
         this.fixed.interactive = true;
         this.fixed.addChild(this.sideMenu, this.bottomMenu, this.topMenu);
         this.topMenu.addMenu('Open', () => {
+            if (window.confirm('Current progress will be lost')) {
+                let fakeInput = document.createElement('input');
+                fakeInput.setAttribute('type', 'file');
+                fakeInput.setAttribute('accept', '.komodi');
+                fakeInput.click();
+                fakeInput.addEventListener('change', () => {
+                    if (fakeInput.files && fakeInput.files[0]) {
+                        let file = fakeInput.files[0];
+                        let reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.clearStage();
+                            this.topMenu.projectName = file.name.slice(0, -7);
+                            serializer_1.deserializeProgram(JSON.parse(reader.result));
+                        };
+                        reader.readAsText(file);
+                    }
+                });
+            }
         });
         this.topMenu.addMenu('Save', () => {
+            let serialized = serializer_1.serializeProgram(), blob = new Blob([JSON.stringify(serialized)], { type: 'octet/stream' }), url = URL.createObjectURL(blob);
+            let fakeLink = document.createElement('a');
+            fakeLink.href = url;
+            fakeLink.download = this.topMenu.projectName + '.komodi';
+            fakeLink.click();
+            URL.revokeObjectURL(url);
         });
         this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2 });
     }
     init() {
         this.attacher.init();
+    }
+    clearStage() {
+        for (let index = this.stage.children.length - 1; index >= 0; index--) {
+            let child = this.stage.getChildAt(index);
+            if (child instanceof index_1.BlockGraphic) {
+                child.logic.destroy();
+            }
+        }
     }
     initializeDOM(parent) {
         let resize = () => {
@@ -4151,12 +4185,6 @@ const index_1 = __webpack_require__(28);
 const type_1 = __webpack_require__(101);
 const definition_parser_1 = __webpack_require__(219);
 const global_1 = __webpack_require__(9);
-class Program {
-    constructor(freeBlocks) {
-        this.freeBlocks = freeBlocks;
-    }
-}
-exports.Program = Program;
 function parseBlockDefinition(definitionBase) {
     let parsed = definition_parser_1.blockDefinitionParser.parse(definitionBase.definition);
     let tokens = _.map(parsed.tokens, (token) => {
@@ -4281,6 +4309,17 @@ class Block {
         }
     }
     destroy() {
+        for (let argumentName of this.definition.argumentNames) {
+            let argumentBlock = this.getArgument(argumentName);
+            if (argumentBlock) {
+                argumentBlock.destroy();
+            }
+        }
+        for (let scopeName of this.definition.scopeNames) {
+            for (let scopeBlock of this.getScope(scopeName)) {
+                scopeBlock.destroy();
+            }
+        }
         this.graphic.destroy();
         global_1.Komodi.attacher.removeBlock(this);
     }
@@ -67380,6 +67419,12 @@ class TopMenu extends PIXI.Container {
         this.label.x = 16;
         this.label.y = (TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT) * .5 - this.label.height * .5;
     }
+    get projectName() {
+        return this.label.text;
+    }
+    set projectName(text) {
+        this.label.text = text;
+    }
     update(width, _height) {
         this.background.clear();
         this.background.beginFill(MENU_COLOR.BACKGROUND_GREY);
@@ -67416,11 +67461,12 @@ class TopMenu extends PIXI.Container {
         label.y = background.height * .5 - label.height * .5;
         button.x = this.buttonX;
         button.y = TOP_MENU_HEIGHT - TOP_MENU_BUTTON_HEIGHT;
-        this.buttonX += button.width;
+        this.buttonX += label.width + 2 * PADDING;
         button.interactive = true;
         button.buttonMode = true;
         button.on('mouseover', setStyleHover);
         button.on('mouseout', setStyleNormal);
+        button.on('click', callback);
         this.buttonList.push(button);
     }
 }
@@ -67906,6 +67952,12 @@ exports.builtinModules = new Map();
 exports.builtinModules.set('common', common_1.blockList);
 exports.builtinModules.set('io', io_1.blockList);
 exports.builtinModules.set('string', string_1.blockList);
+exports.blockClassDictionary = new Map();
+for (let [_set, blocks] of exports.builtinModules.entries()) {
+    for (let blockClass of blocks) {
+        exports.blockClassDictionary.set(blockClass.definition.id, blockClass);
+    }
+}
 
 
 /***/ }),
@@ -68043,6 +68095,85 @@ Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra
 function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
+
+
+/***/ }),
+/* 226 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const global_1 = __webpack_require__(9);
+const index_1 = __webpack_require__(28);
+const index_2 = __webpack_require__(221);
+function serializeBlock(block) {
+    let result = {
+        id: block.definition.id,
+        data: {}
+    };
+    for (let argumentName of block.definition.argumentNames) {
+        let argumentBlock = block.getArgument(argumentName);
+        if (argumentBlock) {
+            result.data[argumentName] = serializeBlock(argumentBlock);
+        }
+    }
+    for (let scopeName of block.definition.scopeNames) {
+        result.data[scopeName] = block.getScope(scopeName).map(serializeBlock);
+    }
+    return result;
+}
+function serializeProgram() {
+    let result = [];
+    for (let blockGraphic of global_1.Komodi.stage.children) {
+        if (blockGraphic instanceof index_1.BlockGraphic) {
+            result.push({
+                position: { x: blockGraphic.x, y: blockGraphic.y },
+                blockData: serializeBlock(blockGraphic.logic),
+            });
+        }
+    }
+    return result;
+}
+exports.serializeProgram = serializeProgram;
+function deserializeBlock(blockData) {
+    let blockClass = index_2.blockClassDictionary.get(blockData.id);
+    let block = new blockClass();
+    for (let argumentName of blockClass.definition.argumentNames) {
+        if (blockData.data.hasOwnProperty(argumentName)) {
+            let argumentBlockData = blockData.data[argumentName];
+            let argumentBlock = deserializeBlock(argumentBlockData);
+            block.attachBlock({
+                attachType: "argument",
+                target: block,
+                argumentName: argumentName
+            }, argumentBlock);
+        }
+    }
+    for (let scopeName of blockClass.definition.scopeNames) {
+        let cnt = 0;
+        for (let scopeBlockData of blockData.data[scopeName]) {
+            let scopeBlock = deserializeBlock(scopeBlockData);
+            block.attachBlock({
+                attachType: "scope",
+                target: block,
+                scopeName: scopeName,
+                scopeIndex: cnt
+            }, scopeBlock);
+            cnt++;
+        }
+    }
+    return block;
+}
+function deserializeProgram(program) {
+    for (let freeBlock of program) {
+        let block = deserializeBlock(freeBlock.blockData);
+        global_1.Komodi.stage.addChild(block.graphic);
+        block.graphic.x = freeBlock.position.x;
+        block.graphic.y = freeBlock.position.y;
+    }
+}
+exports.deserializeProgram = deserializeProgram;
 
 
 /***/ })
