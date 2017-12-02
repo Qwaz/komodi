@@ -1,8 +1,7 @@
 import * as _ from "lodash";
 import {KomodiType} from "../type";
-import {Block} from "../program/index";
+import {Block, BlockClass} from "../program/index";
 import {Komodi} from "../global";
-import {BlockClass} from "../program/lib/index";
 import {BlockDefinition} from "../program/definition_parser";
 
 let labelPool: PIXI.Text[] = [];
@@ -68,13 +67,16 @@ export class BlockGenerator extends LabelManager {
         blockClass.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
 
         this.on('mousedown', () => {
-            let block = new blockClass();
+            if (Komodi.module.editingModule) {
+                let block = new blockClass();
+                block.init(Komodi.module.editingModule);
 
-            let globalPosition = this.getGlobalPosition();
-            Komodi.fixed.addChild(block.graphic);
-            block.graphic.x = globalPosition.x;
-            block.graphic.y = globalPosition.y;
-            Komodi.attacher.setDragging(block, true);
+                let globalPosition = this.getGlobalPosition();
+                Komodi.fixed.addChild(block.graphic);
+                block.graphic.x = globalPosition.x;
+                block.graphic.y = globalPosition.y;
+                Komodi.attacher.setDragging(block, true);
+            }
         });
     }
 }

@@ -148,25 +148,29 @@ export class Attacher {
             }
         };
 
-        this.map.forEach((attach, target) => {
-            if (this.dragging instanceof Expression) {
-                for (let [argumentName, info] of attach.argumentAttach) {
-                    let token = <ExpressionToken>target.definition.tokens.find((token) =>
-                        token.kind == "expression" && token.identifier == argumentName)!;
+        if (Komodi.module.editingModule) {
+            let blocks = Komodi.module.blockListOf(Komodi.module.editingModule);
+            for (let block of blocks) {
+                let attach = this.map.get(block)!
+                if (this.dragging instanceof Expression) {
+                    for (let [argumentName, info] of attach.argumentAttach) {
+                        let token = <ExpressionToken>block.definition.tokens.find((token) =>
+                            token.kind == "expression" && token.identifier == argumentName)!;
 
-                    if (token.type == this.dragging.definition.returnType) {
-                        updateDistance(info);
+                        if (token.type == this.dragging.definition.returnType) {
+                            updateDistance(info);
+                        }
+                    }
+                }
+                if (this.dragging instanceof Command) {
+                    for (let [_scopeName, infoArr] of attach.scopeAttach) {
+                        for (let info of infoArr) {
+                            updateDistance(info);
+                        }
                     }
                 }
             }
-            if (this.dragging instanceof Command) {
-                for (let [_scopeName, infoArr] of attach.scopeAttach) {
-                    for (let info of infoArr) {
-                        updateDistance(info);
-                    }
-                }
-            }
-        });
+        }
 
         return _.clone(attachPoint);
     }

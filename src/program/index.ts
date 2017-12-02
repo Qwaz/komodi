@@ -1,51 +1,13 @@
 import * as _ from "lodash";
-import {
-    BlockGraphic,
-    ExpressionToken,
-    NodeDrawer,
-    PlaceholderToken,
-    ScopeDrawer,
-    Token,
-    UserInputToken
-} from "../graphic/index";
-import {KomodiType, typeFromString} from "../type";
-import {BlockDefinition, blockDefinitionParser} from "./definition_parser";
+import {BlockGraphic} from "../graphic/index";
+import {KomodiType} from "../type";
+import {BlockDefinition} from "./definition_parser";
 import {Komodi} from "../global";
 import {AttachInfo, ScopeAttach} from "./attacher";
 
-interface BlockDefinitionBase {
-    id: string;
-    definition: string;
-    scopeNames?: string[];
-    nodeDrawer: NodeDrawer;
-    scopeDrawer: ScopeDrawer;
-}
-
-export function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinition {
-    let parsed = blockDefinitionParser.parse(definitionBase.definition);
-    let tokens = _.map(parsed.tokens, (token: any) => {
-        switch (token.tokenType) {
-            case "placeholder":
-                return new PlaceholderToken(token.value);
-            case "expression":
-                return new ExpressionToken(token.identifier, typeFromString(token.type));
-            case "user_input":
-                return new UserInputToken(token.identifier, typeFromString(token.type));
-            default:
-                throw new Error("Unknown token type returned from the parser");
-        }
-    });
-
-    return {
-        id: definitionBase.id,
-        definition: definitionBase.definition,
-        tokens: tokens,
-        returnType: parsed.returnType ? typeFromString(parsed.returnType) : KomodiType.empty,
-        argumentNames: _.filter(tokens, <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
-        nodeDrawer: definitionBase.nodeDrawer,
-        scopeDrawer: definitionBase.scopeDrawer
-    }
+export interface BlockClass {
+    new (): Block;
+    definition: BlockDefinition;
 }
 
 export abstract class Block {
@@ -54,11 +16,12 @@ export abstract class Block {
     protected _graphic: BlockGraphic;
 
     constructor(readonly definition: BlockDefinition) {
-        Komodi.attacher.registerBlock(this);
         this._graphic = new BlockGraphic(this, definition.nodeDrawer, definition.scopeDrawer);
     }
 
-    initFinished(): void {
+    init(moduleName: string) {
+        Komodi.registerBlock(this);
+        Komodi.module.addBlockToModule(moduleName, this);
         this.updateGraphic();
     }
 
@@ -179,7 +142,7 @@ export abstract class Block {
         }
 
         this.graphic.destroy();
-        Komodi.attacher.removeBlock(this);
+        Komodi.unregisterBlock(this);
     }
 }
 

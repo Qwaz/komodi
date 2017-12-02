@@ -1,8 +1,6 @@
 import {Coordinate} from "../common/definition";
 import {Komodi} from "../global";
 import {Block} from "./index";
-import {BlockGraphic} from "../graphic/index";
-import {blockClassDictionary} from "./lib/index";
 
 export interface SerializedBlock {
     id: string;
@@ -14,7 +12,15 @@ export interface FreeBlock {
     blockData: SerializedBlock;
 }
 
-export type SerializedProgram = FreeBlock[];
+export interface SerializedModule {
+    moduleName: string;
+    freeBlocks: FreeBlock[];
+}
+
+export type SerializedProgram = {
+    projectName: string,
+    modules: SerializedModule[]
+};
 
 function serializeBlock(block: Block): SerializedBlock {
     let result: SerializedBlock = {
@@ -37,27 +43,40 @@ function serializeBlock(block: Block): SerializedBlock {
 }
 
 export function serializeProgram(): SerializedProgram {
-    let result = [];
-    for (let blockGraphic of Komodi.stage.children) {
-        if (blockGraphic instanceof BlockGraphic) {
-            result.push({
-                position: {x: blockGraphic.x, y: blockGraphic.y},
-                blockData: serializeBlock(blockGraphic.logic),
-            })
+    let modules = [];
+
+    for (let moduleName of Komodi.module.getModuleList().userModule) {
+        let freeBlocks = [];
+        for (let block of Komodi.module.blockListOf(moduleName)) {
+            if (block.attachInfo == null) {
+                freeBlocks.push({
+                    position: {x: block.graphic.x, y: block.graphic.y},
+                    blockData: serializeBlock(block)
+                });
+            }
         }
+
+        modules.push({
+            moduleName: moduleName,
+            freeBlocks: freeBlocks
+        });
     }
 
-    return result;
+    return {
+        projectName: Komodi.topMenu.projectName,
+        modules: modules
+    };
 }
 
-function deserializeBlock(blockData: SerializedBlock): Block {
-    let blockClass = blockClassDictionary.get(blockData.id)!;
+function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block {
+    let blockClass = Komodi.module.getBlockClass(blockData.id);
     let block = new blockClass();
+    block.init(moduleName);
 
     for (let argumentName of blockClass.definition.argumentNames) {
         if (blockData.data.hasOwnProperty(argumentName)) {
             let argumentBlockData = <SerializedBlock>blockData.data[argumentName];
-            let argumentBlock = deserializeBlock(argumentBlockData);
+            let argumentBlock = deserializeBlock(moduleName, argumentBlockData);
             block.attachBlock({
                 attachType: "argument",
                 target: block,
@@ -69,7 +88,7 @@ function deserializeBlock(blockData: SerializedBlock): Block {
     for (let scopeName of blockClass.definition.scopeNames) {
         let cnt = 0;
         for (let scopeBlockData of <SerializedBlock[]>blockData.data[scopeName]) {
-            let scopeBlock = deserializeBlock(scopeBlockData);
+            let scopeBlock = deserializeBlock(moduleName, scopeBlockData);
             block.attachBlock({
                 attachType: "scope",
                 target: block,
@@ -84,10 +103,16 @@ function deserializeBlock(blockData: SerializedBlock): Block {
 }
 
 export function deserializeProgram(program: SerializedProgram) {
-    for (let freeBlock of program) {
-        let block = deserializeBlock(freeBlock.blockData);
-        Komodi.stage.addChild(block.graphic);
-        block.graphic.x = freeBlock.position.x;
-        block.graphic.y = freeBlock.position.y;
+    Komodi.topMenu.projectName = program.projectName;
+
+    for (let module of program.modules) {
+        Komodi.module.addUserModule(module.moduleName);
+        for (let freeBlock of module.freeBlocks) {
+            let block = deserializeBlock(module.moduleName, freeBlock.blockData);
+
+            block.graphic.x = freeBlock.position.x;
+            block.graphic.y = freeBlock.position.y;
+        }
     }
+    Komodi.module.editingModule = program.modules[0].moduleName;
 }

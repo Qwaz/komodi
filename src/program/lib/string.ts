@@ -1,7 +1,7 @@
-import {Expression, parseBlockDefinition} from "../index";
-import {BlockClass} from "./index";
+import {BlockClass, Expression} from "../index";
 import {functionNodeDrawer} from "../../graphic/node_drawer";
 import {lineScopeDrawer} from "../../graphic/scope_drawer";
+import {parseBlockDefinition} from "../definition_parser";
 
 export class ExpConstantString extends Expression {
     static definition = parseBlockDefinition({
@@ -11,7 +11,6 @@ export class ExpConstantString extends Expression {
 
     constructor () {
         super(ExpConstantString.definition);
-        this.initFinished();
     }
 }
 
@@ -26,7 +25,6 @@ export class ExpConcatString extends Expression {
 
     constructor () {
         super(ExpConcatString.definition);
-        this.initFinished();
     }
 }
 
@@ -41,7 +39,6 @@ export class ExpCompareString extends Expression {
 
     constructor () {
         super(ExpCompareString.definition);
-        this.initFinished();
     }
 }
 

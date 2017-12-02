@@ -1,30 +1,20 @@
 import * as PIXI from "pixi.js";
-import {BlockClass, builtinModules} from "./program/lib/index";
 import {Komodi} from "./global";
 import {BlockGenerator} from "./graphic/index";
+import {BlockClass} from "./program/index";
+import {ListSelector, MENU_COLOR, SimpleButton} from "./common/ui";
 
 const TOP_MENU_HEIGHT = 85;
 const TOP_MENU_BUTTON_HEIGHT = 30;
+
 const SIDE_MENU_WIDTH = 240;
-const MODULE_MENU_END_Y = 350;
+const MODULE_SELECTOR_END_Y = 400;
+const EDIT_BUTTON_MARGIN = 8;
+const EDIT_BUTTON_HEIGHT = 40;
+
 const BOTTOM_MENU_HEIGHT = 140;
 const BOTTOM_MENU_TIP_WIDTH = 120;
 const BOTTOM_MENU_TIP_HEIGHT = 30;
-
-enum MENU_COLOR {
-    BACKGROUND_GREY = 0xf2f2f2,
-    BACKGROUND_WHITE = 0xfcfcfc,
-
-    BUTTON_NORMAL = 0xfcfcfc,
-    BUTTON_HOVER = 0xe8eaed,
-    BUTTON_SELECTED = 0x1a7dc4,
-
-    OUTLINE = 0xc8c8c8,
-
-    TEXT_WHITE = 0xffffff,
-    TEXT_SEMI_BLACK = 0x303030,
-    TEXT_BLUE = 0x0366d6,
-}
 
 export class TopMenu extends PIXI.Container {
     background: PIXI.Graphics = new PIXI.Graphics();
@@ -38,7 +28,7 @@ export class TopMenu extends PIXI.Container {
 
         this.addChild(this.background);
 
-        this.label = new PIXI.Text("Untitled Komodi Project", {
+        this.label = new PIXI.Text("ERROR", {
             fontSize: 26, fill: MENU_COLOR.TEXT_SEMI_BLACK
         });
         this.addChild(this.label);
@@ -69,168 +59,78 @@ export class TopMenu extends PIXI.Container {
     addMenu(text: string, callback: () => void) {
         const PADDING = 16;
 
-        let label = new PIXI.Text(text, {
-            fontSize: 12
-        });
-        let background = new PIXI.Graphics();
-        let button = new PIXI.Container();
-        button.addChild(background, label);
+        let label = new PIXI.Text(text, {fontSize: 12});
+
+        let button = new SimpleButton(label.width + PADDING*2, TOP_MENU_BUTTON_HEIGHT);
+        button.addChild(label);
         this.addChild(button);
 
-        let setStyleNormal = () => {
-            background.clear();
-            background.beginFill(MENU_COLOR.BUTTON_NORMAL);
-            background.lineStyle(0.5, MENU_COLOR.OUTLINE);
-            background.drawRect(0, 0, label.width + 2*PADDING, TOP_MENU_BUTTON_HEIGHT);
-        };
-        let setStyleHover = () => {
-            background.clear();
-            background.beginFill(MENU_COLOR.BUTTON_HOVER);
-            background.lineStyle(0.5, MENU_COLOR.OUTLINE);
-            background.drawRect(0, 0, label.width + 2*PADDING, TOP_MENU_BUTTON_HEIGHT);
-        };
-        setStyleNormal();
-
-        label.x = background.width*.5 - label.width*.5;
-        label.y = background.height*.5 - label.height*.5;
+        label.x = button.width*.5 - label.width*.5;
+        label.y = button.height*.5 - label.height*.5;
 
         button.x = this.buttonX;
         button.y = TOP_MENU_HEIGHT-TOP_MENU_BUTTON_HEIGHT;
         this.buttonX += label.width + 2*PADDING;
 
         // interaction
-        button.interactive = true;
-        button.buttonMode = true;
-        button.on('mouseover', setStyleHover);
-        button.on('mouseout', setStyleNormal);
         button.on('click', callback);
 
         this.buttonList.push(button);
     }
 }
 
-class ListSelector<T> extends PIXI.Container {
-    onChange: (index: number, data: T | null) => void;
-
-    private _selectedIndex: number = -1;
-    private buttonList: PIXI.Container[] = [];
-    private dataList: T[] = [];
-
-    constructor(private backgroundWidth: number) {
-        super();
-    }
-
-    private get selectedIndex() {
-        return this._selectedIndex
-    }
-
-    private set selectedIndex(value: number) {
-        if (this.onChange) {
-            this.onChange(value, value == -1 ? null : this.dataList[value]);
-        }
-        this._selectedIndex = value;
-    }
-
-    addButton(text: string, data: T) {
-        const LIST_BUTTON_HEIGHT = 35;
-
-        let currentIndex = this.buttonList.length;
-
-        let label = new PIXI.Text(text, {
-            fontSize: 16, fill:MENU_COLOR.TEXT_BLUE
-        });
-        let background = new PIXI.Graphics();
-        let button = new PIXI.Container();
-        button.addChild(background, label);
-        this.addChild(button);
-
-        let setStyleNormal = () => {
-            background.clear();
-            background.beginFill(MENU_COLOR.BUTTON_NORMAL);
-            background.drawRect(0, 0, this.backgroundWidth, LIST_BUTTON_HEIGHT);
-            label.style.fill = MENU_COLOR.TEXT_BLUE;
-        };
-        let setStyleHover = () => {
-            background.clear();
-            background.beginFill(MENU_COLOR.BUTTON_HOVER);
-            background.drawRect(0, 0, this.backgroundWidth, LIST_BUTTON_HEIGHT);
-            label.style.fill = MENU_COLOR.TEXT_BLUE;
-        };
-        let setStyleSelected = () => {
-            background.clear();
-            background.beginFill(MENU_COLOR.BUTTON_SELECTED);
-            background.drawRect(0, 0, this.backgroundWidth, LIST_BUTTON_HEIGHT);
-            label.style.fill = MENU_COLOR.TEXT_WHITE;
-        };
-        setStyleNormal();
-
-        label.x = 20;
-        label.y = background.height*.5 - label.height*.5;
-        button.y = LIST_BUTTON_HEIGHT * currentIndex;
-
-        // interaction
-        button.interactive = true;
-        button.buttonMode = true;
-        button.on('mouseover', () => {
-            if (this.selectedIndex != currentIndex) {
-                setStyleHover();
-            }
-        });
-        button.on('mouseout', () => {
-            if (this.selectedIndex != currentIndex) {
-                setStyleNormal();
-            }
-        });
-        button.on('click', () => {
-            let prevIndex = this.selectedIndex;
-            if (prevIndex == currentIndex) {
-                this.selectedIndex = -1;
-                setStyleHover();
-            } else {
-                this.selectedIndex = currentIndex;
-                if (prevIndex != -1) {
-                    this.buttonList[prevIndex].emit('mouseout');
-                }
-                setStyleSelected();
-            }
-        });
-
-        this.buttonList.push(button);
-        this.dataList.push(data);
-    }
-}
-
 export class ModuleSelector extends PIXI.Container {
-    builtinModules: Map<string, BlockClass[]>;
-    moduleSelector: ListSelector<BlockClass[]>;
+    readonly selector: ListSelector;
 
     constructor() {
-        const PADDING = 10;
-
-        const HEADING_STYLE = {
-            fontFamily: 'FontAwesome',
-            fill: MENU_COLOR.TEXT_SEMI_BLACK, fontSize: 18, fontWeight: 'bold'
-        };
-
         super();
-        this.builtinModules = builtinModules;
-
-        let builtinLabel = new PIXI.Text('\uf115 built-in modules', HEADING_STYLE);
-        this.addChild(builtinLabel);
-        builtinLabel.x = PADDING;
-        builtinLabel.y = PADDING;
 
         // setup module selector
-        this.moduleSelector = new ListSelector(SIDE_MENU_WIDTH);
-        this.addChild(this.moduleSelector);
-        this.moduleSelector.y = PADDING*2 + builtinLabel.height;
-        for (let [setName, blocks] of this.builtinModules) {
-            this.moduleSelector.addButton(setName, blocks);
+        this.selector = new ListSelector(SIDE_MENU_WIDTH);
+        this.addChild(this.selector);
+    }
+
+    init() {
+        // built-in module
+        let modules = Komodi.module.getModuleList();
+
+        this.selector.addLabel('\uf02d  built-in modules');
+        for (let moduleName of modules.builtinModule) {
+            this.selector.addButton(moduleName, moduleName);
         }
 
-        this.moduleSelector.onChange = (_index, set: BlockClass[] | null) => {
-            Komodi.sideMenu.changeBlockSet(set);
+        // user module
+        this.selector.addLabel('\uf2be  user modules');
+
+        this.selector.onChange = (moduleName: string | null) => {
+            Komodi.sideMenu.blockGeneratorList.update(moduleName);
+            if (!moduleName || Array.from(Komodi.module.getModuleList().userModule).indexOf(moduleName) == -1) {
+                Komodi.sideMenu.editButton.visible = false;
+            } else {
+                Komodi.sideMenu.editButton.visible = true;
+            }
         };
+    }
+
+    addModule(moduleName: string) {
+        this.selector.addButton(moduleName, moduleName);
+    }
+
+    deleteModule(moduleName: string) {
+        this.selector.deleteButton(moduleName);
+    }
+
+    updateEditing(editingModuleName: string | null) {
+        let modules = Komodi.module.getModuleList();
+        for (let moduleName of modules.userModule) {
+            if (moduleName == editingModuleName) {
+                this.selector.changeText(moduleName, `${moduleName} \uf040`);
+            } else {
+                this.selector.changeText(moduleName, moduleName);
+            }
+        }
+
+        Komodi.sideMenu.blockGeneratorList.update(this.selector.getSelectedKey());
     }
 }
 
@@ -249,19 +149,30 @@ export class BlockGeneratorList extends PIXI.Container {
         this.blockList.length = 0;
     }
 
-    update(blockSet: BlockClass[] | null) {
+    update(moduleName: string | null) {
         this.clear();
-        if (blockSet) {
+        if (moduleName) {
             const VERTICAL_PADDING = 10;
 
+            let exportResult = Komodi.module.exportOf(moduleName);
+
             let currentY = 0;
-            for (let blockClass of blockSet) {
+            let addGenerator = (blockClass: BlockClass) => {
                 let generator = new BlockGenerator(blockClass);
                 this.addChild(generator);
                 generator.x = SIDE_MENU_WIDTH*.5;
                 generator.y = currentY + VERTICAL_PADDING + generator.height;
                 this.blockList.push(generator);
                 currentY += generator.height + VERTICAL_PADDING;
+            };
+
+            for (let blockClass of exportResult.globalScope) {
+                addGenerator(blockClass);
+            }
+            if (Komodi.module.editingModule == moduleName) {
+                for (let blockClass of exportResult.internalScope) {
+                    addGenerator(blockClass);
+                }
             }
         }
     }
@@ -269,33 +180,51 @@ export class BlockGeneratorList extends PIXI.Container {
 
 export class SideMenu extends PIXI.Container {
     background: PIXI.Graphics = new PIXI.Graphics();
+    outline: PIXI.Graphics = new PIXI.Graphics();
 
-    topContent: ModuleSelector = new ModuleSelector();
-    bottomContent: BlockGeneratorList = new BlockGeneratorList();
+    moduleSelector: ModuleSelector = new ModuleSelector();
+    blockGeneratorList: BlockGeneratorList = new BlockGeneratorList();
+    editButton: SimpleButton;
 
     constructor() {
         super();
+
         this.interactive = true;
 
-        this.addChild(this.background, this.topContent, this.bottomContent);
+        this.addChild(this.background);
+        this.addChild(this.moduleSelector, this.blockGeneratorList);
 
-        this.topContent.y = TOP_MENU_HEIGHT;
-        this.bottomContent.y = MODULE_MENU_END_Y;
-    }
+        let label = new PIXI.Text('Edit', {fontSize: 16});
+        this.editButton = new SimpleButton(SIDE_MENU_WIDTH - 2*EDIT_BUTTON_MARGIN, EDIT_BUTTON_HEIGHT);
+        this.editButton.addChild(label);
+        label.x = this.editButton.width*.5 - label.width*.5;
+        label.y = this.editButton.height*.5 - label.height*.5;
+        this.editButton.on('click', () => {
+            Komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
+        });
+        this.editButton.visible = false;
+        this.addChild(this.editButton);
 
-    changeBlockSet(blockSet: BlockClass[] | null) {
-        this.bottomContent.update(blockSet);
+        this.addChild(this.outline);
     }
 
     update(_width: number, height: number) {
+        this.moduleSelector.y = TOP_MENU_HEIGHT;
+        this.blockGeneratorList.y = MODULE_SELECTOR_END_Y;
+
         this.background.clear();
         this.background.beginFill(MENU_COLOR.BACKGROUND_WHITE);
         this.background.drawRect(0, TOP_MENU_HEIGHT, SIDE_MENU_WIDTH, height-TOP_MENU_HEIGHT);
-        this.background.lineStyle(1, MENU_COLOR.OUTLINE);
-        this.background.moveTo(0, MODULE_MENU_END_Y);
-        this.background.lineTo(SIDE_MENU_WIDTH, MODULE_MENU_END_Y);
-        this.background.moveTo(SIDE_MENU_WIDTH, TOP_MENU_HEIGHT);
-        this.background.lineTo(SIDE_MENU_WIDTH, height);
+
+        this.outline.clear();
+        this.outline.lineStyle(1, MENU_COLOR.OUTLINE);
+        this.outline.moveTo(0, MODULE_SELECTOR_END_Y);
+        this.outline.lineTo(SIDE_MENU_WIDTH, MODULE_SELECTOR_END_Y);
+        this.outline.moveTo(SIDE_MENU_WIDTH, TOP_MENU_HEIGHT);
+        this.outline.lineTo(SIDE_MENU_WIDTH, height);
+
+        this.editButton.x = SIDE_MENU_WIDTH*.5 - this.editButton.width*.5;
+        this.editButton.y = height - EDIT_BUTTON_MARGIN - this.editButton.height;
     }
 }
 

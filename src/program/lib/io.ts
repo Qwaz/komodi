@@ -1,7 +1,7 @@
-import {Command, Expression, parseBlockDefinition} from "../index";
-import {BlockClass} from "./index";
+import {BlockClass, Command, Expression} from "../index";
 import {commandNodeDrawer, functionNodeDrawer} from "../../graphic/node_drawer";
 import {boxScopeDrawer, lineScopeDrawer} from "../../graphic/scope_drawer";
+import {parseBlockDefinition} from "../definition_parser";
 
 export class ExpReadLine extends Expression {
     static definition = parseBlockDefinition({
@@ -11,7 +11,6 @@ export class ExpReadLine extends Expression {
 
     constructor () {
         super(ExpReadLine.definition);
-        this.initFinished();
     }
 }
 
@@ -25,7 +24,6 @@ export class CmdPrintLine extends Command {
 
     constructor() {
         super(CmdPrintLine.definition);
-        this.initFinished();
     }
 }
 

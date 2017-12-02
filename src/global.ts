@@ -4,7 +4,8 @@ import * as PIXI from "pixi.js";
 import {Attacher} from "./program/attacher";
 import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
 import {deserializeProgram, serializeProgram} from "./program/serializer";
-import {BlockGraphic} from "./graphic/index";
+import {Block} from "./program/index";
+import {Module} from "./program/module";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -54,6 +55,8 @@ class KomodiClass {
 
     attacher: Attacher = new Attacher();
 
+    module: Module = new Module();
+
     constructor() {
         this.komodiDiv = document.createElement("div");
         this.komodiDiv.classList.add("komodi-container");
@@ -67,6 +70,12 @@ class KomodiClass {
         this.fixed.addChild(this.sideMenu, this.bottomMenu, this.topMenu);
 
         // setup top menu
+        this.topMenu.addMenu('Project Name', () => {
+            let projectName = window.prompt('Project Name:', Komodi.topMenu.projectName);
+            if (!projectName || projectName == '') return;
+
+            Komodi.topMenu.projectName = projectName;
+        });
         this.topMenu.addMenu('Open', () => {
             if (window.confirm('Current progress will be lost')) {
                 let fakeInput = document.createElement('input');
@@ -80,8 +89,7 @@ class KomodiClass {
                         // TODO: contents validation
                         let reader = new FileReader();
                         reader.onload = (e) => {
-                            this.clearStage();
-                            this.topMenu.projectName = file.name.slice(0, -7);
+                            this.clearProject();
                             deserializeProgram(JSON.parse(reader.result));
                         };
                         reader.readAsText(file);
@@ -101,6 +109,17 @@ class KomodiClass {
             URL.revokeObjectURL(url);
         });
 
+        this.topMenu.addMenu('New Module', () => {
+            let moduleName = window.prompt('Please choose module name');
+            if (!moduleName || moduleName == '') return;
+
+            if (this.module.checkModuleExist(moduleName, true)) {
+                window.alert('Module name already exists!');
+            } else {
+                this.module.addUserModule(moduleName);
+            }
+        });
+
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
             1, 1,
@@ -110,15 +129,25 @@ class KomodiClass {
 
     init() {
         this.attacher.init();
+        this.sideMenu.moduleSelector.init();
     }
 
-    clearStage() {
-        for (let index = this.stage.children.length-1; index >= 0; index--) {
-            let child = this.stage.getChildAt(index);
-            if (child instanceof BlockGraphic) {
-                child.logic.destroy();
-            }
-        }
+    newProject() {
+        this.topMenu.projectName = "Untitled Komodi Project";
+        this.module.addUserModule('main');
+        this.module.editingModule = 'main';
+    }
+
+    clearProject() {
+        this.module.clear();
+    }
+
+    registerBlock(block: Block) {
+        this.attacher.registerBlock(block);
+    }
+
+    unregisterBlock(block: Block) {
+        this.attacher.removeBlock(block);
     }
 
     initializeDOM(parent: HTMLElement) {
@@ -177,3 +206,4 @@ class KomodiClass {
 
 export const Komodi = new KomodiClass();
 Komodi.init();
+Komodi.newProject();

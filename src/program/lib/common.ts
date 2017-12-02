@@ -1,7 +1,7 @@
-import {Command, Expression, parseBlockDefinition, Scope, Signal} from "../index";
-import {BlockClass} from "./index";
+import {BlockClass, Command, Expression, Scope, Signal} from "../index";
 import {boxScopeDrawer, lineScopeDrawer} from "../../graphic/scope_drawer";
 import {commandNodeDrawer, signalNodeDrawer} from "../../graphic/node_drawer";
+import {parseBlockDefinition} from "../definition_parser";
 
 export class SignalStart extends Signal {
     static definition = parseBlockDefinition({
@@ -13,7 +13,6 @@ export class SignalStart extends Signal {
 
     constructor() {
         super(SignalStart.definition);
-        this.initFinished();
     }
 }
 
@@ -29,7 +28,6 @@ export class CmdIfElse extends Command {
 
     constructor() {
         super(CmdIfElse.definition);
-        this.initFinished();
     }
 }
 
