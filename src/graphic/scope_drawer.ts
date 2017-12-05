@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 import {BlockGraphic, ScopeDrawer} from "./index";
 import {Coordinate} from "../common/definition";
-import {Block} from "../program/index";
+import {BlockBase} from "../program/index";
 import {Komodi} from "../global";
 
 const FLOW_VERTICAL_MARGIN = 20;
@@ -10,11 +10,11 @@ const SPLIT_HORIZONTAL_MARGIN = 40;
 const OUTLINE_PADDING = 6;
 
 function defaultDrawScope(
-    block: Block,
+    block: BlockBase,
     getScopeGraphics: () => IterableIterator<IterableIterator<BlockGraphic>>,
 ): PIXI.Rectangle {
     let definition = block.definition;
-    let target = block instanceof Block ? block.graphic : block;
+    let target = block.graphic;
 
     target.graphics.lineStyle(3, 0);
 
@@ -122,14 +122,14 @@ function defaultDrawScope(
 }
 
 class LineScopeDrawer extends ScopeDrawer {
-    drawScope(block: Block, getScopeGraphics: () => IterableIterator<IterableIterator<BlockGraphic>>) {
+    drawScope(block: BlockBase, getScopeGraphics: () => IterableIterator<IterableIterator<BlockGraphic>>) {
         defaultDrawScope(block, getScopeGraphics);
     }
 }
 export const lineScopeDrawer = new LineScopeDrawer();
 
 class BoxScopeDrawer extends ScopeDrawer {
-    drawScope(block: Block, getScopeGraphics: () => IterableIterator<IterableIterator<BlockGraphic>>) {
+    drawScope(block: BlockBase, getScopeGraphics: () => IterableIterator<IterableIterator<BlockGraphic>>) {
         let rect = defaultDrawScope(block, getScopeGraphics);
 
         // draw outline

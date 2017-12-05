@@ -48,7 +48,7 @@ export class Module {
     checkModuleExist(moduleName: string, soft: boolean = false): boolean {
         if (!this.exports.has(moduleName)) {
             if (soft) return false;
-            throw new Error("checkModuleExist assertion failed");
+            throw new Error("checkModuleExist failed");
         }
         return true;
     }
@@ -56,7 +56,7 @@ export class Module {
     checkUserModuleExist(moduleName: string, soft: boolean = false): boolean {
         if (!this.userModuleBlocks.has(moduleName)) {
             if (soft) return false;
-            throw new Error("checkUserModuleExist assertion failed");
+            throw new Error("checkUserModuleExist failed");
         }
         return true;
     }

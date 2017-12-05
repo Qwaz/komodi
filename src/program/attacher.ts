@@ -1,9 +1,9 @@
 import * as _ from "lodash";
-import {Block, Command, Expression, Signal} from "./index";
+import {Block, BlockBase, Command, Expression, Signal} from "./index";
 import {Coordinate} from "../common/definition";
 import {getMousePoint} from "../common/utils";
 import {Komodi} from "../global";
-import {ExpressionToken} from "../graphic/index";
+import {ExpressionToken} from "./definition_parser";
 
 export interface ArgumentAttach {
     attachType: "argument";
@@ -69,7 +69,9 @@ export class Attacher {
         this.map.delete(block);
     }
 
-    setArgumentCoordinate(block: Block, argumentName: string, coord: Coordinate) {
+    setArgumentCoordinate(block: BlockBase, argumentName: string, coord: Coordinate) {
+        if (!(block instanceof Block)) return;
+
         let argumentAttach = this.map.get(block)!.argumentAttach;
         if (argumentAttach.has(argumentName)) {
             let targetCoord = argumentAttach.get(argumentName)!;
@@ -86,14 +88,18 @@ export class Attacher {
         }
     }
 
-    removeArgumentCoordinate(block: Block, argumentName: string) {
+    removeArgumentCoordinate(block: BlockBase, argumentName: string) {
+        if (!(block instanceof Block)) return;
+
         let argumentAttach = this.map.get(block)!.argumentAttach;
         if (argumentAttach.has(argumentName)) {
             this.map.get(block)!.argumentAttach.delete(argumentName);
         }
     }
 
-    setScopeCoordinate(block: Block, scopeName: string, coordinates: Coordinate[]) {
+    setScopeCoordinate(block: BlockBase, scopeName: string, coordinates: Coordinate[]) {
+        if (!(block instanceof Block)) return;
+
         let scopeAttach = this.map.get(block)!.scopeAttach;
         if (!scopeAttach.has(scopeName)) {
             scopeAttach.set(scopeName, []);
@@ -151,7 +157,7 @@ export class Attacher {
         if (Komodi.module.editingModule) {
             let blocks = Komodi.module.blockListOf(Komodi.module.editingModule);
             for (let block of blocks) {
-                let attach = this.map.get(block)!
+                let attach = this.map.get(block)!;
                 if (this.dragging instanceof Expression) {
                     for (let [argumentName, info] of attach.argumentAttach) {
                         let token = <ExpressionToken>block.definition.tokens.find((token) =>

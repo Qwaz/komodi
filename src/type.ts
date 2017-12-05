@@ -14,7 +14,7 @@ export function typeFromString(str: string): KomodiType {
         case "int":
             return KomodiType.int;
         default:
-            throw new Error(`Unknown type string: ${str}`);
+            throw new Error(`typeFromString failed: unknown type string ${str}`);
     }
 }
 

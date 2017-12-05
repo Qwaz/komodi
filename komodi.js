@@ -21297,60 +21297,84 @@ exports.default = BaseTexture;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(12);
+const index_1 = __webpack_require__(17);
 const global_1 = __webpack_require__(6);
-let labelPool = [];
-function getLabel(text) {
-    if (labelPool.length == 0) {
-        return new PIXI.Text(text, {
-            fontSize: 14, align: 'center'
+const type_1 = __webpack_require__(49);
+const utils_1 = __webpack_require__(102);
+class UserInputTokenGraphic extends PIXI.Container {
+    constructor(target, token) {
+        super();
+        this.token = token;
+        this.graphics = new PIXI.Graphics();
+        this.addChild(this.graphics);
+        if (target instanceof index_1.Block) {
+            this.interactive = true;
+            let prevMouse = new PIXI.Point();
+            this.on('mousedown', () => {
+                prevMouse = utils_1.getMousePoint();
+            });
+            this.on('mouseup', () => {
+                let currentMouse = utils_1.getMousePoint();
+                if (prevMouse.x == currentMouse.x && prevMouse.y == currentMouse.y) {
+                    let result = token.validator.updateInput(target.getInput(token.identifier));
+                    if (result != null) {
+                        target[token.identifier] = result;
+                        target.updateGraphic();
+                    }
+                }
+            });
+        }
+    }
+    updateSize(width, height) {
+        this.graphics.clear();
+        this.graphics.beginFill(type_1.typeToColor(this.token.validator.type));
+        this.graphics.lineStyle(1, 0);
+        this.graphics.drawRoundedRect(0, 0, width, height, 9);
+    }
+}
+class BlockGraphicBase extends PIXI.Container {
+    constructor(logic) {
+        super();
+        this.logic = logic;
+        this.graphics = new PIXI.Graphics();
+        this.labels = [];
+        this.userInputTokens = [];
+        this.addChild(this.graphics);
+        this.interactive = true;
+        logic.definition.tokens.forEach((token) => {
+            if (token.kind == "user_input") {
+                let tokenGraphic = new UserInputTokenGraphic(logic, token);
+                this.userInputTokens.push(tokenGraphic);
+                this.addChild(tokenGraphic);
+            }
+            else {
+                this.userInputTokens.push(null);
+            }
+            let label = new PIXI.Text("", {
+                fontSize: 14, align: 'center'
+            });
+            this.labels.push(label);
+            this.addChild(label);
         });
     }
-    let label = labelPool.pop();
-    label.text = text;
-    return label;
-}
-function releaseLabel(label) {
-    labelPool.push(label);
-}
-class LabelManager extends PIXI.Container {
-    constructor() {
-        super(...arguments);
-        this.assignedLabels = [];
-    }
-    assignLabel(text) {
-        let label = getLabel(text);
-        this.addChild(label);
-        this.assignedLabels.push(label);
-        return label;
-    }
-    releaseLabels() {
-        _.forEach(this.assignedLabels, (label) => releaseLabel(label));
-        this.assignedLabels.length = 0;
-    }
     destroy() {
-        this.releaseLabels();
+        this.labels.forEach((label) => label.destroy());
+        this.userInputTokens.forEach((token) => {
+            if (token)
+                token.destroy();
+        });
         super.destroy();
     }
 }
-function emptyArgumentGraphicsGenerator(block) {
-    return function* () {
-        for (let _argumentName of block.definition.argumentNames) {
-            yield null;
-        }
-    };
-}
-class BlockGenerator extends LabelManager {
+exports.BlockGraphicBase = BlockGraphicBase;
+class BlockGenerator extends BlockGraphicBase {
     constructor(blockClass) {
-        super();
+        super(new index_1.VirtualBlock(blockClass));
         this.blockClass = blockClass;
-        this.graphics = new PIXI.Graphics();
+        this.logic.graphic = this;
         this.definition = blockClass.definition;
-        this.addChild(this.graphics);
-        this.interactive = true;
         this.buttonMode = true;
-        blockClass.definition.nodeDrawer.drawNode(this, emptyArgumentGraphicsGenerator(this));
-        this.on('mousedown', () => {
+        this.on('mousedown', (e) => {
             if (global_1.Komodi.module.editingModule) {
                 let block = new blockClass();
                 block.init(global_1.Komodi.module.editingModule);
@@ -21359,36 +21383,47 @@ class BlockGenerator extends LabelManager {
                 block.graphic.x = globalPosition.x;
                 block.graphic.y = globalPosition.y;
                 global_1.Komodi.attacher.setDragging(block, true);
+                e.stopPropagation();
             }
         });
+        this.update();
+    }
+    update() {
+        this.graphics.clear();
+        this.blockClass.definition.nodeDrawer.drawNode(this.logic, argumentGraphicsGenerator(this.logic));
     }
 }
 exports.BlockGenerator = BlockGenerator;
-class BlockGraphic extends LabelManager {
-    constructor(logic, nodeDrawer, scopeDrawer) {
-        super();
-        this.logic = logic;
-        this.nodeDrawer = nodeDrawer;
-        this.scopeDrawer = scopeDrawer;
-        this.graphics = new PIXI.Graphics();
-        this.addChild(this.graphics);
-        this.interactive = true;
+class BlockGraphic extends BlockGraphicBase {
+    constructor(logic) {
+        super(logic);
+        let prevMouse = null;
         this.on('mousedown', (e) => {
-            if (e.target == this) {
-                let position = this.getGlobalPosition();
-                if (this.logic.attachInfo != null) {
-                    this.logic.attachInfo.target.detachBlock(this.logic);
+            prevMouse = utils_1.getMousePoint();
+            e.stopPropagation();
+        });
+        this.on('mousemove', () => {
+            if (prevMouse) {
+                let currentMouse = utils_1.getMousePoint();
+                if (prevMouse.x != currentMouse.x || prevMouse.y != currentMouse.y) {
+                    let position = this.getGlobalPosition();
+                    if (logic.attachInfo != null) {
+                        logic.attachInfo.target.detachBlock(logic);
+                    }
+                    global_1.Komodi.stage.addChild(this);
+                    this.position = global_1.Komodi.stage.toLocal(position);
+                    global_1.Komodi.attacher.setDragging(logic);
                 }
-                global_1.Komodi.stage.addChild(this);
-                this.position = global_1.Komodi.stage.toLocal(position);
-                global_1.Komodi.attacher.setDragging(this.logic);
             }
         });
+        this.on('mouseup', () => {
+            prevMouse = null;
+        });
     }
-    update(getArgumentGraphics, getScopeGraphics) {
+    update() {
         this.graphics.clear();
-        this.scopeDrawer.drawScope(this.logic, getScopeGraphics);
-        this.nodeDrawer.drawNode(this.logic, getArgumentGraphics);
+        this.logic.definition.scopeDrawer.drawScope(this.logic, scopeGraphicsGenerator(this.logic));
+        this.logic.definition.nodeDrawer.drawNode(this.logic, argumentGraphicsGenerator(this.logic));
     }
 }
 exports.BlockGraphic = BlockGraphic;
@@ -21398,29 +21433,26 @@ exports.NodeDrawer = NodeDrawer;
 class ScopeDrawer {
 }
 exports.ScopeDrawer = ScopeDrawer;
-class PlaceholderToken {
-    constructor(text) {
-        this.text = text;
-        this.kind = "placeholder";
-    }
+function argumentGraphicsGenerator(block) {
+    return function* () {
+        for (let argumentName of block.definition.argumentNames) {
+            let argumentBlock = block.getArgument(argumentName);
+            yield argumentBlock == null ? null : argumentBlock.graphic;
+        }
+    };
 }
-exports.PlaceholderToken = PlaceholderToken;
-class UserInputToken {
-    constructor(identifier, type) {
-        this.identifier = identifier;
-        this.type = type;
-        this.kind = "user_input";
-    }
+function scopeGraphicsGenerator(block) {
+    return function* () {
+        for (let scopeName of block.definition.scopeNames) {
+            let scopeBlocks = block.getScope(scopeName);
+            yield (function* () {
+                for (let block of scopeBlocks) {
+                    yield block.graphic;
+                }
+            })();
+        }
+    };
 }
-exports.UserInputToken = UserInputToken;
-class ExpressionToken {
-    constructor(identifier, type) {
-        this.identifier = identifier;
-        this.type = type;
-        this.kind = "expression";
-    }
-}
-exports.ExpressionToken = ExpressionToken;
 
 
 /***/ }),
@@ -21433,54 +21465,97 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(12);
 const index_1 = __webpack_require__(16);
 const type_1 = __webpack_require__(49);
+const definition_parser_1 = __webpack_require__(48);
 const global_1 = __webpack_require__(6);
-class Block {
+class BlockBase {
     constructor(definition) {
         this.definition = definition;
+    }
+}
+exports.BlockBase = BlockBase;
+class VirtualBlock extends BlockBase {
+    constructor(blockClass) {
+        super(blockClass.definition);
+    }
+    getArgument(argumentName) {
+        if (_.includes(this.definition.argumentNames, argumentName)) {
+            return null;
+        }
+        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
+    }
+    ;
+    getScope(scopeName) {
+        if (_.includes(this.definition.scopeNames, scopeName)) {
+            return [];
+        }
+        throw new Error(`getScope failed: ${scopeName} does not exist`);
+    }
+    getInput(inputName) {
+        if (_.includes(this.definition.inputNames, inputName)) {
+            let token = this.definition.tokens.find((token) => {
+                return token.kind == "user_input" && token.identifier == inputName;
+            });
+            return token.validator.defaultValue;
+        }
+        throw new Error(`getInput failed: ${inputName} does not exist`);
+    }
+}
+exports.VirtualBlock = VirtualBlock;
+class Block extends BlockBase {
+    constructor(definition) {
+        super(definition);
         this.attachInfo = null;
-        this._graphic = new index_1.BlockGraphic(this, definition.nodeDrawer, definition.scopeDrawer);
-    }
-    init(moduleName) {
-        global_1.Komodi.registerBlock(this);
-        global_1.Komodi.module.addBlockToModule(moduleName, this);
-        this.updateGraphic();
-    }
-    get graphic() {
-        return this._graphic;
+        this.graphic = new index_1.BlockGraphic(this);
     }
     getArgument(argumentName) {
         if (_.includes(this.definition.argumentNames, argumentName)) {
             return this[argumentName];
         }
-        throw new Error(`Argument ${argumentName} does not exist`);
+        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
     }
     getScope(scopeName) {
         if (_.includes(this.definition.scopeNames, scopeName)) {
             return this[scopeName];
         }
-        throw new Error(`Scope ${scopeName} does not exist`);
+        throw new Error(`getScope failed: ${scopeName} does not exist`);
+    }
+    getInput(inputName) {
+        if (_.includes(this.definition.inputNames, inputName)) {
+            return this[inputName];
+        }
+        throw new Error(`getInput failed: ${inputName} does not exist`);
+    }
+    init(moduleName) {
+        this.definition.tokens.forEach((token) => {
+            if (token instanceof definition_parser_1.UserInputToken) {
+                this[token.identifier] = token.validator.defaultValue;
+            }
+        });
+        global_1.Komodi.registerBlock(this);
+        global_1.Komodi.module.addBlockToModule(moduleName, this);
+        this.updateGraphic();
     }
     attachBlock(attachInfo, block) {
         if (attachInfo.target != this) {
-            throw new Error("Invalid attach target");
+            throw new Error("attachBlock failed: invalid attach target");
         }
         switch (attachInfo.attachType) {
             case "argument":
                 if (block instanceof Expression == false)
-                    throw new Error("Attach value should be an Expression");
+                    throw new Error("attachBlock failed: attach value should be an Expression");
                 if (this.getArgument(attachInfo.argumentName) != null) {
-                    throw new Error(`Argument ${attachInfo.argumentName} is not empty`);
+                    throw new Error(`attachBlock failed: argument ${attachInfo.argumentName} is not empty`);
                 }
                 block.attachInfo = attachInfo;
                 this[attachInfo.argumentName] = block;
                 break;
             case "scope":
                 if (!(block instanceof Command)) {
-                    throw new Error("Attach value should be a Command");
+                    throw new Error("attachBlock failed: attach value should be a Command");
                 }
                 let scope = this.getScope(attachInfo.scopeName);
                 if (attachInfo.scopeIndex < 0 || scope.length < attachInfo.scopeIndex) {
-                    throw new Error("Invalid scope index");
+                    throw new Error("attachBlock failed: invalid scope index");
                 }
                 for (let i = attachInfo.scopeIndex; i < scope.length; i++) {
                     scope[i].attachInfo.scopeIndex++;
@@ -21495,15 +21570,15 @@ class Block {
     detachBlock(block) {
         let attachInfo = block.attachInfo;
         if (attachInfo == null) {
-            throw new Error("Invalid detach target");
+            throw new Error("detachBlock failed: target is not attached");
         }
         if (attachInfo.target != this) {
-            throw new Error("Invalid detach parent");
+            throw new Error("detachBlock failed: wrong parent");
         }
         switch (attachInfo.attachType) {
             case "argument":
                 if (this.getArgument(attachInfo.argumentName) != block) {
-                    throw new Error("Inconsistent attach");
+                    throw new Error("detachBlock failed: inconsistent attach");
                 }
                 block.attachInfo = null;
                 this[attachInfo.argumentName] = null;
@@ -21511,7 +21586,7 @@ class Block {
             case "scope":
                 let scope = this.getScope(attachInfo.scopeName);
                 if (scope[attachInfo.scopeIndex] != block) {
-                    throw new Error("Inconsistent attach");
+                    throw new Error("detachBlock failed: inconsistent attach");
                 }
                 for (let i = attachInfo.scopeIndex + 1; i < scope.length; i++) {
                     scope[i].attachInfo.scopeIndex--;
@@ -21526,7 +21601,7 @@ class Block {
     updateGraphic() {
         let now = this;
         while (true) {
-            now.graphic.update(argumentGraphicsGenerator(now), scopeGraphicsGenerator(now));
+            now.graphic.update();
             if (now.attachInfo == null)
                 break;
             now = now.attachInfo.target;
@@ -21552,7 +21627,7 @@ exports.Block = Block;
 class Expression extends Block {
     constructor(def) {
         if (def.returnType == type_1.KomodiType.empty)
-            throw new Error(`Error in definition "${def.definition}": Expression must have a return type`);
+            throw new Error("new Expression failed: Expression must have a return type");
         super(def);
     }
 }
@@ -21560,7 +21635,7 @@ exports.Expression = Expression;
 class Command extends Block {
     constructor(def) {
         if (def.returnType != type_1.KomodiType.empty)
-            throw new Error(`Error in definition "${def.definition}": Command must not have a return type`);
+            throw new Error("new Command failed: Command must not have a return type");
         super(def);
     }
 }
@@ -21568,33 +21643,11 @@ exports.Command = Command;
 class Signal extends Block {
     constructor(def) {
         if (def.returnType != type_1.KomodiType.empty)
-            throw new Error(`Error in definition "${def.definition}": Signal must not have a return type`);
+            throw new Error("new Signal failed: Signal must not have a return type");
         super(def);
     }
 }
 exports.Signal = Signal;
-function argumentGraphicsGenerator(block) {
-    return function* () {
-        for (let argumentName of block.definition.argumentNames) {
-            let argumentBlock = block.getArgument(argumentName);
-            yield argumentBlock == null ? null : argumentBlock.graphic;
-        }
-    };
-}
-exports.argumentGraphicsGenerator = argumentGraphicsGenerator;
-function scopeGraphicsGenerator(block) {
-    return function* () {
-        for (let scopeName of block.definition.scopeNames) {
-            let scopeBlocks = block.getScope(scopeName);
-            yield (function* () {
-                for (let block of scopeBlocks) {
-                    yield block.graphic;
-                }
-            })();
-        }
-    };
-}
-exports.scopeGraphicsGenerator = scopeGraphicsGenerator;
 
 
 /***/ }),
@@ -29466,11 +29519,9 @@ const _ = __webpack_require__(12);
 const index_1 = __webpack_require__(16);
 const type_1 = __webpack_require__(49);
 const utils_1 = __webpack_require__(102);
-const index_2 = __webpack_require__(17);
 const global_1 = __webpack_require__(6);
 const MINIMUM_ARG_WIDTH = 26;
 const PADDING = 5;
-const ROUNDED_RADIUS = 7;
 const BLOCK_HEIGHT = 33;
 const TIP_WIDTH = 12;
 const TIP_HEIGHT = 9;
@@ -29480,40 +29531,41 @@ const SIGNAL_LINE = 4;
 function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
     const top = bottom - BLOCK_HEIGHT;
     let definition = block.definition;
-    let target = block instanceof index_2.Block ? block.graphic : block;
+    let target = block.graphic;
     target.graphics.lineStyle(1, 0);
     let tokenStrings = _.map(definition.tokens, (token) => {
         switch (token.kind) {
             case "placeholder":
                 return token.text;
             case "user_input":
-                return token.identifier;
+                return block.getInput(token.identifier);
             case "expression":
                 return token.identifier;
         }
     });
-    target.releaseLabels();
-    let labels = _.map(tokenStrings, (str) => target.assignLabel(str));
+    tokenStrings.forEach((str, i) => {
+        target.labels[i].text = str;
+    });
     let argumentGraphics = Array.from(getArgumentGraphics());
     let expressionCnt = 0;
     let graphicsIndex = definition.tokens.map((token) => token.kind == "expression" ? expressionCnt++ : null);
     let tokenToWidth = (token, index) => {
         switch (token.kind) {
             case "placeholder":
-                return labels[index].width + PADDING;
+                return target.labels[index].width + PADDING;
             case "user_input":
-                return labels[index].width + PADDING * 2;
+                return target.labels[index].width + PADDING * 2;
             case "expression":
                 let child = argumentGraphics[graphicsIndex[index]];
                 let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
-                return Math.max(labels[index].width + PADDING * 2, childWidth);
+                return Math.max(target.labels[index].width + PADDING * 2, childWidth);
         }
     };
     let widthSum = PADDING * 2 + _.sum(definition.tokens.map((token, i) => tokenToWidth(token, i)));
     let nowX = -widthSum * .5 + PADDING;
     _.forEach(definition.tokens, (token, i) => {
         let width = tokenToWidth(token, i);
-        utils_1.centerChild(labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+        utils_1.centerChild(target.labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
         nowX += width;
     });
     nowX = -widthSum * .5 + PADDING;
@@ -29538,8 +29590,11 @@ function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
         let width = tokenToWidth(token, i);
         switch (token.kind) {
             case "user_input":
-                target.graphics.beginFill(type_1.typeToColor(token.type));
-                target.graphics.drawRoundedRect(nowX, top + PADDING, width, BLOCK_HEIGHT - 2 * PADDING, ROUNDED_RADIUS);
+                let tokenGraphic = target.userInputTokens[i];
+                tokenGraphic.updateSize(width, BLOCK_HEIGHT - 2 * PADDING);
+                tokenGraphic.x = nowX;
+                tokenGraphic.y = top + PADDING;
+                target.userInputTokens.push(tokenGraphic);
                 break;
             case "expression":
                 let graphic = secondIterator.next().value;
@@ -29557,14 +29612,10 @@ function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
                 if (graphic) {
                     graphic.x = nowX + width * .5;
                     graphic.y = top + TIP_HEIGHT;
-                    if (block instanceof index_2.Block) {
-                        global_1.Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
-                    }
+                    global_1.Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
                 }
                 else {
-                    if (block instanceof index_2.Block) {
-                        global_1.Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
-                    }
+                    global_1.Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
                 }
                 break;
         }
@@ -29602,8 +29653,7 @@ class SignalNodeDrawer extends index_1.NodeDrawer {
             widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
             -widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
         ]);
-        let graphic = block instanceof index_2.Block ? block.graphic : block;
-        graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
+        block.graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
     }
 }
 exports.signalNodeDrawer = new SignalNodeDrawer();
@@ -29618,7 +29668,6 @@ exports.signalNodeDrawer = new SignalNodeDrawer();
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(12);
 const index_1 = __webpack_require__(16);
-const index_2 = __webpack_require__(17);
 const global_1 = __webpack_require__(6);
 const FLOW_VERTICAL_MARGIN = 20;
 const SPLIT_VERTICAL_MARGIN = 15;
@@ -29626,7 +29675,7 @@ const SPLIT_HORIZONTAL_MARGIN = 40;
 const OUTLINE_PADDING = 6;
 function defaultDrawScope(block, getScopeGraphics) {
     let definition = block.definition;
-    let target = block instanceof index_2.Block ? block.graphic : block;
+    let target = block.graphic;
     target.graphics.lineStyle(3, 0);
     let widthList = Array.from(function* () {
         for (let scopeGraphics of getScopeGraphics()) {
@@ -29736,7 +29785,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const peg = __webpack_require__(116);
 const _ = __webpack_require__(12);
 const type_1 = __webpack_require__(49);
-const index_1 = __webpack_require__(16);
 const PARSER_DEFINITION = `
 start = tokens: token+ returnType:(":" t:type { return t; })? {
     return {
@@ -29750,28 +29798,90 @@ PLACEHOLDER = $[^:\\[\\]\\{\\}]+
 IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
 
 type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
+validator = SPACE validator:("string" / "bool" / "int") SPACE { return validator; }
 
 token
     = str: PLACEHOLDER
         { return {tokenType: "placeholder", value: str}; }
     / "[" identifier:IDENTIFIER ":" type: type "]"
         { return {tokenType: "expression", identifier: identifier, type: type}; }
-    / "{" identifier:IDENTIFIER ":" type: type "}"
-        { return {tokenType: "user_input", identifier: identifier, type: type}; }
+    / "{" identifier:IDENTIFIER ":" validator: validator "}"
+        { return {tokenType: "user_input", identifier: identifier, validator: validator}; }
 `;
 exports.blockDefinitionParser = peg.generate(PARSER_DEFINITION);
+const validatorMap = new Map();
+validatorMap.set('string', {
+    type: type_1.KomodiType.string,
+    defaultValue: 'str',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change string value', currentValue);
+        if (result && result.length > 0) {
+            return result;
+        }
+        return null;
+    }
+});
+validatorMap.set('bool', {
+    type: type_1.KomodiType.bool,
+    defaultValue: 'true',
+    updateInput: (currentValue) => {
+        if (currentValue == 'true')
+            return 'false';
+        else
+            return 'true';
+    }
+});
+validatorMap.set('int', {
+    type: type_1.KomodiType.int,
+    defaultValue: '0',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change integer value', currentValue);
+        if (result && /^[+-]?(0|[1-9]\d*)$/.test(currentValue)) {
+            return result;
+        }
+        return null;
+    }
+});
+class PlaceholderToken {
+    constructor(text) {
+        this.text = text;
+        this.kind = "placeholder";
+    }
+}
+exports.PlaceholderToken = PlaceholderToken;
+class UserInputToken {
+    constructor(identifier, validator) {
+        this.identifier = identifier;
+        this.validator = validator;
+        this.kind = "user_input";
+    }
+}
+exports.UserInputToken = UserInputToken;
+class ExpressionToken {
+    constructor(identifier, type) {
+        this.identifier = identifier;
+        this.type = type;
+        this.kind = "expression";
+    }
+}
+exports.ExpressionToken = ExpressionToken;
 function parseBlockDefinition(definitionBase) {
     let parsed = exports.blockDefinitionParser.parse(definitionBase.definition);
     let tokens = _.map(parsed.tokens, (token) => {
         switch (token.tokenType) {
             case "placeholder":
-                return new index_1.PlaceholderToken(token.value);
+                return new PlaceholderToken(token.value);
             case "expression":
-                return new index_1.ExpressionToken(token.identifier, type_1.typeFromString(token.type));
+                return new ExpressionToken(token.identifier, type_1.typeFromString(token.type));
             case "user_input":
-                return new index_1.UserInputToken(token.identifier, type_1.typeFromString(token.type));
+                let validatorId = token.validator;
+                if (!validatorMap.has(validatorId)) {
+                    throw new Error("parseBlockDefinition failed: unknown validator");
+                }
+                let validator = validatorMap.get(validatorId);
+                return new UserInputToken(token.identifier, validator);
             default:
-                throw new Error("Unknown token type returned from the parser");
+                throw new Error("parseBlockDefinition failed: unknown token type");
         }
     });
     return {
@@ -29779,7 +29889,8 @@ function parseBlockDefinition(definitionBase) {
         definition: definitionBase.definition,
         tokens: tokens,
         returnType: parsed.returnType ? type_1.typeFromString(parsed.returnType) : type_1.KomodiType.empty,
-        argumentNames: _.filter(tokens, ((token) => token instanceof index_1.ExpressionToken)).map((token) => token.identifier),
+        argumentNames: _.filter(tokens, ((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
+        inputNames: _.filter(tokens, ((token) => token instanceof UserInputToken)).map((token) => token.identifier),
         scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
         nodeDrawer: definitionBase.nodeDrawer,
         scopeDrawer: definitionBase.scopeDrawer
@@ -29811,7 +29922,7 @@ function typeFromString(str) {
         case "int":
             return KomodiType.int;
         default:
-            throw new Error(`Unknown type string: ${str}`);
+            throw new Error(`typeFromString failed: unknown type string ${str}`);
     }
 }
 exports.typeFromString = typeFromString;
@@ -67853,6 +67964,8 @@ class Attacher {
         this.map.delete(block);
     }
     setArgumentCoordinate(block, argumentName, coord) {
+        if (!(block instanceof index_1.Block))
+            return;
         let argumentAttach = this.map.get(block).argumentAttach;
         if (argumentAttach.has(argumentName)) {
             let targetCoord = argumentAttach.get(argumentName);
@@ -67870,12 +67983,16 @@ class Attacher {
         }
     }
     removeArgumentCoordinate(block, argumentName) {
+        if (!(block instanceof index_1.Block))
+            return;
         let argumentAttach = this.map.get(block).argumentAttach;
         if (argumentAttach.has(argumentName)) {
             this.map.get(block).argumentAttach.delete(argumentName);
         }
     }
     setScopeCoordinate(block, scopeName, coordinates) {
+        if (!(block instanceof index_1.Block))
+            return;
         let scopeAttach = this.map.get(block).scopeAttach;
         if (!scopeAttach.has(scopeName)) {
             scopeAttach.set(scopeName, []);
@@ -68183,7 +68300,7 @@ class Module {
         if (!this.exports.has(moduleName)) {
             if (soft)
                 return false;
-            throw new Error("checkModuleExist assertion failed");
+            throw new Error("checkModuleExist failed");
         }
         return true;
     }
@@ -68191,7 +68308,7 @@ class Module {
         if (!this.userModuleBlocks.has(moduleName)) {
             if (soft)
                 return false;
-            throw new Error("checkUserModuleExist assertion failed");
+            throw new Error("checkUserModuleExist failed");
         }
         return true;
     }
