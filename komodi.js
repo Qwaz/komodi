@@ -29889,8 +29889,8 @@ function parseBlockDefinition(definitionBase) {
         definition: definitionBase.definition,
         tokens: tokens,
         returnType: parsed.returnType ? type_1.typeFromString(parsed.returnType) : type_1.KomodiType.empty,
-        argumentNames: _.filter(tokens, ((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
         inputNames: _.filter(tokens, ((token) => token instanceof UserInputToken)).map((token) => token.identifier),
+        argumentNames: _.filter(tokens, ((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
         scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
         nodeDrawer: definitionBase.nodeDrawer,
         scopeDrawer: definitionBase.scopeDrawer
@@ -68421,6 +68421,9 @@ function serializeBlock(block) {
         id: block.definition.id,
         data: {}
     };
+    for (let inputName of block.definition.inputNames) {
+        result.data[inputName] = block.getInput(inputName);
+    }
     for (let argumentName of block.definition.argumentNames) {
         let argumentBlock = block.getArgument(argumentName);
         if (argumentBlock) {
@@ -68459,6 +68462,9 @@ function deserializeBlock(moduleName, blockData) {
     let blockClass = global_1.Komodi.module.getBlockClass(blockData.id);
     let block = new blockClass();
     block.init(moduleName);
+    for (let inputName of blockClass.definition.inputNames) {
+        block[inputName] = blockData.data[inputName];
+    }
     for (let argumentName of blockClass.definition.argumentNames) {
         if (blockData.data.hasOwnProperty(argumentName)) {
             let argumentBlockData = blockData.data[argumentName];
@@ -68483,6 +68489,7 @@ function deserializeBlock(moduleName, blockData) {
             cnt++;
         }
     }
+    block.updateGraphic();
     return block;
 }
 function deserializeProgram(program) {

@@ -4,7 +4,7 @@ import {Block} from "./index";
 
 export interface SerializedBlock {
     id: string;
-    data: {[name: string]: SerializedBlock | SerializedBlock[]};
+    data: {[name: string]: SerializedBlock | SerializedBlock[] | string};
 }
 
 export interface FreeBlock {
@@ -27,6 +27,10 @@ function serializeBlock(block: Block): SerializedBlock {
         id: block.definition.id,
         data: {}
     };
+
+    for (let inputName of block.definition.inputNames) {
+        result.data[inputName] = block.getInput(inputName);
+    }
 
     for (let argumentName of block.definition.argumentNames) {
         let argumentBlock = block.getArgument(argumentName);
@@ -73,6 +77,10 @@ function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block
     let block = new blockClass();
     block.init(moduleName);
 
+    for (let inputName of blockClass.definition.inputNames) {
+        (<any>block)[inputName] = blockData.data[inputName];
+    }
+
     for (let argumentName of blockClass.definition.argumentNames) {
         if (blockData.data.hasOwnProperty(argumentName)) {
             let argumentBlockData = <SerializedBlock>blockData.data[argumentName];
@@ -98,6 +106,8 @@ function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block
             cnt++;
         }
     }
+
+    block.updateGraphic();
 
     return block;
 }

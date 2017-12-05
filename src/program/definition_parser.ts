@@ -107,8 +107,8 @@ export interface BlockDefinition {
     definition: string;
     tokens: Token[];
     returnType: KomodiType;
-    argumentNames: string[];
     inputNames: string[];
+    argumentNames: string[];
     scopeNames: string[];
     nodeDrawer: NodeDrawer;
     scopeDrawer: ScopeDrawer;
@@ -139,8 +139,8 @@ export function parseBlockDefinition(definitionBase: BlockDefinitionBase): Block
         definition: definitionBase.definition,
         tokens: tokens,
         returnType: parsed.returnType ? typeFromString(parsed.returnType) : KomodiType.empty,
-        argumentNames: _.filter(tokens, <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
         inputNames: _.filter(tokens, <(x: Token) => x is UserInputToken>((token) => token instanceof UserInputToken)).map((token) => token.identifier),
+        argumentNames: _.filter(tokens, <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
         scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
         nodeDrawer: definitionBase.nodeDrawer,
         scopeDrawer: definitionBase.scopeDrawer
