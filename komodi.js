@@ -68378,7 +68378,9 @@ class Module {
     deleteUserModule(moduleName) {
         this.checkUserModuleExist(moduleName);
         for (let block of this.userModuleBlocks.get(moduleName).values()) {
-            block.destroy();
+            if (block.attachInfo == null) {
+                block.destroy();
+            }
         }
         this.userModuleBlocks.delete(moduleName);
         this.exports.delete(moduleName);
