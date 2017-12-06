@@ -1,12 +1,12 @@
 import {BlockClass, Command, Expression} from "../index";
-import {commandNodeDrawer, functionNodeDrawer} from "../../graphic/node_drawer";
+import {commandNodeDrawer, expressionNodeDrawer} from "../../graphic/node_drawer";
 import {boxScopeDrawer, lineScopeDrawer} from "../../graphic/scope_drawer";
 import {parseBlockDefinition} from "../definition_parser";
 
 export class ExpReadLine extends Expression {
     static definition = parseBlockDefinition({
         id: ExpReadLine.name, definition: "read line: string",
-        nodeDrawer: functionNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: expressionNodeDrawer, scopeDrawer: lineScopeDrawer
     });
 
     constructor () {

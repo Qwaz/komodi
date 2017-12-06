@@ -3,6 +3,7 @@ import {Komodi} from "./global";
 import {BlockGenerator} from "./graphic/index";
 import {BlockClass} from "./program/index";
 import {ListSelector, MENU_COLOR, SimpleButton} from "./common/ui";
+import {Module} from "./program/module";
 
 const TOP_MENU_HEIGHT = 85;
 const TOP_MENU_BUTTON_HEIGHT = 30;
@@ -80,6 +81,8 @@ export class TopMenu extends PIXI.Container {
 }
 
 export class ModuleSelector extends PIXI.Container {
+    static readonly SELECTED_MODULE_CHANGE = 'selectedModuleChange';
+
     readonly selector: ListSelector;
 
     constructor() {
@@ -103,13 +106,20 @@ export class ModuleSelector extends PIXI.Container {
         this.selector.addLabel('\uf2be  user modules');
 
         this.selector.onChange = (moduleName: string | null) => {
-            Komodi.sideMenu.blockGeneratorList.update(moduleName);
-            if (!moduleName || Array.from(Komodi.module.getModuleList().userModule).indexOf(moduleName) == -1) {
-                Komodi.sideMenu.editButton.visible = false;
-            } else {
-                Komodi.sideMenu.editButton.visible = true;
-            }
+            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, moduleName);
         };
+
+        Komodi.module.on(Module.EDITING_MODULE_CHANGE, (changedModuleName: string | null) => {
+            let modules = Komodi.module.getModuleList();
+            for (let moduleName of modules.userModule) {
+                if (moduleName == changedModuleName) {
+                    this.selector.changeText(moduleName, `${moduleName} \uf040`);
+                } else {
+                    this.selector.changeText(moduleName, moduleName);
+                }
+            }
+            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
+        });
     }
 
     addModule(moduleName: string) {
@@ -118,19 +128,6 @@ export class ModuleSelector extends PIXI.Container {
 
     deleteModule(moduleName: string) {
         this.selector.deleteButton(moduleName);
-    }
-
-    updateEditing(editingModuleName: string | null) {
-        let modules = Komodi.module.getModuleList();
-        for (let moduleName of modules.userModule) {
-            if (moduleName == editingModuleName) {
-                this.selector.changeText(moduleName, `${moduleName} \uf040`);
-            } else {
-                this.selector.changeText(moduleName, moduleName);
-            }
-        }
-
-        Komodi.sideMenu.blockGeneratorList.update(this.selector.getSelectedKey());
     }
 }
 
@@ -141,40 +138,42 @@ export class BlockGeneratorList extends PIXI.Container {
         super();
     }
 
+    init() {
+        Komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName: string | null) => {
+            this.clear();
+            if (moduleName) {
+                const VERTICAL_PADDING = 10;
+
+                let exportResult = Komodi.module.exportOf(moduleName);
+
+                let currentY = 0;
+                let addGenerator = (blockClass: BlockClass) => {
+                    let generator = new BlockGenerator(blockClass);
+                    this.addChild(generator);
+                    generator.x = SIDE_MENU_WIDTH*.5;
+                    generator.y = currentY + VERTICAL_PADDING + generator.height;
+                    this.blockList.push(generator);
+                    currentY += generator.height + VERTICAL_PADDING;
+                };
+
+                for (let blockClass of exportResult.globalScope) {
+                    addGenerator(blockClass);
+                }
+                if (Komodi.module.editingModule == moduleName) {
+                    for (let blockClass of exportResult.internalScope) {
+                        addGenerator(blockClass);
+                    }
+                }
+            }
+        });
+    }
+
     clear() {
         for (let block of this.blockList) {
             this.removeChild(block);
             block.destroy();
         }
         this.blockList.length = 0;
-    }
-
-    update(moduleName: string | null) {
-        this.clear();
-        if (moduleName) {
-            const VERTICAL_PADDING = 10;
-
-            let exportResult = Komodi.module.exportOf(moduleName);
-
-            let currentY = 0;
-            let addGenerator = (blockClass: BlockClass) => {
-                let generator = new BlockGenerator(blockClass);
-                this.addChild(generator);
-                generator.x = SIDE_MENU_WIDTH*.5;
-                generator.y = currentY + VERTICAL_PADDING + generator.height;
-                this.blockList.push(generator);
-                currentY += generator.height + VERTICAL_PADDING;
-            };
-
-            for (let blockClass of exportResult.globalScope) {
-                addGenerator(blockClass);
-            }
-            if (Komodi.module.editingModule == moduleName) {
-                for (let blockClass of exportResult.internalScope) {
-                    addGenerator(blockClass);
-                }
-            }
-        }
     }
 }
 
@@ -202,10 +201,22 @@ export class SideMenu extends PIXI.Container {
         this.editButton.on('click', () => {
             Komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
         });
+        this.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName: string | null) => {
+            if (moduleName && Komodi.module.checkUserModuleExist(moduleName, true)) {
+                this.editButton.visible = true;
+            } else {
+                this.editButton.visible = false;
+            }
+        });
         this.editButton.visible = false;
         this.addChild(this.editButton);
 
         this.addChild(this.outline);
+    }
+
+    init() {
+        this.moduleSelector.init();
+        this.blockGeneratorList.init();
     }
 
     update(_width: number, height: number) {

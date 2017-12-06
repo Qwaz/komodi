@@ -467,7 +467,7 @@ Object.defineProperty(exports, 'glCore', {
   }
 });
 
-var _Bounds = __webpack_require__(33);
+var _Bounds = __webpack_require__(37);
 
 Object.defineProperty(exports, 'Bounds', {
   enumerable: true,
@@ -476,7 +476,7 @@ Object.defineProperty(exports, 'Bounds', {
   }
 });
 
-var _DisplayObject = __webpack_require__(67);
+var _DisplayObject = __webpack_require__(68);
 
 Object.defineProperty(exports, 'DisplayObject', {
   enumerable: true,
@@ -485,7 +485,7 @@ Object.defineProperty(exports, 'DisplayObject', {
   }
 });
 
-var _Container = __webpack_require__(20);
+var _Container = __webpack_require__(18);
 
 Object.defineProperty(exports, 'Container', {
   enumerable: true,
@@ -494,7 +494,7 @@ Object.defineProperty(exports, 'Container', {
   }
 });
 
-var _Transform = __webpack_require__(68);
+var _Transform = __webpack_require__(69);
 
 Object.defineProperty(exports, 'Transform', {
   enumerable: true,
@@ -503,7 +503,7 @@ Object.defineProperty(exports, 'Transform', {
   }
 });
 
-var _TransformStatic = __webpack_require__(69);
+var _TransformStatic = __webpack_require__(70);
 
 Object.defineProperty(exports, 'TransformStatic', {
   enumerable: true,
@@ -512,7 +512,7 @@ Object.defineProperty(exports, 'TransformStatic', {
   }
 });
 
-var _TransformBase = __webpack_require__(34);
+var _TransformBase = __webpack_require__(38);
 
 Object.defineProperty(exports, 'TransformBase', {
   enumerable: true,
@@ -521,7 +521,7 @@ Object.defineProperty(exports, 'TransformBase', {
   }
 });
 
-var _Sprite = __webpack_require__(38);
+var _Sprite = __webpack_require__(42);
 
 Object.defineProperty(exports, 'Sprite', {
   enumerable: true,
@@ -539,7 +539,7 @@ Object.defineProperty(exports, 'CanvasSpriteRenderer', {
   }
 });
 
-var _CanvasTinter = __webpack_require__(39);
+var _CanvasTinter = __webpack_require__(43);
 
 Object.defineProperty(exports, 'CanvasTinter', {
   enumerable: true,
@@ -566,7 +566,7 @@ Object.defineProperty(exports, 'Text', {
   }
 });
 
-var _TextStyle = __webpack_require__(80);
+var _TextStyle = __webpack_require__(81);
 
 Object.defineProperty(exports, 'TextStyle', {
   enumerable: true,
@@ -575,7 +575,7 @@ Object.defineProperty(exports, 'TextStyle', {
   }
 });
 
-var _TextMetrics = __webpack_require__(79);
+var _TextMetrics = __webpack_require__(80);
 
 Object.defineProperty(exports, 'TextMetrics', {
   enumerable: true,
@@ -593,7 +593,7 @@ Object.defineProperty(exports, 'Graphics', {
   }
 });
 
-var _GraphicsData = __webpack_require__(70);
+var _GraphicsData = __webpack_require__(71);
 
 Object.defineProperty(exports, 'GraphicsData', {
   enumerable: true,
@@ -638,7 +638,7 @@ Object.defineProperty(exports, 'Texture', {
   }
 });
 
-var _BaseTexture = __webpack_require__(15);
+var _BaseTexture = __webpack_require__(14);
 
 Object.defineProperty(exports, 'BaseTexture', {
   enumerable: true,
@@ -647,7 +647,7 @@ Object.defineProperty(exports, 'BaseTexture', {
   }
 });
 
-var _RenderTexture = __webpack_require__(40);
+var _RenderTexture = __webpack_require__(44);
 
 Object.defineProperty(exports, 'RenderTexture', {
   enumerable: true,
@@ -656,7 +656,7 @@ Object.defineProperty(exports, 'RenderTexture', {
   }
 });
 
-var _BaseRenderTexture = __webpack_require__(81);
+var _BaseRenderTexture = __webpack_require__(82);
 
 Object.defineProperty(exports, 'BaseRenderTexture', {
   enumerable: true,
@@ -665,7 +665,7 @@ Object.defineProperty(exports, 'BaseRenderTexture', {
   }
 });
 
-var _VideoBaseTexture = __webpack_require__(83);
+var _VideoBaseTexture = __webpack_require__(84);
 
 Object.defineProperty(exports, 'VideoBaseTexture', {
   enumerable: true,
@@ -674,7 +674,7 @@ Object.defineProperty(exports, 'VideoBaseTexture', {
   }
 });
 
-var _TextureUvs = __webpack_require__(82);
+var _TextureUvs = __webpack_require__(83);
 
 Object.defineProperty(exports, 'TextureUvs', {
   enumerable: true,
@@ -683,7 +683,7 @@ Object.defineProperty(exports, 'TextureUvs', {
   }
 });
 
-var _CanvasRenderTarget = __webpack_require__(74);
+var _CanvasRenderTarget = __webpack_require__(75);
 
 Object.defineProperty(exports, 'CanvasRenderTarget', {
   enumerable: true,
@@ -692,7 +692,7 @@ Object.defineProperty(exports, 'CanvasRenderTarget', {
   }
 });
 
-var _Shader = __webpack_require__(19);
+var _Shader = __webpack_require__(17);
 
 Object.defineProperty(exports, 'Shader', {
   enumerable: true,
@@ -701,7 +701,7 @@ Object.defineProperty(exports, 'Shader', {
   }
 });
 
-var _WebGLManager = __webpack_require__(22);
+var _WebGLManager = __webpack_require__(20);
 
 Object.defineProperty(exports, 'WebGLManager', {
   enumerable: true,
@@ -728,7 +728,7 @@ Object.defineProperty(exports, 'RenderTarget', {
   }
 });
 
-var _Quad = __webpack_require__(78);
+var _Quad = __webpack_require__(79);
 
 Object.defineProperty(exports, 'Quad', {
   enumerable: true,
@@ -737,7 +737,7 @@ Object.defineProperty(exports, 'Quad', {
   }
 });
 
-var _SpriteMaskFilter = __webpack_require__(77);
+var _SpriteMaskFilter = __webpack_require__(78);
 
 Object.defineProperty(exports, 'SpriteMaskFilter', {
   enumerable: true,
@@ -746,7 +746,7 @@ Object.defineProperty(exports, 'SpriteMaskFilter', {
   }
 });
 
-var _Filter = __webpack_require__(76);
+var _Filter = __webpack_require__(77);
 
 Object.defineProperty(exports, 'Filter', {
   enumerable: true,
@@ -755,7 +755,7 @@ Object.defineProperty(exports, 'Filter', {
   }
 });
 
-var _Application = __webpack_require__(65);
+var _Application = __webpack_require__(66);
 
 Object.defineProperty(exports, 'Application', {
   enumerable: true,
@@ -764,7 +764,7 @@ Object.defineProperty(exports, 'Application', {
   }
 });
 
-var _autoDetectRenderer = __webpack_require__(66);
+var _autoDetectRenderer = __webpack_require__(67);
 
 Object.defineProperty(exports, 'autoDetectRenderer', {
   enumerable: true,
@@ -777,7 +777,7 @@ var _utils = __webpack_require__(2);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _ticker = __webpack_require__(41);
+var _ticker = __webpack_require__(45);
 
 var ticker = _interopRequireWildcard(_ticker);
 
@@ -785,7 +785,7 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(19);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -852,7 +852,7 @@ var _mixin = __webpack_require__(166);
 
 var mixins = _interopRequireWildcard(_mixin);
 
-var _ismobilejs = __webpack_require__(31);
+var _ismobilejs = __webpack_require__(35);
 
 var isMobile = _interopRequireWildcard(_ismobilejs);
 
@@ -1534,7 +1534,7 @@ exports.default = {
 
 exports.__esModule = true;
 
-var _Point = __webpack_require__(36);
+var _Point = __webpack_require__(40);
 
 Object.defineProperty(exports, 'Point', {
   enumerable: true,
@@ -1543,7 +1543,7 @@ Object.defineProperty(exports, 'Point', {
   }
 });
 
-var _ObservablePoint = __webpack_require__(72);
+var _ObservablePoint = __webpack_require__(73);
 
 Object.defineProperty(exports, 'ObservablePoint', {
   enumerable: true,
@@ -1552,7 +1552,7 @@ Object.defineProperty(exports, 'ObservablePoint', {
   }
 });
 
-var _Matrix = __webpack_require__(35);
+var _Matrix = __webpack_require__(39);
 
 Object.defineProperty(exports, 'Matrix', {
   enumerable: true,
@@ -1561,7 +1561,7 @@ Object.defineProperty(exports, 'Matrix', {
   }
 });
 
-var _GroupD = __webpack_require__(71);
+var _GroupD = __webpack_require__(72);
 
 Object.defineProperty(exports, 'GroupD8', {
   enumerable: true,
@@ -1597,7 +1597,7 @@ Object.defineProperty(exports, 'Polygon', {
   }
 });
 
-var _Rectangle = __webpack_require__(37);
+var _Rectangle = __webpack_require__(41);
 
 Object.defineProperty(exports, 'Rectangle', {
   enumerable: true,
@@ -1624,11 +1624,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var gl = {
     createContext:          __webpack_require__(122),
-    setVertexAttribArrays:  __webpack_require__(56),
+    setVertexAttribArrays:  __webpack_require__(57),
     GLBuffer:               __webpack_require__(118),
     GLFramebuffer:          __webpack_require__(119),
     GLShader:               __webpack_require__(120),
-    GLTexture:              __webpack_require__(55),
+    GLTexture:              __webpack_require__(56),
     VertexArrayObject:      __webpack_require__(121),
     shader:                 __webpack_require__(123)
 };
@@ -1657,7 +1657,7 @@ if (typeof window !== 'undefined')
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const WebFont = __webpack_require__(228);
-const PIXI = __webpack_require__(90);
+const PIXI = __webpack_require__(91);
 const attacher_1 = __webpack_require__(221);
 const menu_1 = __webpack_require__(220);
 const serializer_1 = __webpack_require__(226);
@@ -1759,7 +1759,7 @@ class KomodiClass {
     }
     init() {
         this.attacher.init();
-        this.sideMenu.moduleSelector.init();
+        this.sideMenu.init();
     }
     newProject() {
         this.topMenu.projectName = "Untitled Komodi Project";
@@ -2063,7 +2063,7 @@ var substr = 'ab'.substr(-1) === 'b'
 "use strict";
 
 
-var objects = __webpack_require__(14),
+var objects = __webpack_require__(13),
     arrays  = __webpack_require__(9);
 
 /* Simple AST node visitor builder. */
@@ -2579,15 +2579,15 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _BaseTexture = __webpack_require__(15);
+var _BaseTexture = __webpack_require__(14);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
-var _VideoBaseTexture = __webpack_require__(83);
+var _VideoBaseTexture = __webpack_require__(84);
 
 var _VideoBaseTexture2 = _interopRequireDefault(_VideoBaseTexture);
 
-var _TextureUvs = __webpack_require__(82);
+var _TextureUvs = __webpack_require__(83);
 
 var _TextureUvs2 = _interopRequireDefault(_TextureUvs);
 
@@ -3265,6 +3265,941 @@ removeAllHandlers(Texture.WHITE.baseTexture);
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var classes = __webpack_require__(117);
+
+/* Thrown when the grammar contains an error. */
+function GrammarError(message, location) {
+  this.name = "GrammarError";
+  this.message = message;
+  this.location = location;
+
+  if (typeof Error.captureStackTrace === "function") {
+    Error.captureStackTrace(this, GrammarError);
+  }
+}
+
+classes.subclass(GrammarError, Error);
+
+module.exports = GrammarError;
+
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* Object utilities. */
+var objects = {
+  keys: function(object) {
+    var result = [], key;
+
+    for (key in object) {
+      if (object.hasOwnProperty(key)) {
+        result.push(key);
+      }
+    }
+
+    return result;
+  },
+
+  values: function(object) {
+    var result = [], key;
+
+    for (key in object) {
+      if (object.hasOwnProperty(key)) {
+        result.push(object[key]);
+      }
+    }
+
+    return result;
+  },
+
+  clone: function(object) {
+    var result = {}, key;
+
+    for (key in object) {
+      if (object.hasOwnProperty(key)) {
+        result[key] = object[key];
+      }
+    }
+
+    return result;
+  },
+
+  defaults: function(object, defaults) {
+    var key;
+
+    for (key in defaults) {
+      if (defaults.hasOwnProperty(key)) {
+        if (!(key in object)) {
+          object[key] = defaults[key];
+        }
+      }
+    }
+  }
+};
+
+module.exports = objects;
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _utils = __webpack_require__(2);
+
+var _settings = __webpack_require__(3);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _eventemitter = __webpack_require__(10);
+
+var _eventemitter2 = _interopRequireDefault(_eventemitter);
+
+var _determineCrossOrigin = __webpack_require__(163);
+
+var _determineCrossOrigin2 = _interopRequireDefault(_determineCrossOrigin);
+
+var _bitTwiddle = __webpack_require__(34);
+
+var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * A texture stores the information that represents an image. All textures have a base texture.
+ *
+ * @class
+ * @extends EventEmitter
+ * @memberof PIXI
+ */
+var BaseTexture = function (_EventEmitter) {
+    _inherits(BaseTexture, _EventEmitter);
+
+    /**
+     * @param {HTMLImageElement|HTMLCanvasElement} [source] - the source object of the texture.
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [resolution=1] - The resolution / device pixel ratio of the texture
+     */
+    function BaseTexture(source, scaleMode, resolution) {
+        _classCallCheck(this, BaseTexture);
+
+        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+        _this.uid = (0, _utils.uid)();
+
+        _this.touched = 0;
+
+        /**
+         * The resolution / device pixel ratio of the texture
+         *
+         * @member {number}
+         * @default 1
+         */
+        _this.resolution = resolution || _settings2.default.RESOLUTION;
+
+        /**
+         * The width of the base texture set when the image has loaded
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.width = 100;
+
+        /**
+         * The height of the base texture set when the image has loaded
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.height = 100;
+
+        // TODO docs
+        // used to store the actual dimensions of the source
+        /**
+         * Used to store the actual width of the source of this texture
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.realWidth = 100;
+        /**
+         * Used to store the actual height of the source of this texture
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.realHeight = 100;
+
+        /**
+         * The scale mode to apply when scaling this texture
+         *
+         * @member {number}
+         * @default PIXI.settings.SCALE_MODE
+         * @see PIXI.SCALE_MODES
+         */
+        _this.scaleMode = scaleMode !== undefined ? scaleMode : _settings2.default.SCALE_MODE;
+
+        /**
+         * Set to true once the base texture has successfully loaded.
+         *
+         * This is never true if the underlying source fails to load or has no texture data.
+         *
+         * @readonly
+         * @member {boolean}
+         */
+        _this.hasLoaded = false;
+
+        /**
+         * Set to true if the source is currently loading.
+         *
+         * If an Image source is loading the 'loaded' or 'error' event will be
+         * dispatched when the operation ends. An underyling source that is
+         * immediately-available bypasses loading entirely.
+         *
+         * @readonly
+         * @member {boolean}
+         */
+        _this.isLoading = false;
+
+        /**
+         * The image source that is used to create the texture.
+         *
+         * TODO: Make this a setter that calls loadSource();
+         *
+         * @readonly
+         * @member {HTMLImageElement|HTMLCanvasElement}
+         */
+        _this.source = null; // set in loadSource, if at all
+
+        /**
+         * The image source that is used to create the texture. This is used to
+         * store the original Svg source when it is replaced with a canvas element.
+         *
+         * TODO: Currently not in use but could be used when re-scaling svg.
+         *
+         * @readonly
+         * @member {Image}
+         */
+        _this.origSource = null; // set in loadSvg, if at all
+
+        /**
+         * Type of image defined in source, eg. `png` or `svg`
+         *
+         * @readonly
+         * @member {string}
+         */
+        _this.imageType = null; // set in updateImageType
+
+        /**
+         * Scale for source image. Used with Svg images to scale them before rasterization.
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.sourceScale = 1.0;
+
+        /**
+         * Controls if RGB channels should be pre-multiplied by Alpha  (WebGL only)
+         * All blend modes, and shaders written for default value. Change it on your own risk.
+         *
+         * @member {boolean}
+         * @default true
+         */
+        _this.premultipliedAlpha = true;
+
+        /**
+         * The image url of the texture
+         *
+         * @member {string}
+         */
+        _this.imageUrl = null;
+
+        /**
+         * Whether or not the texture is a power of two, try to use power of two textures as much
+         * as you can
+         *
+         * @private
+         * @member {boolean}
+         */
+        _this.isPowerOfTwo = false;
+
+        // used for webGL
+
+        /**
+         *
+         * Set this to true if a mipmap of this texture needs to be generated. This value needs
+         * to be set before the texture is used
+         * Also the texture must be a power of two size to work
+         *
+         * @member {boolean}
+         * @see PIXI.MIPMAP_TEXTURES
+         */
+        _this.mipmap = _settings2.default.MIPMAP_TEXTURES;
+
+        /**
+         *
+         * WebGL Texture wrap mode
+         *
+         * @member {number}
+         * @see PIXI.WRAP_MODES
+         */
+        _this.wrapMode = _settings2.default.WRAP_MODE;
+
+        /**
+         * A map of renderer IDs to webgl textures
+         *
+         * @private
+         * @member {object<number, WebGLTexture>}
+         */
+        _this._glTextures = {};
+
+        _this._enabled = 0;
+        _this._virtalBoundId = -1;
+
+        /**
+         * If the object has been destroyed via destroy(). If true, it should not be used.
+         *
+         * @member {boolean}
+         * @private
+         * @readonly
+         */
+        _this._destroyed = false;
+
+        /**
+         * The ids under which this BaseTexture has been added to the base texture cache. This is
+         * automatically set as long as BaseTexture.addToCache is used, but may not be set if a
+         * BaseTexture is added directly to the BaseTextureCache array.
+         *
+         * @member {string[]}
+         */
+        _this.textureCacheIds = [];
+
+        // if no source passed don't try to load
+        if (source) {
+            _this.loadSource(source);
+        }
+
+        /**
+         * Fired when a not-immediately-available source finishes loading.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#loaded
+         * @param {PIXI.BaseTexture} baseTexture - Resource loaded.
+         */
+
+        /**
+         * Fired when a not-immediately-available source fails to load.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#error
+         * @param {PIXI.BaseTexture} baseTexture - Resource errored.
+         */
+
+        /**
+         * Fired when BaseTexture is updated.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#update
+         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being updated.
+         */
+
+        /**
+         * Fired when BaseTexture is destroyed.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#dispose
+         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being destroyed.
+         */
+        return _this;
+    }
+
+    /**
+     * Updates the texture on all the webgl renderers, this also assumes the src has changed.
+     *
+     * @fires PIXI.BaseTexture#update
+     */
+
+
+    BaseTexture.prototype.update = function update() {
+        // Svg size is handled during load
+        if (this.imageType !== 'svg') {
+            this.realWidth = this.source.naturalWidth || this.source.videoWidth || this.source.width;
+            this.realHeight = this.source.naturalHeight || this.source.videoHeight || this.source.height;
+
+            this._updateDimensions();
+        }
+
+        this.emit('update', this);
+    };
+
+    /**
+     * Update dimensions from real values
+     */
+
+
+    BaseTexture.prototype._updateDimensions = function _updateDimensions() {
+        this.width = this.realWidth / this.resolution;
+        this.height = this.realHeight / this.resolution;
+
+        this.isPowerOfTwo = _bitTwiddle2.default.isPow2(this.realWidth) && _bitTwiddle2.default.isPow2(this.realHeight);
+    };
+
+    /**
+     * Load a source.
+     *
+     * If the source is not-immediately-available, such as an image that needs to be
+     * downloaded, then the 'loaded' or 'error' event will be dispatched in the future
+     * and `hasLoaded` will remain false after this call.
+     *
+     * The logic state after calling `loadSource` directly or indirectly (eg. `fromImage`, `new BaseTexture`) is:
+     *
+     *     if (texture.hasLoaded) {
+     *        // texture ready for use
+     *     } else if (texture.isLoading) {
+     *        // listen to 'loaded' and/or 'error' events on texture
+     *     } else {
+     *        // not loading, not going to load UNLESS the source is reloaded
+     *        // (it may still make sense to listen to the events)
+     *     }
+     *
+     * @protected
+     * @param {HTMLImageElement|HTMLCanvasElement} source - the source object of the texture.
+     */
+
+
+    BaseTexture.prototype.loadSource = function loadSource(source) {
+        var wasLoading = this.isLoading;
+
+        this.hasLoaded = false;
+        this.isLoading = false;
+
+        if (wasLoading && this.source) {
+            this.source.onload = null;
+            this.source.onerror = null;
+        }
+
+        var firstSourceLoaded = !this.source;
+
+        this.source = source;
+
+        // Apply source if loaded. Otherwise setup appropriate loading monitors.
+        if ((source.src && source.complete || source.getContext) && source.width && source.height) {
+            this._updateImageType();
+
+            if (this.imageType === 'svg') {
+                this._loadSvgSource();
+            } else {
+                this._sourceLoaded();
+            }
+
+            if (firstSourceLoaded) {
+                // send loaded event if previous source was null and we have been passed a pre-loaded IMG element
+                this.emit('loaded', this);
+            }
+        } else if (!source.getContext) {
+            // Image fail / not ready
+            this.isLoading = true;
+
+            var scope = this;
+
+            source.onload = function () {
+                scope._updateImageType();
+                source.onload = null;
+                source.onerror = null;
+
+                if (!scope.isLoading) {
+                    return;
+                }
+
+                scope.isLoading = false;
+                scope._sourceLoaded();
+
+                if (scope.imageType === 'svg') {
+                    scope._loadSvgSource();
+
+                    return;
+                }
+
+                scope.emit('loaded', scope);
+            };
+
+            source.onerror = function () {
+                source.onload = null;
+                source.onerror = null;
+
+                if (!scope.isLoading) {
+                    return;
+                }
+
+                scope.isLoading = false;
+                scope.emit('error', scope);
+            };
+
+            // Per http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element
+            //   "The value of `complete` can thus change while a script is executing."
+            // So complete needs to be re-checked after the callbacks have been added..
+            // NOTE: complete will be true if the image has no src so best to check if the src is set.
+            if (source.complete && source.src) {
+                // ..and if we're complete now, no need for callbacks
+                source.onload = null;
+                source.onerror = null;
+
+                if (scope.imageType === 'svg') {
+                    scope._loadSvgSource();
+
+                    return;
+                }
+
+                this.isLoading = false;
+
+                if (source.width && source.height) {
+                    this._sourceLoaded();
+
+                    // If any previous subscribers possible
+                    if (wasLoading) {
+                        this.emit('loaded', this);
+                    }
+                }
+                // If any previous subscribers possible
+                else if (wasLoading) {
+                        this.emit('error', this);
+                    }
+            }
+        }
+    };
+
+    /**
+     * Updates type of the source image.
+     */
+
+
+    BaseTexture.prototype._updateImageType = function _updateImageType() {
+        if (!this.imageUrl) {
+            return;
+        }
+
+        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
+        var imageType = void 0;
+
+        if (dataUri && dataUri.mediaType === 'image') {
+            // Check for subType validity
+            var firstSubType = dataUri.subType.split('+')[0];
+
+            imageType = (0, _utils.getUrlFileExtension)('.' + firstSubType);
+
+            if (!imageType) {
+                throw new Error('Invalid image type in data URI.');
+            }
+        } else {
+            imageType = (0, _utils.getUrlFileExtension)(this.imageUrl);
+
+            if (!imageType) {
+                imageType = 'png';
+            }
+        }
+
+        this.imageType = imageType;
+    };
+
+    /**
+     * Checks if `source` is an SVG image and whether it's loaded via a URL or a data URI. Then calls
+     * `_loadSvgSourceUsingDataUri` or `_loadSvgSourceUsingXhr`.
+     */
+
+
+    BaseTexture.prototype._loadSvgSource = function _loadSvgSource() {
+        if (this.imageType !== 'svg') {
+            // Do nothing if source is not svg
+            return;
+        }
+
+        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
+
+        if (dataUri) {
+            this._loadSvgSourceUsingDataUri(dataUri);
+        } else {
+            // We got an URL, so we need to do an XHR to check the svg size
+            this._loadSvgSourceUsingXhr();
+        }
+    };
+
+    /**
+     * Reads an SVG string from data URI and then calls `_loadSvgSourceUsingString`.
+     *
+     * @param {string} dataUri - The data uri to load from.
+     */
+
+
+    BaseTexture.prototype._loadSvgSourceUsingDataUri = function _loadSvgSourceUsingDataUri(dataUri) {
+        var svgString = void 0;
+
+        if (dataUri.encoding === 'base64') {
+            if (!atob) {
+                throw new Error('Your browser doesn\'t support base64 conversions.');
+            }
+            svgString = atob(dataUri.data);
+        } else {
+            svgString = dataUri.data;
+        }
+
+        this._loadSvgSourceUsingString(svgString);
+    };
+
+    /**
+     * Loads an SVG string from `imageUrl` using XHR and then calls `_loadSvgSourceUsingString`.
+     */
+
+
+    BaseTexture.prototype._loadSvgSourceUsingXhr = function _loadSvgSourceUsingXhr() {
+        var _this2 = this;
+
+        var svgXhr = new XMLHttpRequest();
+
+        // This throws error on IE, so SVG Document can't be used
+        // svgXhr.responseType = 'document';
+
+        // This is not needed since we load the svg as string (breaks IE too)
+        // but overrideMimeType() can be used to force the response to be parsed as XML
+        // svgXhr.overrideMimeType('image/svg+xml');
+
+        svgXhr.onload = function () {
+            if (svgXhr.readyState !== svgXhr.DONE || svgXhr.status !== 200) {
+                throw new Error('Failed to load SVG using XHR.');
+            }
+
+            _this2._loadSvgSourceUsingString(svgXhr.response);
+        };
+
+        svgXhr.onerror = function () {
+            return _this2.emit('error', _this2);
+        };
+
+        svgXhr.open('GET', this.imageUrl, true);
+        svgXhr.send();
+    };
+
+    /**
+     * Loads texture using an SVG string. The original SVG Image is stored as `origSource` and the
+     * created canvas is the new `source`. The SVG is scaled using `sourceScale`. Called by
+     * `_loadSvgSourceUsingXhr` or `_loadSvgSourceUsingDataUri`.
+     *
+     * @param  {string} svgString SVG source as string
+     *
+     * @fires PIXI.BaseTexture#loaded
+     */
+
+
+    BaseTexture.prototype._loadSvgSourceUsingString = function _loadSvgSourceUsingString(svgString) {
+        var svgSize = (0, _utils.getSvgSize)(svgString);
+
+        var svgWidth = svgSize.width;
+        var svgHeight = svgSize.height;
+
+        if (!svgWidth || !svgHeight) {
+            throw new Error('The SVG image must have width and height defined (in pixels), canvas API needs them.');
+        }
+
+        // Scale realWidth and realHeight
+        this.realWidth = Math.round(svgWidth * this.sourceScale);
+        this.realHeight = Math.round(svgHeight * this.sourceScale);
+
+        this._updateDimensions();
+
+        // Create a canvas element
+        var canvas = document.createElement('canvas');
+
+        canvas.width = this.realWidth;
+        canvas.height = this.realHeight;
+        canvas._pixiId = 'canvas_' + (0, _utils.uid)();
+
+        // Draw the Svg to the canvas
+        canvas.getContext('2d').drawImage(this.source, 0, 0, svgWidth, svgHeight, 0, 0, this.realWidth, this.realHeight);
+
+        // Replace the original source image with the canvas
+        this.origSource = this.source;
+        this.source = canvas;
+
+        // Add also the canvas in cache (destroy clears by `imageUrl` and `source._pixiId`)
+        BaseTexture.addToCache(this, canvas._pixiId);
+
+        this.isLoading = false;
+        this._sourceLoaded();
+        this.emit('loaded', this);
+    };
+
+    /**
+     * Used internally to update the width, height, and some other tracking vars once
+     * a source has successfully loaded.
+     *
+     * @private
+     */
+
+
+    BaseTexture.prototype._sourceLoaded = function _sourceLoaded() {
+        this.hasLoaded = true;
+        this.update();
+    };
+
+    /**
+     * Destroys this base texture
+     *
+     */
+
+
+    BaseTexture.prototype.destroy = function destroy() {
+        if (this.imageUrl) {
+            delete _utils.TextureCache[this.imageUrl];
+
+            this.imageUrl = null;
+
+            if (!navigator.isCocoonJS) {
+                this.source.src = '';
+            }
+        }
+
+        this.source = null;
+
+        this.dispose();
+
+        BaseTexture.removeFromCache(this);
+        this.textureCacheIds = null;
+
+        this._destroyed = true;
+    };
+
+    /**
+     * Frees the texture from WebGL memory without destroying this texture object.
+     * This means you can still use the texture later which will upload it to GPU
+     * memory again.
+     *
+     * @fires PIXI.BaseTexture#dispose
+     */
+
+
+    BaseTexture.prototype.dispose = function dispose() {
+        this.emit('dispose', this);
+    };
+
+    /**
+     * Changes the source image of the texture.
+     * The original source must be an Image element.
+     *
+     * @param {string} newSrc - the path of the image
+     */
+
+
+    BaseTexture.prototype.updateSourceImage = function updateSourceImage(newSrc) {
+        this.source.src = newSrc;
+
+        this.loadSource(this.source);
+    };
+
+    /**
+     * Helper function that creates a base texture from the given image url.
+     * If the image is not in the base texture cache it will be created and loaded.
+     *
+     * @static
+     * @param {string} imageUrl - The image url of the texture
+     * @param {boolean} [crossorigin=(auto)] - Should use anonymous CORS? Defaults to true if the URL is not a data-URI.
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
+     * @return {PIXI.BaseTexture} The new base texture.
+     */
+
+
+    BaseTexture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
+        var baseTexture = _utils.BaseTextureCache[imageUrl];
+
+        if (!baseTexture) {
+            // new Image() breaks tex loading in some versions of Chrome.
+            // See https://code.google.com/p/chromium/issues/detail?id=238071
+            var image = new Image(); // document.createElement('img');
+
+            if (crossorigin === undefined && imageUrl.indexOf('data:') !== 0) {
+                image.crossOrigin = (0, _determineCrossOrigin2.default)(imageUrl);
+            } else if (crossorigin) {
+                image.crossOrigin = typeof crossorigin === 'string' ? crossorigin : 'anonymous';
+            }
+
+            baseTexture = new BaseTexture(image, scaleMode);
+            baseTexture.imageUrl = imageUrl;
+
+            if (sourceScale) {
+                baseTexture.sourceScale = sourceScale;
+            }
+
+            // if there is an @2x at the end of the url we are going to assume its a highres image
+            baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
+
+            image.src = imageUrl; // Setting this triggers load
+
+            BaseTexture.addToCache(baseTexture, imageUrl);
+        }
+
+        return baseTexture;
+    };
+
+    /**
+     * Helper function that creates a base texture from the given canvas element.
+     *
+     * @static
+     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
+     * @param {number} scaleMode - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {string} [origin='canvas'] - A string origin of who created the base texture
+     * @return {PIXI.BaseTexture} The new base texture.
+     */
+
+
+    BaseTexture.fromCanvas = function fromCanvas(canvas, scaleMode) {
+        var origin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'canvas';
+
+        if (!canvas._pixiId) {
+            canvas._pixiId = origin + '_' + (0, _utils.uid)();
+        }
+
+        var baseTexture = _utils.BaseTextureCache[canvas._pixiId];
+
+        if (!baseTexture) {
+            baseTexture = new BaseTexture(canvas, scaleMode);
+            BaseTexture.addToCache(baseTexture, canvas._pixiId);
+        }
+
+        return baseTexture;
+    };
+
+    /**
+     * Helper function that creates a base texture based on the source you provide.
+     * The source can be - image url, image element, canvas element.
+     *
+     * @static
+     * @param {string|HTMLImageElement|HTMLCanvasElement} source - The source to create base texture from.
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
+     * @return {PIXI.BaseTexture} The new base texture.
+     */
+
+
+    BaseTexture.from = function from(source, scaleMode, sourceScale) {
+        if (typeof source === 'string') {
+            return BaseTexture.fromImage(source, undefined, scaleMode, sourceScale);
+        } else if (source instanceof HTMLImageElement) {
+            var imageUrl = source.src;
+            var baseTexture = _utils.BaseTextureCache[imageUrl];
+
+            if (!baseTexture) {
+                baseTexture = new BaseTexture(source, scaleMode);
+                baseTexture.imageUrl = imageUrl;
+
+                if (sourceScale) {
+                    baseTexture.sourceScale = sourceScale;
+                }
+
+                // if there is an @2x at the end of the url we are going to assume its a highres image
+                baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
+
+                BaseTexture.addToCache(baseTexture, imageUrl);
+            }
+
+            return baseTexture;
+        } else if (source instanceof HTMLCanvasElement) {
+            return BaseTexture.fromCanvas(source, scaleMode);
+        }
+
+        // lets assume its a base texture!
+        return source;
+    };
+
+    /**
+     * Adds a BaseTexture to the global BaseTextureCache. This cache is shared across the whole PIXI object.
+     *
+     * @static
+     * @param {PIXI.BaseTexture} baseTexture - The BaseTexture to add to the cache.
+     * @param {string} id - The id that the BaseTexture will be stored against.
+     */
+
+
+    BaseTexture.addToCache = function addToCache(baseTexture, id) {
+        if (id) {
+            if (baseTexture.textureCacheIds.indexOf(id) === -1) {
+                baseTexture.textureCacheIds.push(id);
+            }
+
+            // @if DEBUG
+            /* eslint-disable no-console */
+            if (_utils.BaseTextureCache[id]) {
+                console.warn('BaseTexture added to the cache with an id [' + id + '] that already had an entry');
+            }
+            /* eslint-enable no-console */
+            // @endif
+
+            _utils.BaseTextureCache[id] = baseTexture;
+        }
+    };
+
+    /**
+     * Remove a BaseTexture from the global BaseTextureCache.
+     *
+     * @static
+     * @param {string|PIXI.BaseTexture} baseTexture - id of a BaseTexture to be removed, or a BaseTexture instance itself.
+     * @return {PIXI.BaseTexture|null} The BaseTexture that was removed.
+     */
+
+
+    BaseTexture.removeFromCache = function removeFromCache(baseTexture) {
+        if (typeof baseTexture === 'string') {
+            var baseTextureFromCache = _utils.BaseTextureCache[baseTexture];
+
+            if (baseTextureFromCache) {
+                var index = baseTextureFromCache.textureCacheIds.indexOf(baseTexture);
+
+                if (index > -1) {
+                    baseTextureFromCache.textureCacheIds.splice(index, 1);
+                }
+
+                delete _utils.BaseTextureCache[baseTexture];
+
+                return baseTextureFromCache;
+            }
+        } else if (baseTexture && baseTexture.textureCacheIds) {
+            for (var i = 0; i < baseTexture.textureCacheIds.length; ++i) {
+                delete _utils.BaseTextureCache[baseTexture.textureCacheIds[i]];
+            }
+
+            baseTexture.textureCacheIds.length = 0;
+
+            return baseTexture;
+        }
+
+        return null;
+    };
+
+    return BaseTexture;
+}(_eventemitter2.default);
+
+exports.default = BaseTexture;
+//# sourceMappingURL=BaseTexture.js.map
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -20353,1305 +21288,10 @@ removeAllHandlers(Texture.WHITE.baseTexture);
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(104)(module)))
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var classes = __webpack_require__(117);
-
-/* Thrown when the grammar contains an error. */
-function GrammarError(message, location) {
-  this.name = "GrammarError";
-  this.message = message;
-  this.location = location;
-
-  if (typeof Error.captureStackTrace === "function") {
-    Error.captureStackTrace(this, GrammarError);
-  }
-}
-
-classes.subclass(GrammarError, Error);
-
-module.exports = GrammarError;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/* Object utilities. */
-var objects = {
-  keys: function(object) {
-    var result = [], key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        result.push(key);
-      }
-    }
-
-    return result;
-  },
-
-  values: function(object) {
-    var result = [], key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        result.push(object[key]);
-      }
-    }
-
-    return result;
-  },
-
-  clone: function(object) {
-    var result = {}, key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        result[key] = object[key];
-      }
-    }
-
-    return result;
-  },
-
-  defaults: function(object, defaults) {
-    var key;
-
-    for (key in defaults) {
-      if (defaults.hasOwnProperty(key)) {
-        if (!(key in object)) {
-          object[key] = defaults[key];
-        }
-      }
-    }
-  }
-};
-
-module.exports = objects;
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _utils = __webpack_require__(2);
-
-var _settings = __webpack_require__(3);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-var _eventemitter = __webpack_require__(10);
-
-var _eventemitter2 = _interopRequireDefault(_eventemitter);
-
-var _determineCrossOrigin = __webpack_require__(163);
-
-var _determineCrossOrigin2 = _interopRequireDefault(_determineCrossOrigin);
-
-var _bitTwiddle = __webpack_require__(30);
-
-var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * A texture stores the information that represents an image. All textures have a base texture.
- *
- * @class
- * @extends EventEmitter
- * @memberof PIXI
- */
-var BaseTexture = function (_EventEmitter) {
-    _inherits(BaseTexture, _EventEmitter);
-
-    /**
-     * @param {HTMLImageElement|HTMLCanvasElement} [source] - the source object of the texture.
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [resolution=1] - The resolution / device pixel ratio of the texture
-     */
-    function BaseTexture(source, scaleMode, resolution) {
-        _classCallCheck(this, BaseTexture);
-
-        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
-
-        _this.uid = (0, _utils.uid)();
-
-        _this.touched = 0;
-
-        /**
-         * The resolution / device pixel ratio of the texture
-         *
-         * @member {number}
-         * @default 1
-         */
-        _this.resolution = resolution || _settings2.default.RESOLUTION;
-
-        /**
-         * The width of the base texture set when the image has loaded
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.width = 100;
-
-        /**
-         * The height of the base texture set when the image has loaded
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.height = 100;
-
-        // TODO docs
-        // used to store the actual dimensions of the source
-        /**
-         * Used to store the actual width of the source of this texture
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.realWidth = 100;
-        /**
-         * Used to store the actual height of the source of this texture
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.realHeight = 100;
-
-        /**
-         * The scale mode to apply when scaling this texture
-         *
-         * @member {number}
-         * @default PIXI.settings.SCALE_MODE
-         * @see PIXI.SCALE_MODES
-         */
-        _this.scaleMode = scaleMode !== undefined ? scaleMode : _settings2.default.SCALE_MODE;
-
-        /**
-         * Set to true once the base texture has successfully loaded.
-         *
-         * This is never true if the underlying source fails to load or has no texture data.
-         *
-         * @readonly
-         * @member {boolean}
-         */
-        _this.hasLoaded = false;
-
-        /**
-         * Set to true if the source is currently loading.
-         *
-         * If an Image source is loading the 'loaded' or 'error' event will be
-         * dispatched when the operation ends. An underyling source that is
-         * immediately-available bypasses loading entirely.
-         *
-         * @readonly
-         * @member {boolean}
-         */
-        _this.isLoading = false;
-
-        /**
-         * The image source that is used to create the texture.
-         *
-         * TODO: Make this a setter that calls loadSource();
-         *
-         * @readonly
-         * @member {HTMLImageElement|HTMLCanvasElement}
-         */
-        _this.source = null; // set in loadSource, if at all
-
-        /**
-         * The image source that is used to create the texture. This is used to
-         * store the original Svg source when it is replaced with a canvas element.
-         *
-         * TODO: Currently not in use but could be used when re-scaling svg.
-         *
-         * @readonly
-         * @member {Image}
-         */
-        _this.origSource = null; // set in loadSvg, if at all
-
-        /**
-         * Type of image defined in source, eg. `png` or `svg`
-         *
-         * @readonly
-         * @member {string}
-         */
-        _this.imageType = null; // set in updateImageType
-
-        /**
-         * Scale for source image. Used with Svg images to scale them before rasterization.
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.sourceScale = 1.0;
-
-        /**
-         * Controls if RGB channels should be pre-multiplied by Alpha  (WebGL only)
-         * All blend modes, and shaders written for default value. Change it on your own risk.
-         *
-         * @member {boolean}
-         * @default true
-         */
-        _this.premultipliedAlpha = true;
-
-        /**
-         * The image url of the texture
-         *
-         * @member {string}
-         */
-        _this.imageUrl = null;
-
-        /**
-         * Whether or not the texture is a power of two, try to use power of two textures as much
-         * as you can
-         *
-         * @private
-         * @member {boolean}
-         */
-        _this.isPowerOfTwo = false;
-
-        // used for webGL
-
-        /**
-         *
-         * Set this to true if a mipmap of this texture needs to be generated. This value needs
-         * to be set before the texture is used
-         * Also the texture must be a power of two size to work
-         *
-         * @member {boolean}
-         * @see PIXI.MIPMAP_TEXTURES
-         */
-        _this.mipmap = _settings2.default.MIPMAP_TEXTURES;
-
-        /**
-         *
-         * WebGL Texture wrap mode
-         *
-         * @member {number}
-         * @see PIXI.WRAP_MODES
-         */
-        _this.wrapMode = _settings2.default.WRAP_MODE;
-
-        /**
-         * A map of renderer IDs to webgl textures
-         *
-         * @private
-         * @member {object<number, WebGLTexture>}
-         */
-        _this._glTextures = {};
-
-        _this._enabled = 0;
-        _this._virtalBoundId = -1;
-
-        /**
-         * If the object has been destroyed via destroy(). If true, it should not be used.
-         *
-         * @member {boolean}
-         * @private
-         * @readonly
-         */
-        _this._destroyed = false;
-
-        /**
-         * The ids under which this BaseTexture has been added to the base texture cache. This is
-         * automatically set as long as BaseTexture.addToCache is used, but may not be set if a
-         * BaseTexture is added directly to the BaseTextureCache array.
-         *
-         * @member {string[]}
-         */
-        _this.textureCacheIds = [];
-
-        // if no source passed don't try to load
-        if (source) {
-            _this.loadSource(source);
-        }
-
-        /**
-         * Fired when a not-immediately-available source finishes loading.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#loaded
-         * @param {PIXI.BaseTexture} baseTexture - Resource loaded.
-         */
-
-        /**
-         * Fired when a not-immediately-available source fails to load.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#error
-         * @param {PIXI.BaseTexture} baseTexture - Resource errored.
-         */
-
-        /**
-         * Fired when BaseTexture is updated.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#update
-         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being updated.
-         */
-
-        /**
-         * Fired when BaseTexture is destroyed.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#dispose
-         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being destroyed.
-         */
-        return _this;
-    }
-
-    /**
-     * Updates the texture on all the webgl renderers, this also assumes the src has changed.
-     *
-     * @fires PIXI.BaseTexture#update
-     */
-
-
-    BaseTexture.prototype.update = function update() {
-        // Svg size is handled during load
-        if (this.imageType !== 'svg') {
-            this.realWidth = this.source.naturalWidth || this.source.videoWidth || this.source.width;
-            this.realHeight = this.source.naturalHeight || this.source.videoHeight || this.source.height;
-
-            this._updateDimensions();
-        }
-
-        this.emit('update', this);
-    };
-
-    /**
-     * Update dimensions from real values
-     */
-
-
-    BaseTexture.prototype._updateDimensions = function _updateDimensions() {
-        this.width = this.realWidth / this.resolution;
-        this.height = this.realHeight / this.resolution;
-
-        this.isPowerOfTwo = _bitTwiddle2.default.isPow2(this.realWidth) && _bitTwiddle2.default.isPow2(this.realHeight);
-    };
-
-    /**
-     * Load a source.
-     *
-     * If the source is not-immediately-available, such as an image that needs to be
-     * downloaded, then the 'loaded' or 'error' event will be dispatched in the future
-     * and `hasLoaded` will remain false after this call.
-     *
-     * The logic state after calling `loadSource` directly or indirectly (eg. `fromImage`, `new BaseTexture`) is:
-     *
-     *     if (texture.hasLoaded) {
-     *        // texture ready for use
-     *     } else if (texture.isLoading) {
-     *        // listen to 'loaded' and/or 'error' events on texture
-     *     } else {
-     *        // not loading, not going to load UNLESS the source is reloaded
-     *        // (it may still make sense to listen to the events)
-     *     }
-     *
-     * @protected
-     * @param {HTMLImageElement|HTMLCanvasElement} source - the source object of the texture.
-     */
-
-
-    BaseTexture.prototype.loadSource = function loadSource(source) {
-        var wasLoading = this.isLoading;
-
-        this.hasLoaded = false;
-        this.isLoading = false;
-
-        if (wasLoading && this.source) {
-            this.source.onload = null;
-            this.source.onerror = null;
-        }
-
-        var firstSourceLoaded = !this.source;
-
-        this.source = source;
-
-        // Apply source if loaded. Otherwise setup appropriate loading monitors.
-        if ((source.src && source.complete || source.getContext) && source.width && source.height) {
-            this._updateImageType();
-
-            if (this.imageType === 'svg') {
-                this._loadSvgSource();
-            } else {
-                this._sourceLoaded();
-            }
-
-            if (firstSourceLoaded) {
-                // send loaded event if previous source was null and we have been passed a pre-loaded IMG element
-                this.emit('loaded', this);
-            }
-        } else if (!source.getContext) {
-            // Image fail / not ready
-            this.isLoading = true;
-
-            var scope = this;
-
-            source.onload = function () {
-                scope._updateImageType();
-                source.onload = null;
-                source.onerror = null;
-
-                if (!scope.isLoading) {
-                    return;
-                }
-
-                scope.isLoading = false;
-                scope._sourceLoaded();
-
-                if (scope.imageType === 'svg') {
-                    scope._loadSvgSource();
-
-                    return;
-                }
-
-                scope.emit('loaded', scope);
-            };
-
-            source.onerror = function () {
-                source.onload = null;
-                source.onerror = null;
-
-                if (!scope.isLoading) {
-                    return;
-                }
-
-                scope.isLoading = false;
-                scope.emit('error', scope);
-            };
-
-            // Per http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element
-            //   "The value of `complete` can thus change while a script is executing."
-            // So complete needs to be re-checked after the callbacks have been added..
-            // NOTE: complete will be true if the image has no src so best to check if the src is set.
-            if (source.complete && source.src) {
-                // ..and if we're complete now, no need for callbacks
-                source.onload = null;
-                source.onerror = null;
-
-                if (scope.imageType === 'svg') {
-                    scope._loadSvgSource();
-
-                    return;
-                }
-
-                this.isLoading = false;
-
-                if (source.width && source.height) {
-                    this._sourceLoaded();
-
-                    // If any previous subscribers possible
-                    if (wasLoading) {
-                        this.emit('loaded', this);
-                    }
-                }
-                // If any previous subscribers possible
-                else if (wasLoading) {
-                        this.emit('error', this);
-                    }
-            }
-        }
-    };
-
-    /**
-     * Updates type of the source image.
-     */
-
-
-    BaseTexture.prototype._updateImageType = function _updateImageType() {
-        if (!this.imageUrl) {
-            return;
-        }
-
-        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
-        var imageType = void 0;
-
-        if (dataUri && dataUri.mediaType === 'image') {
-            // Check for subType validity
-            var firstSubType = dataUri.subType.split('+')[0];
-
-            imageType = (0, _utils.getUrlFileExtension)('.' + firstSubType);
-
-            if (!imageType) {
-                throw new Error('Invalid image type in data URI.');
-            }
-        } else {
-            imageType = (0, _utils.getUrlFileExtension)(this.imageUrl);
-
-            if (!imageType) {
-                imageType = 'png';
-            }
-        }
-
-        this.imageType = imageType;
-    };
-
-    /**
-     * Checks if `source` is an SVG image and whether it's loaded via a URL or a data URI. Then calls
-     * `_loadSvgSourceUsingDataUri` or `_loadSvgSourceUsingXhr`.
-     */
-
-
-    BaseTexture.prototype._loadSvgSource = function _loadSvgSource() {
-        if (this.imageType !== 'svg') {
-            // Do nothing if source is not svg
-            return;
-        }
-
-        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
-
-        if (dataUri) {
-            this._loadSvgSourceUsingDataUri(dataUri);
-        } else {
-            // We got an URL, so we need to do an XHR to check the svg size
-            this._loadSvgSourceUsingXhr();
-        }
-    };
-
-    /**
-     * Reads an SVG string from data URI and then calls `_loadSvgSourceUsingString`.
-     *
-     * @param {string} dataUri - The data uri to load from.
-     */
-
-
-    BaseTexture.prototype._loadSvgSourceUsingDataUri = function _loadSvgSourceUsingDataUri(dataUri) {
-        var svgString = void 0;
-
-        if (dataUri.encoding === 'base64') {
-            if (!atob) {
-                throw new Error('Your browser doesn\'t support base64 conversions.');
-            }
-            svgString = atob(dataUri.data);
-        } else {
-            svgString = dataUri.data;
-        }
-
-        this._loadSvgSourceUsingString(svgString);
-    };
-
-    /**
-     * Loads an SVG string from `imageUrl` using XHR and then calls `_loadSvgSourceUsingString`.
-     */
-
-
-    BaseTexture.prototype._loadSvgSourceUsingXhr = function _loadSvgSourceUsingXhr() {
-        var _this2 = this;
-
-        var svgXhr = new XMLHttpRequest();
-
-        // This throws error on IE, so SVG Document can't be used
-        // svgXhr.responseType = 'document';
-
-        // This is not needed since we load the svg as string (breaks IE too)
-        // but overrideMimeType() can be used to force the response to be parsed as XML
-        // svgXhr.overrideMimeType('image/svg+xml');
-
-        svgXhr.onload = function () {
-            if (svgXhr.readyState !== svgXhr.DONE || svgXhr.status !== 200) {
-                throw new Error('Failed to load SVG using XHR.');
-            }
-
-            _this2._loadSvgSourceUsingString(svgXhr.response);
-        };
-
-        svgXhr.onerror = function () {
-            return _this2.emit('error', _this2);
-        };
-
-        svgXhr.open('GET', this.imageUrl, true);
-        svgXhr.send();
-    };
-
-    /**
-     * Loads texture using an SVG string. The original SVG Image is stored as `origSource` and the
-     * created canvas is the new `source`. The SVG is scaled using `sourceScale`. Called by
-     * `_loadSvgSourceUsingXhr` or `_loadSvgSourceUsingDataUri`.
-     *
-     * @param  {string} svgString SVG source as string
-     *
-     * @fires PIXI.BaseTexture#loaded
-     */
-
-
-    BaseTexture.prototype._loadSvgSourceUsingString = function _loadSvgSourceUsingString(svgString) {
-        var svgSize = (0, _utils.getSvgSize)(svgString);
-
-        var svgWidth = svgSize.width;
-        var svgHeight = svgSize.height;
-
-        if (!svgWidth || !svgHeight) {
-            throw new Error('The SVG image must have width and height defined (in pixels), canvas API needs them.');
-        }
-
-        // Scale realWidth and realHeight
-        this.realWidth = Math.round(svgWidth * this.sourceScale);
-        this.realHeight = Math.round(svgHeight * this.sourceScale);
-
-        this._updateDimensions();
-
-        // Create a canvas element
-        var canvas = document.createElement('canvas');
-
-        canvas.width = this.realWidth;
-        canvas.height = this.realHeight;
-        canvas._pixiId = 'canvas_' + (0, _utils.uid)();
-
-        // Draw the Svg to the canvas
-        canvas.getContext('2d').drawImage(this.source, 0, 0, svgWidth, svgHeight, 0, 0, this.realWidth, this.realHeight);
-
-        // Replace the original source image with the canvas
-        this.origSource = this.source;
-        this.source = canvas;
-
-        // Add also the canvas in cache (destroy clears by `imageUrl` and `source._pixiId`)
-        BaseTexture.addToCache(this, canvas._pixiId);
-
-        this.isLoading = false;
-        this._sourceLoaded();
-        this.emit('loaded', this);
-    };
-
-    /**
-     * Used internally to update the width, height, and some other tracking vars once
-     * a source has successfully loaded.
-     *
-     * @private
-     */
-
-
-    BaseTexture.prototype._sourceLoaded = function _sourceLoaded() {
-        this.hasLoaded = true;
-        this.update();
-    };
-
-    /**
-     * Destroys this base texture
-     *
-     */
-
-
-    BaseTexture.prototype.destroy = function destroy() {
-        if (this.imageUrl) {
-            delete _utils.TextureCache[this.imageUrl];
-
-            this.imageUrl = null;
-
-            if (!navigator.isCocoonJS) {
-                this.source.src = '';
-            }
-        }
-
-        this.source = null;
-
-        this.dispose();
-
-        BaseTexture.removeFromCache(this);
-        this.textureCacheIds = null;
-
-        this._destroyed = true;
-    };
-
-    /**
-     * Frees the texture from WebGL memory without destroying this texture object.
-     * This means you can still use the texture later which will upload it to GPU
-     * memory again.
-     *
-     * @fires PIXI.BaseTexture#dispose
-     */
-
-
-    BaseTexture.prototype.dispose = function dispose() {
-        this.emit('dispose', this);
-    };
-
-    /**
-     * Changes the source image of the texture.
-     * The original source must be an Image element.
-     *
-     * @param {string} newSrc - the path of the image
-     */
-
-
-    BaseTexture.prototype.updateSourceImage = function updateSourceImage(newSrc) {
-        this.source.src = newSrc;
-
-        this.loadSource(this.source);
-    };
-
-    /**
-     * Helper function that creates a base texture from the given image url.
-     * If the image is not in the base texture cache it will be created and loaded.
-     *
-     * @static
-     * @param {string} imageUrl - The image url of the texture
-     * @param {boolean} [crossorigin=(auto)] - Should use anonymous CORS? Defaults to true if the URL is not a data-URI.
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
-     * @return {PIXI.BaseTexture} The new base texture.
-     */
-
-
-    BaseTexture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
-        var baseTexture = _utils.BaseTextureCache[imageUrl];
-
-        if (!baseTexture) {
-            // new Image() breaks tex loading in some versions of Chrome.
-            // See https://code.google.com/p/chromium/issues/detail?id=238071
-            var image = new Image(); // document.createElement('img');
-
-            if (crossorigin === undefined && imageUrl.indexOf('data:') !== 0) {
-                image.crossOrigin = (0, _determineCrossOrigin2.default)(imageUrl);
-            } else if (crossorigin) {
-                image.crossOrigin = typeof crossorigin === 'string' ? crossorigin : 'anonymous';
-            }
-
-            baseTexture = new BaseTexture(image, scaleMode);
-            baseTexture.imageUrl = imageUrl;
-
-            if (sourceScale) {
-                baseTexture.sourceScale = sourceScale;
-            }
-
-            // if there is an @2x at the end of the url we are going to assume its a highres image
-            baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
-
-            image.src = imageUrl; // Setting this triggers load
-
-            BaseTexture.addToCache(baseTexture, imageUrl);
-        }
-
-        return baseTexture;
-    };
-
-    /**
-     * Helper function that creates a base texture from the given canvas element.
-     *
-     * @static
-     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
-     * @param {number} scaleMode - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {string} [origin='canvas'] - A string origin of who created the base texture
-     * @return {PIXI.BaseTexture} The new base texture.
-     */
-
-
-    BaseTexture.fromCanvas = function fromCanvas(canvas, scaleMode) {
-        var origin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'canvas';
-
-        if (!canvas._pixiId) {
-            canvas._pixiId = origin + '_' + (0, _utils.uid)();
-        }
-
-        var baseTexture = _utils.BaseTextureCache[canvas._pixiId];
-
-        if (!baseTexture) {
-            baseTexture = new BaseTexture(canvas, scaleMode);
-            BaseTexture.addToCache(baseTexture, canvas._pixiId);
-        }
-
-        return baseTexture;
-    };
-
-    /**
-     * Helper function that creates a base texture based on the source you provide.
-     * The source can be - image url, image element, canvas element.
-     *
-     * @static
-     * @param {string|HTMLImageElement|HTMLCanvasElement} source - The source to create base texture from.
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
-     * @return {PIXI.BaseTexture} The new base texture.
-     */
-
-
-    BaseTexture.from = function from(source, scaleMode, sourceScale) {
-        if (typeof source === 'string') {
-            return BaseTexture.fromImage(source, undefined, scaleMode, sourceScale);
-        } else if (source instanceof HTMLImageElement) {
-            var imageUrl = source.src;
-            var baseTexture = _utils.BaseTextureCache[imageUrl];
-
-            if (!baseTexture) {
-                baseTexture = new BaseTexture(source, scaleMode);
-                baseTexture.imageUrl = imageUrl;
-
-                if (sourceScale) {
-                    baseTexture.sourceScale = sourceScale;
-                }
-
-                // if there is an @2x at the end of the url we are going to assume its a highres image
-                baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
-
-                BaseTexture.addToCache(baseTexture, imageUrl);
-            }
-
-            return baseTexture;
-        } else if (source instanceof HTMLCanvasElement) {
-            return BaseTexture.fromCanvas(source, scaleMode);
-        }
-
-        // lets assume its a base texture!
-        return source;
-    };
-
-    /**
-     * Adds a BaseTexture to the global BaseTextureCache. This cache is shared across the whole PIXI object.
-     *
-     * @static
-     * @param {PIXI.BaseTexture} baseTexture - The BaseTexture to add to the cache.
-     * @param {string} id - The id that the BaseTexture will be stored against.
-     */
-
-
-    BaseTexture.addToCache = function addToCache(baseTexture, id) {
-        if (id) {
-            if (baseTexture.textureCacheIds.indexOf(id) === -1) {
-                baseTexture.textureCacheIds.push(id);
-            }
-
-            // @if DEBUG
-            /* eslint-disable no-console */
-            if (_utils.BaseTextureCache[id]) {
-                console.warn('BaseTexture added to the cache with an id [' + id + '] that already had an entry');
-            }
-            /* eslint-enable no-console */
-            // @endif
-
-            _utils.BaseTextureCache[id] = baseTexture;
-        }
-    };
-
-    /**
-     * Remove a BaseTexture from the global BaseTextureCache.
-     *
-     * @static
-     * @param {string|PIXI.BaseTexture} baseTexture - id of a BaseTexture to be removed, or a BaseTexture instance itself.
-     * @return {PIXI.BaseTexture|null} The BaseTexture that was removed.
-     */
-
-
-    BaseTexture.removeFromCache = function removeFromCache(baseTexture) {
-        if (typeof baseTexture === 'string') {
-            var baseTextureFromCache = _utils.BaseTextureCache[baseTexture];
-
-            if (baseTextureFromCache) {
-                var index = baseTextureFromCache.textureCacheIds.indexOf(baseTexture);
-
-                if (index > -1) {
-                    baseTextureFromCache.textureCacheIds.splice(index, 1);
-                }
-
-                delete _utils.BaseTextureCache[baseTexture];
-
-                return baseTextureFromCache;
-            }
-        } else if (baseTexture && baseTexture.textureCacheIds) {
-            for (var i = 0; i < baseTexture.textureCacheIds.length; ++i) {
-                delete _utils.BaseTextureCache[baseTexture.textureCacheIds[i]];
-            }
-
-            baseTexture.textureCacheIds.length = 0;
-
-            return baseTexture;
-        }
-
-        return null;
-    };
-
-    return BaseTexture;
-}(_eventemitter2.default);
-
-exports.default = BaseTexture;
-//# sourceMappingURL=BaseTexture.js.map
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33), __webpack_require__(104)(module)))
 
 /***/ }),
 /* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(17);
-const global_1 = __webpack_require__(6);
-const type_1 = __webpack_require__(49);
-const utils_1 = __webpack_require__(102);
-class UserInputTokenGraphic extends PIXI.Container {
-    constructor(target, token) {
-        super();
-        this.token = token;
-        this.graphics = new PIXI.Graphics();
-        this.addChild(this.graphics);
-        if (target instanceof index_1.Block) {
-            this.interactive = true;
-            let prevMouse = new PIXI.Point();
-            this.on('mousedown', () => {
-                prevMouse = utils_1.getMousePoint();
-            });
-            this.on('mouseup', () => {
-                let currentMouse = utils_1.getMousePoint();
-                if (prevMouse.x == currentMouse.x && prevMouse.y == currentMouse.y) {
-                    let result = token.validator.updateInput(target.getInput(token.identifier));
-                    if (result != null) {
-                        target[token.identifier] = result;
-                        target.updateGraphic();
-                    }
-                }
-            });
-        }
-    }
-    updateSize(width, height) {
-        this.graphics.clear();
-        this.graphics.beginFill(type_1.typeToColor(this.token.validator.type));
-        this.graphics.lineStyle(1, 0);
-        this.graphics.drawRoundedRect(0, 0, width, height, 9);
-    }
-}
-class BlockGraphicBase extends PIXI.Container {
-    constructor(logic) {
-        super();
-        this.logic = logic;
-        this.graphics = new PIXI.Graphics();
-        this.labels = [];
-        this.userInputTokens = [];
-        this.addChild(this.graphics);
-        this.interactive = true;
-        logic.definition.tokens.forEach((token) => {
-            if (token.kind == "user_input") {
-                let tokenGraphic = new UserInputTokenGraphic(logic, token);
-                this.userInputTokens.push(tokenGraphic);
-                this.addChild(tokenGraphic);
-            }
-            else {
-                this.userInputTokens.push(null);
-            }
-            let label = new PIXI.Text("", {
-                fontSize: 14, align: 'center'
-            });
-            this.labels.push(label);
-            this.addChild(label);
-        });
-    }
-    destroy() {
-        this.labels.forEach((label) => label.destroy());
-        this.userInputTokens.forEach((token) => {
-            if (token)
-                token.destroy();
-        });
-        super.destroy();
-    }
-}
-exports.BlockGraphicBase = BlockGraphicBase;
-class BlockGenerator extends BlockGraphicBase {
-    constructor(blockClass) {
-        super(new index_1.VirtualBlock(blockClass));
-        this.blockClass = blockClass;
-        this.logic.graphic = this;
-        this.definition = blockClass.definition;
-        this.buttonMode = true;
-        this.on('mousedown', (e) => {
-            if (global_1.Komodi.module.editingModule) {
-                let block = new blockClass();
-                block.init(global_1.Komodi.module.editingModule);
-                let globalPosition = this.getGlobalPosition();
-                global_1.Komodi.fixed.addChild(block.graphic);
-                block.graphic.x = globalPosition.x;
-                block.graphic.y = globalPosition.y;
-                global_1.Komodi.attacher.setDragging(block, true);
-                e.stopPropagation();
-            }
-        });
-        this.update();
-    }
-    update() {
-        this.graphics.clear();
-        this.blockClass.definition.nodeDrawer.drawNode(this.logic, argumentGraphicsGenerator(this.logic));
-    }
-}
-exports.BlockGenerator = BlockGenerator;
-class BlockGraphic extends BlockGraphicBase {
-    constructor(logic) {
-        super(logic);
-        let prevMouse = null;
-        this.on('mousedown', (e) => {
-            prevMouse = utils_1.getMousePoint();
-            e.stopPropagation();
-        });
-        this.on('mousemove', () => {
-            if (prevMouse) {
-                let currentMouse = utils_1.getMousePoint();
-                if (prevMouse.x != currentMouse.x || prevMouse.y != currentMouse.y) {
-                    let position = this.getGlobalPosition();
-                    if (logic.attachInfo != null) {
-                        logic.attachInfo.target.detachBlock(logic);
-                    }
-                    global_1.Komodi.stage.addChild(this);
-                    this.position = global_1.Komodi.stage.toLocal(position);
-                    global_1.Komodi.attacher.setDragging(logic);
-                }
-            }
-        });
-        this.on('mouseup', () => {
-            prevMouse = null;
-        });
-    }
-    update() {
-        this.graphics.clear();
-        this.logic.definition.scopeDrawer.drawScope(this.logic, scopeGraphicsGenerator(this.logic));
-        this.logic.definition.nodeDrawer.drawNode(this.logic, argumentGraphicsGenerator(this.logic));
-    }
-}
-exports.BlockGraphic = BlockGraphic;
-class NodeDrawer {
-}
-exports.NodeDrawer = NodeDrawer;
-class ScopeDrawer {
-}
-exports.ScopeDrawer = ScopeDrawer;
-function argumentGraphicsGenerator(block) {
-    return function* () {
-        for (let argumentName of block.definition.argumentNames) {
-            let argumentBlock = block.getArgument(argumentName);
-            yield argumentBlock == null ? null : argumentBlock.graphic;
-        }
-    };
-}
-function scopeGraphicsGenerator(block) {
-    return function* () {
-        for (let scopeName of block.definition.scopeNames) {
-            let scopeBlocks = block.getScope(scopeName);
-            yield (function* () {
-                for (let block of scopeBlocks) {
-                    yield block.graphic;
-                }
-            })();
-        }
-    };
-}
-
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(12);
-const index_1 = __webpack_require__(16);
-const type_1 = __webpack_require__(49);
-const definition_parser_1 = __webpack_require__(48);
-const global_1 = __webpack_require__(6);
-class BlockBase {
-    constructor(definition) {
-        this.definition = definition;
-    }
-}
-exports.BlockBase = BlockBase;
-class VirtualBlock extends BlockBase {
-    constructor(blockClass) {
-        super(blockClass.definition);
-    }
-    getArgument(argumentName) {
-        if (_.includes(this.definition.argumentNames, argumentName)) {
-            return null;
-        }
-        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
-    }
-    ;
-    getScope(scopeName) {
-        if (_.includes(this.definition.scopeNames, scopeName)) {
-            return [];
-        }
-        throw new Error(`getScope failed: ${scopeName} does not exist`);
-    }
-    getInput(inputName) {
-        if (_.includes(this.definition.inputNames, inputName)) {
-            let token = this.definition.tokens.find((token) => {
-                return token.kind == "user_input" && token.identifier == inputName;
-            });
-            return token.validator.defaultValue;
-        }
-        throw new Error(`getInput failed: ${inputName} does not exist`);
-    }
-}
-exports.VirtualBlock = VirtualBlock;
-class Block extends BlockBase {
-    constructor(definition) {
-        super(definition);
-        this.attachInfo = null;
-        this.graphic = new index_1.BlockGraphic(this);
-    }
-    getArgument(argumentName) {
-        if (_.includes(this.definition.argumentNames, argumentName)) {
-            return this[argumentName];
-        }
-        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
-    }
-    getScope(scopeName) {
-        if (_.includes(this.definition.scopeNames, scopeName)) {
-            return this[scopeName];
-        }
-        throw new Error(`getScope failed: ${scopeName} does not exist`);
-    }
-    getInput(inputName) {
-        if (_.includes(this.definition.inputNames, inputName)) {
-            return this[inputName];
-        }
-        throw new Error(`getInput failed: ${inputName} does not exist`);
-    }
-    init(moduleName) {
-        this.definition.tokens.forEach((token) => {
-            if (token instanceof definition_parser_1.UserInputToken) {
-                this[token.identifier] = token.validator.defaultValue;
-            }
-        });
-        global_1.Komodi.registerBlock(this);
-        global_1.Komodi.module.addBlockToModule(moduleName, this);
-        this.updateGraphic();
-    }
-    attachBlock(attachInfo, block) {
-        if (attachInfo.target != this) {
-            throw new Error("attachBlock failed: invalid attach target");
-        }
-        switch (attachInfo.attachType) {
-            case "argument":
-                if (block instanceof Expression == false)
-                    throw new Error("attachBlock failed: attach value should be an Expression");
-                if (this.getArgument(attachInfo.argumentName) != null) {
-                    throw new Error(`attachBlock failed: argument ${attachInfo.argumentName} is not empty`);
-                }
-                block.attachInfo = attachInfo;
-                this[attachInfo.argumentName] = block;
-                break;
-            case "scope":
-                if (!(block instanceof Command)) {
-                    throw new Error("attachBlock failed: attach value should be a Command");
-                }
-                let scope = this.getScope(attachInfo.scopeName);
-                if (attachInfo.scopeIndex < 0 || scope.length < attachInfo.scopeIndex) {
-                    throw new Error("attachBlock failed: invalid scope index");
-                }
-                for (let i = attachInfo.scopeIndex; i < scope.length; i++) {
-                    scope[i].attachInfo.scopeIndex++;
-                }
-                block.attachInfo = attachInfo;
-                scope.splice(attachInfo.scopeIndex, 0, block);
-                break;
-        }
-        this.graphic.addChild(block.graphic);
-        this.updateGraphic();
-    }
-    detachBlock(block) {
-        let attachInfo = block.attachInfo;
-        if (attachInfo == null) {
-            throw new Error("detachBlock failed: target is not attached");
-        }
-        if (attachInfo.target != this) {
-            throw new Error("detachBlock failed: wrong parent");
-        }
-        switch (attachInfo.attachType) {
-            case "argument":
-                if (this.getArgument(attachInfo.argumentName) != block) {
-                    throw new Error("detachBlock failed: inconsistent attach");
-                }
-                block.attachInfo = null;
-                this[attachInfo.argumentName] = null;
-                break;
-            case "scope":
-                let scope = this.getScope(attachInfo.scopeName);
-                if (scope[attachInfo.scopeIndex] != block) {
-                    throw new Error("detachBlock failed: inconsistent attach");
-                }
-                for (let i = attachInfo.scopeIndex + 1; i < scope.length; i++) {
-                    scope[i].attachInfo.scopeIndex--;
-                }
-                block.attachInfo = null;
-                scope.splice(attachInfo.scopeIndex, 1);
-                break;
-        }
-        this.graphic.removeChild(block.graphic);
-        this.updateGraphic();
-    }
-    updateGraphic() {
-        let now = this;
-        while (true) {
-            now.graphic.update();
-            if (now.attachInfo == null)
-                break;
-            now = now.attachInfo.target;
-        }
-    }
-    destroy() {
-        for (let argumentName of this.definition.argumentNames) {
-            let argumentBlock = this.getArgument(argumentName);
-            if (argumentBlock) {
-                argumentBlock.destroy();
-            }
-        }
-        for (let scopeName of this.definition.scopeNames) {
-            for (let scopeBlock of this.getScope(scopeName)) {
-                scopeBlock.destroy();
-            }
-        }
-        this.graphic.destroy();
-        global_1.Komodi.unregisterBlock(this);
-    }
-}
-exports.Block = Block;
-class Expression extends Block {
-    constructor(def) {
-        if (def.returnType == type_1.KomodiType.empty)
-            throw new Error("new Expression failed: Expression must have a return type");
-        super(def);
-    }
-}
-exports.Expression = Expression;
-class Command extends Block {
-    constructor(def) {
-        if (def.returnType != type_1.KomodiType.empty)
-            throw new Error("new Command failed: Command must not have a return type");
-        super(def);
-    }
-}
-exports.Command = Command;
-class Signal extends Block {
-    constructor(def) {
-        if (def.returnType != type_1.KomodiType.empty)
-            throw new Error("new Signal failed: Signal must not have a return type");
-        super(def);
-    }
-}
-exports.Signal = Signal;
-
-
-/***/ }),
-/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21723,7 +21363,7 @@ module.exports = asts;
 
 
 /***/ }),
-/* 19 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21792,7 +21432,7 @@ exports.default = Shader;
 //# sourceMappingURL=Shader.js.map
 
 /***/ }),
-/* 20 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21804,7 +21444,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _utils = __webpack_require__(2);
 
-var _DisplayObject2 = __webpack_require__(67);
+var _DisplayObject2 = __webpack_require__(68);
 
 var _DisplayObject3 = _interopRequireDefault(_DisplayObject2);
 
@@ -22415,7 +22055,7 @@ Container.prototype.containerUpdateTransform = Container.prototype.updateTransfo
 //# sourceMappingURL=Container.js.map
 
 /***/ }),
-/* 21 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22423,7 +22063,7 @@ Container.prototype.containerUpdateTransform = Container.prototype.updateTransfo
 
 exports.__esModule = true;
 
-var _SystemRenderer2 = __webpack_require__(73);
+var _SystemRenderer2 = __webpack_require__(74);
 
 var _SystemRenderer3 = _interopRequireDefault(_SystemRenderer2);
 
@@ -22431,7 +22071,7 @@ var _CanvasMaskManager = __webpack_require__(140);
 
 var _CanvasMaskManager2 = _interopRequireDefault(_CanvasMaskManager);
 
-var _CanvasRenderTarget = __webpack_require__(74);
+var _CanvasRenderTarget = __webpack_require__(75);
 
 var _CanvasRenderTarget2 = _interopRequireDefault(_CanvasRenderTarget);
 
@@ -22782,7 +22422,7 @@ _utils.pluginTarget.mixin(CanvasRenderer);
 //# sourceMappingURL=CanvasRenderer.js.map
 
 /***/ }),
-/* 22 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22842,7 +22482,7 @@ exports.default = WebGLManager;
 //# sourceMappingURL=WebGLManager.js.map
 
 /***/ }),
-/* 23 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22856,7 +22496,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _TextureTransform = __webpack_require__(43);
+var _TextureTransform = __webpack_require__(47);
 
 var _TextureTransform2 = _interopRequireDefault(_TextureTransform);
 
@@ -23215,7 +22855,7 @@ Mesh.DRAW_MODES = {
 //# sourceMappingURL=Mesh.js.map
 
 /***/ }),
-/* 24 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23229,9 +22869,9 @@ Mesh.DRAW_MODES = {
 /* eslint-disable no-undef */
 
 var Loader = __webpack_require__(215).default;
-var Resource = __webpack_require__(45).default;
-var async = __webpack_require__(100);
-var b64 = __webpack_require__(101);
+var Resource = __webpack_require__(49).default;
+var async = __webpack_require__(101);
+var b64 = __webpack_require__(102);
 
 Loader.Resource = Resource;
 Loader.async = async;
@@ -23242,6 +22882,367 @@ module.exports = Loader;
 // export default Loader;
 module.exports.default = Loader;
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __webpack_require__(24);
+const global_1 = __webpack_require__(6);
+const type_1 = __webpack_require__(32);
+const utils_1 = __webpack_require__(50);
+class UserInputTokenGraphic extends PIXI.Container {
+    constructor(target, token) {
+        super();
+        this.token = token;
+        this.graphics = new PIXI.Graphics();
+        this.addChild(this.graphics);
+        if (target instanceof index_1.Block) {
+            this.interactive = true;
+            this.buttonMode = true;
+            let prevMouse = new PIXI.Point();
+            this.on('mousedown', () => {
+                prevMouse = utils_1.getMousePoint();
+            });
+            this.on('mouseup', () => {
+                let currentMouse = utils_1.getMousePoint();
+                if (prevMouse.x == currentMouse.x && prevMouse.y == currentMouse.y) {
+                    let result = token.validator.updateInput(target.getInput(token.identifier));
+                    if (result != null) {
+                        target[token.identifier] = result;
+                        target.updateGraphic();
+                    }
+                }
+            });
+        }
+    }
+    updateSize(width, height) {
+        this.graphics.clear();
+        this.graphics.beginFill(type_1.typeToColor(this.token.validator.type));
+        this.graphics.lineStyle(1, 0);
+        this.graphics.drawRoundedRect(0, 0, width, height, 9);
+    }
+}
+class BlockGraphicBase extends PIXI.Container {
+    constructor(logic) {
+        super();
+        this.logic = logic;
+        this.graphics = new PIXI.Graphics();
+        this.labels = [];
+        this.userInputTokens = [];
+        this.addChild(this.graphics);
+        this.interactive = true;
+        logic.definition.tokens.forEach((token) => {
+            if (token.kind == "user_input") {
+                let tokenGraphic = new UserInputTokenGraphic(logic, token);
+                this.userInputTokens.push(tokenGraphic);
+                this.addChild(tokenGraphic);
+            }
+            else {
+                this.userInputTokens.push(null);
+            }
+            let label = new PIXI.Text("", {
+                fontSize: 14, align: 'center'
+            });
+            this.labels.push(label);
+            this.addChild(label);
+        });
+    }
+    destroy() {
+        this.labels.forEach((label) => label.destroy());
+        this.userInputTokens.forEach((token) => {
+            if (token)
+                token.destroy();
+        });
+        super.destroy();
+    }
+}
+exports.BlockGraphicBase = BlockGraphicBase;
+class BlockGenerator extends BlockGraphicBase {
+    constructor(blockClass) {
+        super(new index_1.VirtualBlock(blockClass));
+        this.blockClass = blockClass;
+        this.logic.graphic = this;
+        this.definition = blockClass.definition;
+        this.buttonMode = true;
+        this.on('mousedown', (e) => {
+            if (global_1.Komodi.module.editingModule) {
+                let block = new blockClass();
+                block.init(global_1.Komodi.module.editingModule);
+                let globalPosition = this.getGlobalPosition();
+                global_1.Komodi.fixed.addChild(block.graphic);
+                block.graphic.x = globalPosition.x;
+                block.graphic.y = globalPosition.y;
+                global_1.Komodi.attacher.setDragging(block, true);
+                e.stopPropagation();
+            }
+        });
+        this.update();
+    }
+    update() {
+        this.graphics.clear();
+        this.blockClass.definition.nodeDrawer.drawNode(this.logic, argumentGraphicsGenerator(this.logic));
+    }
+}
+exports.BlockGenerator = BlockGenerator;
+class BlockGraphic extends BlockGraphicBase {
+    constructor(logic) {
+        super(logic);
+        let prevMouse = null;
+        this.on('mousedown', (e) => {
+            prevMouse = utils_1.getMousePoint();
+            e.stopPropagation();
+        });
+        this.on('mousemove', () => {
+            if (prevMouse) {
+                let currentMouse = utils_1.getMousePoint();
+                if (prevMouse.x != currentMouse.x || prevMouse.y != currentMouse.y) {
+                    let position = this.getGlobalPosition();
+                    if (logic.attachInfo != null) {
+                        logic.attachInfo.target.detachBlock(logic);
+                    }
+                    global_1.Komodi.stage.addChild(this);
+                    this.position = global_1.Komodi.stage.toLocal(position);
+                    global_1.Komodi.attacher.setDragging(logic);
+                }
+            }
+        });
+        this.on('mouseup', () => {
+            prevMouse = null;
+        });
+    }
+    update() {
+        this.graphics.clear();
+        this.logic.definition.scopeDrawer.drawScope(this.logic, scopeGraphicsGenerator(this.logic));
+        this.logic.definition.nodeDrawer.drawNode(this.logic, argumentGraphicsGenerator(this.logic));
+    }
+}
+exports.BlockGraphic = BlockGraphic;
+class NodeDrawer {
+}
+exports.NodeDrawer = NodeDrawer;
+class ScopeDrawer {
+}
+exports.ScopeDrawer = ScopeDrawer;
+function argumentGraphicsGenerator(block) {
+    return function* () {
+        for (let argumentName of block.definition.argumentNames) {
+            let argumentBlock = block.getArgument(argumentName);
+            yield argumentBlock == null ? null : argumentBlock.graphic;
+        }
+    };
+}
+function scopeGraphicsGenerator(block) {
+    return function* () {
+        for (let scopeName of block.definition.scopeNames) {
+            let scopeBlocks = block.getScope(scopeName);
+            yield (function* () {
+                for (let block of scopeBlocks) {
+                    yield block.graphic;
+                }
+            })();
+        }
+    };
+}
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(15);
+const index_1 = __webpack_require__(23);
+const type_1 = __webpack_require__(32);
+const definition_parser_1 = __webpack_require__(31);
+const global_1 = __webpack_require__(6);
+class BlockBase {
+    constructor(definition) {
+        this.definition = definition;
+    }
+}
+exports.BlockBase = BlockBase;
+class VirtualBlock extends BlockBase {
+    constructor(blockClass) {
+        super(blockClass.definition);
+    }
+    getArgument(argumentName) {
+        if (_.includes(this.definition.argumentNames, argumentName)) {
+            return null;
+        }
+        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
+    }
+    ;
+    getScope(scopeName) {
+        if (_.includes(this.definition.scopeNames, scopeName)) {
+            return [];
+        }
+        throw new Error(`getScope failed: ${scopeName} does not exist`);
+    }
+    getInput(inputName) {
+        if (_.includes(this.definition.inputNames, inputName)) {
+            let token = this.definition.tokens.find((token) => {
+                return token.kind == "user_input" && token.identifier == inputName;
+            });
+            return token.validator.defaultValue;
+        }
+        throw new Error(`getInput failed: ${inputName} does not exist`);
+    }
+}
+exports.VirtualBlock = VirtualBlock;
+class Block extends BlockBase {
+    constructor(definition) {
+        super(definition);
+        this.attachInfo = null;
+        this.graphic = new index_1.BlockGraphic(this);
+    }
+    getArgument(argumentName) {
+        if (_.includes(this.definition.argumentNames, argumentName)) {
+            return this[argumentName];
+        }
+        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
+    }
+    getScope(scopeName) {
+        if (_.includes(this.definition.scopeNames, scopeName)) {
+            return this[scopeName];
+        }
+        throw new Error(`getScope failed: ${scopeName} does not exist`);
+    }
+    getInput(inputName) {
+        if (_.includes(this.definition.inputNames, inputName)) {
+            return this[inputName];
+        }
+        throw new Error(`getInput failed: ${inputName} does not exist`);
+    }
+    init(moduleName) {
+        this.definition.tokens.forEach((token) => {
+            if (token instanceof definition_parser_1.UserInputToken) {
+                this[token.identifier] = token.validator.defaultValue;
+            }
+        });
+        global_1.Komodi.registerBlock(this);
+        global_1.Komodi.module.addBlockToModule(moduleName, this);
+        this.updateGraphic();
+    }
+    attachBlock(attachInfo, block) {
+        if (attachInfo.target != this) {
+            throw new Error("attachBlock failed: invalid attach target");
+        }
+        switch (attachInfo.attachType) {
+            case "argument":
+                if (block instanceof Expression == false)
+                    throw new Error("attachBlock failed: attach value should be an Expression");
+                if (this.getArgument(attachInfo.argumentName) != null) {
+                    throw new Error(`attachBlock failed: argument ${attachInfo.argumentName} is not empty`);
+                }
+                block.attachInfo = attachInfo;
+                this[attachInfo.argumentName] = block;
+                break;
+            case "scope":
+                if (!(block instanceof Command)) {
+                    throw new Error("attachBlock failed: attach value should be a Command");
+                }
+                let scope = this.getScope(attachInfo.scopeName);
+                if (attachInfo.scopeIndex < 0 || scope.length < attachInfo.scopeIndex) {
+                    throw new Error("attachBlock failed: invalid scope index");
+                }
+                for (let i = attachInfo.scopeIndex; i < scope.length; i++) {
+                    scope[i].attachInfo.scopeIndex++;
+                }
+                block.attachInfo = attachInfo;
+                scope.splice(attachInfo.scopeIndex, 0, block);
+                break;
+        }
+        this.graphic.addChild(block.graphic);
+        this.updateGraphic();
+    }
+    detachBlock(block) {
+        let attachInfo = block.attachInfo;
+        if (attachInfo == null) {
+            throw new Error("detachBlock failed: target is not attached");
+        }
+        if (attachInfo.target != this) {
+            throw new Error("detachBlock failed: wrong parent");
+        }
+        switch (attachInfo.attachType) {
+            case "argument":
+                if (this.getArgument(attachInfo.argumentName) != block) {
+                    throw new Error("detachBlock failed: inconsistent attach");
+                }
+                block.attachInfo = null;
+                this[attachInfo.argumentName] = null;
+                break;
+            case "scope":
+                let scope = this.getScope(attachInfo.scopeName);
+                if (scope[attachInfo.scopeIndex] != block) {
+                    throw new Error("detachBlock failed: inconsistent attach");
+                }
+                for (let i = attachInfo.scopeIndex + 1; i < scope.length; i++) {
+                    scope[i].attachInfo.scopeIndex--;
+                }
+                block.attachInfo = null;
+                scope.splice(attachInfo.scopeIndex, 1);
+                break;
+        }
+        this.graphic.removeChild(block.graphic);
+        this.updateGraphic();
+    }
+    updateGraphic() {
+        let now = this;
+        while (true) {
+            now.graphic.update();
+            if (now.attachInfo == null)
+                break;
+            now = now.attachInfo.target;
+        }
+    }
+    destroy() {
+        for (let argumentName of this.definition.argumentNames) {
+            let argumentBlock = this.getArgument(argumentName);
+            if (argumentBlock) {
+                argumentBlock.destroy();
+            }
+        }
+        for (let scopeName of this.definition.scopeNames) {
+            for (let scopeBlock of this.getScope(scopeName)) {
+                scopeBlock.destroy();
+            }
+        }
+        this.graphic.destroy();
+        global_1.Komodi.unregisterBlock(this);
+    }
+}
+exports.Block = Block;
+class Expression extends Block {
+    constructor(def) {
+        if (def.returnType == type_1.KomodiType.empty)
+            throw new Error("new Expression failed: Expression must have a return type");
+        super(def);
+    }
+}
+exports.Expression = Expression;
+class Command extends Block {
+    constructor(def) {
+        if (def.returnType != type_1.KomodiType.empty)
+            throw new Error("new Command failed: Command must not have a return type");
+        super(def);
+    }
+}
+exports.Command = Command;
+class Definition extends Block {
+    constructor(def) {
+        if (def.returnType != type_1.KomodiType.empty)
+            throw new Error("new Definition failed: Definition must not have a return type");
+        super(def);
+    }
+}
+exports.Definition = Definition;
+
 
 /***/ }),
 /* 25 */
@@ -23527,7 +23528,7 @@ function buildNativeLine(graphicsData, webGLData) {
 
 exports.__esModule = true;
 
-var _SystemRenderer2 = __webpack_require__(73);
+var _SystemRenderer2 = __webpack_require__(74);
 
 var _SystemRenderer3 = _interopRequireDefault(_SystemRenderer2);
 
@@ -23555,7 +23556,7 @@ var _TextureManager = __webpack_require__(143);
 
 var _TextureManager2 = _interopRequireDefault(_TextureManager);
 
-var _BaseTexture = __webpack_require__(15);
+var _BaseTexture = __webpack_require__(14);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
@@ -24344,7 +24345,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(20);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -24752,6 +24753,467 @@ exports.default = RenderTarget;
 
 /***/ }),
 /* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(15);
+const index_1 = __webpack_require__(23);
+const type_1 = __webpack_require__(32);
+const utils_1 = __webpack_require__(50);
+const global_1 = __webpack_require__(6);
+const MINIMUM_ARG_WIDTH = 26;
+const PADDING = 5;
+const BLOCK_HEIGHT = 33;
+const TIP_WIDTH = 12;
+const TIP_HEIGHT = 9;
+const CURVE_HEIGHT = 6;
+const SIGNAL_GAP = 4;
+const SIGNAL_LINE = 4;
+function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
+    const top = bottom - BLOCK_HEIGHT;
+    let definition = block.definition;
+    let target = block.graphic;
+    target.graphics.lineStyle(1, 0);
+    let tokenStrings = _.map(definition.tokens, (token) => {
+        switch (token.kind) {
+            case "placeholder":
+                return token.text;
+            case "user_input":
+                return block.getInput(token.identifier);
+            case "expression":
+                return token.identifier;
+        }
+    });
+    tokenStrings.forEach((str, i) => {
+        target.labels[i].text = str;
+    });
+    let argumentGraphics = Array.from(getArgumentGraphics());
+    let expressionCnt = 0;
+    let graphicsIndex = definition.tokens.map((token) => token.kind == "expression" ? expressionCnt++ : null);
+    let tokenToWidth = (token, index) => {
+        switch (token.kind) {
+            case "placeholder":
+                return target.labels[index].width + PADDING;
+            case "user_input":
+                return target.labels[index].width + PADDING * 2;
+            case "expression":
+                let child = argumentGraphics[graphicsIndex[index]];
+                let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
+                return Math.max(target.labels[index].width + PADDING * 2, childWidth);
+        }
+    };
+    let widthSum = PADDING * 2 + _.sum(definition.tokens.map((token, i) => tokenToWidth(token, i)));
+    let nowX = -widthSum * .5 + PADDING;
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        utils_1.centerChild(target.labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+        nowX += width;
+    });
+    nowX = -widthSum * .5 + PADDING;
+    let outlinePath = [-widthSum * .5, top];
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        switch (token.kind) {
+            case "expression":
+                outlinePath.push(nowX + width * .5 - TIP_WIDTH * .5, top, nowX + width * .5, top + TIP_HEIGHT, nowX + width * .5 + TIP_WIDTH * .5, top);
+        }
+        nowX += width;
+    });
+    outlinePath.push(widthSum * .5, top);
+    outlinePath = outlinePath.concat(bottomOutline(widthSum));
+    outlinePath.push(-widthSum * .5, top);
+    target.graphics.beginFill(type_1.typeToColor(definition.returnType));
+    target.graphics.drawPolygon(outlinePath);
+    target.hitArea = new PIXI.Polygon(outlinePath);
+    let secondIterator = getArgumentGraphics();
+    nowX = -widthSum * .5 + PADDING;
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        switch (token.kind) {
+            case "user_input":
+                let tokenGraphic = target.userInputTokens[i];
+                tokenGraphic.updateSize(width, BLOCK_HEIGHT - 2 * PADDING);
+                tokenGraphic.x = nowX;
+                tokenGraphic.y = top + PADDING;
+                target.userInputTokens.push(tokenGraphic);
+                break;
+            case "expression":
+                let graphic = secondIterator.next().value;
+                target.graphics.beginFill(type_1.typeToColor(token.type));
+                target.graphics.drawPolygon([
+                    nowX, top,
+                    nowX + width * .5 - TIP_WIDTH * .5, top,
+                    nowX + width * .5, top + TIP_HEIGHT,
+                    nowX + width * .5 + TIP_WIDTH * .5, top,
+                    nowX + width, top,
+                    nowX + width, bottom - PADDING,
+                    nowX, bottom - PADDING,
+                    nowX, top,
+                ]);
+                if (graphic) {
+                    graphic.x = nowX + width * .5;
+                    graphic.y = top + TIP_HEIGHT;
+                    global_1.Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
+                }
+                else {
+                    global_1.Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
+                }
+                break;
+        }
+        nowX += width;
+    });
+    return widthSum;
+}
+class ExpressionNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
+            widthSum * .5, -TIP_HEIGHT,
+            TIP_WIDTH * .5, -TIP_HEIGHT,
+            0, 0,
+            -TIP_WIDTH * .5, -TIP_HEIGHT,
+            -widthSum * .5, -TIP_HEIGHT,
+        ]);
+    }
+}
+exports.expressionNodeDrawer = new ExpressionNodeDrawer();
+class CommandNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
+            let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
+                return [widthSum * .5 - num * widthSum, -CURVE_HEIGHT + Math.sin(num * Math.PI) * CURVE_HEIGHT];
+            }).value();
+            ret.push(-widthSum * .5, -CURVE_HEIGHT);
+            return ret;
+        });
+    }
+}
+exports.commandNodeDrawer = new CommandNodeDrawer();
+class DefinitionNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        let widthSum = defaultDrawNode(block, getArgumentGraphics, -SIGNAL_GAP - SIGNAL_LINE, (widthSum) => [
+            widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
+            -widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
+        ]);
+        block.graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
+    }
+}
+exports.definitionNodeDrawer = new DefinitionNodeDrawer();
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(15);
+const index_1 = __webpack_require__(23);
+const global_1 = __webpack_require__(6);
+const FLOW_VERTICAL_MARGIN = 20;
+const SPLIT_VERTICAL_MARGIN = 15;
+const SPLIT_HORIZONTAL_MARGIN = 40;
+const OUTLINE_PADDING = 6;
+function defaultDrawScope(block, getScopeGraphics) {
+    let definition = block.definition;
+    let target = block.graphic;
+    target.graphics.lineStyle(3, 0);
+    let widthList = Array.from(function* () {
+        for (let scopeGraphics of getScopeGraphics()) {
+            let width = 0;
+            for (let graphic of scopeGraphics) {
+                width = Math.max(width, graphic.width);
+            }
+            yield width;
+        }
+    }());
+    let widthSum = _.sum(widthList) + SPLIT_HORIZONTAL_MARGIN * (widthList.length - 1);
+    if (definition.scopeNames.length == 1) {
+        let attachPoints = [];
+        target.graphics.moveTo(0, 0);
+        target.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+        attachPoints.push({ x: 0, y: FLOW_VERTICAL_MARGIN * .5 });
+        let nowY = FLOW_VERTICAL_MARGIN;
+        for (let scope of getScopeGraphics()) {
+            for (let block of scope) {
+                let rect = block.getLocalBounds();
+                block.x = 0;
+                block.y = nowY + (-rect.top);
+                target.graphics.moveTo(0, nowY);
+                target.graphics.lineTo(0, nowY + (-rect.top));
+                target.graphics.moveTo(0, nowY + rect.height);
+                target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
+                attachPoints.push({ x: 0, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
+                nowY += rect.height + FLOW_VERTICAL_MARGIN;
+            }
+        }
+        global_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
+    }
+    else if (definition.scopeNames.length >= 2) {
+        target.graphics.moveTo(0, 0);
+        target.graphics.lineTo(0, SPLIT_VERTICAL_MARGIN);
+        let endOffset = [];
+        let nowX = -widthSum * .5;
+        let scopeIterator = getScopeGraphics();
+        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
+            let attachPoints = [];
+            let currentScope = scopeIterator.next().value;
+            nowX += widthList[scopeIndex] * .5;
+            let nowY = SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN;
+            target.graphics.moveTo(0, SPLIT_VERTICAL_MARGIN);
+            target.graphics.lineTo(nowX, SPLIT_VERTICAL_MARGIN);
+            target.graphics.moveTo(nowX, SPLIT_VERTICAL_MARGIN);
+            target.graphics.lineTo(nowX, nowY);
+            attachPoints.push({ x: nowX, y: SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN * .5 });
+            for (let block of currentScope) {
+                let rect = block.getLocalBounds();
+                block.x = nowX;
+                block.y = nowY + (-rect.top);
+                target.graphics.moveTo(nowX, nowY);
+                target.graphics.lineTo(nowX, nowY + (-rect.top));
+                target.graphics.moveTo(nowX, nowY + rect.height);
+                target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
+                attachPoints.push({ x: nowX, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
+                nowY += rect.height + FLOW_VERTICAL_MARGIN;
+            }
+            endOffset.push({
+                x: nowX,
+                y: nowY,
+            });
+            global_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
+        }
+        let maxY = _(endOffset).map((coord) => coord.y).max();
+        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
+            const offset = endOffset[scopeIndex];
+            target.graphics.moveTo(offset.x, offset.y);
+            target.graphics.lineTo(offset.x, maxY);
+            target.graphics.moveTo(offset.x, maxY);
+            target.graphics.lineTo(0, maxY);
+        }
+        target.graphics.moveTo(0, maxY);
+        target.graphics.lineTo(0, maxY + SPLIT_VERTICAL_MARGIN);
+        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, maxY + SPLIT_VERTICAL_MARGIN);
+    }
+    else {
+        return new PIXI.Rectangle();
+    }
+}
+class LineScopeDrawer extends index_1.ScopeDrawer {
+    drawScope(block, getScopeGraphics) {
+        defaultDrawScope(block, getScopeGraphics);
+    }
+}
+exports.lineScopeDrawer = new LineScopeDrawer();
+class BoxScopeDrawer extends index_1.ScopeDrawer {
+    drawScope(block, getScopeGraphics) {
+        let rect = defaultDrawScope(block, getScopeGraphics);
+        block.graphic.graphics.lineStyle(1, 0x9E9E9E);
+        block.graphic.graphics.drawRect(rect.x - OUTLINE_PADDING, rect.y, rect.width + OUTLINE_PADDING * 2, rect.height);
+    }
+}
+exports.boxScopeDrawer = new BoxScopeDrawer();
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const peg = __webpack_require__(116);
+const _ = __webpack_require__(15);
+const type_1 = __webpack_require__(32);
+const scope_drawer_1 = __webpack_require__(30);
+const node_drawer_1 = __webpack_require__(29);
+const PARSER_DEFINITION = `
+start = tokens: token+ returnType:(":" t:type { return t; })? {
+    return {
+        tokens: tokens,
+        returnType: returnType
+    };
+}
+
+SPACE = " "*
+PLACEHOLDER = $[^:\\[\\]\\{\\}]+
+IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
+
+type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
+validator = SPACE validator:("string" / "bool" / "int" / "scope" / "definition") SPACE { return validator; }
+
+token
+    = str: PLACEHOLDER
+        { return {tokenType: "placeholder", value: str}; }
+    / "[" identifier:IDENTIFIER ":" type: type "]"
+        { return {tokenType: "expression", identifier: identifier, type: type}; }
+    / "{" identifier:IDENTIFIER ":" validator: validator "}"
+        { return {tokenType: "user_input", identifier: identifier, validator: validator}; }
+`;
+exports.blockDefinitionParser = peg.generate(PARSER_DEFINITION);
+const validatorMap = new Map();
+function toggle(...args) {
+    return (str) => {
+        let index = args.indexOf(str);
+        return args[(index + 1) % args.length];
+    };
+}
+validatorMap.set('string', {
+    type: type_1.KomodiType.string,
+    defaultValue: 'str',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change string value', currentValue);
+        if (result && result.length > 0) {
+            return result;
+        }
+        return null;
+    }
+});
+validatorMap.set('bool', {
+    type: type_1.KomodiType.bool,
+    defaultValue: 'true',
+    updateInput: toggle('true', 'false')
+});
+validatorMap.set('int', {
+    type: type_1.KomodiType.int,
+    defaultValue: '0',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change integer value', currentValue);
+        if (result && /^[+-]?(0|[1-9]\d*)$/.test(currentValue)) {
+            return result;
+        }
+        return null;
+    }
+});
+validatorMap.set('scope', {
+    type: type_1.KomodiType.empty,
+    defaultValue: 'global',
+    updateInput: toggle('internal', 'global')
+});
+validatorMap.set('definition', {
+    type: type_1.KomodiType.empty,
+    defaultValue: 'test [arg: int]',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change function definition', currentValue);
+        if (result) {
+            try {
+                parseBlockDefinition({
+                    id: 'test', definition: result,
+                    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+                });
+                return result;
+            }
+            catch (e) {
+                window.alert(e.toString());
+            }
+        }
+        return null;
+    }
+});
+class PlaceholderToken {
+    constructor(text) {
+        this.text = text;
+        this.kind = "placeholder";
+    }
+}
+exports.PlaceholderToken = PlaceholderToken;
+class UserInputToken {
+    constructor(identifier, validator) {
+        this.identifier = identifier;
+        this.validator = validator;
+        this.kind = "user_input";
+    }
+}
+exports.UserInputToken = UserInputToken;
+class ExpressionToken {
+    constructor(identifier, type) {
+        this.identifier = identifier;
+        this.type = type;
+        this.kind = "expression";
+    }
+}
+exports.ExpressionToken = ExpressionToken;
+function parseBlockDefinition(definitionBase) {
+    let parsed = exports.blockDefinitionParser.parse(definitionBase.definition);
+    let tokens = _.map(parsed.tokens, (token) => {
+        switch (token.tokenType) {
+            case "placeholder":
+                return new PlaceholderToken(token.value);
+            case "expression":
+                return new ExpressionToken(token.identifier, type_1.typeFromString(token.type));
+            case "user_input":
+                let validatorId = token.validator;
+                if (!validatorMap.has(validatorId)) {
+                    throw new Error("parseBlockDefinition failed: unknown validator");
+                }
+                let validator = validatorMap.get(validatorId);
+                return new UserInputToken(token.identifier, validator);
+            default:
+                throw new Error("parseBlockDefinition failed: unknown token type");
+        }
+    });
+    return {
+        id: definitionBase.id,
+        definition: definitionBase.definition,
+        tokens: tokens,
+        returnType: parsed.returnType ? type_1.typeFromString(parsed.returnType) : type_1.KomodiType.empty,
+        inputNames: _.filter(tokens, ((token) => token instanceof UserInputToken)).map((token) => token.identifier),
+        argumentNames: _.filter(tokens, ((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
+        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
+        nodeDrawer: definitionBase.nodeDrawer,
+        scopeDrawer: definitionBase.scopeDrawer
+    };
+}
+exports.parseBlockDefinition = parseBlockDefinition;
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var KomodiType;
+(function (KomodiType) {
+    KomodiType[KomodiType["string"] = 0] = "string";
+    KomodiType[KomodiType["bool"] = 1] = "bool";
+    KomodiType[KomodiType["int"] = 2] = "int";
+    KomodiType[KomodiType["empty"] = 3] = "empty";
+})(KomodiType = exports.KomodiType || (exports.KomodiType = {}));
+function typeFromString(str) {
+    switch (str) {
+        case "string":
+            return KomodiType.string;
+        case "bool":
+            return KomodiType.bool;
+        case "int":
+            return KomodiType.int;
+        default:
+            throw new Error(`typeFromString failed: unknown type string ${str}`);
+    }
+}
+exports.typeFromString = typeFromString;
+function typeToColor(type) {
+    switch (type) {
+        case KomodiType.string:
+            return 0xF1A9A0;
+        case KomodiType.bool:
+            return 0xDCC6E0;
+        case KomodiType.int:
+            return 0xC5EFF7;
+        case KomodiType.empty:
+            return 0xFFFFFF;
+    }
+}
+exports.typeToColor = typeToColor;
+
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports) {
 
 var g;
@@ -24778,7 +25240,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 30 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24989,7 +25451,7 @@ exports.nextCombination = function(v) {
 
 
 /***/ }),
-/* 31 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -25135,7 +25597,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 32 */
+/* 36 */
 /***/ (function(module, exports) {
 
 
@@ -25187,7 +25649,7 @@ module.exports = mapSize;
 
 
 /***/ }),
-/* 33 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25535,7 +25997,7 @@ exports.default = Bounds;
 //# sourceMappingURL=Bounds.js.map
 
 /***/ }),
-/* 34 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25627,7 +26089,7 @@ TransformBase.IDENTITY = new TransformBase();
 //# sourceMappingURL=TransformBase.js.map
 
 /***/ }),
-/* 35 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25637,7 +26099,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Point = __webpack_require__(36);
+var _Point = __webpack_require__(40);
 
 var _Point2 = _interopRequireDefault(_Point);
 
@@ -26163,7 +26625,7 @@ exports.default = Matrix;
 //# sourceMappingURL=Matrix.js.map
 
 /***/ }),
-/* 36 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26259,7 +26721,7 @@ exports.default = Point;
 //# sourceMappingURL=Point.js.map
 
 /***/ }),
-/* 37 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26527,7 +26989,7 @@ exports.default = Rectangle;
 //# sourceMappingURL=Rectangle.js.map
 
 /***/ }),
-/* 38 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26547,7 +27009,7 @@ var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _Container2 = __webpack_require__(20);
+var _Container2 = __webpack_require__(18);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -27155,7 +27617,7 @@ exports.default = Sprite;
 //# sourceMappingURL=Sprite.js.map
 
 /***/ }),
-/* 39 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27165,7 +27627,7 @@ exports.__esModule = true;
 
 var _utils = __webpack_require__(2);
 
-var _canUseNewCanvasBlendModes = __webpack_require__(75);
+var _canUseNewCanvasBlendModes = __webpack_require__(76);
 
 var _canUseNewCanvasBlendModes2 = _interopRequireDefault(_canUseNewCanvasBlendModes);
 
@@ -27411,7 +27873,7 @@ exports.default = CanvasTinter;
 //# sourceMappingURL=CanvasTinter.js.map
 
 /***/ }),
-/* 40 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27419,7 +27881,7 @@ exports.default = CanvasTinter;
 
 exports.__esModule = true;
 
-var _BaseRenderTexture = __webpack_require__(81);
+var _BaseRenderTexture = __webpack_require__(82);
 
 var _BaseRenderTexture2 = _interopRequireDefault(_BaseRenderTexture);
 
@@ -27567,7 +28029,7 @@ exports.default = RenderTexture;
 //# sourceMappingURL=RenderTexture.js.map
 
 /***/ }),
-/* 41 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27652,7 +28114,7 @@ exports.Ticker = _Ticker2.default;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 42 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27691,7 +28153,7 @@ function createIndicesForQuads(size) {
 //# sourceMappingURL=createIndicesForQuads.js.map
 
 /***/ }),
-/* 43 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27701,7 +28163,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Matrix = __webpack_require__(35);
+var _Matrix = __webpack_require__(39);
 
 var _Matrix2 = _interopRequireDefault(_Matrix);
 
@@ -27855,7 +28317,7 @@ exports.default = TextureTransform;
 //# sourceMappingURL=TextureTransform.js.map
 
 /***/ }),
-/* 44 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27867,7 +28329,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _CountLimiter = __webpack_require__(99);
+var _CountLimiter = __webpack_require__(100);
 
 var _CountLimiter2 = _interopRequireDefault(_CountLimiter);
 
@@ -28348,7 +28810,7 @@ function findTextStyle(item, queue) {
 //# sourceMappingURL=BasePrepare.js.map
 
 /***/ }),
-/* 45 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28358,11 +28820,11 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _parseUri = __webpack_require__(52);
+var _parseUri = __webpack_require__(53);
 
 var _parseUri2 = _interopRequireDefault(_parseUri);
 
-var _miniSignals = __webpack_require__(51);
+var _miniSignals = __webpack_require__(52);
 
 var _miniSignals2 = _interopRequireDefault(_miniSignals);
 
@@ -29509,440 +29971,34 @@ function reqType(xhr) {
 //# sourceMappingURL=Resource.js.map
 
 /***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(12);
-const index_1 = __webpack_require__(16);
-const type_1 = __webpack_require__(49);
-const utils_1 = __webpack_require__(102);
-const global_1 = __webpack_require__(6);
-const MINIMUM_ARG_WIDTH = 26;
-const PADDING = 5;
-const BLOCK_HEIGHT = 33;
-const TIP_WIDTH = 12;
-const TIP_HEIGHT = 9;
-const CURVE_HEIGHT = 6;
-const SIGNAL_GAP = 4;
-const SIGNAL_LINE = 4;
-function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
-    const top = bottom - BLOCK_HEIGHT;
-    let definition = block.definition;
-    let target = block.graphic;
-    target.graphics.lineStyle(1, 0);
-    let tokenStrings = _.map(definition.tokens, (token) => {
-        switch (token.kind) {
-            case "placeholder":
-                return token.text;
-            case "user_input":
-                return block.getInput(token.identifier);
-            case "expression":
-                return token.identifier;
-        }
-    });
-    tokenStrings.forEach((str, i) => {
-        target.labels[i].text = str;
-    });
-    let argumentGraphics = Array.from(getArgumentGraphics());
-    let expressionCnt = 0;
-    let graphicsIndex = definition.tokens.map((token) => token.kind == "expression" ? expressionCnt++ : null);
-    let tokenToWidth = (token, index) => {
-        switch (token.kind) {
-            case "placeholder":
-                return target.labels[index].width + PADDING;
-            case "user_input":
-                return target.labels[index].width + PADDING * 2;
-            case "expression":
-                let child = argumentGraphics[graphicsIndex[index]];
-                let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
-                return Math.max(target.labels[index].width + PADDING * 2, childWidth);
-        }
-    };
-    let widthSum = PADDING * 2 + _.sum(definition.tokens.map((token, i) => tokenToWidth(token, i)));
-    let nowX = -widthSum * .5 + PADDING;
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        utils_1.centerChild(target.labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
-        nowX += width;
-    });
-    nowX = -widthSum * .5 + PADDING;
-    let outlinePath = [-widthSum * .5, top];
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        switch (token.kind) {
-            case "expression":
-                outlinePath.push(nowX + width * .5 - TIP_WIDTH * .5, top, nowX + width * .5, top + TIP_HEIGHT, nowX + width * .5 + TIP_WIDTH * .5, top);
-        }
-        nowX += width;
-    });
-    outlinePath.push(widthSum * .5, top);
-    outlinePath = outlinePath.concat(bottomOutline(widthSum));
-    outlinePath.push(-widthSum * .5, top);
-    target.graphics.beginFill(type_1.typeToColor(definition.returnType));
-    target.graphics.drawPolygon(outlinePath);
-    target.hitArea = new PIXI.Polygon(outlinePath);
-    let secondIterator = getArgumentGraphics();
-    nowX = -widthSum * .5 + PADDING;
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        switch (token.kind) {
-            case "user_input":
-                let tokenGraphic = target.userInputTokens[i];
-                tokenGraphic.updateSize(width, BLOCK_HEIGHT - 2 * PADDING);
-                tokenGraphic.x = nowX;
-                tokenGraphic.y = top + PADDING;
-                target.userInputTokens.push(tokenGraphic);
-                break;
-            case "expression":
-                let graphic = secondIterator.next().value;
-                target.graphics.beginFill(type_1.typeToColor(token.type));
-                target.graphics.drawPolygon([
-                    nowX, top,
-                    nowX + width * .5 - TIP_WIDTH * .5, top,
-                    nowX + width * .5, top + TIP_HEIGHT,
-                    nowX + width * .5 + TIP_WIDTH * .5, top,
-                    nowX + width, top,
-                    nowX + width, bottom - PADDING,
-                    nowX, bottom - PADDING,
-                    nowX, top,
-                ]);
-                if (graphic) {
-                    graphic.x = nowX + width * .5;
-                    graphic.y = top + TIP_HEIGHT;
-                    global_1.Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
-                }
-                else {
-                    global_1.Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
-                }
-                break;
-        }
-        nowX += width;
-    });
-    return widthSum;
-}
-class FunctionNodeDrawer extends index_1.NodeDrawer {
-    drawNode(block, getArgumentGraphics) {
-        defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
-            widthSum * .5, -TIP_HEIGHT,
-            TIP_WIDTH * .5, -TIP_HEIGHT,
-            0, 0,
-            -TIP_WIDTH * .5, -TIP_HEIGHT,
-            -widthSum * .5, -TIP_HEIGHT,
-        ]);
-    }
-}
-exports.functionNodeDrawer = new FunctionNodeDrawer();
-class CommandNodeDrawer extends index_1.NodeDrawer {
-    drawNode(block, getArgumentGraphics) {
-        defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
-            let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
-                return [widthSum * .5 - num * widthSum, -CURVE_HEIGHT + Math.sin(num * Math.PI) * CURVE_HEIGHT];
-            }).value();
-            ret.push(-widthSum * .5, -CURVE_HEIGHT);
-            return ret;
-        });
-    }
-}
-exports.commandNodeDrawer = new CommandNodeDrawer();
-class SignalNodeDrawer extends index_1.NodeDrawer {
-    drawNode(block, getArgumentGraphics) {
-        let widthSum = defaultDrawNode(block, getArgumentGraphics, -SIGNAL_GAP - SIGNAL_LINE, (widthSum) => [
-            widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
-            -widthSum * .5, -SIGNAL_GAP - SIGNAL_LINE,
-        ]);
-        block.graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
-    }
-}
-exports.signalNodeDrawer = new SignalNodeDrawer();
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(12);
-const index_1 = __webpack_require__(16);
-const global_1 = __webpack_require__(6);
-const FLOW_VERTICAL_MARGIN = 20;
-const SPLIT_VERTICAL_MARGIN = 15;
-const SPLIT_HORIZONTAL_MARGIN = 40;
-const OUTLINE_PADDING = 6;
-function defaultDrawScope(block, getScopeGraphics) {
-    let definition = block.definition;
-    let target = block.graphic;
-    target.graphics.lineStyle(3, 0);
-    let widthList = Array.from(function* () {
-        for (let scopeGraphics of getScopeGraphics()) {
-            let width = 0;
-            for (let graphic of scopeGraphics) {
-                width = Math.max(width, graphic.width);
-            }
-            yield width;
-        }
-    }());
-    let widthSum = _.sum(widthList) + SPLIT_HORIZONTAL_MARGIN * (widthList.length - 1);
-    if (definition.scopeNames.length == 1) {
-        let attachPoints = [];
-        target.graphics.moveTo(0, 0);
-        target.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
-        attachPoints.push({ x: 0, y: FLOW_VERTICAL_MARGIN * .5 });
-        let nowY = FLOW_VERTICAL_MARGIN;
-        for (let scope of getScopeGraphics()) {
-            for (let block of scope) {
-                let rect = block.getLocalBounds();
-                block.x = 0;
-                block.y = nowY + (-rect.top);
-                target.graphics.moveTo(0, nowY);
-                target.graphics.lineTo(0, nowY + (-rect.top));
-                target.graphics.moveTo(0, nowY + rect.height);
-                target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
-                attachPoints.push({ x: 0, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
-                nowY += rect.height + FLOW_VERTICAL_MARGIN;
-            }
-        }
-        global_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
-        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
-    }
-    else if (definition.scopeNames.length >= 2) {
-        target.graphics.moveTo(0, 0);
-        target.graphics.lineTo(0, SPLIT_VERTICAL_MARGIN);
-        let endOffset = [];
-        let nowX = -widthSum * .5;
-        let scopeIterator = getScopeGraphics();
-        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
-            let attachPoints = [];
-            let currentScope = scopeIterator.next().value;
-            nowX += widthList[scopeIndex] * .5;
-            let nowY = SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN;
-            target.graphics.moveTo(0, SPLIT_VERTICAL_MARGIN);
-            target.graphics.lineTo(nowX, SPLIT_VERTICAL_MARGIN);
-            target.graphics.moveTo(nowX, SPLIT_VERTICAL_MARGIN);
-            target.graphics.lineTo(nowX, nowY);
-            attachPoints.push({ x: nowX, y: SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN * .5 });
-            for (let block of currentScope) {
-                let rect = block.getLocalBounds();
-                block.x = nowX;
-                block.y = nowY + (-rect.top);
-                target.graphics.moveTo(nowX, nowY);
-                target.graphics.lineTo(nowX, nowY + (-rect.top));
-                target.graphics.moveTo(nowX, nowY + rect.height);
-                target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
-                attachPoints.push({ x: nowX, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
-                nowY += rect.height + FLOW_VERTICAL_MARGIN;
-            }
-            endOffset.push({
-                x: nowX,
-                y: nowY,
-            });
-            global_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
-            nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
-        }
-        let maxY = _(endOffset).map((coord) => coord.y).max();
-        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
-            const offset = endOffset[scopeIndex];
-            target.graphics.moveTo(offset.x, offset.y);
-            target.graphics.lineTo(offset.x, maxY);
-            target.graphics.moveTo(offset.x, maxY);
-            target.graphics.lineTo(0, maxY);
-        }
-        target.graphics.moveTo(0, maxY);
-        target.graphics.lineTo(0, maxY + SPLIT_VERTICAL_MARGIN);
-        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, maxY + SPLIT_VERTICAL_MARGIN);
-    }
-    else {
-        return new PIXI.Rectangle();
-    }
-}
-class LineScopeDrawer extends index_1.ScopeDrawer {
-    drawScope(block, getScopeGraphics) {
-        defaultDrawScope(block, getScopeGraphics);
-    }
-}
-exports.lineScopeDrawer = new LineScopeDrawer();
-class BoxScopeDrawer extends index_1.ScopeDrawer {
-    drawScope(block, getScopeGraphics) {
-        let rect = defaultDrawScope(block, getScopeGraphics);
-        block.graphic.graphics.lineStyle(1, 0x9E9E9E);
-        block.graphic.graphics.drawRect(rect.x - OUTLINE_PADDING, rect.y, rect.width + OUTLINE_PADDING * 2, rect.height);
-    }
-}
-exports.boxScopeDrawer = new BoxScopeDrawer();
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const peg = __webpack_require__(116);
-const _ = __webpack_require__(12);
-const type_1 = __webpack_require__(49);
-const PARSER_DEFINITION = `
-start = tokens: token+ returnType:(":" t:type { return t; })? {
-    return {
-        tokens: tokens,
-        returnType: returnType
-    };
-}
-
-SPACE = " "*
-PLACEHOLDER = $[^:\\[\\]\\{\\}]+
-IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
-
-type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
-validator = SPACE validator:("string" / "bool" / "int") SPACE { return validator; }
-
-token
-    = str: PLACEHOLDER
-        { return {tokenType: "placeholder", value: str}; }
-    / "[" identifier:IDENTIFIER ":" type: type "]"
-        { return {tokenType: "expression", identifier: identifier, type: type}; }
-    / "{" identifier:IDENTIFIER ":" validator: validator "}"
-        { return {tokenType: "user_input", identifier: identifier, validator: validator}; }
-`;
-exports.blockDefinitionParser = peg.generate(PARSER_DEFINITION);
-const validatorMap = new Map();
-validatorMap.set('string', {
-    type: type_1.KomodiType.string,
-    defaultValue: 'str',
-    updateInput: (currentValue) => {
-        let result = window.prompt('Change string value', currentValue);
-        if (result && result.length > 0) {
-            return result;
-        }
-        return null;
-    }
-});
-validatorMap.set('bool', {
-    type: type_1.KomodiType.bool,
-    defaultValue: 'true',
-    updateInput: (currentValue) => {
-        if (currentValue == 'true')
-            return 'false';
-        else
-            return 'true';
-    }
-});
-validatorMap.set('int', {
-    type: type_1.KomodiType.int,
-    defaultValue: '0',
-    updateInput: (currentValue) => {
-        let result = window.prompt('Change integer value', currentValue);
-        if (result && /^[+-]?(0|[1-9]\d*)$/.test(currentValue)) {
-            return result;
-        }
-        return null;
-    }
-});
-class PlaceholderToken {
-    constructor(text) {
-        this.text = text;
-        this.kind = "placeholder";
-    }
-}
-exports.PlaceholderToken = PlaceholderToken;
-class UserInputToken {
-    constructor(identifier, validator) {
-        this.identifier = identifier;
-        this.validator = validator;
-        this.kind = "user_input";
-    }
-}
-exports.UserInputToken = UserInputToken;
-class ExpressionToken {
-    constructor(identifier, type) {
-        this.identifier = identifier;
-        this.type = type;
-        this.kind = "expression";
-    }
-}
-exports.ExpressionToken = ExpressionToken;
-function parseBlockDefinition(definitionBase) {
-    let parsed = exports.blockDefinitionParser.parse(definitionBase.definition);
-    let tokens = _.map(parsed.tokens, (token) => {
-        switch (token.tokenType) {
-            case "placeholder":
-                return new PlaceholderToken(token.value);
-            case "expression":
-                return new ExpressionToken(token.identifier, type_1.typeFromString(token.type));
-            case "user_input":
-                let validatorId = token.validator;
-                if (!validatorMap.has(validatorId)) {
-                    throw new Error("parseBlockDefinition failed: unknown validator");
-                }
-                let validator = validatorMap.get(validatorId);
-                return new UserInputToken(token.identifier, validator);
-            default:
-                throw new Error("parseBlockDefinition failed: unknown token type");
-        }
-    });
-    return {
-        id: definitionBase.id,
-        definition: definitionBase.definition,
-        tokens: tokens,
-        returnType: parsed.returnType ? type_1.typeFromString(parsed.returnType) : type_1.KomodiType.empty,
-        inputNames: _.filter(tokens, ((token) => token instanceof UserInputToken)).map((token) => token.identifier),
-        argumentNames: _.filter(tokens, ((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
-        nodeDrawer: definitionBase.nodeDrawer,
-        scopeDrawer: definitionBase.scopeDrawer
-    };
-}
-exports.parseBlockDefinition = parseBlockDefinition;
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var KomodiType;
-(function (KomodiType) {
-    KomodiType[KomodiType["string"] = 0] = "string";
-    KomodiType[KomodiType["bool"] = 1] = "bool";
-    KomodiType[KomodiType["int"] = 2] = "int";
-    KomodiType[KomodiType["empty"] = 3] = "empty";
-})(KomodiType = exports.KomodiType || (exports.KomodiType = {}));
-function typeFromString(str) {
-    switch (str) {
-        case "string":
-            return KomodiType.string;
-        case "bool":
-            return KomodiType.bool;
-        case "int":
-            return KomodiType.int;
-        default:
-            throw new Error(`typeFromString failed: unknown type string ${str}`);
-    }
-}
-exports.typeFromString = typeFromString;
-function typeToColor(type) {
-    switch (type) {
-        case KomodiType.string:
-            return 0xF1A9A0;
-        case KomodiType.bool:
-            return 0xDCC6E0;
-        case KomodiType.int:
-            return 0xC5EFF7;
-        case KomodiType.empty:
-            return 0xFFFFFF;
-    }
-}
-exports.typeToColor = typeToColor;
-
-
-/***/ }),
 /* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const global_1 = __webpack_require__(6);
+function centerChild(target, x, y) {
+    let localBounds = target.getLocalBounds();
+    target.x = x - localBounds.width * .5;
+    target.y = y - localBounds.height * .5;
+}
+exports.centerChild = centerChild;
+function getMousePoint() {
+    return global_1.Komodi.renderer.plugins.interaction.mouse.global.clone();
+}
+exports.getMousePoint = getMousePoint;
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+exports.uuidv4 = uuidv4;
+
+
+/***/ }),
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30593,7 +30649,7 @@ earcut.flatten = function (data) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30765,7 +30821,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30802,7 +30858,7 @@ module.exports = function parseURI (str, opts) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30867,7 +30923,7 @@ module.exports = js;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30928,7 +30984,7 @@ module.exports = opcodes;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 
@@ -31267,7 +31323,7 @@ module.exports = Texture;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 // var GL_MAP = {};
@@ -31328,7 +31384,7 @@ module.exports = setVertexAttribArrays;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 
@@ -31414,7 +31470,7 @@ module.exports = compileProgram;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 /**
@@ -31498,12 +31554,12 @@ module.exports = defaultValue;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var mapType = __webpack_require__(32);
-var mapSize = __webpack_require__(62);
+var mapType = __webpack_require__(36);
+var mapSize = __webpack_require__(63);
 
 /**
  * Extracts the attributes
@@ -31545,11 +31601,11 @@ module.exports = extractAttributes;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapType = __webpack_require__(32);
-var defaultValue = __webpack_require__(58);
+var mapType = __webpack_require__(36);
+var defaultValue = __webpack_require__(59);
 
 /**
  * Extracts the uniforms
@@ -31586,7 +31642,7 @@ module.exports = extractUniforms;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /**
@@ -31733,7 +31789,7 @@ module.exports = generateUniformAccessObject;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 /**
@@ -31775,7 +31831,7 @@ module.exports = mapSize;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /**
@@ -31799,7 +31855,7 @@ module.exports = setPrecision;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31862,7 +31918,7 @@ exports.default = {
 //# sourceMappingURL=accessibleTarget.js.map
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31872,13 +31928,13 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _autoDetectRenderer = __webpack_require__(66);
+var _autoDetectRenderer = __webpack_require__(67);
 
-var _Container = __webpack_require__(20);
+var _Container = __webpack_require__(18);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _ticker = __webpack_require__(41);
+var _ticker = __webpack_require__(45);
 
 var _settings = __webpack_require__(3);
 
@@ -32090,7 +32146,7 @@ exports.default = Application;
 //# sourceMappingURL=Application.js.map
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32103,7 +32159,7 @@ var _utils = __webpack_require__(2);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(19);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -32164,7 +32220,7 @@ function autoDetectRenderer(options, arg1, arg2, arg3) {
 //# sourceMappingURL=autoDetectRenderer.js.map
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32184,15 +32240,15 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _TransformStatic = __webpack_require__(69);
+var _TransformStatic = __webpack_require__(70);
 
 var _TransformStatic2 = _interopRequireDefault(_TransformStatic);
 
-var _Transform = __webpack_require__(68);
+var _Transform = __webpack_require__(69);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
-var _Bounds = __webpack_require__(33);
+var _Bounds = __webpack_require__(37);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
@@ -32861,7 +32917,7 @@ DisplayObject.prototype.displayObjectUpdateTransform = DisplayObject.prototype.u
 //# sourceMappingURL=DisplayObject.js.map
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32873,7 +32929,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _math = __webpack_require__(4);
 
-var _TransformBase2 = __webpack_require__(34);
+var _TransformBase2 = __webpack_require__(38);
 
 var _TransformBase3 = _interopRequireDefault(_TransformBase2);
 
@@ -33047,7 +33103,7 @@ exports.default = Transform;
 //# sourceMappingURL=Transform.js.map
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33059,7 +33115,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _math = __webpack_require__(4);
 
-var _TransformBase2 = __webpack_require__(34);
+var _TransformBase2 = __webpack_require__(38);
 
 var _TransformBase3 = _interopRequireDefault(_TransformBase2);
 
@@ -33262,7 +33318,7 @@ exports.default = TransformStatic;
 //# sourceMappingURL=TransformStatic.js.map
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33389,7 +33445,7 @@ exports.default = GraphicsData;
 //# sourceMappingURL=GraphicsData.js.map
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33397,7 +33453,7 @@ exports.default = GraphicsData;
 
 exports.__esModule = true;
 
-var _Matrix = __webpack_require__(35);
+var _Matrix = __webpack_require__(39);
 
 var _Matrix2 = _interopRequireDefault(_Matrix);
 
@@ -33586,7 +33642,7 @@ exports.default = GroupD8;
 //# sourceMappingURL=GroupD8.js.map
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33708,7 +33764,7 @@ exports.default = ObservablePoint;
 //# sourceMappingURL=ObservablePoint.js.map
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33728,11 +33784,11 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _Container = __webpack_require__(20);
+var _Container = __webpack_require__(18);
 
 var _Container2 = _interopRequireDefault(_Container);
 
-var _RenderTexture = __webpack_require__(40);
+var _RenderTexture = __webpack_require__(44);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
@@ -34076,7 +34132,7 @@ exports.default = SystemRenderer;
 //# sourceMappingURL=SystemRenderer.js.map
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34205,7 +34261,7 @@ exports.default = CanvasRenderTarget;
 //# sourceMappingURL=CanvasRenderTarget.js.map
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34271,7 +34327,7 @@ function canUseNewCanvasBlendModes() {
 //# sourceMappingURL=canUseNewCanvasBlendModes.js.map
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34472,7 +34528,7 @@ exports.default = Filter;
 //# sourceMappingURL=Filter.js.map
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34480,7 +34536,7 @@ exports.default = Filter;
 
 exports.__esModule = true;
 
-var _Filter2 = __webpack_require__(76);
+var _Filter2 = __webpack_require__(77);
 
 var _Filter3 = _interopRequireDefault(_Filter2);
 
@@ -34549,7 +34605,7 @@ exports.default = SpriteMaskFilter;
 //# sourceMappingURL=SpriteMaskFilter.js.map
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34561,7 +34617,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _createIndicesForQuads = __webpack_require__(42);
+var _createIndicesForQuads = __webpack_require__(46);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -34735,7 +34791,7 @@ exports.default = Quad;
 //# sourceMappingURL=Quad.js.map
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35042,7 +35098,7 @@ TextMetrics._fonts = {};
 //# sourceMappingURL=TextMetrics.js.map
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35831,7 +35887,7 @@ function areArraysEqual(array1, array2) {
 //# sourceMappingURL=TextStyle.js.map
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35839,7 +35895,7 @@ function areArraysEqual(array1, array2) {
 
 exports.__esModule = true;
 
-var _BaseTexture2 = __webpack_require__(15);
+var _BaseTexture2 = __webpack_require__(14);
 
 var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
@@ -35995,7 +36051,7 @@ exports.default = BaseRenderTexture;
 //# sourceMappingURL=BaseRenderTexture.js.map
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36003,7 +36059,7 @@ exports.default = BaseRenderTexture;
 
 exports.__esModule = true;
 
-var _GroupD = __webpack_require__(71);
+var _GroupD = __webpack_require__(72);
 
 var _GroupD2 = _interopRequireDefault(_GroupD);
 
@@ -36105,7 +36161,7 @@ exports.default = TextureUvs;
 //# sourceMappingURL=TextureUvs.js.map
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36115,13 +36171,13 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _BaseTexture2 = __webpack_require__(15);
+var _BaseTexture2 = __webpack_require__(14);
 
 var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
 var _utils = __webpack_require__(2);
 
-var _ticker = __webpack_require__(41);
+var _ticker = __webpack_require__(45);
 
 var _const = __webpack_require__(0);
 
@@ -36435,7 +36491,7 @@ function createSource(path, type) {
 //# sourceMappingURL=VideoBaseTexture.js.map
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36453,7 +36509,7 @@ Object.defineProperty(exports, 'AnimatedSprite', {
   }
 });
 
-var _TextureTransform = __webpack_require__(43);
+var _TextureTransform = __webpack_require__(47);
 
 Object.defineProperty(exports, 'TextureTransform', {
   enumerable: true,
@@ -36501,7 +36557,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36515,15 +36571,15 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _generateBlurVertSource = __webpack_require__(88);
+var _generateBlurVertSource = __webpack_require__(89);
 
 var _generateBlurVertSource2 = _interopRequireDefault(_generateBlurVertSource);
 
-var _generateBlurFragSource = __webpack_require__(87);
+var _generateBlurFragSource = __webpack_require__(88);
 
 var _generateBlurFragSource2 = _interopRequireDefault(_generateBlurFragSource);
 
-var _getMaxBlurKernelSize = __webpack_require__(89);
+var _getMaxBlurKernelSize = __webpack_require__(90);
 
 var _getMaxBlurKernelSize2 = _interopRequireDefault(_getMaxBlurKernelSize);
 
@@ -36672,7 +36728,7 @@ exports.default = BlurXFilter;
 //# sourceMappingURL=BlurXFilter.js.map
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36686,15 +36742,15 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _generateBlurVertSource = __webpack_require__(88);
+var _generateBlurVertSource = __webpack_require__(89);
 
 var _generateBlurVertSource2 = _interopRequireDefault(_generateBlurVertSource);
 
-var _generateBlurFragSource = __webpack_require__(87);
+var _generateBlurFragSource = __webpack_require__(88);
 
 var _generateBlurFragSource2 = _interopRequireDefault(_generateBlurFragSource);
 
-var _getMaxBlurKernelSize = __webpack_require__(89);
+var _getMaxBlurKernelSize = __webpack_require__(90);
 
 var _getMaxBlurKernelSize2 = _interopRequireDefault(_getMaxBlurKernelSize);
 
@@ -36842,7 +36898,7 @@ exports.default = BlurYFilter;
 //# sourceMappingURL=BlurYFilter.js.map
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36894,7 +36950,7 @@ function generateFragBlurSource(kernelSize) {
 //# sourceMappingURL=generateBlurFragSource.js.map
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36943,7 +36999,7 @@ function generateVertBlurSource(kernelSize, x) {
 //# sourceMappingURL=generateBlurVertSource.js.map
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36964,7 +37020,7 @@ function getMaxKernelSize(gl) {
 //# sourceMappingURL=getMaxBlurKernelSize.js.map
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37009,7 +37065,7 @@ var _extract = __webpack_require__(171);
 
 var extract = _interopRequireWildcard(_extract);
 
-var _extras = __webpack_require__(84);
+var _extras = __webpack_require__(85);
 
 var extras = _interopRequireWildcard(_extras);
 
@@ -37079,10 +37135,10 @@ if (typeof _deprecation2.default === 'function') {
 // Always export PixiJS globally.
 global.PIXI = exports; // eslint-disable-line
 //# sourceMappingURL=index.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37311,7 +37367,7 @@ exports.default = InteractionData;
 //# sourceMappingURL=InteractionData.js.map
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37401,7 +37457,7 @@ exports.default = InteractionEvent;
 //# sourceMappingURL=InteractionEvent.js.map
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37582,7 +37638,7 @@ InteractionTrackingData.FLAGS = Object.freeze({
 //# sourceMappingURL=InteractionTrackingData.js.map
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37704,7 +37760,7 @@ exports.default = {
 //# sourceMappingURL=interactiveTarget.js.map
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37781,9 +37837,9 @@ var path = _interopRequireWildcard(_path);
 
 var _core = __webpack_require__(1);
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(22);
 
-var _extras = __webpack_require__(84);
+var _extras = __webpack_require__(85);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -37801,7 +37857,7 @@ function parse(resource, texture) {
 //# sourceMappingURL=bitmapFontParser.js.map
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37844,7 +37900,7 @@ exports.default = function () {
 
 exports.getResourcePath = getResourcePath;
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(22);
 
 var _url = __webpack_require__(103);
 
@@ -37865,7 +37921,7 @@ function getResourcePath(resource, baseUrl) {
 //# sourceMappingURL=spritesheetParser.js.map
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37883,7 +37939,7 @@ exports.default = function () {
     };
 };
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(22);
 
 var _Texture = __webpack_require__(11);
 
@@ -37893,7 +37949,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=textureParser.js.map
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37901,7 +37957,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(23);
+var _Mesh2 = __webpack_require__(21);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -38037,7 +38093,7 @@ exports.default = Plane;
 //# sourceMappingURL=Plane.js.map
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38100,7 +38156,7 @@ exports.default = CountLimiter;
 //# sourceMappingURL=CountLimiter.js.map
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38314,7 +38370,7 @@ function queue(worker, concurrency) {
 //# sourceMappingURL=async.js.map
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38385,26 +38441,6 @@ function encodeBinary(input) {
     return output;
 }
 //# sourceMappingURL=b64.js.map
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const global_1 = __webpack_require__(6);
-function centerChild(target, x, y) {
-    let localBounds = target.getLocalBounds();
-    target.x = x - localBounds.width * .5;
-    target.y = y - localBounds.height * .5;
-}
-exports.centerChild = centerChild;
-function getMousePoint() {
-    return global_1.Komodi.renderer.plugins.interaction.mouse.global.clone();
-}
-exports.getMousePoint = getMousePoint;
-
 
 /***/ }),
 /* 103 */
@@ -39278,7 +39314,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 var arrays  = __webpack_require__(9),
-    objects = __webpack_require__(14);
+    objects = __webpack_require__(13);
 
 var compiler = {
   /*
@@ -39358,11 +39394,11 @@ module.exports = compiler;
 
 
 var arrays  = __webpack_require__(9),
-    objects = __webpack_require__(14),
-    asts    = __webpack_require__(18),
+    objects = __webpack_require__(13),
+    asts    = __webpack_require__(16),
     visitor = __webpack_require__(8),
-    op      = __webpack_require__(54),
-    js      = __webpack_require__(53);
+    op      = __webpack_require__(55),
+    js      = __webpack_require__(54);
 
 /* Generates bytecode.
  *
@@ -39996,10 +40032,10 @@ module.exports = generateBytecode;
 
 
 var arrays  = __webpack_require__(9),
-    objects = __webpack_require__(14),
-    asts    = __webpack_require__(18),
-    op      = __webpack_require__(54),
-    js      = __webpack_require__(53);
+    objects = __webpack_require__(13),
+    asts    = __webpack_require__(16),
+    op      = __webpack_require__(55),
+    js      = __webpack_require__(54);
 
 /* Generates parser JavaScript code. */
 function generateJS(ast, options) {
@@ -41445,9 +41481,9 @@ module.exports = removeProxyRules;
 "use strict";
 
 
-var GrammarError = __webpack_require__(13),
+var GrammarError = __webpack_require__(12),
     arrays       = __webpack_require__(9),
-    objects      = __webpack_require__(14),
+    objects      = __webpack_require__(13),
     visitor      = __webpack_require__(8);
 
 /* Checks that each label is defined only once within each scope. */
@@ -41506,7 +41542,7 @@ module.exports = reportDuplicateLabels;
 "use strict";
 
 
-var GrammarError = __webpack_require__(13),
+var GrammarError = __webpack_require__(12),
     visitor      = __webpack_require__(8);
 
 /* Checks that each rule is defined only once. */
@@ -41542,8 +41578,8 @@ module.exports = reportDuplicateRules;
 
 
 var arrays       = __webpack_require__(9),
-    GrammarError = __webpack_require__(13),
-    asts         = __webpack_require__(18),
+    GrammarError = __webpack_require__(12),
+    asts         = __webpack_require__(16),
     visitor      = __webpack_require__(8);
 
 /*
@@ -41605,8 +41641,8 @@ module.exports = reportInfiniteRecursion;
 "use strict";
 
 
-var GrammarError = __webpack_require__(13),
-    asts         = __webpack_require__(18),
+var GrammarError = __webpack_require__(12),
+    asts         = __webpack_require__(16),
     visitor      = __webpack_require__(8);
 
 /*
@@ -41647,8 +41683,8 @@ module.exports = reportInfiniteRepetition;
 "use strict";
 
 
-var GrammarError = __webpack_require__(13),
-    asts         = __webpack_require__(18),
+var GrammarError = __webpack_require__(12),
+    asts         = __webpack_require__(16),
     visitor      = __webpack_require__(8);
 
 /* Checks that all referenced rules exist. */
@@ -46725,13 +46761,13 @@ module.exports = {
 
 
 var arrays  = __webpack_require__(9),
-    objects = __webpack_require__(14);
+    objects = __webpack_require__(13);
 
 var peg = {
   /* PEG.js version (uses semantic versioning). */
   VERSION: "0.10.0",
 
-  GrammarError: __webpack_require__(13),
+  GrammarError: __webpack_require__(12),
   parser:       __webpack_require__(115),
   compiler:     __webpack_require__(106),
 
@@ -46931,7 +46967,7 @@ module.exports = Buffer;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Texture = __webpack_require__(55);
+var Texture = __webpack_require__(56);
 
 /**
  * Helper class to create a webGL Framebuffer
@@ -47162,11 +47198,11 @@ module.exports = Framebuffer;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var compileProgram = __webpack_require__(57),
-	extractAttributes = __webpack_require__(59),
-	extractUniforms = __webpack_require__(60),
-	setPrecision = __webpack_require__(63),
-	generateUniformAccessObject = __webpack_require__(61);
+var compileProgram = __webpack_require__(58),
+	extractAttributes = __webpack_require__(60),
+	extractUniforms = __webpack_require__(61),
+	setPrecision = __webpack_require__(64),
+	generateUniformAccessObject = __webpack_require__(62);
 
 /**
  * Helper class to create a webGL Shader
@@ -47260,7 +47296,7 @@ module.exports = Shader;
 
 
 // state object//
-var setVertexAttribArrays = __webpack_require__( 56 );
+var setVertexAttribArrays = __webpack_require__( 57 );
 
 /**
  * Helper class to work with WebGL VertexArrayObjects (vaos)
@@ -47559,14 +47595,14 @@ module.exports = createContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-    compileProgram: __webpack_require__(57),
-    defaultValue: __webpack_require__(58),
-    extractAttributes: __webpack_require__(59),
-    extractUniforms: __webpack_require__(60),
-    generateUniformAccessObject: __webpack_require__(61),
-    setPrecision: __webpack_require__(63),
-    mapSize: __webpack_require__(62),
-    mapType: __webpack_require__(32)
+    compileProgram: __webpack_require__(58),
+    defaultValue: __webpack_require__(59),
+    extractAttributes: __webpack_require__(60),
+    extractUniforms: __webpack_require__(61),
+    generateUniformAccessObject: __webpack_require__(62),
+    setPrecision: __webpack_require__(64),
+    mapSize: __webpack_require__(63),
+    mapType: __webpack_require__(36)
 };
 
 /***/ }),
@@ -47582,11 +47618,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _ismobilejs = __webpack_require__(31);
+var _ismobilejs = __webpack_require__(35);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
-var _accessibleTarget = __webpack_require__(64);
+var _accessibleTarget = __webpack_require__(65);
 
 var _accessibleTarget2 = _interopRequireDefault(_accessibleTarget);
 
@@ -48077,7 +48113,7 @@ core.CanvasRenderer.registerPlugin('accessibility', AccessibilityManager);
 
 exports.__esModule = true;
 
-var _accessibleTarget = __webpack_require__(64);
+var _accessibleTarget = __webpack_require__(65);
 
 Object.defineProperty(exports, 'accessibleTarget', {
   enumerable: true,
@@ -48107,11 +48143,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Container2 = __webpack_require__(20);
+var _Container2 = __webpack_require__(18);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
-var _RenderTexture = __webpack_require__(40);
+var _RenderTexture = __webpack_require__(44);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
@@ -48119,11 +48155,11 @@ var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _GraphicsData = __webpack_require__(70);
+var _GraphicsData = __webpack_require__(71);
 
 var _GraphicsData2 = _interopRequireDefault(_GraphicsData);
 
-var _Sprite = __webpack_require__(38);
+var _Sprite = __webpack_require__(42);
 
 var _Sprite2 = _interopRequireDefault(_Sprite);
 
@@ -48133,7 +48169,7 @@ var _utils = __webpack_require__(2);
 
 var _const = __webpack_require__(0);
 
-var _Bounds = __webpack_require__(33);
+var _Bounds = __webpack_require__(37);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
@@ -48141,7 +48177,7 @@ var _bezierCurveTo2 = __webpack_require__(128);
 
 var _bezierCurveTo3 = _interopRequireDefault(_bezierCurveTo2);
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(19);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -49284,7 +49320,7 @@ Graphics._SPRITE_TEXTURE = null;
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(19);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -50031,7 +50067,7 @@ exports.default = WebGLGraphicsData;
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(19);
+var _Shader2 = __webpack_require__(17);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -50186,7 +50222,7 @@ var _buildLine2 = _interopRequireDefault(_buildLine);
 
 var _utils = __webpack_require__(2);
 
-var _earcut = __webpack_require__(50);
+var _earcut = __webpack_require__(51);
 
 var _earcut2 = _interopRequireDefault(_earcut);
 
@@ -50352,7 +50388,7 @@ function buildRectangle(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildRoundedRectangle;
 
-var _earcut = __webpack_require__(50);
+var _earcut = __webpack_require__(51);
 
 var _earcut2 = _interopRequireDefault(_earcut);
 
@@ -50512,7 +50548,7 @@ function quadraticBezierCurve(fromX, fromY, cpX, cpY, toX, toY) {
 
 exports.__esModule = true;
 
-var _Rectangle = __webpack_require__(37);
+var _Rectangle = __webpack_require__(41);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
 
@@ -50631,7 +50667,7 @@ exports.default = Circle;
 
 exports.__esModule = true;
 
-var _Rectangle = __webpack_require__(37);
+var _Rectangle = __webpack_require__(41);
 
 var _Rectangle2 = _interopRequireDefault(_Rectangle);
 
@@ -50758,7 +50794,7 @@ exports.default = Ellipse;
 
 exports.__esModule = true;
 
-var _Point = __webpack_require__(36);
+var _Point = __webpack_require__(40);
 
 var _Point2 = _interopRequireDefault(_Point);
 
@@ -51209,7 +51245,7 @@ exports.default = mapCanvasBlendModesToPixi;
 
 var _const = __webpack_require__(0);
 
-var _canUseNewCanvasBlendModes = __webpack_require__(75);
+var _canUseNewCanvasBlendModes = __webpack_require__(76);
 
 var _canUseNewCanvasBlendModes2 = _interopRequireDefault(_canUseNewCanvasBlendModes);
 
@@ -52085,7 +52121,7 @@ function calculateSpriteMatrix(outputMatrix, filterArea, textureSize, sprite) {
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(20);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -52093,13 +52129,13 @@ var _RenderTarget = __webpack_require__(28);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
-var _Quad = __webpack_require__(78);
+var _Quad = __webpack_require__(79);
 
 var _Quad2 = _interopRequireDefault(_Quad);
 
 var _math = __webpack_require__(4);
 
-var _Shader = __webpack_require__(19);
+var _Shader = __webpack_require__(17);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -52107,7 +52143,7 @@ var _filterTransforms = __webpack_require__(146);
 
 var filterTransforms = _interopRequireWildcard(_filterTransforms);
 
-var _bitTwiddle = __webpack_require__(30);
+var _bitTwiddle = __webpack_require__(34);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -52684,11 +52720,11 @@ exports.default = FilterManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(20);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
-var _SpriteMaskFilter = __webpack_require__(77);
+var _SpriteMaskFilter = __webpack_require__(78);
 
 var _SpriteMaskFilter2 = _interopRequireDefault(_SpriteMaskFilter);
 
@@ -52899,7 +52935,7 @@ exports.default = MaskManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(20);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -53249,7 +53285,7 @@ function validateContext(gl) {
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(19);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -53257,7 +53293,7 @@ var _const = __webpack_require__(0);
 
 var _math = __webpack_require__(4);
 
-var _CanvasTinter = __webpack_require__(39);
+var _CanvasTinter = __webpack_require__(43);
 
 var _CanvasTinter2 = _interopRequireDefault(_CanvasTinter);
 
@@ -53473,7 +53509,7 @@ var _WebGLRenderer = __webpack_require__(26);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
-var _createIndicesForQuads = __webpack_require__(42);
+var _createIndicesForQuads = __webpack_require__(46);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -53499,7 +53535,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _bitTwiddle = __webpack_require__(30);
+var _bitTwiddle = __webpack_require__(34);
 
 var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
 
@@ -54013,7 +54049,7 @@ _WebGLRenderer2.default.registerPlugin('sprite', SpriteRenderer);
 exports.__esModule = true;
 exports.default = generateMultiTextureShader;
 
-var _Shader = __webpack_require__(19);
+var _Shader = __webpack_require__(17);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -54082,7 +54118,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Sprite2 = __webpack_require__(38);
+var _Sprite2 = __webpack_require__(42);
 
 var _Sprite3 = _interopRequireDefault(_Sprite2);
 
@@ -54100,11 +54136,11 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _TextStyle = __webpack_require__(80);
+var _TextStyle = __webpack_require__(81);
 
 var _TextStyle2 = _interopRequireDefault(_TextStyle);
 
-var _TextMetrics = __webpack_require__(79);
+var _TextMetrics = __webpack_require__(80);
 
 var _TextMetrics2 = _interopRequireDefault(_TextMetrics);
 
@@ -55793,7 +55829,7 @@ function mapPremultipliedBlendModes() {
 exports.__esModule = true;
 exports.default = maxRecommendedTextures;
 
-var _ismobilejs = __webpack_require__(31);
+var _ismobilejs = __webpack_require__(35);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
@@ -58002,7 +58038,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _ObservablePoint = __webpack_require__(72);
+var _ObservablePoint = __webpack_require__(73);
 
 var _ObservablePoint2 = _interopRequireDefault(_ObservablePoint);
 
@@ -58595,11 +58631,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _CanvasTinter = __webpack_require__(39);
+var _CanvasTinter = __webpack_require__(43);
 
 var _CanvasTinter2 = _interopRequireDefault(_CanvasTinter);
 
-var _TextureTransform = __webpack_require__(43);
+var _TextureTransform = __webpack_require__(47);
 
 var _TextureTransform2 = _interopRequireDefault(_TextureTransform);
 
@@ -59050,7 +59086,7 @@ var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _BaseTexture = __webpack_require__(15);
+var _BaseTexture = __webpack_require__(14);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
@@ -59703,11 +59739,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BlurXFilter = __webpack_require__(85);
+var _BlurXFilter = __webpack_require__(86);
 
 var _BlurXFilter2 = _interopRequireDefault(_BlurXFilter);
 
-var _BlurYFilter = __webpack_require__(86);
+var _BlurYFilter = __webpack_require__(87);
 
 var _BlurYFilter2 = _interopRequireDefault(_BlurYFilter);
 
@@ -60642,7 +60678,7 @@ Object.defineProperty(exports, 'BlurFilter', {
   }
 });
 
-var _BlurXFilter = __webpack_require__(85);
+var _BlurXFilter = __webpack_require__(86);
 
 Object.defineProperty(exports, 'BlurXFilter', {
   enumerable: true,
@@ -60651,7 +60687,7 @@ Object.defineProperty(exports, 'BlurXFilter', {
   }
 });
 
-var _BlurYFilter = __webpack_require__(86);
+var _BlurYFilter = __webpack_require__(87);
 
 Object.defineProperty(exports, 'BlurYFilter', {
   enumerable: true,
@@ -60853,15 +60889,15 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _InteractionData = __webpack_require__(91);
+var _InteractionData = __webpack_require__(92);
 
 var _InteractionData2 = _interopRequireDefault(_InteractionData);
 
-var _InteractionEvent = __webpack_require__(92);
+var _InteractionEvent = __webpack_require__(93);
 
 var _InteractionEvent2 = _interopRequireDefault(_InteractionEvent);
 
-var _InteractionTrackingData = __webpack_require__(93);
+var _InteractionTrackingData = __webpack_require__(94);
 
 var _InteractionTrackingData2 = _interopRequireDefault(_InteractionTrackingData);
 
@@ -60869,7 +60905,7 @@ var _eventemitter = __webpack_require__(10);
 
 var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
-var _interactiveTarget = __webpack_require__(94);
+var _interactiveTarget = __webpack_require__(95);
 
 var _interactiveTarget2 = _interopRequireDefault(_interactiveTarget);
 
@@ -62612,7 +62648,7 @@ core.CanvasRenderer.registerPlugin('interaction', InteractionManager);
 
 exports.__esModule = true;
 
-var _InteractionData = __webpack_require__(91);
+var _InteractionData = __webpack_require__(92);
 
 Object.defineProperty(exports, 'InteractionData', {
   enumerable: true,
@@ -62630,7 +62666,7 @@ Object.defineProperty(exports, 'InteractionManager', {
   }
 });
 
-var _interactiveTarget = __webpack_require__(94);
+var _interactiveTarget = __webpack_require__(95);
 
 Object.defineProperty(exports, 'interactiveTarget', {
   enumerable: true,
@@ -62639,7 +62675,7 @@ Object.defineProperty(exports, 'interactiveTarget', {
   }
 });
 
-var _InteractionTrackingData = __webpack_require__(93);
+var _InteractionTrackingData = __webpack_require__(94);
 
 Object.defineProperty(exports, 'InteractionTrackingData', {
   enumerable: true,
@@ -62648,7 +62684,7 @@ Object.defineProperty(exports, 'InteractionTrackingData', {
   }
 });
 
-var _InteractionEvent = __webpack_require__(92);
+var _InteractionEvent = __webpack_require__(93);
 
 Object.defineProperty(exports, 'InteractionEvent', {
   enumerable: true,
@@ -62670,7 +62706,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.__esModule = true;
 exports.shared = exports.Resource = exports.textureParser = exports.getResourcePath = exports.spritesheetParser = exports.parseBitmapFontData = exports.bitmapFontParser = exports.Loader = undefined;
 
-var _bitmapFontParser = __webpack_require__(95);
+var _bitmapFontParser = __webpack_require__(96);
 
 Object.defineProperty(exports, 'bitmapFontParser', {
     enumerable: true,
@@ -62685,7 +62721,7 @@ Object.defineProperty(exports, 'parseBitmapFontData', {
     }
 });
 
-var _spritesheetParser = __webpack_require__(96);
+var _spritesheetParser = __webpack_require__(97);
 
 Object.defineProperty(exports, 'spritesheetParser', {
     enumerable: true,
@@ -62700,7 +62736,7 @@ Object.defineProperty(exports, 'getResourcePath', {
     }
 });
 
-var _textureParser = __webpack_require__(97);
+var _textureParser = __webpack_require__(98);
 
 Object.defineProperty(exports, 'textureParser', {
     enumerable: true,
@@ -62709,7 +62745,7 @@ Object.defineProperty(exports, 'textureParser', {
     }
 });
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(22);
 
 Object.defineProperty(exports, 'Resource', {
     enumerable: true,
@@ -62718,7 +62754,7 @@ Object.defineProperty(exports, 'Resource', {
     }
 });
 
-var _Application = __webpack_require__(65);
+var _Application = __webpack_require__(66);
 
 var _Application2 = _interopRequireDefault(_Application);
 
@@ -62802,7 +62838,7 @@ AppPrototype.destroy = function destroy(removeView) {
 
 exports.__esModule = true;
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(22);
 
 var _resourceLoader2 = _interopRequireDefault(_resourceLoader);
 
@@ -62812,15 +62848,15 @@ var _eventemitter = __webpack_require__(10);
 
 var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
-var _textureParser = __webpack_require__(97);
+var _textureParser = __webpack_require__(98);
 
 var _textureParser2 = _interopRequireDefault(_textureParser);
 
-var _spritesheetParser = __webpack_require__(96);
+var _spritesheetParser = __webpack_require__(97);
 
 var _spritesheetParser2 = _interopRequireDefault(_spritesheetParser);
 
-var _bitmapFontParser = __webpack_require__(95);
+var _bitmapFontParser = __webpack_require__(96);
 
 var _bitmapFontParser2 = _interopRequireDefault(_bitmapFontParser);
 
@@ -62980,7 +63016,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Plane2 = __webpack_require__(98);
+var _Plane2 = __webpack_require__(99);
 
 var _Plane3 = _interopRequireDefault(_Plane2);
 
@@ -63369,7 +63405,7 @@ exports.default = NineSlicePlane;
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(23);
+var _Mesh2 = __webpack_require__(21);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -63614,7 +63650,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _Mesh = __webpack_require__(23);
+var _Mesh = __webpack_require__(21);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -63898,7 +63934,7 @@ core.CanvasRenderer.registerPlugin('mesh', MeshSpriteRenderer);
 
 exports.__esModule = true;
 
-var _Mesh = __webpack_require__(23);
+var _Mesh = __webpack_require__(21);
 
 Object.defineProperty(exports, 'Mesh', {
   enumerable: true,
@@ -63925,7 +63961,7 @@ Object.defineProperty(exports, 'CanvasMeshRenderer', {
   }
 });
 
-var _Plane = __webpack_require__(98);
+var _Plane = __webpack_require__(99);
 
 Object.defineProperty(exports, 'Plane', {
   enumerable: true,
@@ -63972,7 +64008,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _Mesh = __webpack_require__(23);
+var _Mesh = __webpack_require__(21);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -64537,7 +64573,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _createIndicesForQuads = __webpack_require__(42);
+var _createIndicesForQuads = __webpack_require__(46);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
@@ -65262,7 +65298,7 @@ core.WebGLRenderer.registerPlugin('particle', ParticleRenderer);
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(19);
+var _Shader2 = __webpack_require__(17);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -65453,7 +65489,7 @@ if (!global.cancelAnimationFrame) {
     };
 }
 //# sourceMappingURL=requestAnimationFrame.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
 /* 205 */
@@ -65468,7 +65504,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BasePrepare2 = __webpack_require__(44);
+var _BasePrepare2 = __webpack_require__(48);
 
 var _BasePrepare3 = _interopRequireDefault(_BasePrepare2);
 
@@ -65607,7 +65643,7 @@ Object.defineProperty(exports, 'canvas', {
   }
 });
 
-var _BasePrepare = __webpack_require__(44);
+var _BasePrepare = __webpack_require__(48);
 
 Object.defineProperty(exports, 'BasePrepare', {
   enumerable: true,
@@ -65616,7 +65652,7 @@ Object.defineProperty(exports, 'BasePrepare', {
   }
 });
 
-var _CountLimiter = __webpack_require__(99);
+var _CountLimiter = __webpack_require__(100);
 
 Object.defineProperty(exports, 'CountLimiter', {
   enumerable: true,
@@ -65713,7 +65749,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BasePrepare2 = __webpack_require__(44);
+var _BasePrepare2 = __webpack_require__(48);
 
 var _BasePrepare3 = _interopRequireDefault(_BasePrepare2);
 
@@ -66554,7 +66590,7 @@ process.umask = function() { return 0; };
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(104)(module), __webpack_require__(29)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(104)(module), __webpack_require__(33)))
 
 /***/ }),
 /* 211 */
@@ -66796,19 +66832,19 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _miniSignals = __webpack_require__(51);
+var _miniSignals = __webpack_require__(52);
 
 var _miniSignals2 = _interopRequireDefault(_miniSignals);
 
-var _parseUri = __webpack_require__(52);
+var _parseUri = __webpack_require__(53);
 
 var _parseUri2 = _interopRequireDefault(_parseUri);
 
-var _async = __webpack_require__(100);
+var _async = __webpack_require__(101);
 
 var async = _interopRequireWildcard(_async);
 
-var _Resource = __webpack_require__(45);
+var _Resource = __webpack_require__(49);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
@@ -67421,11 +67457,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.blobMiddlewareFactory = blobMiddlewareFactory;
 
-var _Resource = __webpack_require__(45);
+var _Resource = __webpack_require__(49);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
-var _b = __webpack_require__(101);
+var _b = __webpack_require__(102);
 
 var _b2 = _interopRequireDefault(_b);
 
@@ -67708,10 +67744,11 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(90);
+const PIXI = __webpack_require__(91);
 const global_1 = __webpack_require__(6);
-const index_1 = __webpack_require__(16);
+const index_1 = __webpack_require__(23);
 const ui_1 = __webpack_require__(218);
+const module_1 = __webpack_require__(225);
 const TOP_MENU_HEIGHT = 85;
 const TOP_MENU_BUTTON_HEIGHT = 30;
 const SIDE_MENU_WIDTH = 240;
@@ -67781,14 +67818,20 @@ class ModuleSelector extends PIXI.Container {
         }
         this.selector.addLabel('\uf2be  user modules');
         this.selector.onChange = (moduleName) => {
-            global_1.Komodi.sideMenu.blockGeneratorList.update(moduleName);
-            if (!moduleName || Array.from(global_1.Komodi.module.getModuleList().userModule).indexOf(moduleName) == -1) {
-                global_1.Komodi.sideMenu.editButton.visible = false;
-            }
-            else {
-                global_1.Komodi.sideMenu.editButton.visible = true;
-            }
+            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, moduleName);
         };
+        global_1.Komodi.module.on(module_1.Module.EDITING_MODULE_CHANGE, (changedModuleName) => {
+            let modules = global_1.Komodi.module.getModuleList();
+            for (let moduleName of modules.userModule) {
+                if (moduleName == changedModuleName) {
+                    this.selector.changeText(moduleName, `${moduleName} \uf040`);
+                }
+                else {
+                    this.selector.changeText(moduleName, moduleName);
+                }
+            }
+            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
+        });
     }
     addModule(moduleName) {
         this.selector.addButton(moduleName, moduleName);
@@ -67796,24 +67839,39 @@ class ModuleSelector extends PIXI.Container {
     deleteModule(moduleName) {
         this.selector.deleteButton(moduleName);
     }
-    updateEditing(editingModuleName) {
-        let modules = global_1.Komodi.module.getModuleList();
-        for (let moduleName of modules.userModule) {
-            if (moduleName == editingModuleName) {
-                this.selector.changeText(moduleName, `${moduleName} \uf040`);
-            }
-            else {
-                this.selector.changeText(moduleName, moduleName);
-            }
-        }
-        global_1.Komodi.sideMenu.blockGeneratorList.update(this.selector.getSelectedKey());
-    }
 }
+ModuleSelector.SELECTED_MODULE_CHANGE = 'selectedModuleChange';
 exports.ModuleSelector = ModuleSelector;
 class BlockGeneratorList extends PIXI.Container {
     constructor() {
         super();
         this.blockList = [];
+    }
+    init() {
+        global_1.Komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName) => {
+            this.clear();
+            if (moduleName) {
+                const VERTICAL_PADDING = 10;
+                let exportResult = global_1.Komodi.module.exportOf(moduleName);
+                let currentY = 0;
+                let addGenerator = (blockClass) => {
+                    let generator = new index_1.BlockGenerator(blockClass);
+                    this.addChild(generator);
+                    generator.x = SIDE_MENU_WIDTH * .5;
+                    generator.y = currentY + VERTICAL_PADDING + generator.height;
+                    this.blockList.push(generator);
+                    currentY += generator.height + VERTICAL_PADDING;
+                };
+                for (let blockClass of exportResult.globalScope) {
+                    addGenerator(blockClass);
+                }
+                if (global_1.Komodi.module.editingModule == moduleName) {
+                    for (let blockClass of exportResult.internalScope) {
+                        addGenerator(blockClass);
+                    }
+                }
+            }
+        });
     }
     clear() {
         for (let block of this.blockList) {
@@ -67821,30 +67879,6 @@ class BlockGeneratorList extends PIXI.Container {
             block.destroy();
         }
         this.blockList.length = 0;
-    }
-    update(moduleName) {
-        this.clear();
-        if (moduleName) {
-            const VERTICAL_PADDING = 10;
-            let exportResult = global_1.Komodi.module.exportOf(moduleName);
-            let currentY = 0;
-            let addGenerator = (blockClass) => {
-                let generator = new index_1.BlockGenerator(blockClass);
-                this.addChild(generator);
-                generator.x = SIDE_MENU_WIDTH * .5;
-                generator.y = currentY + VERTICAL_PADDING + generator.height;
-                this.blockList.push(generator);
-                currentY += generator.height + VERTICAL_PADDING;
-            };
-            for (let blockClass of exportResult.globalScope) {
-                addGenerator(blockClass);
-            }
-            if (global_1.Komodi.module.editingModule == moduleName) {
-                for (let blockClass of exportResult.internalScope) {
-                    addGenerator(blockClass);
-                }
-            }
-        }
     }
 }
 exports.BlockGeneratorList = BlockGeneratorList;
@@ -67866,9 +67900,21 @@ class SideMenu extends PIXI.Container {
         this.editButton.on('click', () => {
             global_1.Komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
         });
+        this.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName) => {
+            if (moduleName && global_1.Komodi.module.checkUserModuleExist(moduleName, true)) {
+                this.editButton.visible = true;
+            }
+            else {
+                this.editButton.visible = false;
+            }
+        });
         this.editButton.visible = false;
         this.addChild(this.editButton);
         this.addChild(this.outline);
+    }
+    init() {
+        this.moduleSelector.init();
+        this.blockGeneratorList.init();
     }
     update(_width, height) {
         this.moduleSelector.y = TOP_MENU_HEIGHT;
@@ -67925,9 +67971,9 @@ exports.ConsoleMenu = ConsoleMenu;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(12);
-const index_1 = __webpack_require__(17);
-const utils_1 = __webpack_require__(102);
+const _ = __webpack_require__(15);
+const index_1 = __webpack_require__(24);
+const utils_1 = __webpack_require__(50);
 const global_1 = __webpack_require__(6);
 const INDICATOR_COLOR = 0x505050;
 const INDICATOR_RADIUS = 3;
@@ -68018,7 +68064,7 @@ class Attacher {
         scopeAttachArray.length = coordinates.length;
     }
     getNearestAttachPoint(stageX, stageY) {
-        if (this.dragging instanceof index_1.Signal) {
+        if (this.dragging instanceof index_1.Definition) {
             return null;
         }
         let distance = Infinity;
@@ -68138,21 +68184,32 @@ exports.Attacher = Attacher;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(17);
-const scope_drawer_1 = __webpack_require__(47);
-const node_drawer_1 = __webpack_require__(46);
-const definition_parser_1 = __webpack_require__(48);
-class SignalStart extends index_1.Signal {
+const index_1 = __webpack_require__(24);
+const scope_drawer_1 = __webpack_require__(30);
+const node_drawer_1 = __webpack_require__(29);
+const definition_parser_1 = __webpack_require__(31);
+class DefinitionStart extends index_1.Definition {
     constructor() {
-        super(SignalStart.definition);
+        super(DefinitionStart.definition);
         this.body = [];
     }
 }
-SignalStart.definition = definition_parser_1.parseBlockDefinition({
-    id: SignalStart.name, definition: "start", scopeNames: ["body"],
-    nodeDrawer: node_drawer_1.signalNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+DefinitionStart.definition = definition_parser_1.parseBlockDefinition({
+    id: DefinitionStart.name, definition: "start", scopeNames: ["body"],
+    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
 });
-exports.SignalStart = SignalStart;
+exports.DefinitionStart = DefinitionStart;
+class DefinitionFunction extends index_1.Definition {
+    constructor() {
+        super(DefinitionFunction.definition);
+        this.body = [];
+    }
+}
+DefinitionFunction.definition = definition_parser_1.parseBlockDefinition({
+    id: DefinitionFunction.name, definition: "{scope: scope} function {define: definition}", scopeNames: ["body"],
+    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+});
+exports.DefinitionFunction = DefinitionFunction;
 class CmdIfElse extends index_1.Command {
     constructor() {
         super(CmdIfElse.definition);
@@ -68167,7 +68224,7 @@ CmdIfElse.definition = definition_parser_1.parseBlockDefinition({
 });
 exports.CmdIfElse = CmdIfElse;
 exports.blockList = [
-    SignalStart, CmdIfElse
+    DefinitionStart, DefinitionFunction, CmdIfElse
 ];
 
 
@@ -68178,10 +68235,10 @@ exports.blockList = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(17);
-const node_drawer_1 = __webpack_require__(46);
-const scope_drawer_1 = __webpack_require__(47);
-const definition_parser_1 = __webpack_require__(48);
+const index_1 = __webpack_require__(24);
+const node_drawer_1 = __webpack_require__(29);
+const scope_drawer_1 = __webpack_require__(30);
+const definition_parser_1 = __webpack_require__(31);
 class ExpReadLine extends index_1.Expression {
     constructor() {
         super(ExpReadLine.definition);
@@ -68189,7 +68246,7 @@ class ExpReadLine extends index_1.Expression {
 }
 ExpReadLine.definition = definition_parser_1.parseBlockDefinition({
     id: ExpReadLine.name, definition: "read line: string",
-    nodeDrawer: node_drawer_1.functionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.expressionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
 });
 exports.ExpReadLine = ExpReadLine;
 class CmdPrintLine extends index_1.Command {
@@ -68215,10 +68272,10 @@ exports.blockList = [
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(17);
-const node_drawer_1 = __webpack_require__(46);
-const scope_drawer_1 = __webpack_require__(47);
-const definition_parser_1 = __webpack_require__(48);
+const index_1 = __webpack_require__(24);
+const node_drawer_1 = __webpack_require__(29);
+const scope_drawer_1 = __webpack_require__(30);
+const definition_parser_1 = __webpack_require__(31);
 class ExpConstantString extends index_1.Expression {
     constructor() {
         super(ExpConstantString.definition);
@@ -68226,7 +68283,7 @@ class ExpConstantString extends index_1.Expression {
 }
 ExpConstantString.definition = definition_parser_1.parseBlockDefinition({
     id: ExpConstantString.name, definition: "{str: string}: string",
-    nodeDrawer: node_drawer_1.functionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.expressionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
 });
 exports.ExpConstantString = ExpConstantString;
 class ExpConcatString extends index_1.Expression {
@@ -68238,7 +68295,7 @@ class ExpConcatString extends index_1.Expression {
 }
 ExpConcatString.definition = definition_parser_1.parseBlockDefinition({
     id: ExpConcatString.name, definition: "concat [str1: string] + [str2: string]: string",
-    nodeDrawer: node_drawer_1.functionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.expressionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
 });
 exports.ExpConcatString = ExpConcatString;
 class ExpCompareString extends index_1.Expression {
@@ -68250,7 +68307,7 @@ class ExpCompareString extends index_1.Expression {
 }
 ExpCompareString.definition = definition_parser_1.parseBlockDefinition({
     id: ExpCompareString.name, definition: "is same [str1: string], [str2: string]: bool",
-    nodeDrawer: node_drawer_1.functionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.expressionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
 });
 exports.ExpCompareString = ExpCompareString;
 exports.blockList = [
@@ -68269,7 +68326,7 @@ const common_1 = __webpack_require__(222);
 const io_1 = __webpack_require__(223);
 const string_1 = __webpack_require__(224);
 const global_1 = __webpack_require__(6);
-const index_1 = __webpack_require__(16);
+const index_1 = __webpack_require__(23);
 const builtinModules = new Map();
 builtinModules.set('common', common_1.blockList);
 builtinModules.set('io', io_1.blockList);
@@ -68279,8 +68336,9 @@ var ExportScope;
     ExportScope[ExportScope["INTERNAL"] = 0] = "INTERNAL";
     ExportScope[ExportScope["GLOBAL"] = 1] = "GLOBAL";
 })(ExportScope = exports.ExportScope || (exports.ExportScope = {}));
-class Module {
+class Module extends PIXI.utils.EventEmitter {
     constructor() {
+        super();
         this._editingModule = null;
         this.exports = new Map();
         this.idToBlockClass = new Map();
@@ -68334,7 +68392,7 @@ class Module {
             }
         }
         this._editingModule = moduleName;
-        global_1.Komodi.sideMenu.moduleSelector.updateEditing(moduleName);
+        this.emit(Module.EDITING_MODULE_CHANGE, moduleName);
     }
     getModuleList() {
         return {
@@ -68407,6 +68465,7 @@ class Module {
         }
     }
 }
+Module.EDITING_MODULE_CHANGE = 'editingModuleChange';
 exports.Module = Module;
 
 

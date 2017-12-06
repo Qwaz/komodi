@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import {Block, BlockBase, Command, Expression, Signal} from "./index";
+import {Block, BlockBase, Command, Definition, Expression} from "./index";
 import {Coordinate} from "../common/definition";
 import {getMousePoint} from "../common/utils";
 import {Komodi} from "../global";
@@ -130,7 +130,7 @@ export class Attacher {
     getNearestAttachPoint(
         stageX: number, stageY: number
     ): AttachInfo & Coordinate | null {
-        if (this.dragging instanceof Signal) {
+        if (this.dragging instanceof Definition) {
             return null;
         }
 

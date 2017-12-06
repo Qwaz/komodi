@@ -15,6 +15,7 @@ class UserInputTokenGraphic extends PIXI.Container {
 
         if (target instanceof Block) {
             this.interactive = true;
+            this.buttonMode = true;
 
             let prevMouse = new PIXI.Point();
             this.on('mousedown', () => {

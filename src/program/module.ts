@@ -20,7 +20,9 @@ interface ExportResult {
     globalScope: Set<BlockClass>;
 }
 
-export class Module {
+export class Module extends PIXI.utils.EventEmitter {
+    static readonly EDITING_MODULE_CHANGE = 'editingModuleChange';
+
     private readonly exports: Map<string, ExportResult>;
     private readonly idToBlockClass: Map<string, BlockClass>;
 
@@ -29,6 +31,8 @@ export class Module {
     private _editingModule: string | null = null;
 
     constructor() {
+        super();
+
         this.exports = new Map();
         this.idToBlockClass = new Map();
         this.userModuleBlocks = new Map();
@@ -88,7 +92,7 @@ export class Module {
         }
 
         this._editingModule = moduleName;
-        Komodi.sideMenu.moduleSelector.updateEditing(moduleName);
+        this.emit(Module.EDITING_MODULE_CHANGE, moduleName);
     }
 
     getModuleList() {

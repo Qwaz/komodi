@@ -129,7 +129,7 @@ class KomodiClass {
 
     init() {
         this.attacher.init();
-        this.sideMenu.moduleSelector.init();
+        this.sideMenu.init();
     }
 
     newProject() {

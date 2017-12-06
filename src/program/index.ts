@@ -217,10 +217,10 @@ export abstract class Command extends Block {
     }
 }
 
-export abstract class Signal extends Block {
+export abstract class Definition extends Block {
     constructor(def: BlockDefinition) {
         if (def.returnType != KomodiType.empty)
-            throw new Error("new Signal failed: Signal must not have a return type");
+            throw new Error("new Definition failed: Definition must not have a return type");
 
         super(def);
     }

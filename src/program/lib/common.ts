@@ -1,18 +1,33 @@
-import {BlockClass, Command, Expression, Scope, Signal} from "../index";
+import {BlockClass, Command, Definition, Expression, Scope} from "../index";
 import {boxScopeDrawer, lineScopeDrawer} from "../../graphic/scope_drawer";
-import {commandNodeDrawer, signalNodeDrawer} from "../../graphic/node_drawer";
+import {commandNodeDrawer, definitionNodeDrawer} from "../../graphic/node_drawer";
 import {parseBlockDefinition} from "../definition_parser";
 
-export class SignalStart extends Signal {
+export class DefinitionStart extends Definition {
     static definition = parseBlockDefinition({
-        id: SignalStart.name, definition: "start", scopeNames: ["body"],
-        nodeDrawer: signalNodeDrawer, scopeDrawer: lineScopeDrawer
+        id: DefinitionStart.name, definition: "start", scopeNames: ["body"],
+        nodeDrawer: definitionNodeDrawer, scopeDrawer: lineScopeDrawer
     });
 
     body: Scope = [];
 
     constructor() {
-        super(SignalStart.definition);
+        super(DefinitionStart.definition);
+    }
+}
+
+export class DefinitionFunction extends Definition {
+    static definition = parseBlockDefinition({
+        id: DefinitionFunction.name, definition: "{scope: scope} function {define: definition}", scopeNames: ["body"],
+        nodeDrawer: definitionNodeDrawer, scopeDrawer: lineScopeDrawer
+    });
+
+    scope: string;
+    define: string;
+    body: Scope = [];
+
+    constructor() {
+        super(DefinitionFunction.definition);
     }
 }
 
@@ -32,5 +47,5 @@ export class CmdIfElse extends Command {
 }
 
 export let blockList: BlockClass[] = [
-    SignalStart, CmdIfElse
+    DefinitionStart, DefinitionFunction, CmdIfElse
 ];

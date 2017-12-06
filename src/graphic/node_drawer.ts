@@ -135,7 +135,7 @@ function defaultDrawNode(
     return widthSum;
 }
 
-class FunctionNodeDrawer extends NodeDrawer {
+class ExpressionNodeDrawer extends NodeDrawer {
     drawNode(block: BlockBase, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
         defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
             widthSum*.5, -TIP_HEIGHT,
@@ -146,7 +146,7 @@ class FunctionNodeDrawer extends NodeDrawer {
         ]);
     }
 }
-export const functionNodeDrawer = new FunctionNodeDrawer();
+export const expressionNodeDrawer = new ExpressionNodeDrawer();
 
 class CommandNodeDrawer extends NodeDrawer {
     drawNode(block: BlockBase, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
@@ -163,7 +163,7 @@ class CommandNodeDrawer extends NodeDrawer {
 }
 export const commandNodeDrawer = new CommandNodeDrawer();
 
-class SignalNodeDrawer extends NodeDrawer {
+class DefinitionNodeDrawer extends NodeDrawer {
     drawNode(block: BlockBase, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
         let widthSum = defaultDrawNode(block, getArgumentGraphics, -SIGNAL_GAP-SIGNAL_LINE, (widthSum) => [
             widthSum * .5, -SIGNAL_GAP-SIGNAL_LINE,
@@ -174,4 +174,4 @@ class SignalNodeDrawer extends NodeDrawer {
     }
 }
 
-export const signalNodeDrawer = new SignalNodeDrawer();
+export const definitionNodeDrawer = new DefinitionNodeDrawer();

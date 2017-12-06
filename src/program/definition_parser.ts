@@ -2,6 +2,8 @@ import peg = require("pegjs");
 import * as _ from "lodash";
 import {KomodiType, typeFromString} from "../type";
 import {NodeDrawer, ScopeDrawer} from "../graphic";
+import {lineScopeDrawer} from "../graphic/scope_drawer";
+import {definitionNodeDrawer} from "../graphic/node_drawer";
 
 const PARSER_DEFINITION = `
 start = tokens: token+ returnType:(":" t:type { return t; })? {
@@ -16,7 +18,7 @@ PLACEHOLDER = $[^:\\[\\]\\{\\}]+
 IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
 
 type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
-validator = SPACE validator:("string" / "bool" / "int") SPACE { return validator; }
+validator = SPACE validator:("string" / "bool" / "int" / "scope" / "definition") SPACE { return validator; }
 
 token
     = str: PLACEHOLDER
@@ -37,6 +39,13 @@ export interface UserInputValidator {
 
 const validatorMap: Map<string, UserInputValidator> = new Map();
 
+function toggle(...args: string[]) {
+    return (str: string) => {
+        let index = args.indexOf(str);
+        return args[(index+1) % args.length];
+    };
+}
+
 validatorMap.set('string', {
     type: KomodiType.string,
     defaultValue: 'str',
@@ -52,10 +61,7 @@ validatorMap.set('string', {
 validatorMap.set('bool', {
     type: KomodiType.bool,
     defaultValue: 'true',
-    updateInput: (currentValue: string) => {
-        if (currentValue == 'true') return 'false';
-        else return 'true';
-    }
+    updateInput: toggle('true', 'false')
 });
 
 validatorMap.set('int', {
@@ -65,6 +71,32 @@ validatorMap.set('int', {
         let result = window.prompt('Change integer value', currentValue);
         if (result && /^[+-]?(0|[1-9]\d*)$/.test(currentValue)) {
             return result;
+        }
+        return null;
+    }
+});
+
+validatorMap.set('scope', {
+    type: KomodiType.empty,
+    defaultValue: 'global',
+    updateInput: toggle('internal', 'global')
+});
+
+validatorMap.set('definition', {
+    type: KomodiType.empty,
+    defaultValue: 'test [arg: int]',
+    updateInput: (currentValue: string) => {
+        let result = window.prompt('Change function definition', currentValue);
+        if (result) {
+            try {
+                parseBlockDefinition({
+                    id: 'test', definition: result,
+                    nodeDrawer: definitionNodeDrawer, scopeDrawer: lineScopeDrawer
+                });
+                return result;
+            } catch (e) {
+                window.alert(e.toString());
+            }
         }
         return null;
     }
