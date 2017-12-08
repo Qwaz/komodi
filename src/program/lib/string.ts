@@ -1,12 +1,12 @@
 import {BlockClass, Expression} from "../index";
-import {expressionNodeDrawer} from "../../graphic/node_drawer";
+import {defaultNodeDrawer} from "../../graphic/node_drawer";
 import {lineScopeDrawer} from "../../graphic/scope_drawer";
 import {parseBlockDefinition} from "../definition_parser";
 
 export class ExpConstantString extends Expression {
-    static definition = parseBlockDefinition({
+    static readonly definition = parseBlockDefinition({
         id: ExpConstantString.name, definition: "{str: string}: string",
-        nodeDrawer: expressionNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
     });
 
     str: string;
@@ -17,9 +17,9 @@ export class ExpConstantString extends Expression {
 }
 
 export class ExpConcatString extends Expression {
-    static definition = parseBlockDefinition({
+    static readonly definition = parseBlockDefinition({
         id: ExpConcatString.name, definition: "concat [str1: string] + [str2: string]: string",
-        nodeDrawer: expressionNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
     });
 
     str1: Expression | null = null;
@@ -31,9 +31,9 @@ export class ExpConcatString extends Expression {
 }
 
 export class ExpCompareString extends Expression {
-    static definition = parseBlockDefinition({
+    static readonly definition = parseBlockDefinition({
         id: ExpCompareString.name, definition: "is same [str1: string], [str2: string]: bool",
-        nodeDrawer: expressionNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
     });
 
     str1: Expression | null = null;

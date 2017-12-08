@@ -15,6 +15,12 @@ export enum ExportScope {
     INTERNAL, GLOBAL
 }
 
+export function parseScopeString(str: string) {
+    if (str == "internal") return ExportScope.INTERNAL;
+    if (str == "global") return ExportScope.GLOBAL;
+    throw new Error("parseScopeString failed");
+}
+
 interface ExportResult {
     internalScope: Set<BlockClass>;
     globalScope: Set<BlockClass>;
@@ -22,6 +28,7 @@ interface ExportResult {
 
 export class Module extends PIXI.utils.EventEmitter {
     static readonly EDITING_MODULE_CHANGE = 'editingModuleChange';
+    static readonly EXPORT_UPDATE = 'exportUpdate';
 
     private readonly exports: Map<string, ExportResult>;
     private readonly idToBlockClass: Map<string, BlockClass>;
@@ -107,6 +114,10 @@ export class Module extends PIXI.utils.EventEmitter {
         return this.exports.get(moduleName)!;
     }
 
+    hasBlockClass(id: string) {
+        return this.idToBlockClass.has(id);
+    }
+
     getBlockClass(id: string): BlockClass {
         if (!this.idToBlockClass.has(id)) {
             throw new Error("getBlockClass failed: id does not exist");
@@ -163,6 +174,8 @@ export class Module extends PIXI.utils.EventEmitter {
 
         exportSet.add(blockClass);
         this.idToBlockClass.set(blockClass.definition.id, blockClass);
+
+        this.emit(Module.EXPORT_UPDATE);
     }
 
     deleteExport(moduleName: string, scope: ExportScope, blockClass: BlockClass) {
@@ -173,6 +186,8 @@ export class Module extends PIXI.utils.EventEmitter {
 
         exportSet.delete(blockClass);
         this.idToBlockClass.delete(blockClass.definition.id);
+
+        this.emit(Module.EXPORT_UPDATE);
     }
 
     clear() {

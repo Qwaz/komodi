@@ -1,21 +1,8 @@
 export enum KomodiType {
-    string,
-    bool,
-    int,
-    empty,
-}
-
-export function typeFromString(str: string): KomodiType {
-    switch (str) {
-        case "string":
-            return KomodiType.string;
-        case "bool":
-            return KomodiType.bool;
-        case "int":
-            return KomodiType.int;
-        default:
-            throw new Error(`typeFromString failed: unknown type string ${str}`);
-    }
+    string = "string",
+    bool = "bool",
+    int = "int",
+    empty = "empty",
 }
 
 export function typeToColor(type: KomodiType) {

@@ -1,10 +1,17 @@
 import {Coordinate} from "../common/definition";
 import {Komodi} from "../global";
-import {Block} from "./index";
+import {Block, BlockClass, createAnonymousCommand, createAnonymousExpression} from "./index";
+import {AttachInfo} from "./attacher";
+import {parseBlockDefinition} from "./definition_parser";
+import {defaultNodeDrawer} from "../graphic/node_drawer";
+import {lineScopeDrawer} from "../graphic/scope_drawer";
+import {KomodiType} from "../type";
 
 export interface SerializedBlock {
     id: string;
     data: {[name: string]: SerializedBlock | SerializedBlock[] | string};
+    definition?: string;
+    exportId: string[];
 }
 
 export interface FreeBlock {
@@ -22,11 +29,20 @@ export type SerializedProgram = {
     modules: SerializedModule[]
 };
 
+const NOT_FOUND_ID = 'NotFound';
+
 function serializeBlock(block: Block): SerializedBlock {
     let result: SerializedBlock = {
         id: block.definition.id,
-        data: {}
+        data: {},
+        exportId: block.getExportId()
     };
+
+    // Not Found Block
+    if (!Komodi.module.hasBlockClass(block.definition.id)) {
+        result.id = NOT_FOUND_ID;
+        result.definition = block.definition.definition;
+    }
 
     for (let inputName of block.definition.inputNames) {
         result.data[inputName] = block.getInput(inputName);
@@ -41,6 +57,10 @@ function serializeBlock(block: Block): SerializedBlock {
 
     for (let scopeName of block.definition.scopeNames) {
         result.data[scopeName] = block.getScope(scopeName).map(serializeBlock);
+    }
+
+    for (let extraName of block.definition.extraNames) {
+        result.data[extraName] = block.getExtra(extraName);
     }
 
     return result;
@@ -72,8 +92,42 @@ export function serializeProgram(): SerializedProgram {
     };
 }
 
-function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block {
-    let blockClass = Komodi.module.getBlockClass(blockData.id);
+interface DelayedAttachBlock {
+    blockData: SerializedBlock;
+    attachInfo: AttachInfo;
+    moduleName: string;
+}
+
+interface DelayedFreeBlock {
+    blockData: SerializedBlock;
+    position: Coordinate;
+    moduleName: string;
+}
+
+type DelayedBlock = DelayedAttachBlock | DelayedFreeBlock;
+
+let delayed: Set<DelayedBlock>;
+
+function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block | null {
+    let blockClass: BlockClass;
+    if (Komodi.module.hasBlockClass(blockData.id)) {
+        blockClass = Komodi.module.getBlockClass(blockData.id);
+    } else if (blockData.id == NOT_FOUND_ID) {
+        let definition = parseBlockDefinition({
+            id: NOT_FOUND_ID, definition: blockData.definition!,
+            nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
+        });
+        if (definition.returnType == KomodiType.empty) {
+            blockClass = createAnonymousCommand(definition);
+        } else {
+            blockClass = createAnonymousExpression(definition);
+        }
+
+    } else {
+        // delay processing
+        return null;
+    }
+
     let block = new blockClass();
     block.init(moduleName);
 
@@ -85,11 +139,21 @@ function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block
         if (blockData.data.hasOwnProperty(argumentName)) {
             let argumentBlockData = <SerializedBlock>blockData.data[argumentName];
             let argumentBlock = deserializeBlock(moduleName, argumentBlockData);
-            block.attachBlock({
+            let argumentAttachInfo: AttachInfo = {
                 attachType: "argument",
                 target: block,
                 argumentName: argumentName
-            }, argumentBlock);
+            };
+
+            if (argumentBlock) {
+                block.attachBlock(argumentAttachInfo, argumentBlock);
+            } else {
+                delayed.add({
+                    blockData: argumentBlockData,
+                    attachInfo: argumentAttachInfo,
+                    moduleName: moduleName
+                });
+            }
         }
     }
 
@@ -97,15 +161,27 @@ function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block
         let cnt = 0;
         for (let scopeBlockData of <SerializedBlock[]>blockData.data[scopeName]) {
             let scopeBlock = deserializeBlock(moduleName, scopeBlockData);
-            block.attachBlock({
+            let scopeAttachInfo: AttachInfo = {
                 attachType: "scope",
                 target: block,
                 scopeName: scopeName,
                 scopeIndex: cnt
-            }, scopeBlock);
+            };
             cnt++;
+
+            if (scopeBlock) {
+                block.attachBlock(scopeAttachInfo, scopeBlock);
+            } else {
+                delayed.add({
+                    blockData: scopeBlockData,
+                    attachInfo: scopeAttachInfo,
+                    moduleName: moduleName
+                });
+            }
         }
     }
+
+    block.setExportId(blockData.exportId);
 
     block.updateGraphic();
 
@@ -115,14 +191,42 @@ function deserializeBlock(moduleName: string, blockData: SerializedBlock): Block
 export function deserializeProgram(program: SerializedProgram) {
     Komodi.topMenu.projectName = program.projectName;
 
+    delayed = new Set();
     for (let module of program.modules) {
         Komodi.module.addUserModule(module.moduleName);
         for (let freeBlock of module.freeBlocks) {
-            let block = deserializeBlock(module.moduleName, freeBlock.blockData);
-
-            block.graphic.x = freeBlock.position.x;
-            block.graphic.y = freeBlock.position.y;
+            delayed.add({
+                blockData: freeBlock.blockData,
+                position: freeBlock.position,
+                moduleName: module.moduleName
+            });
         }
+    }
+
+    let isDelayedFreeBlock = (delayedBlock: DelayedBlock): delayedBlock is DelayedFreeBlock => {
+        return delayedBlock.hasOwnProperty('position');
+    };
+
+    while (delayed.size > 0) {
+        for (let delayedBlock of delayed.values()) {
+            if (isDelayedFreeBlock(delayedBlock)) {
+                let block = deserializeBlock(delayedBlock.moduleName, delayedBlock.blockData);
+
+                if (block) {
+                    block.graphic.x = delayedBlock.position.x;
+                    block.graphic.y = delayedBlock.position.y;
+                    delayed.delete(delayedBlock);
+                }
+            } else {
+                let block = deserializeBlock(delayedBlock.moduleName, delayedBlock.blockData);
+
+                if (block) {
+                    delayedBlock.attachInfo.target.attachBlock(delayedBlock.attachInfo, block);
+                    delayed.delete(delayedBlock);
+                }
+            }
+        }
+
     }
     Komodi.module.editingModule = program.modules[0].moduleName;
 }

@@ -1,13 +1,14 @@
 import * as _ from "lodash";
-import {BlockGraphic} from "../graphic/index";
+import {BlockGraphic} from "../graphic";
 import {KomodiType} from "../type";
 import {BlockDefinition, UserInputToken} from "./definition_parser";
 import {Komodi} from "../global";
 import {AttachInfo, ScopeAttach} from "./attacher";
+import {ExportScope} from "./module";
 
 export interface BlockClass {
     new (): Block;
-    definition: BlockDefinition;
+    readonly definition: BlockDefinition;
 }
 
 export abstract class BlockBase {
@@ -21,6 +22,13 @@ export abstract class BlockBase {
     abstract getScope(scopeName: string): Scope;
 
     abstract getInput(inputName: string): string;
+
+    getExtra(extraName: string): any {
+        if (_.includes(this.definition.extraNames, extraName)) {
+            return (<any>this)[extraName];
+        }
+        throw new Error(`getExtra failed: ${extraName} does not exist`);
+    }
 }
 
 export class VirtualBlock extends BlockBase {
@@ -57,11 +65,19 @@ export abstract class Block extends BlockBase {
     // parental attach information
     attachInfo: AttachInfo | null = null;
 
+    private _initialized = false;
+
+    protected moduleName: string;
+    protected exportInfo: {scope: ExportScope, blockClass: BlockClass}[] = [];
 
     constructor(definition: BlockDefinition) {
         super(definition);
 
         this.graphic = new BlockGraphic(this);
+    }
+
+    get initialized() {
+        return this._initialized;
     }
 
     getArgument(argumentName: string): Expression | null {
@@ -86,6 +102,7 @@ export abstract class Block extends BlockBase {
     }
 
     init(moduleName: string) {
+        this.moduleName = moduleName;
         this.definition.tokens.forEach((token) => {
             if (token instanceof UserInputToken) {
                 (<any>this)[token.identifier] = token.validator.defaultValue;
@@ -93,9 +110,43 @@ export abstract class Block extends BlockBase {
         });
         Komodi.registerBlock(this);
         Komodi.module.addBlockToModule(moduleName, this);
+        this._initialized = true;
+
         this.updateGraphic();
     }
 
+    // export related functions
+    addExport(scope: ExportScope, blockClass: BlockClass) {
+        this.exportInfo.push({
+            scope: scope,
+            blockClass: blockClass
+        });
+        Komodi.module.addExport(this.moduleName, scope, blockClass);
+    }
+
+    clearExport() {
+        this.exportInfo.forEach((data) => {
+            Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+        });
+
+        this.exportInfo.length = 0;
+    }
+
+    getExportId() {
+        return this.exportInfo.map(
+            (data) =>data.blockClass.definition.id
+        );
+    }
+
+    setExportId(idArray: string[]) {
+        this.exportInfo.forEach((data, i) => {
+            Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            data.blockClass.definition.id = idArray[i];
+            Komodi.module.addExport(this.moduleName, data.scope, data.blockClass);
+        });
+    }
+
+    // attach & detach
     attachBlock(attachInfo: AttachInfo, block: Block) {
         if (attachInfo.target != this) {
             throw new Error("attachBlock failed: invalid attach target");
@@ -193,6 +244,7 @@ export abstract class Block extends BlockBase {
                 scopeBlock.destroy();
             }
         }
+        this.clearExport();
 
         this.graphic.destroy();
         Komodi.unregisterBlock(this);
@@ -223,6 +275,24 @@ export abstract class Definition extends Block {
             throw new Error("new Definition failed: Definition must not have a return type");
 
         super(def);
+    }
+}
+
+export function createAnonymousCommand(definition: BlockDefinition) {
+    return class extends Command {
+        static readonly definition = definition;
+        constructor() {
+            super(definition);
+        }
+    }
+}
+
+export function createAnonymousExpression(definition: BlockDefinition) {
+    return class extends Expression {
+        static readonly definition = definition;
+        constructor() {
+            super(definition);
+        }
     }
 }
 

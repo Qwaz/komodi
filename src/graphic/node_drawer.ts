@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 import {BlockGraphic, NodeDrawer} from "./index";
-import {typeToColor} from "../type";
+import {KomodiType, typeToColor} from "../type";
 import {centerChild} from "../common/utils";
 import {Komodi} from "../global";
 import {Token} from "../program/definition_parser";
@@ -8,13 +8,13 @@ import {BlockBase} from "../program";
 
 const MINIMUM_ARG_WIDTH = 26;
 const PADDING = 5;
-const BLOCK_HEIGHT = 33;
+const BLOCK_HEIGHT = 35;
 
 const TIP_WIDTH = 12;
 const TIP_HEIGHT = 9;
 const CURVE_HEIGHT = 6;
-const SIGNAL_GAP = 4;
-const SIGNAL_LINE = 4;
+const DEFINITION_GAP = 4;
+const DEFINITION_LINE = 4;
 
 function defaultDrawNode(
     block: BlockBase,
@@ -135,42 +135,40 @@ function defaultDrawNode(
     return widthSum;
 }
 
-class ExpressionNodeDrawer extends NodeDrawer {
+class DefaultNodeDrawer extends NodeDrawer {
     drawNode(block: BlockBase, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
-        defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
-            widthSum*.5, -TIP_HEIGHT,
-            TIP_WIDTH*.5, -TIP_HEIGHT,
-            0, 0,
-            -TIP_WIDTH*.5, -TIP_HEIGHT,
-            -widthSum*.5, -TIP_HEIGHT,
-        ]);
+        if (block.definition.returnType == KomodiType.empty) {
+            defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
+                let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
+                    return [widthSum*.5 - num*widthSum, -CURVE_HEIGHT+Math.sin(num * Math.PI)*CURVE_HEIGHT];
+                }).value();
+                ret.push(
+                    -widthSum*.5, -CURVE_HEIGHT,
+                );
+                return ret;
+            });
+        } else {
+            defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
+                widthSum*.5, -TIP_HEIGHT,
+                TIP_WIDTH*.5, -TIP_HEIGHT,
+                0, 0,
+                -TIP_WIDTH*.5, -TIP_HEIGHT,
+                -widthSum*.5, -TIP_HEIGHT,
+            ]);
+        }
     }
 }
-export const expressionNodeDrawer = new ExpressionNodeDrawer();
-
-class CommandNodeDrawer extends NodeDrawer {
-    drawNode(block: BlockBase, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
-        defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
-            let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
-                return [widthSum*.5 - num*widthSum, -CURVE_HEIGHT+Math.sin(num * Math.PI)*CURVE_HEIGHT];
-            }).value();
-            ret.push(
-                -widthSum*.5, -CURVE_HEIGHT,
-            );
-            return ret;
-        });
-    }
-}
-export const commandNodeDrawer = new CommandNodeDrawer();
+export const defaultNodeDrawer = new DefaultNodeDrawer();
 
 class DefinitionNodeDrawer extends NodeDrawer {
     drawNode(block: BlockBase, getArgumentGraphics: () => IterableIterator<BlockGraphic | null>) {
-        let widthSum = defaultDrawNode(block, getArgumentGraphics, -SIGNAL_GAP-SIGNAL_LINE, (widthSum) => [
-            widthSum * .5, -SIGNAL_GAP-SIGNAL_LINE,
-            -widthSum * .5, -SIGNAL_GAP-SIGNAL_LINE,
+        let widthSum = defaultDrawNode(block, getArgumentGraphics, -DEFINITION_GAP-DEFINITION_LINE, (widthSum) => [
+            widthSum * .5, -DEFINITION_GAP-DEFINITION_LINE,
+            -widthSum * .5, -DEFINITION_GAP-DEFINITION_LINE,
         ]);
 
-        block.graphic.graphics.drawRect(-widthSum * .5, -SIGNAL_LINE, widthSum, SIGNAL_LINE);
+        block.graphic.graphics.beginFill(typeToColor(block.definition.returnType));
+        block.graphic.graphics.drawRect(-widthSum * .5, -DEFINITION_LINE, widthSum, DEFINITION_LINE);
     }
 }
 

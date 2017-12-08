@@ -123,7 +123,7 @@ class KomodiClass {
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
             1, 1,
-            {antialias: false, transparent: true, resolution: 2}
+            {antialias: false, transparent: true, resolution: 2, roundPixels: true}
         );
     }
 

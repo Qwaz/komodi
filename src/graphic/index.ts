@@ -94,10 +94,11 @@ export class BlockGenerator extends BlockGraphicBase {
 
         this.on('mousedown', (e: PIXI.interaction.InteractionEvent) => {
             if (Komodi.module.editingModule) {
+                let globalPosition = this.getGlobalPosition();
+
                 let block = new blockClass();
                 block.init(Komodi.module.editingModule);
 
-                let globalPosition = this.getGlobalPosition();
                 Komodi.fixed.addChild(block.graphic);
                 block.graphic.x = globalPosition.x;
                 block.graphic.y = globalPosition.y;

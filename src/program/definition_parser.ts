@@ -1,9 +1,30 @@
 import peg = require("pegjs");
 import * as _ from "lodash";
-import {KomodiType, typeFromString} from "../type";
+import {KomodiType} from "../type";
 import {NodeDrawer, ScopeDrawer} from "../graphic";
-import {lineScopeDrawer} from "../graphic/scope_drawer";
-import {definitionNodeDrawer} from "../graphic/node_drawer";
+
+export class PlaceholderToken {
+    kind: "placeholder" = "placeholder";
+
+    constructor(readonly text: string) {
+    }
+}
+
+export class UserInputToken {
+    kind: "user_input" = "user_input";
+
+    constructor(readonly identifier: string, readonly validator: UserInputValidator) {
+    }
+}
+
+export class ExpressionToken {
+    kind: "expression" = "expression";
+
+    constructor(readonly identifier: string, readonly type: KomodiType) {
+    }
+}
+
+export type Token = PlaceholderToken | UserInputToken | ExpressionToken;
 
 const PARSER_DEFINITION = `
 start = tokens: token+ returnType:(":" t:type { return t; })? {
@@ -29,7 +50,77 @@ token
         { return {tokenType: "user_input", identifier: identifier, validator: validator}; }
 `;
 
-export const blockDefinitionParser = peg.generate(PARSER_DEFINITION);
+const blockDefinitionParser = peg.generate(PARSER_DEFINITION);
+export interface BlockDefinitionBase {
+    id: string;
+    definition: string;
+    scopeNames?: string[];
+    extraNames?: string[];
+    nodeDrawer: NodeDrawer;
+    scopeDrawer: ScopeDrawer;
+}
+
+export interface BlockDefinition {
+    id: string;
+    definition: string;
+    tokens: Token[];
+    returnType: KomodiType;
+    inputNames: string[];
+    argumentNames: string[];
+    scopeNames: string[];
+    extraNames: string[];
+    nodeDrawer: NodeDrawer;
+    scopeDrawer: ScopeDrawer;
+}
+
+function parseDefinitionString(definition: string): {
+    tokens: Token[],
+    returnType: KomodiType
+} {
+    let parsed = blockDefinitionParser.parse(definition);
+    parsed.tokens = _.map(parsed.tokens, (token: any) => {
+        switch (token.tokenType) {
+            case "placeholder":
+                return new PlaceholderToken(token.value);
+            case "expression":
+                return new ExpressionToken(token.identifier, token.type);
+            case "user_input":
+                let validatorId = token.validator;
+                if (!validatorMap.has(validatorId)) {
+                    throw new Error("parseBlockDefinition failed: unknown validator");
+                }
+                let validator = validatorMap.get(validatorId)!;
+                return new UserInputToken(token.identifier, validator);
+            default:
+                throw new Error("parseBlockDefinition failed: unknown token type");
+        }
+    });
+    parsed.returnType = parsed.returnType ? parsed.returnType : KomodiType.empty;
+
+    return parsed;
+}
+
+export function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinition {
+    let parsed = parseDefinitionString(definitionBase.definition);
+
+    return {
+        id: definitionBase.id,
+        definition: definitionBase.definition,
+        tokens: parsed.tokens,
+        returnType: parsed.returnType,
+        inputNames: _.filter(parsed.tokens,
+            <(x: Token) => x is UserInputToken>((token) => token instanceof UserInputToken))
+            .map((token) => token.identifier),
+        argumentNames: _.filter(parsed.tokens,
+            <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken))
+            .map((token) => token.identifier),
+        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
+        extraNames: definitionBase.extraNames ? definitionBase.extraNames : [],
+        nodeDrawer: definitionBase.nodeDrawer,
+        scopeDrawer: definitionBase.scopeDrawer
+    }
+}
+
 
 export interface UserInputValidator {
     type: KomodiType;
@@ -84,15 +175,12 @@ validatorMap.set('scope', {
 
 validatorMap.set('definition', {
     type: KomodiType.empty,
-    defaultValue: 'test [arg: int]',
+    defaultValue: 'test [arg: int]: bool',
     updateInput: (currentValue: string) => {
         let result = window.prompt('Change function definition', currentValue);
         if (result) {
             try {
-                parseBlockDefinition({
-                    id: 'test', definition: result,
-                    nodeDrawer: definitionNodeDrawer, scopeDrawer: lineScopeDrawer
-                });
+                parseDefinitionString(result);
                 return result;
             } catch (e) {
                 window.alert(e.toString());
@@ -101,80 +189,3 @@ validatorMap.set('definition', {
         return null;
     }
 });
-
-export class PlaceholderToken {
-    kind: "placeholder" = "placeholder";
-
-    constructor(readonly text: string) {
-    }
-}
-
-export class UserInputToken {
-    kind: "user_input" = "user_input";
-
-    constructor(readonly identifier: string, readonly validator: UserInputValidator) {
-    }
-}
-
-export class ExpressionToken {
-    kind: "expression" = "expression";
-
-    constructor(readonly identifier: string, readonly type: KomodiType) {
-    }
-}
-
-export type Token = PlaceholderToken | UserInputToken | ExpressionToken;
-
-
-export interface BlockDefinitionBase {
-    id: string;
-    definition: string;
-    scopeNames?: string[];
-    nodeDrawer: NodeDrawer;
-    scopeDrawer: ScopeDrawer;
-}
-
-export interface BlockDefinition {
-    id: string;
-    definition: string;
-    tokens: Token[];
-    returnType: KomodiType;
-    inputNames: string[];
-    argumentNames: string[];
-    scopeNames: string[];
-    nodeDrawer: NodeDrawer;
-    scopeDrawer: ScopeDrawer;
-}
-
-export function parseBlockDefinition(definitionBase: BlockDefinitionBase): BlockDefinition {
-    let parsed = blockDefinitionParser.parse(definitionBase.definition);
-    let tokens = _.map(parsed.tokens, (token: any) => {
-        switch (token.tokenType) {
-            case "placeholder":
-                return new PlaceholderToken(token.value);
-            case "expression":
-                return new ExpressionToken(token.identifier, typeFromString(token.type));
-            case "user_input":
-                let validatorId = token.validator;
-                if (!validatorMap.has(validatorId)) {
-                    throw new Error("parseBlockDefinition failed: unknown validator");
-                }
-                let validator = validatorMap.get(validatorId)!;
-                return new UserInputToken(token.identifier, validator);
-            default:
-                throw new Error("parseBlockDefinition failed: unknown token type");
-        }
-    });
-
-    return {
-        id: definitionBase.id,
-        definition: definitionBase.definition,
-        tokens: tokens,
-        returnType: parsed.returnType ? typeFromString(parsed.returnType) : KomodiType.empty,
-        inputNames: _.filter(tokens, <(x: Token) => x is UserInputToken>((token) => token instanceof UserInputToken)).map((token) => token.identifier),
-        argumentNames: _.filter(tokens, <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken)).map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
-        nodeDrawer: definitionBase.nodeDrawer,
-        scopeDrawer: definitionBase.scopeDrawer
-    }
-}

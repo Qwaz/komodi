@@ -8,7 +8,7 @@ import {Module} from "./program/module";
 const TOP_MENU_HEIGHT = 85;
 const TOP_MENU_BUTTON_HEIGHT = 30;
 
-const SIDE_MENU_WIDTH = 240;
+const SIDE_MENU_WIDTH = 260;
 const MODULE_SELECTOR_END_Y = 400;
 const EDIT_BUTTON_MARGIN = 8;
 const EDIT_BUTTON_HEIGHT = 40;
@@ -81,6 +81,7 @@ export class TopMenu extends PIXI.Container {
 }
 
 export class ModuleSelector extends PIXI.Container {
+    // (moduleName: string | null)
     static readonly SELECTED_MODULE_CHANGE = 'selectedModuleChange';
 
     readonly selector: ListSelector;
@@ -104,10 +105,9 @@ export class ModuleSelector extends PIXI.Container {
 
         // user module
         this.selector.addLabel('\uf2be  user modules');
-
-        this.selector.onChange = (moduleName: string | null) => {
-            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, moduleName);
-        };
+        this.selector.on(ListSelector.CHANGE, () => {
+            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
+        });
 
         Komodi.module.on(Module.EDITING_MODULE_CHANGE, (changedModuleName: string | null) => {
             let modules = Komodi.module.getModuleList();
@@ -118,8 +118,9 @@ export class ModuleSelector extends PIXI.Container {
                     this.selector.changeText(moduleName, moduleName);
                 }
             }
-            this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
         });
+
+        this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
     }
 
     addModule(moduleName: string) {
@@ -139,33 +140,45 @@ export class BlockGeneratorList extends PIXI.Container {
     }
 
     init() {
-        Komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName: string | null) => {
-            this.clear();
-            if (moduleName) {
-                const VERTICAL_PADDING = 10;
+        Komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, () => {
+            this.update();
+        });
+        Komodi.module.on(Module.EDITING_MODULE_CHANGE, () => {
+            this.update();
+        });
+        Komodi.module.on(Module.EXPORT_UPDATE, () => {
+            this.update();
+        });
+    }
 
-                let exportResult = Komodi.module.exportOf(moduleName);
+    private update() {
+        this.clear();
 
-                let currentY = 0;
-                let addGenerator = (blockClass: BlockClass) => {
-                    let generator = new BlockGenerator(blockClass);
-                    this.addChild(generator);
-                    generator.x = SIDE_MENU_WIDTH*.5;
-                    generator.y = currentY + VERTICAL_PADDING + generator.height;
-                    this.blockList.push(generator);
-                    currentY += generator.height + VERTICAL_PADDING;
-                };
+        let moduleName = Komodi.sideMenu.moduleSelector.selector.getSelectedKey();
+        if (moduleName) {
+            const VERTICAL_PADDING = 10;
 
-                for (let blockClass of exportResult.globalScope) {
+            let exportResult = Komodi.module.exportOf(moduleName);
+
+            let currentY = 0;
+            let addGenerator = (blockClass: BlockClass) => {
+                let generator = new BlockGenerator(blockClass);
+                this.addChild(generator);
+                generator.x = SIDE_MENU_WIDTH*.5;
+                generator.y = currentY + VERTICAL_PADDING + generator.height;
+                this.blockList.push(generator);
+                currentY += generator.height + VERTICAL_PADDING;
+            };
+
+            for (let blockClass of exportResult.globalScope) {
+                addGenerator(blockClass);
+            }
+            if (Komodi.module.editingModule == moduleName) {
+                for (let blockClass of exportResult.internalScope) {
                     addGenerator(blockClass);
                 }
-                if (Komodi.module.editingModule == moduleName) {
-                    for (let blockClass of exportResult.internalScope) {
-                        addGenerator(blockClass);
-                    }
-                }
             }
-        });
+        }
     }
 
     clear() {

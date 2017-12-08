@@ -16,11 +16,11 @@ export enum MENU_COLOR {
 }
 
 export class ListSelector extends PIXI.Container {
+    static readonly CHANGE = 'change';
+
     static readonly LIST_BUTTON_HEIGHT = 35;
     static readonly LABEL_LEFT = 10;
     static readonly BUTTON_LEFT = 20;
-
-    onChange: ((key: string | null) => void) | null = null;
 
     private _selectedKey: string | null = null;
 
@@ -41,10 +41,8 @@ export class ListSelector extends PIXI.Container {
     }
 
     private set selectedKey(value: string | null) {
-        if (this.onChange) {
-            this.onChange(value);
-        }
         this._selectedKey = value;
+        this.emit(ListSelector.CHANGE);
     }
 
     addButton(text: string, key: string) {
