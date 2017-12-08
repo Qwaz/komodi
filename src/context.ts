@@ -13,7 +13,7 @@ export class KomodiContext {
     readonly module: Module;
     readonly serializer: Serializer;
 
-    private _projectName: string;
+    protected _projectName: string;
 
     constructor() {
         this.attacher = new Attacher(this);

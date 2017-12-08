@@ -29,9 +29,9 @@ export function addToScopeTree(block: Block, module: Module, context: Validation
     context.scopeTree.push(block);
 }
 
-export function checkScopeTree(block: Block) {
+export function checkScopeTree(parentBlock: Block) {
     return (block: Block, module: Module, context: ValidationContext) => {
-        if (!_.includes(context.scopeTree, block)) {
+        if (!_.includes(context.scopeTree, parentBlock)) {
             context.result.error.push(`"${block.definition.definition}" is in the wrong scope.`);
         }
     }

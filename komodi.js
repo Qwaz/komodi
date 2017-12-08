@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 221);
+/******/ 	return __webpack_require__(__webpack_require__.s = 223);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -530,7 +530,7 @@ Object.defineProperty(exports, 'Sprite', {
   }
 });
 
-var _CanvasSpriteRenderer = __webpack_require__(155);
+var _CanvasSpriteRenderer = __webpack_require__(158);
 
 Object.defineProperty(exports, 'CanvasSpriteRenderer', {
   enumerable: true,
@@ -548,7 +548,7 @@ Object.defineProperty(exports, 'CanvasTinter', {
   }
 });
 
-var _SpriteRenderer = __webpack_require__(157);
+var _SpriteRenderer = __webpack_require__(160);
 
 Object.defineProperty(exports, 'SpriteRenderer', {
   enumerable: true,
@@ -557,7 +557,7 @@ Object.defineProperty(exports, 'SpriteRenderer', {
   }
 });
 
-var _Text = __webpack_require__(159);
+var _Text = __webpack_require__(162);
 
 Object.defineProperty(exports, 'Text', {
   enumerable: true,
@@ -584,7 +584,7 @@ Object.defineProperty(exports, 'TextMetrics', {
   }
 });
 
-var _Graphics = __webpack_require__(127);
+var _Graphics = __webpack_require__(130);
 
 Object.defineProperty(exports, 'Graphics', {
   enumerable: true,
@@ -602,7 +602,7 @@ Object.defineProperty(exports, 'GraphicsData', {
   }
 });
 
-var _GraphicsRenderer = __webpack_require__(130);
+var _GraphicsRenderer = __webpack_require__(133);
 
 Object.defineProperty(exports, 'GraphicsRenderer', {
   enumerable: true,
@@ -611,7 +611,7 @@ Object.defineProperty(exports, 'GraphicsRenderer', {
   }
 });
 
-var _CanvasGraphicsRenderer = __webpack_require__(128);
+var _CanvasGraphicsRenderer = __webpack_require__(131);
 
 Object.defineProperty(exports, 'CanvasGraphicsRenderer', {
   enumerable: true,
@@ -620,7 +620,7 @@ Object.defineProperty(exports, 'CanvasGraphicsRenderer', {
   }
 });
 
-var _Spritesheet = __webpack_require__(160);
+var _Spritesheet = __webpack_require__(163);
 
 Object.defineProperty(exports, 'Spritesheet', {
   enumerable: true,
@@ -629,7 +629,7 @@ Object.defineProperty(exports, 'Spritesheet', {
   }
 });
 
-var _Texture = __webpack_require__(11);
+var _Texture = __webpack_require__(12);
 
 Object.defineProperty(exports, 'Texture', {
   enumerable: true,
@@ -638,7 +638,7 @@ Object.defineProperty(exports, 'Texture', {
   }
 });
 
-var _BaseTexture = __webpack_require__(14);
+var _BaseTexture = __webpack_require__(15);
 
 Object.defineProperty(exports, 'BaseTexture', {
   enumerable: true,
@@ -844,11 +844,11 @@ var _eventemitter = __webpack_require__(10);
 
 var _eventemitter2 = _interopRequireDefault(_eventemitter);
 
-var _pluginTarget = __webpack_require__(168);
+var _pluginTarget = __webpack_require__(171);
 
 var _pluginTarget2 = _interopRequireDefault(_pluginTarget);
 
-var _mixin = __webpack_require__(167);
+var _mixin = __webpack_require__(170);
 
 var mixins = _interopRequireWildcard(_mixin);
 
@@ -856,11 +856,11 @@ var _ismobilejs = __webpack_require__(36);
 
 var isMobile = _interopRequireWildcard(_ismobilejs);
 
-var _removeArrayItems = __webpack_require__(215);
+var _removeArrayItems = __webpack_require__(218);
 
 var _removeArrayItems2 = _interopRequireDefault(_removeArrayItems);
 
-var _mapPremultipliedBlendModes = __webpack_require__(165);
+var _mapPremultipliedBlendModes = __webpack_require__(168);
 
 var _mapPremultipliedBlendModes2 = _interopRequireDefault(_mapPremultipliedBlendModes);
 
@@ -1294,11 +1294,11 @@ function premultiplyTintToRgba(tint, alpha, out, premultiply) {
 
 exports.__esModule = true;
 
-var _maxRecommendedTextures = __webpack_require__(166);
+var _maxRecommendedTextures = __webpack_require__(169);
 
 var _maxRecommendedTextures2 = _interopRequireDefault(_maxRecommendedTextures);
 
-var _canUploadSameBuffer = __webpack_require__(163);
+var _canUploadSameBuffer = __webpack_require__(166);
 
 var _canUploadSameBuffer2 = _interopRequireDefault(_canUploadSameBuffer);
 
@@ -1570,7 +1570,7 @@ Object.defineProperty(exports, 'GroupD8', {
   }
 });
 
-var _Circle = __webpack_require__(137);
+var _Circle = __webpack_require__(140);
 
 Object.defineProperty(exports, 'Circle', {
   enumerable: true,
@@ -1579,7 +1579,7 @@ Object.defineProperty(exports, 'Circle', {
   }
 });
 
-var _Ellipse = __webpack_require__(138);
+var _Ellipse = __webpack_require__(141);
 
 Object.defineProperty(exports, 'Ellipse', {
   enumerable: true,
@@ -1588,7 +1588,7 @@ Object.defineProperty(exports, 'Ellipse', {
   }
 });
 
-var _Polygon = __webpack_require__(139);
+var _Polygon = __webpack_require__(142);
 
 Object.defineProperty(exports, 'Polygon', {
   enumerable: true,
@@ -1606,7 +1606,7 @@ Object.defineProperty(exports, 'Rectangle', {
   }
 });
 
-var _RoundedRectangle = __webpack_require__(140);
+var _RoundedRectangle = __webpack_require__(143);
 
 Object.defineProperty(exports, 'RoundedRectangle', {
   enumerable: true,
@@ -1623,14 +1623,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /***/ (function(module, exports, __webpack_require__) {
 
 var gl = {
-    createContext:          __webpack_require__(123),
+    createContext:          __webpack_require__(125),
     setVertexAttribArrays:  __webpack_require__(59),
-    GLBuffer:               __webpack_require__(119),
-    GLFramebuffer:          __webpack_require__(120),
-    GLShader:               __webpack_require__(121),
+    GLBuffer:               __webpack_require__(121),
+    GLFramebuffer:          __webpack_require__(122),
+    GLShader:               __webpack_require__(123),
     GLTexture:              __webpack_require__(58),
-    VertexArrayObject:      __webpack_require__(122),
-    shader:                 __webpack_require__(124)
+    VertexArrayObject:      __webpack_require__(124),
+    shader:                 __webpack_require__(126)
 };
 
 // Export for Node-compatible environments
@@ -1878,7 +1878,7 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(210)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(213)))
 
 /***/ }),
 /* 7 */
@@ -1887,7 +1887,7 @@ var substr = 'ab'.substr(-1) === 'b'
 "use strict";
 
 
-var objects = __webpack_require__(13),
+var objects = __webpack_require__(14),
     arrays  = __webpack_require__(8);
 
 /* Simple AST node visitor builder. */
@@ -2081,9 +2081,9 @@ module.exports = arrays;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(16);
+const _ = __webpack_require__(11);
 const graphic_1 = __webpack_require__(24);
-const type_1 = __webpack_require__(15);
+const type_1 = __webpack_require__(16);
 const definition_parser_1 = __webpack_require__(25);
 class BlockBase {
     constructor(definition) {
@@ -2647,1665 +2647,6 @@ if (true) {
 
 /***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _BaseTexture = __webpack_require__(14);
-
-var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
-
-var _VideoBaseTexture = __webpack_require__(86);
-
-var _VideoBaseTexture2 = _interopRequireDefault(_VideoBaseTexture);
-
-var _TextureUvs = __webpack_require__(85);
-
-var _TextureUvs2 = _interopRequireDefault(_TextureUvs);
-
-var _eventemitter = __webpack_require__(10);
-
-var _eventemitter2 = _interopRequireDefault(_eventemitter);
-
-var _math = __webpack_require__(4);
-
-var _utils = __webpack_require__(2);
-
-var _settings = __webpack_require__(3);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * A texture stores the information that represents an image or part of an image. It cannot be added
- * to the display list directly. Instead use it as the texture for a Sprite. If no frame is provided
- * then the whole image is used.
- *
- * You can directly create a texture from an image and then reuse it multiple times like this :
- *
- * ```js
- * let texture = PIXI.Texture.fromImage('assets/image.png');
- * let sprite1 = new PIXI.Sprite(texture);
- * let sprite2 = new PIXI.Sprite(texture);
- * ```
- *
- * Textures made from SVGs, loaded or not, cannot be used before the file finishes processing.
- * You can check for this by checking the sprite's _textureID property.
- * ```js
- * var texture = PIXI.Texture.fromImage('assets/image.svg');
- * var sprite1 = new PIXI.Sprite(texture);
- * //sprite1._textureID should not be undefined if the texture has finished processing the SVG file
- * ```
- * You can use a ticker or rAF to ensure your sprites load the finished textures after processing. See issue #3068.
- *
- * @class
- * @extends EventEmitter
- * @memberof PIXI
- */
-var Texture = function (_EventEmitter) {
-    _inherits(Texture, _EventEmitter);
-
-    /**
-     * @param {PIXI.BaseTexture} baseTexture - The base texture source to create the texture from
-     * @param {PIXI.Rectangle} [frame] - The rectangle frame of the texture to show
-     * @param {PIXI.Rectangle} [orig] - The area of original texture
-     * @param {PIXI.Rectangle} [trim] - Trimmed rectangle of original texture
-     * @param {number} [rotate] - indicates how the texture was rotated by texture packer. See {@link PIXI.GroupD8}
-     */
-    function Texture(baseTexture, frame, orig, trim, rotate) {
-        _classCallCheck(this, Texture);
-
-        /**
-         * Does this Texture have any frame data assigned to it?
-         *
-         * @member {boolean}
-         */
-        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
-
-        _this.noFrame = false;
-
-        if (!frame) {
-            _this.noFrame = true;
-            frame = new _math.Rectangle(0, 0, 1, 1);
-        }
-
-        if (baseTexture instanceof Texture) {
-            baseTexture = baseTexture.baseTexture;
-        }
-
-        /**
-         * The base texture that this texture uses.
-         *
-         * @member {PIXI.BaseTexture}
-         */
-        _this.baseTexture = baseTexture;
-
-        /**
-         * This is the area of the BaseTexture image to actually copy to the Canvas / WebGL when rendering,
-         * irrespective of the actual frame size or placement (which can be influenced by trimmed texture atlases)
-         *
-         * @member {PIXI.Rectangle}
-         */
-        _this._frame = frame;
-
-        /**
-         * This is the trimmed area of original texture, before it was put in atlas
-         *
-         * @member {PIXI.Rectangle}
-         */
-        _this.trim = trim;
-
-        /**
-         * This will let the renderer know if the texture is valid. If it's not then it cannot be rendered.
-         *
-         * @member {boolean}
-         */
-        _this.valid = false;
-
-        /**
-         * This will let a renderer know that a texture has been updated (used mainly for webGL uv updates)
-         *
-         * @member {boolean}
-         */
-        _this.requiresUpdate = false;
-
-        /**
-         * The WebGL UV data cache.
-         *
-         * @member {PIXI.TextureUvs}
-         * @private
-         */
-        _this._uvs = null;
-
-        /**
-         * This is the area of original texture, before it was put in atlas
-         *
-         * @member {PIXI.Rectangle}
-         */
-        _this.orig = orig || frame; // new Rectangle(0, 0, 1, 1);
-
-        _this._rotate = Number(rotate || 0);
-
-        if (rotate === true) {
-            // this is old texturepacker legacy, some games/libraries are passing "true" for rotated textures
-            _this._rotate = 2;
-        } else if (_this._rotate % 2 !== 0) {
-            throw new Error('attempt to use diamond-shaped UVs. If you are sure, set rotation manually');
-        }
-
-        if (baseTexture.hasLoaded) {
-            if (_this.noFrame) {
-                frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
-
-                // if there is no frame we should monitor for any base texture changes..
-                baseTexture.on('update', _this.onBaseTextureUpdated, _this);
-            }
-            _this.frame = frame;
-        } else {
-            baseTexture.once('loaded', _this.onBaseTextureLoaded, _this);
-        }
-
-        /**
-         * Fired when the texture is updated. This happens if the frame or the baseTexture is updated.
-         *
-         * @event PIXI.Texture#update
-         * @protected
-         * @param {PIXI.Texture} texture - Instance of texture being updated.
-         */
-
-        _this._updateID = 0;
-
-        /**
-         * Extra field for extra plugins. May contain clamp settings and some matrices
-         * @type {Object}
-         */
-        _this.transform = null;
-
-        /**
-         * The ids under which this Texture has been added to the texture cache. This is
-         * automatically set as long as Texture.addToCache is used, but may not be set if a
-         * Texture is added directly to the TextureCache array.
-         *
-         * @member {string[]}
-         */
-        _this.textureCacheIds = [];
-        return _this;
-    }
-
-    /**
-     * Updates this texture on the gpu.
-     *
-     */
-
-
-    Texture.prototype.update = function update() {
-        this.baseTexture.update();
-    };
-
-    /**
-     * Called when the base texture is loaded
-     *
-     * @private
-     * @param {PIXI.BaseTexture} baseTexture - The base texture.
-     */
-
-
-    Texture.prototype.onBaseTextureLoaded = function onBaseTextureLoaded(baseTexture) {
-        this._updateID++;
-
-        // TODO this code looks confusing.. boo to abusing getters and setters!
-        if (this.noFrame) {
-            this.frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
-        } else {
-            this.frame = this._frame;
-        }
-
-        this.baseTexture.on('update', this.onBaseTextureUpdated, this);
-        this.emit('update', this);
-    };
-
-    /**
-     * Called when the base texture is updated
-     *
-     * @private
-     * @param {PIXI.BaseTexture} baseTexture - The base texture.
-     */
-
-
-    Texture.prototype.onBaseTextureUpdated = function onBaseTextureUpdated(baseTexture) {
-        this._updateID++;
-
-        this._frame.width = baseTexture.width;
-        this._frame.height = baseTexture.height;
-
-        this.emit('update', this);
-    };
-
-    /**
-     * Destroys this texture
-     *
-     * @param {boolean} [destroyBase=false] Whether to destroy the base texture as well
-     */
-
-
-    Texture.prototype.destroy = function destroy(destroyBase) {
-        if (this.baseTexture) {
-            if (destroyBase) {
-                // delete the texture if it exists in the texture cache..
-                // this only needs to be removed if the base texture is actually destroyed too..
-                if (_utils.TextureCache[this.baseTexture.imageUrl]) {
-                    Texture.removeFromCache(this.baseTexture.imageUrl);
-                }
-
-                this.baseTexture.destroy();
-            }
-
-            this.baseTexture.off('update', this.onBaseTextureUpdated, this);
-            this.baseTexture.off('loaded', this.onBaseTextureLoaded, this);
-
-            this.baseTexture = null;
-        }
-
-        this._frame = null;
-        this._uvs = null;
-        this.trim = null;
-        this.orig = null;
-
-        this.valid = false;
-
-        Texture.removeFromCache(this);
-        this.textureCacheIds = null;
-    };
-
-    /**
-     * Creates a new texture object that acts the same as this one.
-     *
-     * @return {PIXI.Texture} The new texture
-     */
-
-
-    Texture.prototype.clone = function clone() {
-        return new Texture(this.baseTexture, this.frame, this.orig, this.trim, this.rotate);
-    };
-
-    /**
-     * Updates the internal WebGL UV cache.
-     *
-     * @protected
-     */
-
-
-    Texture.prototype._updateUvs = function _updateUvs() {
-        if (!this._uvs) {
-            this._uvs = new _TextureUvs2.default();
-        }
-
-        this._uvs.set(this._frame, this.baseTexture, this.rotate);
-
-        this._updateID++;
-    };
-
-    /**
-     * Helper function that creates a Texture object from the given image url.
-     * If the image is not in the texture cache it will be  created and loaded.
-     *
-     * @static
-     * @param {string} imageUrl - The image url of the texture
-     * @param {boolean} [crossorigin] - Whether requests should be treated as crossorigin
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with SVG images.
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
-        var texture = _utils.TextureCache[imageUrl];
-
-        if (!texture) {
-            texture = new Texture(_BaseTexture2.default.fromImage(imageUrl, crossorigin, scaleMode, sourceScale));
-            Texture.addToCache(texture, imageUrl);
-        }
-
-        return texture;
-    };
-
-    /**
-     * Helper function that creates a sprite that will contain a texture from the TextureCache based on the frameId
-     * The frame ids are created when a Texture packer file has been loaded
-     *
-     * @static
-     * @param {string} frameId - The frame Id of the texture in the cache
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromFrame = function fromFrame(frameId) {
-        var texture = _utils.TextureCache[frameId];
-
-        if (!texture) {
-            throw new Error('The frameId "' + frameId + '" does not exist in the texture cache');
-        }
-
-        return texture;
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the given canvas element.
-     *
-     * @static
-     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {string} [origin='canvas'] - A string origin of who created the base texture
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromCanvas = function fromCanvas(canvas, scaleMode) {
-        var origin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'canvas';
-
-        return new Texture(_BaseTexture2.default.fromCanvas(canvas, scaleMode, origin));
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the given video element.
-     *
-     * @static
-     * @param {HTMLVideoElement|string} video - The URL or actual element of the video
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromVideo = function fromVideo(video, scaleMode) {
-        if (typeof video === 'string') {
-            return Texture.fromVideoUrl(video, scaleMode);
-        }
-
-        return new Texture(_VideoBaseTexture2.default.fromVideo(video, scaleMode));
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the video url.
-     *
-     * @static
-     * @param {string} videoUrl - URL of the video
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.fromVideoUrl = function fromVideoUrl(videoUrl, scaleMode) {
-        return new Texture(_VideoBaseTexture2.default.fromUrl(videoUrl, scaleMode));
-    };
-
-    /**
-     * Helper function that creates a new Texture based on the source you provide.
-     * The source can be - frame id, image url, video url, canvas element, video element, base texture
-     *
-     * @static
-     * @param {number|string|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|PIXI.BaseTexture}
-     *        source - Source to create texture from
-     * @return {PIXI.Texture} The newly created texture
-     */
-
-
-    Texture.from = function from(source) {
-        // TODO auto detect cross origin..
-        // TODO pass in scale mode?
-        if (typeof source === 'string') {
-            var texture = _utils.TextureCache[source];
-
-            if (!texture) {
-                // check if its a video..
-                var isVideo = source.match(/\.(mp4|webm|ogg|h264|avi|mov)$/) !== null;
-
-                if (isVideo) {
-                    return Texture.fromVideoUrl(source);
-                }
-
-                return Texture.fromImage(source);
-            }
-
-            return texture;
-        } else if (source instanceof HTMLImageElement) {
-            return new Texture(_BaseTexture2.default.from(source));
-        } else if (source instanceof HTMLCanvasElement) {
-            return Texture.fromCanvas(source, _settings2.default.SCALE_MODE, 'HTMLCanvasElement');
-        } else if (source instanceof HTMLVideoElement) {
-            return Texture.fromVideo(source);
-        } else if (source instanceof _BaseTexture2.default) {
-            return new Texture(source);
-        }
-
-        // lets assume its a texture!
-        return source;
-    };
-
-    /**
-     * Create a texture from a source and add to the cache.
-     *
-     * @static
-     * @param {HTMLImageElement|HTMLCanvasElement} source - The input source.
-     * @param {String} imageUrl - File name of texture, for cache and resolving resolution.
-     * @param {String} [name] - Human readible name for the texture cache. If no name is
-     *        specified, only `imageUrl` will be used as the cache ID.
-     * @return {PIXI.Texture} Output texture
-     */
-
-
-    Texture.fromLoader = function fromLoader(source, imageUrl, name) {
-        var baseTexture = new _BaseTexture2.default(source, undefined, (0, _utils.getResolutionOfUrl)(imageUrl));
-        var texture = new Texture(baseTexture);
-
-        baseTexture.imageUrl = imageUrl;
-
-        // No name, use imageUrl instead
-        if (!name) {
-            name = imageUrl;
-        }
-
-        // lets also add the frame to pixi's global cache for fromFrame and fromImage fucntions
-        _BaseTexture2.default.addToCache(texture.baseTexture, name);
-        Texture.addToCache(texture, name);
-
-        // also add references by url if they are different.
-        if (name !== imageUrl) {
-            _BaseTexture2.default.addToCache(texture.baseTexture, imageUrl);
-            Texture.addToCache(texture, imageUrl);
-        }
-
-        return texture;
-    };
-
-    /**
-     * Adds a Texture to the global TextureCache. This cache is shared across the whole PIXI object.
-     *
-     * @static
-     * @param {PIXI.Texture} texture - The Texture to add to the cache.
-     * @param {string} id - The id that the Texture will be stored against.
-     */
-
-
-    Texture.addToCache = function addToCache(texture, id) {
-        if (id) {
-            if (texture.textureCacheIds.indexOf(id) === -1) {
-                texture.textureCacheIds.push(id);
-            }
-
-            // @if DEBUG
-            /* eslint-disable no-console */
-            if (_utils.TextureCache[id]) {
-                console.warn('Texture added to the cache with an id [' + id + '] that already had an entry');
-            }
-            /* eslint-enable no-console */
-            // @endif
-
-            _utils.TextureCache[id] = texture;
-        }
-    };
-
-    /**
-     * Remove a Texture from the global TextureCache.
-     *
-     * @static
-     * @param {string|PIXI.Texture} texture - id of a Texture to be removed, or a Texture instance itself
-     * @return {PIXI.Texture|null} The Texture that was removed
-     */
-
-
-    Texture.removeFromCache = function removeFromCache(texture) {
-        if (typeof texture === 'string') {
-            var textureFromCache = _utils.TextureCache[texture];
-
-            if (textureFromCache) {
-                var index = textureFromCache.textureCacheIds.indexOf(texture);
-
-                if (index > -1) {
-                    textureFromCache.textureCacheIds.splice(index, 1);
-                }
-
-                delete _utils.TextureCache[texture];
-
-                return textureFromCache;
-            }
-        } else if (texture && texture.textureCacheIds) {
-            for (var i = 0; i < texture.textureCacheIds.length; ++i) {
-                // Check that texture matches the one being passed in before deleting it from the cache.
-                if (_utils.TextureCache[texture.textureCacheIds[i]] === texture) {
-                    delete _utils.TextureCache[texture.textureCacheIds[i]];
-                }
-            }
-
-            texture.textureCacheIds.length = 0;
-
-            return texture;
-        }
-
-        return null;
-    };
-
-    /**
-     * The frame specifies the region of the base texture that this texture uses.
-     *
-     * @member {PIXI.Rectangle}
-     */
-
-
-    _createClass(Texture, [{
-        key: 'frame',
-        get: function get() {
-            return this._frame;
-        },
-        set: function set(frame) // eslint-disable-line require-jsdoc
-        {
-            this._frame = frame;
-
-            this.noFrame = false;
-
-            var x = frame.x,
-                y = frame.y,
-                width = frame.width,
-                height = frame.height;
-
-            var xNotFit = x + width > this.baseTexture.width;
-            var yNotFit = y + height > this.baseTexture.height;
-
-            if (xNotFit || yNotFit) {
-                var relationship = xNotFit && yNotFit ? 'and' : 'or';
-                var errorX = 'X: ' + x + ' + ' + width + ' = ' + (x + width) + ' > ' + this.baseTexture.width;
-                var errorY = 'Y: ' + y + ' + ' + height + ' = ' + (y + height) + ' > ' + this.baseTexture.height;
-
-                throw new Error('Texture Error: frame does not fit inside the base Texture dimensions: ' + (errorX + ' ' + relationship + ' ' + errorY));
-            }
-
-            // this.valid = width && height && this.baseTexture.source && this.baseTexture.hasLoaded;
-            this.valid = width && height && this.baseTexture.hasLoaded;
-
-            if (!this.trim && !this.rotate) {
-                this.orig = frame;
-            }
-
-            if (this.valid) {
-                this._updateUvs();
-            }
-        }
-
-        /**
-         * Indicates whether the texture is rotated inside the atlas
-         * set to 2 to compensate for texture packer rotation
-         * set to 6 to compensate for spine packer rotation
-         * can be used to rotate or mirror sprites
-         * See {@link PIXI.GroupD8} for explanation
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'rotate',
-        get: function get() {
-            return this._rotate;
-        },
-        set: function set(rotate) // eslint-disable-line require-jsdoc
-        {
-            this._rotate = rotate;
-            if (this.valid) {
-                this._updateUvs();
-            }
-        }
-
-        /**
-         * The width of the Texture in pixels.
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'width',
-        get: function get() {
-            return this.orig.width;
-        }
-
-        /**
-         * The height of the Texture in pixels.
-         *
-         * @member {number}
-         */
-
-    }, {
-        key: 'height',
-        get: function get() {
-            return this.orig.height;
-        }
-    }]);
-
-    return Texture;
-}(_eventemitter2.default);
-
-exports.default = Texture;
-
-
-function createWhiteTexture() {
-    var canvas = document.createElement('canvas');
-
-    canvas.width = 10;
-    canvas.height = 10;
-
-    var context = canvas.getContext('2d');
-
-    context.fillStyle = 'white';
-    context.fillRect(0, 0, 10, 10);
-
-    return new Texture(new _BaseTexture2.default(canvas));
-}
-
-function removeAllHandlers(tex) {
-    tex.destroy = function _emptyDestroy() {/* empty */};
-    tex.on = function _emptyOn() {/* empty */};
-    tex.once = function _emptyOnce() {/* empty */};
-    tex.emit = function _emptyEmit() {/* empty */};
-}
-
-/**
- * An empty texture, used often to not have to create multiple empty textures.
- * Can not be destroyed.
- *
- * @static
- * @constant
- */
-Texture.EMPTY = new Texture(new _BaseTexture2.default());
-removeAllHandlers(Texture.EMPTY);
-removeAllHandlers(Texture.EMPTY.baseTexture);
-
-/**
- * A white texture of 10x10 size, used for graphics and other things
- * Can not be destroyed.
- *
- * @static
- * @constant
- */
-Texture.WHITE = createWhiteTexture();
-removeAllHandlers(Texture.WHITE);
-removeAllHandlers(Texture.WHITE.baseTexture);
-//# sourceMappingURL=Texture.js.map
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var classes = __webpack_require__(118);
-
-/* Thrown when the grammar contains an error. */
-function GrammarError(message, location) {
-  this.name = "GrammarError";
-  this.message = message;
-  this.location = location;
-
-  if (typeof Error.captureStackTrace === "function") {
-    Error.captureStackTrace(this, GrammarError);
-  }
-}
-
-classes.subclass(GrammarError, Error);
-
-module.exports = GrammarError;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/* Object utilities. */
-var objects = {
-  keys: function(object) {
-    var result = [], key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        result.push(key);
-      }
-    }
-
-    return result;
-  },
-
-  values: function(object) {
-    var result = [], key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        result.push(object[key]);
-      }
-    }
-
-    return result;
-  },
-
-  clone: function(object) {
-    var result = {}, key;
-
-    for (key in object) {
-      if (object.hasOwnProperty(key)) {
-        result[key] = object[key];
-      }
-    }
-
-    return result;
-  },
-
-  defaults: function(object, defaults) {
-    var key;
-
-    for (key in defaults) {
-      if (defaults.hasOwnProperty(key)) {
-        if (!(key in object)) {
-          object[key] = defaults[key];
-        }
-      }
-    }
-  }
-};
-
-module.exports = objects;
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _utils = __webpack_require__(2);
-
-var _settings = __webpack_require__(3);
-
-var _settings2 = _interopRequireDefault(_settings);
-
-var _eventemitter = __webpack_require__(10);
-
-var _eventemitter2 = _interopRequireDefault(_eventemitter);
-
-var _determineCrossOrigin = __webpack_require__(164);
-
-var _determineCrossOrigin2 = _interopRequireDefault(_determineCrossOrigin);
-
-var _bitTwiddle = __webpack_require__(35);
-
-var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * A texture stores the information that represents an image. All textures have a base texture.
- *
- * @class
- * @extends EventEmitter
- * @memberof PIXI
- */
-var BaseTexture = function (_EventEmitter) {
-    _inherits(BaseTexture, _EventEmitter);
-
-    /**
-     * @param {HTMLImageElement|HTMLCanvasElement} [source] - the source object of the texture.
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [resolution=1] - The resolution / device pixel ratio of the texture
-     */
-    function BaseTexture(source, scaleMode, resolution) {
-        _classCallCheck(this, BaseTexture);
-
-        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
-
-        _this.uid = (0, _utils.uid)();
-
-        _this.touched = 0;
-
-        /**
-         * The resolution / device pixel ratio of the texture
-         *
-         * @member {number}
-         * @default 1
-         */
-        _this.resolution = resolution || _settings2.default.RESOLUTION;
-
-        /**
-         * The width of the base texture set when the image has loaded
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.width = 100;
-
-        /**
-         * The height of the base texture set when the image has loaded
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.height = 100;
-
-        // TODO docs
-        // used to store the actual dimensions of the source
-        /**
-         * Used to store the actual width of the source of this texture
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.realWidth = 100;
-        /**
-         * Used to store the actual height of the source of this texture
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.realHeight = 100;
-
-        /**
-         * The scale mode to apply when scaling this texture
-         *
-         * @member {number}
-         * @default PIXI.settings.SCALE_MODE
-         * @see PIXI.SCALE_MODES
-         */
-        _this.scaleMode = scaleMode !== undefined ? scaleMode : _settings2.default.SCALE_MODE;
-
-        /**
-         * Set to true once the base texture has successfully loaded.
-         *
-         * This is never true if the underlying source fails to load or has no texture data.
-         *
-         * @readonly
-         * @member {boolean}
-         */
-        _this.hasLoaded = false;
-
-        /**
-         * Set to true if the source is currently loading.
-         *
-         * If an Image source is loading the 'loaded' or 'error' event will be
-         * dispatched when the operation ends. An underyling source that is
-         * immediately-available bypasses loading entirely.
-         *
-         * @readonly
-         * @member {boolean}
-         */
-        _this.isLoading = false;
-
-        /**
-         * The image source that is used to create the texture.
-         *
-         * TODO: Make this a setter that calls loadSource();
-         *
-         * @readonly
-         * @member {HTMLImageElement|HTMLCanvasElement}
-         */
-        _this.source = null; // set in loadSource, if at all
-
-        /**
-         * The image source that is used to create the texture. This is used to
-         * store the original Svg source when it is replaced with a canvas element.
-         *
-         * TODO: Currently not in use but could be used when re-scaling svg.
-         *
-         * @readonly
-         * @member {Image}
-         */
-        _this.origSource = null; // set in loadSvg, if at all
-
-        /**
-         * Type of image defined in source, eg. `png` or `svg`
-         *
-         * @readonly
-         * @member {string}
-         */
-        _this.imageType = null; // set in updateImageType
-
-        /**
-         * Scale for source image. Used with Svg images to scale them before rasterization.
-         *
-         * @readonly
-         * @member {number}
-         */
-        _this.sourceScale = 1.0;
-
-        /**
-         * Controls if RGB channels should be pre-multiplied by Alpha  (WebGL only)
-         * All blend modes, and shaders written for default value. Change it on your own risk.
-         *
-         * @member {boolean}
-         * @default true
-         */
-        _this.premultipliedAlpha = true;
-
-        /**
-         * The image url of the texture
-         *
-         * @member {string}
-         */
-        _this.imageUrl = null;
-
-        /**
-         * Whether or not the texture is a power of two, try to use power of two textures as much
-         * as you can
-         *
-         * @private
-         * @member {boolean}
-         */
-        _this.isPowerOfTwo = false;
-
-        // used for webGL
-
-        /**
-         *
-         * Set this to true if a mipmap of this texture needs to be generated. This value needs
-         * to be set before the texture is used
-         * Also the texture must be a power of two size to work
-         *
-         * @member {boolean}
-         * @see PIXI.MIPMAP_TEXTURES
-         */
-        _this.mipmap = _settings2.default.MIPMAP_TEXTURES;
-
-        /**
-         *
-         * WebGL Texture wrap mode
-         *
-         * @member {number}
-         * @see PIXI.WRAP_MODES
-         */
-        _this.wrapMode = _settings2.default.WRAP_MODE;
-
-        /**
-         * A map of renderer IDs to webgl textures
-         *
-         * @private
-         * @member {object<number, WebGLTexture>}
-         */
-        _this._glTextures = {};
-
-        _this._enabled = 0;
-        _this._virtalBoundId = -1;
-
-        /**
-         * If the object has been destroyed via destroy(). If true, it should not be used.
-         *
-         * @member {boolean}
-         * @private
-         * @readonly
-         */
-        _this._destroyed = false;
-
-        /**
-         * The ids under which this BaseTexture has been added to the base texture cache. This is
-         * automatically set as long as BaseTexture.addToCache is used, but may not be set if a
-         * BaseTexture is added directly to the BaseTextureCache array.
-         *
-         * @member {string[]}
-         */
-        _this.textureCacheIds = [];
-
-        // if no source passed don't try to load
-        if (source) {
-            _this.loadSource(source);
-        }
-
-        /**
-         * Fired when a not-immediately-available source finishes loading.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#loaded
-         * @param {PIXI.BaseTexture} baseTexture - Resource loaded.
-         */
-
-        /**
-         * Fired when a not-immediately-available source fails to load.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#error
-         * @param {PIXI.BaseTexture} baseTexture - Resource errored.
-         */
-
-        /**
-         * Fired when BaseTexture is updated.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#update
-         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being updated.
-         */
-
-        /**
-         * Fired when BaseTexture is destroyed.
-         *
-         * @protected
-         * @event PIXI.BaseTexture#dispose
-         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being destroyed.
-         */
-        return _this;
-    }
-
-    /**
-     * Updates the texture on all the webgl renderers, this also assumes the src has changed.
-     *
-     * @fires PIXI.BaseTexture#update
-     */
-
-
-    BaseTexture.prototype.update = function update() {
-        // Svg size is handled during load
-        if (this.imageType !== 'svg') {
-            this.realWidth = this.source.naturalWidth || this.source.videoWidth || this.source.width;
-            this.realHeight = this.source.naturalHeight || this.source.videoHeight || this.source.height;
-
-            this._updateDimensions();
-        }
-
-        this.emit('update', this);
-    };
-
-    /**
-     * Update dimensions from real values
-     */
-
-
-    BaseTexture.prototype._updateDimensions = function _updateDimensions() {
-        this.width = this.realWidth / this.resolution;
-        this.height = this.realHeight / this.resolution;
-
-        this.isPowerOfTwo = _bitTwiddle2.default.isPow2(this.realWidth) && _bitTwiddle2.default.isPow2(this.realHeight);
-    };
-
-    /**
-     * Load a source.
-     *
-     * If the source is not-immediately-available, such as an image that needs to be
-     * downloaded, then the 'loaded' or 'error' event will be dispatched in the future
-     * and `hasLoaded` will remain false after this call.
-     *
-     * The logic state after calling `loadSource` directly or indirectly (eg. `fromImage`, `new BaseTexture`) is:
-     *
-     *     if (texture.hasLoaded) {
-     *        // texture ready for use
-     *     } else if (texture.isLoading) {
-     *        // listen to 'loaded' and/or 'error' events on texture
-     *     } else {
-     *        // not loading, not going to load UNLESS the source is reloaded
-     *        // (it may still make sense to listen to the events)
-     *     }
-     *
-     * @protected
-     * @param {HTMLImageElement|HTMLCanvasElement} source - the source object of the texture.
-     */
-
-
-    BaseTexture.prototype.loadSource = function loadSource(source) {
-        var wasLoading = this.isLoading;
-
-        this.hasLoaded = false;
-        this.isLoading = false;
-
-        if (wasLoading && this.source) {
-            this.source.onload = null;
-            this.source.onerror = null;
-        }
-
-        var firstSourceLoaded = !this.source;
-
-        this.source = source;
-
-        // Apply source if loaded. Otherwise setup appropriate loading monitors.
-        if ((source.src && source.complete || source.getContext) && source.width && source.height) {
-            this._updateImageType();
-
-            if (this.imageType === 'svg') {
-                this._loadSvgSource();
-            } else {
-                this._sourceLoaded();
-            }
-
-            if (firstSourceLoaded) {
-                // send loaded event if previous source was null and we have been passed a pre-loaded IMG element
-                this.emit('loaded', this);
-            }
-        } else if (!source.getContext) {
-            // Image fail / not ready
-            this.isLoading = true;
-
-            var scope = this;
-
-            source.onload = function () {
-                scope._updateImageType();
-                source.onload = null;
-                source.onerror = null;
-
-                if (!scope.isLoading) {
-                    return;
-                }
-
-                scope.isLoading = false;
-                scope._sourceLoaded();
-
-                if (scope.imageType === 'svg') {
-                    scope._loadSvgSource();
-
-                    return;
-                }
-
-                scope.emit('loaded', scope);
-            };
-
-            source.onerror = function () {
-                source.onload = null;
-                source.onerror = null;
-
-                if (!scope.isLoading) {
-                    return;
-                }
-
-                scope.isLoading = false;
-                scope.emit('error', scope);
-            };
-
-            // Per http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element
-            //   "The value of `complete` can thus change while a script is executing."
-            // So complete needs to be re-checked after the callbacks have been added..
-            // NOTE: complete will be true if the image has no src so best to check if the src is set.
-            if (source.complete && source.src) {
-                // ..and if we're complete now, no need for callbacks
-                source.onload = null;
-                source.onerror = null;
-
-                if (scope.imageType === 'svg') {
-                    scope._loadSvgSource();
-
-                    return;
-                }
-
-                this.isLoading = false;
-
-                if (source.width && source.height) {
-                    this._sourceLoaded();
-
-                    // If any previous subscribers possible
-                    if (wasLoading) {
-                        this.emit('loaded', this);
-                    }
-                }
-                // If any previous subscribers possible
-                else if (wasLoading) {
-                        this.emit('error', this);
-                    }
-            }
-        }
-    };
-
-    /**
-     * Updates type of the source image.
-     */
-
-
-    BaseTexture.prototype._updateImageType = function _updateImageType() {
-        if (!this.imageUrl) {
-            return;
-        }
-
-        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
-        var imageType = void 0;
-
-        if (dataUri && dataUri.mediaType === 'image') {
-            // Check for subType validity
-            var firstSubType = dataUri.subType.split('+')[0];
-
-            imageType = (0, _utils.getUrlFileExtension)('.' + firstSubType);
-
-            if (!imageType) {
-                throw new Error('Invalid image type in data URI.');
-            }
-        } else {
-            imageType = (0, _utils.getUrlFileExtension)(this.imageUrl);
-
-            if (!imageType) {
-                imageType = 'png';
-            }
-        }
-
-        this.imageType = imageType;
-    };
-
-    /**
-     * Checks if `source` is an SVG image and whether it's loaded via a URL or a data URI. Then calls
-     * `_loadSvgSourceUsingDataUri` or `_loadSvgSourceUsingXhr`.
-     */
-
-
-    BaseTexture.prototype._loadSvgSource = function _loadSvgSource() {
-        if (this.imageType !== 'svg') {
-            // Do nothing if source is not svg
-            return;
-        }
-
-        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
-
-        if (dataUri) {
-            this._loadSvgSourceUsingDataUri(dataUri);
-        } else {
-            // We got an URL, so we need to do an XHR to check the svg size
-            this._loadSvgSourceUsingXhr();
-        }
-    };
-
-    /**
-     * Reads an SVG string from data URI and then calls `_loadSvgSourceUsingString`.
-     *
-     * @param {string} dataUri - The data uri to load from.
-     */
-
-
-    BaseTexture.prototype._loadSvgSourceUsingDataUri = function _loadSvgSourceUsingDataUri(dataUri) {
-        var svgString = void 0;
-
-        if (dataUri.encoding === 'base64') {
-            if (!atob) {
-                throw new Error('Your browser doesn\'t support base64 conversions.');
-            }
-            svgString = atob(dataUri.data);
-        } else {
-            svgString = dataUri.data;
-        }
-
-        this._loadSvgSourceUsingString(svgString);
-    };
-
-    /**
-     * Loads an SVG string from `imageUrl` using XHR and then calls `_loadSvgSourceUsingString`.
-     */
-
-
-    BaseTexture.prototype._loadSvgSourceUsingXhr = function _loadSvgSourceUsingXhr() {
-        var _this2 = this;
-
-        var svgXhr = new XMLHttpRequest();
-
-        // This throws error on IE, so SVG Document can't be used
-        // svgXhr.responseType = 'document';
-
-        // This is not needed since we load the svg as string (breaks IE too)
-        // but overrideMimeType() can be used to force the response to be parsed as XML
-        // svgXhr.overrideMimeType('image/svg+xml');
-
-        svgXhr.onload = function () {
-            if (svgXhr.readyState !== svgXhr.DONE || svgXhr.status !== 200) {
-                throw new Error('Failed to load SVG using XHR.');
-            }
-
-            _this2._loadSvgSourceUsingString(svgXhr.response);
-        };
-
-        svgXhr.onerror = function () {
-            return _this2.emit('error', _this2);
-        };
-
-        svgXhr.open('GET', this.imageUrl, true);
-        svgXhr.send();
-    };
-
-    /**
-     * Loads texture using an SVG string. The original SVG Image is stored as `origSource` and the
-     * created canvas is the new `source`. The SVG is scaled using `sourceScale`. Called by
-     * `_loadSvgSourceUsingXhr` or `_loadSvgSourceUsingDataUri`.
-     *
-     * @param  {string} svgString SVG source as string
-     *
-     * @fires PIXI.BaseTexture#loaded
-     */
-
-
-    BaseTexture.prototype._loadSvgSourceUsingString = function _loadSvgSourceUsingString(svgString) {
-        var svgSize = (0, _utils.getSvgSize)(svgString);
-
-        var svgWidth = svgSize.width;
-        var svgHeight = svgSize.height;
-
-        if (!svgWidth || !svgHeight) {
-            throw new Error('The SVG image must have width and height defined (in pixels), canvas API needs them.');
-        }
-
-        // Scale realWidth and realHeight
-        this.realWidth = Math.round(svgWidth * this.sourceScale);
-        this.realHeight = Math.round(svgHeight * this.sourceScale);
-
-        this._updateDimensions();
-
-        // Create a canvas element
-        var canvas = document.createElement('canvas');
-
-        canvas.width = this.realWidth;
-        canvas.height = this.realHeight;
-        canvas._pixiId = 'canvas_' + (0, _utils.uid)();
-
-        // Draw the Svg to the canvas
-        canvas.getContext('2d').drawImage(this.source, 0, 0, svgWidth, svgHeight, 0, 0, this.realWidth, this.realHeight);
-
-        // Replace the original source image with the canvas
-        this.origSource = this.source;
-        this.source = canvas;
-
-        // Add also the canvas in cache (destroy clears by `imageUrl` and `source._pixiId`)
-        BaseTexture.addToCache(this, canvas._pixiId);
-
-        this.isLoading = false;
-        this._sourceLoaded();
-        this.emit('loaded', this);
-    };
-
-    /**
-     * Used internally to update the width, height, and some other tracking vars once
-     * a source has successfully loaded.
-     *
-     * @private
-     */
-
-
-    BaseTexture.prototype._sourceLoaded = function _sourceLoaded() {
-        this.hasLoaded = true;
-        this.update();
-    };
-
-    /**
-     * Destroys this base texture
-     *
-     */
-
-
-    BaseTexture.prototype.destroy = function destroy() {
-        if (this.imageUrl) {
-            delete _utils.TextureCache[this.imageUrl];
-
-            this.imageUrl = null;
-
-            if (!navigator.isCocoonJS) {
-                this.source.src = '';
-            }
-        }
-
-        this.source = null;
-
-        this.dispose();
-
-        BaseTexture.removeFromCache(this);
-        this.textureCacheIds = null;
-
-        this._destroyed = true;
-    };
-
-    /**
-     * Frees the texture from WebGL memory without destroying this texture object.
-     * This means you can still use the texture later which will upload it to GPU
-     * memory again.
-     *
-     * @fires PIXI.BaseTexture#dispose
-     */
-
-
-    BaseTexture.prototype.dispose = function dispose() {
-        this.emit('dispose', this);
-    };
-
-    /**
-     * Changes the source image of the texture.
-     * The original source must be an Image element.
-     *
-     * @param {string} newSrc - the path of the image
-     */
-
-
-    BaseTexture.prototype.updateSourceImage = function updateSourceImage(newSrc) {
-        this.source.src = newSrc;
-
-        this.loadSource(this.source);
-    };
-
-    /**
-     * Helper function that creates a base texture from the given image url.
-     * If the image is not in the base texture cache it will be created and loaded.
-     *
-     * @static
-     * @param {string} imageUrl - The image url of the texture
-     * @param {boolean} [crossorigin=(auto)] - Should use anonymous CORS? Defaults to true if the URL is not a data-URI.
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
-     * @return {PIXI.BaseTexture} The new base texture.
-     */
-
-
-    BaseTexture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
-        var baseTexture = _utils.BaseTextureCache[imageUrl];
-
-        if (!baseTexture) {
-            // new Image() breaks tex loading in some versions of Chrome.
-            // See https://code.google.com/p/chromium/issues/detail?id=238071
-            var image = new Image(); // document.createElement('img');
-
-            if (crossorigin === undefined && imageUrl.indexOf('data:') !== 0) {
-                image.crossOrigin = (0, _determineCrossOrigin2.default)(imageUrl);
-            } else if (crossorigin) {
-                image.crossOrigin = typeof crossorigin === 'string' ? crossorigin : 'anonymous';
-            }
-
-            baseTexture = new BaseTexture(image, scaleMode);
-            baseTexture.imageUrl = imageUrl;
-
-            if (sourceScale) {
-                baseTexture.sourceScale = sourceScale;
-            }
-
-            // if there is an @2x at the end of the url we are going to assume its a highres image
-            baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
-
-            image.src = imageUrl; // Setting this triggers load
-
-            BaseTexture.addToCache(baseTexture, imageUrl);
-        }
-
-        return baseTexture;
-    };
-
-    /**
-     * Helper function that creates a base texture from the given canvas element.
-     *
-     * @static
-     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
-     * @param {number} scaleMode - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {string} [origin='canvas'] - A string origin of who created the base texture
-     * @return {PIXI.BaseTexture} The new base texture.
-     */
-
-
-    BaseTexture.fromCanvas = function fromCanvas(canvas, scaleMode) {
-        var origin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'canvas';
-
-        if (!canvas._pixiId) {
-            canvas._pixiId = origin + '_' + (0, _utils.uid)();
-        }
-
-        var baseTexture = _utils.BaseTextureCache[canvas._pixiId];
-
-        if (!baseTexture) {
-            baseTexture = new BaseTexture(canvas, scaleMode);
-            BaseTexture.addToCache(baseTexture, canvas._pixiId);
-        }
-
-        return baseTexture;
-    };
-
-    /**
-     * Helper function that creates a base texture based on the source you provide.
-     * The source can be - image url, image element, canvas element.
-     *
-     * @static
-     * @param {string|HTMLImageElement|HTMLCanvasElement} source - The source to create base texture from.
-     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
-     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
-     * @return {PIXI.BaseTexture} The new base texture.
-     */
-
-
-    BaseTexture.from = function from(source, scaleMode, sourceScale) {
-        if (typeof source === 'string') {
-            return BaseTexture.fromImage(source, undefined, scaleMode, sourceScale);
-        } else if (source instanceof HTMLImageElement) {
-            var imageUrl = source.src;
-            var baseTexture = _utils.BaseTextureCache[imageUrl];
-
-            if (!baseTexture) {
-                baseTexture = new BaseTexture(source, scaleMode);
-                baseTexture.imageUrl = imageUrl;
-
-                if (sourceScale) {
-                    baseTexture.sourceScale = sourceScale;
-                }
-
-                // if there is an @2x at the end of the url we are going to assume its a highres image
-                baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
-
-                BaseTexture.addToCache(baseTexture, imageUrl);
-            }
-
-            return baseTexture;
-        } else if (source instanceof HTMLCanvasElement) {
-            return BaseTexture.fromCanvas(source, scaleMode);
-        }
-
-        // lets assume its a base texture!
-        return source;
-    };
-
-    /**
-     * Adds a BaseTexture to the global BaseTextureCache. This cache is shared across the whole PIXI object.
-     *
-     * @static
-     * @param {PIXI.BaseTexture} baseTexture - The BaseTexture to add to the cache.
-     * @param {string} id - The id that the BaseTexture will be stored against.
-     */
-
-
-    BaseTexture.addToCache = function addToCache(baseTexture, id) {
-        if (id) {
-            if (baseTexture.textureCacheIds.indexOf(id) === -1) {
-                baseTexture.textureCacheIds.push(id);
-            }
-
-            // @if DEBUG
-            /* eslint-disable no-console */
-            if (_utils.BaseTextureCache[id]) {
-                console.warn('BaseTexture added to the cache with an id [' + id + '] that already had an entry');
-            }
-            /* eslint-enable no-console */
-            // @endif
-
-            _utils.BaseTextureCache[id] = baseTexture;
-        }
-    };
-
-    /**
-     * Remove a BaseTexture from the global BaseTextureCache.
-     *
-     * @static
-     * @param {string|PIXI.BaseTexture} baseTexture - id of a BaseTexture to be removed, or a BaseTexture instance itself.
-     * @return {PIXI.BaseTexture|null} The BaseTexture that was removed.
-     */
-
-
-    BaseTexture.removeFromCache = function removeFromCache(baseTexture) {
-        if (typeof baseTexture === 'string') {
-            var baseTextureFromCache = _utils.BaseTextureCache[baseTexture];
-
-            if (baseTextureFromCache) {
-                var index = baseTextureFromCache.textureCacheIds.indexOf(baseTexture);
-
-                if (index > -1) {
-                    baseTextureFromCache.textureCacheIds.splice(index, 1);
-                }
-
-                delete _utils.BaseTextureCache[baseTexture];
-
-                return baseTextureFromCache;
-            }
-        } else if (baseTexture && baseTexture.textureCacheIds) {
-            for (var i = 0; i < baseTexture.textureCacheIds.length; ++i) {
-                delete _utils.BaseTextureCache[baseTexture.textureCacheIds[i]];
-            }
-
-            baseTexture.textureCacheIds.length = 0;
-
-            return baseTexture;
-        }
-
-        return null;
-    };
-
-    return BaseTexture;
-}(_eventemitter2.default);
-
-exports.default = BaseTexture;
-//# sourceMappingURL=BaseTexture.js.map
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var KomodiType;
-(function (KomodiType) {
-    KomodiType["string"] = "string";
-    KomodiType["bool"] = "bool";
-    KomodiType["int"] = "int";
-    KomodiType["empty"] = "empty";
-})(KomodiType = exports.KomodiType || (exports.KomodiType = {}));
-function typeToColor(type) {
-    switch (type) {
-        case KomodiType.string:
-            return 0xF1A9A0;
-        case KomodiType.bool:
-            return 0xDCC6E0;
-        case KomodiType.int:
-            return 0xC5EFF7;
-        case KomodiType.empty:
-            return 0xFFFFFF;
-    }
-}
-exports.typeToColor = typeToColor;
-
-
-/***/ }),
-/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -21394,7 +19735,1666 @@ exports.typeToColor = typeToColor;
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(105)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(107)(module)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _BaseTexture = __webpack_require__(15);
+
+var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
+
+var _VideoBaseTexture = __webpack_require__(86);
+
+var _VideoBaseTexture2 = _interopRequireDefault(_VideoBaseTexture);
+
+var _TextureUvs = __webpack_require__(85);
+
+var _TextureUvs2 = _interopRequireDefault(_TextureUvs);
+
+var _eventemitter = __webpack_require__(10);
+
+var _eventemitter2 = _interopRequireDefault(_eventemitter);
+
+var _math = __webpack_require__(4);
+
+var _utils = __webpack_require__(2);
+
+var _settings = __webpack_require__(3);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * A texture stores the information that represents an image or part of an image. It cannot be added
+ * to the display list directly. Instead use it as the texture for a Sprite. If no frame is provided
+ * then the whole image is used.
+ *
+ * You can directly create a texture from an image and then reuse it multiple times like this :
+ *
+ * ```js
+ * let texture = PIXI.Texture.fromImage('assets/image.png');
+ * let sprite1 = new PIXI.Sprite(texture);
+ * let sprite2 = new PIXI.Sprite(texture);
+ * ```
+ *
+ * Textures made from SVGs, loaded or not, cannot be used before the file finishes processing.
+ * You can check for this by checking the sprite's _textureID property.
+ * ```js
+ * var texture = PIXI.Texture.fromImage('assets/image.svg');
+ * var sprite1 = new PIXI.Sprite(texture);
+ * //sprite1._textureID should not be undefined if the texture has finished processing the SVG file
+ * ```
+ * You can use a ticker or rAF to ensure your sprites load the finished textures after processing. See issue #3068.
+ *
+ * @class
+ * @extends EventEmitter
+ * @memberof PIXI
+ */
+var Texture = function (_EventEmitter) {
+    _inherits(Texture, _EventEmitter);
+
+    /**
+     * @param {PIXI.BaseTexture} baseTexture - The base texture source to create the texture from
+     * @param {PIXI.Rectangle} [frame] - The rectangle frame of the texture to show
+     * @param {PIXI.Rectangle} [orig] - The area of original texture
+     * @param {PIXI.Rectangle} [trim] - Trimmed rectangle of original texture
+     * @param {number} [rotate] - indicates how the texture was rotated by texture packer. See {@link PIXI.GroupD8}
+     */
+    function Texture(baseTexture, frame, orig, trim, rotate) {
+        _classCallCheck(this, Texture);
+
+        /**
+         * Does this Texture have any frame data assigned to it?
+         *
+         * @member {boolean}
+         */
+        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+        _this.noFrame = false;
+
+        if (!frame) {
+            _this.noFrame = true;
+            frame = new _math.Rectangle(0, 0, 1, 1);
+        }
+
+        if (baseTexture instanceof Texture) {
+            baseTexture = baseTexture.baseTexture;
+        }
+
+        /**
+         * The base texture that this texture uses.
+         *
+         * @member {PIXI.BaseTexture}
+         */
+        _this.baseTexture = baseTexture;
+
+        /**
+         * This is the area of the BaseTexture image to actually copy to the Canvas / WebGL when rendering,
+         * irrespective of the actual frame size or placement (which can be influenced by trimmed texture atlases)
+         *
+         * @member {PIXI.Rectangle}
+         */
+        _this._frame = frame;
+
+        /**
+         * This is the trimmed area of original texture, before it was put in atlas
+         *
+         * @member {PIXI.Rectangle}
+         */
+        _this.trim = trim;
+
+        /**
+         * This will let the renderer know if the texture is valid. If it's not then it cannot be rendered.
+         *
+         * @member {boolean}
+         */
+        _this.valid = false;
+
+        /**
+         * This will let a renderer know that a texture has been updated (used mainly for webGL uv updates)
+         *
+         * @member {boolean}
+         */
+        _this.requiresUpdate = false;
+
+        /**
+         * The WebGL UV data cache.
+         *
+         * @member {PIXI.TextureUvs}
+         * @private
+         */
+        _this._uvs = null;
+
+        /**
+         * This is the area of original texture, before it was put in atlas
+         *
+         * @member {PIXI.Rectangle}
+         */
+        _this.orig = orig || frame; // new Rectangle(0, 0, 1, 1);
+
+        _this._rotate = Number(rotate || 0);
+
+        if (rotate === true) {
+            // this is old texturepacker legacy, some games/libraries are passing "true" for rotated textures
+            _this._rotate = 2;
+        } else if (_this._rotate % 2 !== 0) {
+            throw new Error('attempt to use diamond-shaped UVs. If you are sure, set rotation manually');
+        }
+
+        if (baseTexture.hasLoaded) {
+            if (_this.noFrame) {
+                frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
+
+                // if there is no frame we should monitor for any base texture changes..
+                baseTexture.on('update', _this.onBaseTextureUpdated, _this);
+            }
+            _this.frame = frame;
+        } else {
+            baseTexture.once('loaded', _this.onBaseTextureLoaded, _this);
+        }
+
+        /**
+         * Fired when the texture is updated. This happens if the frame or the baseTexture is updated.
+         *
+         * @event PIXI.Texture#update
+         * @protected
+         * @param {PIXI.Texture} texture - Instance of texture being updated.
+         */
+
+        _this._updateID = 0;
+
+        /**
+         * Extra field for extra plugins. May contain clamp settings and some matrices
+         * @type {Object}
+         */
+        _this.transform = null;
+
+        /**
+         * The ids under which this Texture has been added to the texture cache. This is
+         * automatically set as long as Texture.addToCache is used, but may not be set if a
+         * Texture is added directly to the TextureCache array.
+         *
+         * @member {string[]}
+         */
+        _this.textureCacheIds = [];
+        return _this;
+    }
+
+    /**
+     * Updates this texture on the gpu.
+     *
+     */
+
+
+    Texture.prototype.update = function update() {
+        this.baseTexture.update();
+    };
+
+    /**
+     * Called when the base texture is loaded
+     *
+     * @private
+     * @param {PIXI.BaseTexture} baseTexture - The base texture.
+     */
+
+
+    Texture.prototype.onBaseTextureLoaded = function onBaseTextureLoaded(baseTexture) {
+        this._updateID++;
+
+        // TODO this code looks confusing.. boo to abusing getters and setters!
+        if (this.noFrame) {
+            this.frame = new _math.Rectangle(0, 0, baseTexture.width, baseTexture.height);
+        } else {
+            this.frame = this._frame;
+        }
+
+        this.baseTexture.on('update', this.onBaseTextureUpdated, this);
+        this.emit('update', this);
+    };
+
+    /**
+     * Called when the base texture is updated
+     *
+     * @private
+     * @param {PIXI.BaseTexture} baseTexture - The base texture.
+     */
+
+
+    Texture.prototype.onBaseTextureUpdated = function onBaseTextureUpdated(baseTexture) {
+        this._updateID++;
+
+        this._frame.width = baseTexture.width;
+        this._frame.height = baseTexture.height;
+
+        this.emit('update', this);
+    };
+
+    /**
+     * Destroys this texture
+     *
+     * @param {boolean} [destroyBase=false] Whether to destroy the base texture as well
+     */
+
+
+    Texture.prototype.destroy = function destroy(destroyBase) {
+        if (this.baseTexture) {
+            if (destroyBase) {
+                // delete the texture if it exists in the texture cache..
+                // this only needs to be removed if the base texture is actually destroyed too..
+                if (_utils.TextureCache[this.baseTexture.imageUrl]) {
+                    Texture.removeFromCache(this.baseTexture.imageUrl);
+                }
+
+                this.baseTexture.destroy();
+            }
+
+            this.baseTexture.off('update', this.onBaseTextureUpdated, this);
+            this.baseTexture.off('loaded', this.onBaseTextureLoaded, this);
+
+            this.baseTexture = null;
+        }
+
+        this._frame = null;
+        this._uvs = null;
+        this.trim = null;
+        this.orig = null;
+
+        this.valid = false;
+
+        Texture.removeFromCache(this);
+        this.textureCacheIds = null;
+    };
+
+    /**
+     * Creates a new texture object that acts the same as this one.
+     *
+     * @return {PIXI.Texture} The new texture
+     */
+
+
+    Texture.prototype.clone = function clone() {
+        return new Texture(this.baseTexture, this.frame, this.orig, this.trim, this.rotate);
+    };
+
+    /**
+     * Updates the internal WebGL UV cache.
+     *
+     * @protected
+     */
+
+
+    Texture.prototype._updateUvs = function _updateUvs() {
+        if (!this._uvs) {
+            this._uvs = new _TextureUvs2.default();
+        }
+
+        this._uvs.set(this._frame, this.baseTexture, this.rotate);
+
+        this._updateID++;
+    };
+
+    /**
+     * Helper function that creates a Texture object from the given image url.
+     * If the image is not in the texture cache it will be  created and loaded.
+     *
+     * @static
+     * @param {string} imageUrl - The image url of the texture
+     * @param {boolean} [crossorigin] - Whether requests should be treated as crossorigin
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with SVG images.
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
+        var texture = _utils.TextureCache[imageUrl];
+
+        if (!texture) {
+            texture = new Texture(_BaseTexture2.default.fromImage(imageUrl, crossorigin, scaleMode, sourceScale));
+            Texture.addToCache(texture, imageUrl);
+        }
+
+        return texture;
+    };
+
+    /**
+     * Helper function that creates a sprite that will contain a texture from the TextureCache based on the frameId
+     * The frame ids are created when a Texture packer file has been loaded
+     *
+     * @static
+     * @param {string} frameId - The frame Id of the texture in the cache
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromFrame = function fromFrame(frameId) {
+        var texture = _utils.TextureCache[frameId];
+
+        if (!texture) {
+            throw new Error('The frameId "' + frameId + '" does not exist in the texture cache');
+        }
+
+        return texture;
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the given canvas element.
+     *
+     * @static
+     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {string} [origin='canvas'] - A string origin of who created the base texture
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromCanvas = function fromCanvas(canvas, scaleMode) {
+        var origin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'canvas';
+
+        return new Texture(_BaseTexture2.default.fromCanvas(canvas, scaleMode, origin));
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the given video element.
+     *
+     * @static
+     * @param {HTMLVideoElement|string} video - The URL or actual element of the video
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromVideo = function fromVideo(video, scaleMode) {
+        if (typeof video === 'string') {
+            return Texture.fromVideoUrl(video, scaleMode);
+        }
+
+        return new Texture(_VideoBaseTexture2.default.fromVideo(video, scaleMode));
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the video url.
+     *
+     * @static
+     * @param {string} videoUrl - URL of the video
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.fromVideoUrl = function fromVideoUrl(videoUrl, scaleMode) {
+        return new Texture(_VideoBaseTexture2.default.fromUrl(videoUrl, scaleMode));
+    };
+
+    /**
+     * Helper function that creates a new Texture based on the source you provide.
+     * The source can be - frame id, image url, video url, canvas element, video element, base texture
+     *
+     * @static
+     * @param {number|string|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|PIXI.BaseTexture}
+     *        source - Source to create texture from
+     * @return {PIXI.Texture} The newly created texture
+     */
+
+
+    Texture.from = function from(source) {
+        // TODO auto detect cross origin..
+        // TODO pass in scale mode?
+        if (typeof source === 'string') {
+            var texture = _utils.TextureCache[source];
+
+            if (!texture) {
+                // check if its a video..
+                var isVideo = source.match(/\.(mp4|webm|ogg|h264|avi|mov)$/) !== null;
+
+                if (isVideo) {
+                    return Texture.fromVideoUrl(source);
+                }
+
+                return Texture.fromImage(source);
+            }
+
+            return texture;
+        } else if (source instanceof HTMLImageElement) {
+            return new Texture(_BaseTexture2.default.from(source));
+        } else if (source instanceof HTMLCanvasElement) {
+            return Texture.fromCanvas(source, _settings2.default.SCALE_MODE, 'HTMLCanvasElement');
+        } else if (source instanceof HTMLVideoElement) {
+            return Texture.fromVideo(source);
+        } else if (source instanceof _BaseTexture2.default) {
+            return new Texture(source);
+        }
+
+        // lets assume its a texture!
+        return source;
+    };
+
+    /**
+     * Create a texture from a source and add to the cache.
+     *
+     * @static
+     * @param {HTMLImageElement|HTMLCanvasElement} source - The input source.
+     * @param {String} imageUrl - File name of texture, for cache and resolving resolution.
+     * @param {String} [name] - Human readible name for the texture cache. If no name is
+     *        specified, only `imageUrl` will be used as the cache ID.
+     * @return {PIXI.Texture} Output texture
+     */
+
+
+    Texture.fromLoader = function fromLoader(source, imageUrl, name) {
+        var baseTexture = new _BaseTexture2.default(source, undefined, (0, _utils.getResolutionOfUrl)(imageUrl));
+        var texture = new Texture(baseTexture);
+
+        baseTexture.imageUrl = imageUrl;
+
+        // No name, use imageUrl instead
+        if (!name) {
+            name = imageUrl;
+        }
+
+        // lets also add the frame to pixi's global cache for fromFrame and fromImage fucntions
+        _BaseTexture2.default.addToCache(texture.baseTexture, name);
+        Texture.addToCache(texture, name);
+
+        // also add references by url if they are different.
+        if (name !== imageUrl) {
+            _BaseTexture2.default.addToCache(texture.baseTexture, imageUrl);
+            Texture.addToCache(texture, imageUrl);
+        }
+
+        return texture;
+    };
+
+    /**
+     * Adds a Texture to the global TextureCache. This cache is shared across the whole PIXI object.
+     *
+     * @static
+     * @param {PIXI.Texture} texture - The Texture to add to the cache.
+     * @param {string} id - The id that the Texture will be stored against.
+     */
+
+
+    Texture.addToCache = function addToCache(texture, id) {
+        if (id) {
+            if (texture.textureCacheIds.indexOf(id) === -1) {
+                texture.textureCacheIds.push(id);
+            }
+
+            // @if DEBUG
+            /* eslint-disable no-console */
+            if (_utils.TextureCache[id]) {
+                console.warn('Texture added to the cache with an id [' + id + '] that already had an entry');
+            }
+            /* eslint-enable no-console */
+            // @endif
+
+            _utils.TextureCache[id] = texture;
+        }
+    };
+
+    /**
+     * Remove a Texture from the global TextureCache.
+     *
+     * @static
+     * @param {string|PIXI.Texture} texture - id of a Texture to be removed, or a Texture instance itself
+     * @return {PIXI.Texture|null} The Texture that was removed
+     */
+
+
+    Texture.removeFromCache = function removeFromCache(texture) {
+        if (typeof texture === 'string') {
+            var textureFromCache = _utils.TextureCache[texture];
+
+            if (textureFromCache) {
+                var index = textureFromCache.textureCacheIds.indexOf(texture);
+
+                if (index > -1) {
+                    textureFromCache.textureCacheIds.splice(index, 1);
+                }
+
+                delete _utils.TextureCache[texture];
+
+                return textureFromCache;
+            }
+        } else if (texture && texture.textureCacheIds) {
+            for (var i = 0; i < texture.textureCacheIds.length; ++i) {
+                // Check that texture matches the one being passed in before deleting it from the cache.
+                if (_utils.TextureCache[texture.textureCacheIds[i]] === texture) {
+                    delete _utils.TextureCache[texture.textureCacheIds[i]];
+                }
+            }
+
+            texture.textureCacheIds.length = 0;
+
+            return texture;
+        }
+
+        return null;
+    };
+
+    /**
+     * The frame specifies the region of the base texture that this texture uses.
+     *
+     * @member {PIXI.Rectangle}
+     */
+
+
+    _createClass(Texture, [{
+        key: 'frame',
+        get: function get() {
+            return this._frame;
+        },
+        set: function set(frame) // eslint-disable-line require-jsdoc
+        {
+            this._frame = frame;
+
+            this.noFrame = false;
+
+            var x = frame.x,
+                y = frame.y,
+                width = frame.width,
+                height = frame.height;
+
+            var xNotFit = x + width > this.baseTexture.width;
+            var yNotFit = y + height > this.baseTexture.height;
+
+            if (xNotFit || yNotFit) {
+                var relationship = xNotFit && yNotFit ? 'and' : 'or';
+                var errorX = 'X: ' + x + ' + ' + width + ' = ' + (x + width) + ' > ' + this.baseTexture.width;
+                var errorY = 'Y: ' + y + ' + ' + height + ' = ' + (y + height) + ' > ' + this.baseTexture.height;
+
+                throw new Error('Texture Error: frame does not fit inside the base Texture dimensions: ' + (errorX + ' ' + relationship + ' ' + errorY));
+            }
+
+            // this.valid = width && height && this.baseTexture.source && this.baseTexture.hasLoaded;
+            this.valid = width && height && this.baseTexture.hasLoaded;
+
+            if (!this.trim && !this.rotate) {
+                this.orig = frame;
+            }
+
+            if (this.valid) {
+                this._updateUvs();
+            }
+        }
+
+        /**
+         * Indicates whether the texture is rotated inside the atlas
+         * set to 2 to compensate for texture packer rotation
+         * set to 6 to compensate for spine packer rotation
+         * can be used to rotate or mirror sprites
+         * See {@link PIXI.GroupD8} for explanation
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'rotate',
+        get: function get() {
+            return this._rotate;
+        },
+        set: function set(rotate) // eslint-disable-line require-jsdoc
+        {
+            this._rotate = rotate;
+            if (this.valid) {
+                this._updateUvs();
+            }
+        }
+
+        /**
+         * The width of the Texture in pixels.
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'width',
+        get: function get() {
+            return this.orig.width;
+        }
+
+        /**
+         * The height of the Texture in pixels.
+         *
+         * @member {number}
+         */
+
+    }, {
+        key: 'height',
+        get: function get() {
+            return this.orig.height;
+        }
+    }]);
+
+    return Texture;
+}(_eventemitter2.default);
+
+exports.default = Texture;
+
+
+function createWhiteTexture() {
+    var canvas = document.createElement('canvas');
+
+    canvas.width = 10;
+    canvas.height = 10;
+
+    var context = canvas.getContext('2d');
+
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, 10, 10);
+
+    return new Texture(new _BaseTexture2.default(canvas));
+}
+
+function removeAllHandlers(tex) {
+    tex.destroy = function _emptyDestroy() {/* empty */};
+    tex.on = function _emptyOn() {/* empty */};
+    tex.once = function _emptyOnce() {/* empty */};
+    tex.emit = function _emptyEmit() {/* empty */};
+}
+
+/**
+ * An empty texture, used often to not have to create multiple empty textures.
+ * Can not be destroyed.
+ *
+ * @static
+ * @constant
+ */
+Texture.EMPTY = new Texture(new _BaseTexture2.default());
+removeAllHandlers(Texture.EMPTY);
+removeAllHandlers(Texture.EMPTY.baseTexture);
+
+/**
+ * A white texture of 10x10 size, used for graphics and other things
+ * Can not be destroyed.
+ *
+ * @static
+ * @constant
+ */
+Texture.WHITE = createWhiteTexture();
+removeAllHandlers(Texture.WHITE);
+removeAllHandlers(Texture.WHITE.baseTexture);
+//# sourceMappingURL=Texture.js.map
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var classes = __webpack_require__(120);
+
+/* Thrown when the grammar contains an error. */
+function GrammarError(message, location) {
+  this.name = "GrammarError";
+  this.message = message;
+  this.location = location;
+
+  if (typeof Error.captureStackTrace === "function") {
+    Error.captureStackTrace(this, GrammarError);
+  }
+}
+
+classes.subclass(GrammarError, Error);
+
+module.exports = GrammarError;
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* Object utilities. */
+var objects = {
+  keys: function(object) {
+    var result = [], key;
+
+    for (key in object) {
+      if (object.hasOwnProperty(key)) {
+        result.push(key);
+      }
+    }
+
+    return result;
+  },
+
+  values: function(object) {
+    var result = [], key;
+
+    for (key in object) {
+      if (object.hasOwnProperty(key)) {
+        result.push(object[key]);
+      }
+    }
+
+    return result;
+  },
+
+  clone: function(object) {
+    var result = {}, key;
+
+    for (key in object) {
+      if (object.hasOwnProperty(key)) {
+        result[key] = object[key];
+      }
+    }
+
+    return result;
+  },
+
+  defaults: function(object, defaults) {
+    var key;
+
+    for (key in defaults) {
+      if (defaults.hasOwnProperty(key)) {
+        if (!(key in object)) {
+          object[key] = defaults[key];
+        }
+      }
+    }
+  }
+};
+
+module.exports = objects;
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _utils = __webpack_require__(2);
+
+var _settings = __webpack_require__(3);
+
+var _settings2 = _interopRequireDefault(_settings);
+
+var _eventemitter = __webpack_require__(10);
+
+var _eventemitter2 = _interopRequireDefault(_eventemitter);
+
+var _determineCrossOrigin = __webpack_require__(167);
+
+var _determineCrossOrigin2 = _interopRequireDefault(_determineCrossOrigin);
+
+var _bitTwiddle = __webpack_require__(35);
+
+var _bitTwiddle2 = _interopRequireDefault(_bitTwiddle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * A texture stores the information that represents an image. All textures have a base texture.
+ *
+ * @class
+ * @extends EventEmitter
+ * @memberof PIXI
+ */
+var BaseTexture = function (_EventEmitter) {
+    _inherits(BaseTexture, _EventEmitter);
+
+    /**
+     * @param {HTMLImageElement|HTMLCanvasElement} [source] - the source object of the texture.
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [resolution=1] - The resolution / device pixel ratio of the texture
+     */
+    function BaseTexture(source, scaleMode, resolution) {
+        _classCallCheck(this, BaseTexture);
+
+        var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
+
+        _this.uid = (0, _utils.uid)();
+
+        _this.touched = 0;
+
+        /**
+         * The resolution / device pixel ratio of the texture
+         *
+         * @member {number}
+         * @default 1
+         */
+        _this.resolution = resolution || _settings2.default.RESOLUTION;
+
+        /**
+         * The width of the base texture set when the image has loaded
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.width = 100;
+
+        /**
+         * The height of the base texture set when the image has loaded
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.height = 100;
+
+        // TODO docs
+        // used to store the actual dimensions of the source
+        /**
+         * Used to store the actual width of the source of this texture
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.realWidth = 100;
+        /**
+         * Used to store the actual height of the source of this texture
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.realHeight = 100;
+
+        /**
+         * The scale mode to apply when scaling this texture
+         *
+         * @member {number}
+         * @default PIXI.settings.SCALE_MODE
+         * @see PIXI.SCALE_MODES
+         */
+        _this.scaleMode = scaleMode !== undefined ? scaleMode : _settings2.default.SCALE_MODE;
+
+        /**
+         * Set to true once the base texture has successfully loaded.
+         *
+         * This is never true if the underlying source fails to load or has no texture data.
+         *
+         * @readonly
+         * @member {boolean}
+         */
+        _this.hasLoaded = false;
+
+        /**
+         * Set to true if the source is currently loading.
+         *
+         * If an Image source is loading the 'loaded' or 'error' event will be
+         * dispatched when the operation ends. An underyling source that is
+         * immediately-available bypasses loading entirely.
+         *
+         * @readonly
+         * @member {boolean}
+         */
+        _this.isLoading = false;
+
+        /**
+         * The image source that is used to create the texture.
+         *
+         * TODO: Make this a setter that calls loadSource();
+         *
+         * @readonly
+         * @member {HTMLImageElement|HTMLCanvasElement}
+         */
+        _this.source = null; // set in loadSource, if at all
+
+        /**
+         * The image source that is used to create the texture. This is used to
+         * store the original Svg source when it is replaced with a canvas element.
+         *
+         * TODO: Currently not in use but could be used when re-scaling svg.
+         *
+         * @readonly
+         * @member {Image}
+         */
+        _this.origSource = null; // set in loadSvg, if at all
+
+        /**
+         * Type of image defined in source, eg. `png` or `svg`
+         *
+         * @readonly
+         * @member {string}
+         */
+        _this.imageType = null; // set in updateImageType
+
+        /**
+         * Scale for source image. Used with Svg images to scale them before rasterization.
+         *
+         * @readonly
+         * @member {number}
+         */
+        _this.sourceScale = 1.0;
+
+        /**
+         * Controls if RGB channels should be pre-multiplied by Alpha  (WebGL only)
+         * All blend modes, and shaders written for default value. Change it on your own risk.
+         *
+         * @member {boolean}
+         * @default true
+         */
+        _this.premultipliedAlpha = true;
+
+        /**
+         * The image url of the texture
+         *
+         * @member {string}
+         */
+        _this.imageUrl = null;
+
+        /**
+         * Whether or not the texture is a power of two, try to use power of two textures as much
+         * as you can
+         *
+         * @private
+         * @member {boolean}
+         */
+        _this.isPowerOfTwo = false;
+
+        // used for webGL
+
+        /**
+         *
+         * Set this to true if a mipmap of this texture needs to be generated. This value needs
+         * to be set before the texture is used
+         * Also the texture must be a power of two size to work
+         *
+         * @member {boolean}
+         * @see PIXI.MIPMAP_TEXTURES
+         */
+        _this.mipmap = _settings2.default.MIPMAP_TEXTURES;
+
+        /**
+         *
+         * WebGL Texture wrap mode
+         *
+         * @member {number}
+         * @see PIXI.WRAP_MODES
+         */
+        _this.wrapMode = _settings2.default.WRAP_MODE;
+
+        /**
+         * A map of renderer IDs to webgl textures
+         *
+         * @private
+         * @member {object<number, WebGLTexture>}
+         */
+        _this._glTextures = {};
+
+        _this._enabled = 0;
+        _this._virtalBoundId = -1;
+
+        /**
+         * If the object has been destroyed via destroy(). If true, it should not be used.
+         *
+         * @member {boolean}
+         * @private
+         * @readonly
+         */
+        _this._destroyed = false;
+
+        /**
+         * The ids under which this BaseTexture has been added to the base texture cache. This is
+         * automatically set as long as BaseTexture.addToCache is used, but may not be set if a
+         * BaseTexture is added directly to the BaseTextureCache array.
+         *
+         * @member {string[]}
+         */
+        _this.textureCacheIds = [];
+
+        // if no source passed don't try to load
+        if (source) {
+            _this.loadSource(source);
+        }
+
+        /**
+         * Fired when a not-immediately-available source finishes loading.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#loaded
+         * @param {PIXI.BaseTexture} baseTexture - Resource loaded.
+         */
+
+        /**
+         * Fired when a not-immediately-available source fails to load.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#error
+         * @param {PIXI.BaseTexture} baseTexture - Resource errored.
+         */
+
+        /**
+         * Fired when BaseTexture is updated.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#update
+         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being updated.
+         */
+
+        /**
+         * Fired when BaseTexture is destroyed.
+         *
+         * @protected
+         * @event PIXI.BaseTexture#dispose
+         * @param {PIXI.BaseTexture} baseTexture - Instance of texture being destroyed.
+         */
+        return _this;
+    }
+
+    /**
+     * Updates the texture on all the webgl renderers, this also assumes the src has changed.
+     *
+     * @fires PIXI.BaseTexture#update
+     */
+
+
+    BaseTexture.prototype.update = function update() {
+        // Svg size is handled during load
+        if (this.imageType !== 'svg') {
+            this.realWidth = this.source.naturalWidth || this.source.videoWidth || this.source.width;
+            this.realHeight = this.source.naturalHeight || this.source.videoHeight || this.source.height;
+
+            this._updateDimensions();
+        }
+
+        this.emit('update', this);
+    };
+
+    /**
+     * Update dimensions from real values
+     */
+
+
+    BaseTexture.prototype._updateDimensions = function _updateDimensions() {
+        this.width = this.realWidth / this.resolution;
+        this.height = this.realHeight / this.resolution;
+
+        this.isPowerOfTwo = _bitTwiddle2.default.isPow2(this.realWidth) && _bitTwiddle2.default.isPow2(this.realHeight);
+    };
+
+    /**
+     * Load a source.
+     *
+     * If the source is not-immediately-available, such as an image that needs to be
+     * downloaded, then the 'loaded' or 'error' event will be dispatched in the future
+     * and `hasLoaded` will remain false after this call.
+     *
+     * The logic state after calling `loadSource` directly or indirectly (eg. `fromImage`, `new BaseTexture`) is:
+     *
+     *     if (texture.hasLoaded) {
+     *        // texture ready for use
+     *     } else if (texture.isLoading) {
+     *        // listen to 'loaded' and/or 'error' events on texture
+     *     } else {
+     *        // not loading, not going to load UNLESS the source is reloaded
+     *        // (it may still make sense to listen to the events)
+     *     }
+     *
+     * @protected
+     * @param {HTMLImageElement|HTMLCanvasElement} source - the source object of the texture.
+     */
+
+
+    BaseTexture.prototype.loadSource = function loadSource(source) {
+        var wasLoading = this.isLoading;
+
+        this.hasLoaded = false;
+        this.isLoading = false;
+
+        if (wasLoading && this.source) {
+            this.source.onload = null;
+            this.source.onerror = null;
+        }
+
+        var firstSourceLoaded = !this.source;
+
+        this.source = source;
+
+        // Apply source if loaded. Otherwise setup appropriate loading monitors.
+        if ((source.src && source.complete || source.getContext) && source.width && source.height) {
+            this._updateImageType();
+
+            if (this.imageType === 'svg') {
+                this._loadSvgSource();
+            } else {
+                this._sourceLoaded();
+            }
+
+            if (firstSourceLoaded) {
+                // send loaded event if previous source was null and we have been passed a pre-loaded IMG element
+                this.emit('loaded', this);
+            }
+        } else if (!source.getContext) {
+            // Image fail / not ready
+            this.isLoading = true;
+
+            var scope = this;
+
+            source.onload = function () {
+                scope._updateImageType();
+                source.onload = null;
+                source.onerror = null;
+
+                if (!scope.isLoading) {
+                    return;
+                }
+
+                scope.isLoading = false;
+                scope._sourceLoaded();
+
+                if (scope.imageType === 'svg') {
+                    scope._loadSvgSource();
+
+                    return;
+                }
+
+                scope.emit('loaded', scope);
+            };
+
+            source.onerror = function () {
+                source.onload = null;
+                source.onerror = null;
+
+                if (!scope.isLoading) {
+                    return;
+                }
+
+                scope.isLoading = false;
+                scope.emit('error', scope);
+            };
+
+            // Per http://www.w3.org/TR/html5/embedded-content-0.html#the-img-element
+            //   "The value of `complete` can thus change while a script is executing."
+            // So complete needs to be re-checked after the callbacks have been added..
+            // NOTE: complete will be true if the image has no src so best to check if the src is set.
+            if (source.complete && source.src) {
+                // ..and if we're complete now, no need for callbacks
+                source.onload = null;
+                source.onerror = null;
+
+                if (scope.imageType === 'svg') {
+                    scope._loadSvgSource();
+
+                    return;
+                }
+
+                this.isLoading = false;
+
+                if (source.width && source.height) {
+                    this._sourceLoaded();
+
+                    // If any previous subscribers possible
+                    if (wasLoading) {
+                        this.emit('loaded', this);
+                    }
+                }
+                // If any previous subscribers possible
+                else if (wasLoading) {
+                        this.emit('error', this);
+                    }
+            }
+        }
+    };
+
+    /**
+     * Updates type of the source image.
+     */
+
+
+    BaseTexture.prototype._updateImageType = function _updateImageType() {
+        if (!this.imageUrl) {
+            return;
+        }
+
+        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
+        var imageType = void 0;
+
+        if (dataUri && dataUri.mediaType === 'image') {
+            // Check for subType validity
+            var firstSubType = dataUri.subType.split('+')[0];
+
+            imageType = (0, _utils.getUrlFileExtension)('.' + firstSubType);
+
+            if (!imageType) {
+                throw new Error('Invalid image type in data URI.');
+            }
+        } else {
+            imageType = (0, _utils.getUrlFileExtension)(this.imageUrl);
+
+            if (!imageType) {
+                imageType = 'png';
+            }
+        }
+
+        this.imageType = imageType;
+    };
+
+    /**
+     * Checks if `source` is an SVG image and whether it's loaded via a URL or a data URI. Then calls
+     * `_loadSvgSourceUsingDataUri` or `_loadSvgSourceUsingXhr`.
+     */
+
+
+    BaseTexture.prototype._loadSvgSource = function _loadSvgSource() {
+        if (this.imageType !== 'svg') {
+            // Do nothing if source is not svg
+            return;
+        }
+
+        var dataUri = (0, _utils.decomposeDataUri)(this.imageUrl);
+
+        if (dataUri) {
+            this._loadSvgSourceUsingDataUri(dataUri);
+        } else {
+            // We got an URL, so we need to do an XHR to check the svg size
+            this._loadSvgSourceUsingXhr();
+        }
+    };
+
+    /**
+     * Reads an SVG string from data URI and then calls `_loadSvgSourceUsingString`.
+     *
+     * @param {string} dataUri - The data uri to load from.
+     */
+
+
+    BaseTexture.prototype._loadSvgSourceUsingDataUri = function _loadSvgSourceUsingDataUri(dataUri) {
+        var svgString = void 0;
+
+        if (dataUri.encoding === 'base64') {
+            if (!atob) {
+                throw new Error('Your browser doesn\'t support base64 conversions.');
+            }
+            svgString = atob(dataUri.data);
+        } else {
+            svgString = dataUri.data;
+        }
+
+        this._loadSvgSourceUsingString(svgString);
+    };
+
+    /**
+     * Loads an SVG string from `imageUrl` using XHR and then calls `_loadSvgSourceUsingString`.
+     */
+
+
+    BaseTexture.prototype._loadSvgSourceUsingXhr = function _loadSvgSourceUsingXhr() {
+        var _this2 = this;
+
+        var svgXhr = new XMLHttpRequest();
+
+        // This throws error on IE, so SVG Document can't be used
+        // svgXhr.responseType = 'document';
+
+        // This is not needed since we load the svg as string (breaks IE too)
+        // but overrideMimeType() can be used to force the response to be parsed as XML
+        // svgXhr.overrideMimeType('image/svg+xml');
+
+        svgXhr.onload = function () {
+            if (svgXhr.readyState !== svgXhr.DONE || svgXhr.status !== 200) {
+                throw new Error('Failed to load SVG using XHR.');
+            }
+
+            _this2._loadSvgSourceUsingString(svgXhr.response);
+        };
+
+        svgXhr.onerror = function () {
+            return _this2.emit('error', _this2);
+        };
+
+        svgXhr.open('GET', this.imageUrl, true);
+        svgXhr.send();
+    };
+
+    /**
+     * Loads texture using an SVG string. The original SVG Image is stored as `origSource` and the
+     * created canvas is the new `source`. The SVG is scaled using `sourceScale`. Called by
+     * `_loadSvgSourceUsingXhr` or `_loadSvgSourceUsingDataUri`.
+     *
+     * @param  {string} svgString SVG source as string
+     *
+     * @fires PIXI.BaseTexture#loaded
+     */
+
+
+    BaseTexture.prototype._loadSvgSourceUsingString = function _loadSvgSourceUsingString(svgString) {
+        var svgSize = (0, _utils.getSvgSize)(svgString);
+
+        var svgWidth = svgSize.width;
+        var svgHeight = svgSize.height;
+
+        if (!svgWidth || !svgHeight) {
+            throw new Error('The SVG image must have width and height defined (in pixels), canvas API needs them.');
+        }
+
+        // Scale realWidth and realHeight
+        this.realWidth = Math.round(svgWidth * this.sourceScale);
+        this.realHeight = Math.round(svgHeight * this.sourceScale);
+
+        this._updateDimensions();
+
+        // Create a canvas element
+        var canvas = document.createElement('canvas');
+
+        canvas.width = this.realWidth;
+        canvas.height = this.realHeight;
+        canvas._pixiId = 'canvas_' + (0, _utils.uid)();
+
+        // Draw the Svg to the canvas
+        canvas.getContext('2d').drawImage(this.source, 0, 0, svgWidth, svgHeight, 0, 0, this.realWidth, this.realHeight);
+
+        // Replace the original source image with the canvas
+        this.origSource = this.source;
+        this.source = canvas;
+
+        // Add also the canvas in cache (destroy clears by `imageUrl` and `source._pixiId`)
+        BaseTexture.addToCache(this, canvas._pixiId);
+
+        this.isLoading = false;
+        this._sourceLoaded();
+        this.emit('loaded', this);
+    };
+
+    /**
+     * Used internally to update the width, height, and some other tracking vars once
+     * a source has successfully loaded.
+     *
+     * @private
+     */
+
+
+    BaseTexture.prototype._sourceLoaded = function _sourceLoaded() {
+        this.hasLoaded = true;
+        this.update();
+    };
+
+    /**
+     * Destroys this base texture
+     *
+     */
+
+
+    BaseTexture.prototype.destroy = function destroy() {
+        if (this.imageUrl) {
+            delete _utils.TextureCache[this.imageUrl];
+
+            this.imageUrl = null;
+
+            if (!navigator.isCocoonJS) {
+                this.source.src = '';
+            }
+        }
+
+        this.source = null;
+
+        this.dispose();
+
+        BaseTexture.removeFromCache(this);
+        this.textureCacheIds = null;
+
+        this._destroyed = true;
+    };
+
+    /**
+     * Frees the texture from WebGL memory without destroying this texture object.
+     * This means you can still use the texture later which will upload it to GPU
+     * memory again.
+     *
+     * @fires PIXI.BaseTexture#dispose
+     */
+
+
+    BaseTexture.prototype.dispose = function dispose() {
+        this.emit('dispose', this);
+    };
+
+    /**
+     * Changes the source image of the texture.
+     * The original source must be an Image element.
+     *
+     * @param {string} newSrc - the path of the image
+     */
+
+
+    BaseTexture.prototype.updateSourceImage = function updateSourceImage(newSrc) {
+        this.source.src = newSrc;
+
+        this.loadSource(this.source);
+    };
+
+    /**
+     * Helper function that creates a base texture from the given image url.
+     * If the image is not in the base texture cache it will be created and loaded.
+     *
+     * @static
+     * @param {string} imageUrl - The image url of the texture
+     * @param {boolean} [crossorigin=(auto)] - Should use anonymous CORS? Defaults to true if the URL is not a data-URI.
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
+     * @return {PIXI.BaseTexture} The new base texture.
+     */
+
+
+    BaseTexture.fromImage = function fromImage(imageUrl, crossorigin, scaleMode, sourceScale) {
+        var baseTexture = _utils.BaseTextureCache[imageUrl];
+
+        if (!baseTexture) {
+            // new Image() breaks tex loading in some versions of Chrome.
+            // See https://code.google.com/p/chromium/issues/detail?id=238071
+            var image = new Image(); // document.createElement('img');
+
+            if (crossorigin === undefined && imageUrl.indexOf('data:') !== 0) {
+                image.crossOrigin = (0, _determineCrossOrigin2.default)(imageUrl);
+            } else if (crossorigin) {
+                image.crossOrigin = typeof crossorigin === 'string' ? crossorigin : 'anonymous';
+            }
+
+            baseTexture = new BaseTexture(image, scaleMode);
+            baseTexture.imageUrl = imageUrl;
+
+            if (sourceScale) {
+                baseTexture.sourceScale = sourceScale;
+            }
+
+            // if there is an @2x at the end of the url we are going to assume its a highres image
+            baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
+
+            image.src = imageUrl; // Setting this triggers load
+
+            BaseTexture.addToCache(baseTexture, imageUrl);
+        }
+
+        return baseTexture;
+    };
+
+    /**
+     * Helper function that creates a base texture from the given canvas element.
+     *
+     * @static
+     * @param {HTMLCanvasElement} canvas - The canvas element source of the texture
+     * @param {number} scaleMode - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {string} [origin='canvas'] - A string origin of who created the base texture
+     * @return {PIXI.BaseTexture} The new base texture.
+     */
+
+
+    BaseTexture.fromCanvas = function fromCanvas(canvas, scaleMode) {
+        var origin = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'canvas';
+
+        if (!canvas._pixiId) {
+            canvas._pixiId = origin + '_' + (0, _utils.uid)();
+        }
+
+        var baseTexture = _utils.BaseTextureCache[canvas._pixiId];
+
+        if (!baseTexture) {
+            baseTexture = new BaseTexture(canvas, scaleMode);
+            BaseTexture.addToCache(baseTexture, canvas._pixiId);
+        }
+
+        return baseTexture;
+    };
+
+    /**
+     * Helper function that creates a base texture based on the source you provide.
+     * The source can be - image url, image element, canvas element.
+     *
+     * @static
+     * @param {string|HTMLImageElement|HTMLCanvasElement} source - The source to create base texture from.
+     * @param {number} [scaleMode=PIXI.settings.SCALE_MODE] - See {@link PIXI.SCALE_MODES} for possible values
+     * @param {number} [sourceScale=(auto)] - Scale for the original image, used with Svg images.
+     * @return {PIXI.BaseTexture} The new base texture.
+     */
+
+
+    BaseTexture.from = function from(source, scaleMode, sourceScale) {
+        if (typeof source === 'string') {
+            return BaseTexture.fromImage(source, undefined, scaleMode, sourceScale);
+        } else if (source instanceof HTMLImageElement) {
+            var imageUrl = source.src;
+            var baseTexture = _utils.BaseTextureCache[imageUrl];
+
+            if (!baseTexture) {
+                baseTexture = new BaseTexture(source, scaleMode);
+                baseTexture.imageUrl = imageUrl;
+
+                if (sourceScale) {
+                    baseTexture.sourceScale = sourceScale;
+                }
+
+                // if there is an @2x at the end of the url we are going to assume its a highres image
+                baseTexture.resolution = (0, _utils.getResolutionOfUrl)(imageUrl);
+
+                BaseTexture.addToCache(baseTexture, imageUrl);
+            }
+
+            return baseTexture;
+        } else if (source instanceof HTMLCanvasElement) {
+            return BaseTexture.fromCanvas(source, scaleMode);
+        }
+
+        // lets assume its a base texture!
+        return source;
+    };
+
+    /**
+     * Adds a BaseTexture to the global BaseTextureCache. This cache is shared across the whole PIXI object.
+     *
+     * @static
+     * @param {PIXI.BaseTexture} baseTexture - The BaseTexture to add to the cache.
+     * @param {string} id - The id that the BaseTexture will be stored against.
+     */
+
+
+    BaseTexture.addToCache = function addToCache(baseTexture, id) {
+        if (id) {
+            if (baseTexture.textureCacheIds.indexOf(id) === -1) {
+                baseTexture.textureCacheIds.push(id);
+            }
+
+            // @if DEBUG
+            /* eslint-disable no-console */
+            if (_utils.BaseTextureCache[id]) {
+                console.warn('BaseTexture added to the cache with an id [' + id + '] that already had an entry');
+            }
+            /* eslint-enable no-console */
+            // @endif
+
+            _utils.BaseTextureCache[id] = baseTexture;
+        }
+    };
+
+    /**
+     * Remove a BaseTexture from the global BaseTextureCache.
+     *
+     * @static
+     * @param {string|PIXI.BaseTexture} baseTexture - id of a BaseTexture to be removed, or a BaseTexture instance itself.
+     * @return {PIXI.BaseTexture|null} The BaseTexture that was removed.
+     */
+
+
+    BaseTexture.removeFromCache = function removeFromCache(baseTexture) {
+        if (typeof baseTexture === 'string') {
+            var baseTextureFromCache = _utils.BaseTextureCache[baseTexture];
+
+            if (baseTextureFromCache) {
+                var index = baseTextureFromCache.textureCacheIds.indexOf(baseTexture);
+
+                if (index > -1) {
+                    baseTextureFromCache.textureCacheIds.splice(index, 1);
+                }
+
+                delete _utils.BaseTextureCache[baseTexture];
+
+                return baseTextureFromCache;
+            }
+        } else if (baseTexture && baseTexture.textureCacheIds) {
+            for (var i = 0; i < baseTexture.textureCacheIds.length; ++i) {
+                delete _utils.BaseTextureCache[baseTexture.textureCacheIds[i]];
+            }
+
+            baseTexture.textureCacheIds.length = 0;
+
+            return baseTexture;
+        }
+
+        return null;
+    };
+
+    return BaseTexture;
+}(_eventemitter2.default);
+
+exports.default = BaseTexture;
+//# sourceMappingURL=BaseTexture.js.map
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var KomodiType;
+(function (KomodiType) {
+    KomodiType["string"] = "string";
+    KomodiType["bool"] = "bool";
+    KomodiType["int"] = "int";
+    KomodiType["empty"] = "empty";
+})(KomodiType = exports.KomodiType || (exports.KomodiType = {}));
+function typeToColor(type) {
+    switch (type) {
+        case KomodiType.string:
+            return 0xF1A9A0;
+        case KomodiType.bool:
+            return 0xDCC6E0;
+        case KomodiType.int:
+            return 0xC5EFF7;
+        case KomodiType.empty:
+            return 0xFFFFFF;
+    }
+}
+exports.typeToColor = typeToColor;
+
 
 /***/ }),
 /* 17 */
@@ -22173,7 +22173,7 @@ var _SystemRenderer2 = __webpack_require__(76);
 
 var _SystemRenderer3 = _interopRequireDefault(_SystemRenderer2);
 
-var _CanvasMaskManager = __webpack_require__(141);
+var _CanvasMaskManager = __webpack_require__(144);
 
 var _CanvasMaskManager2 = _interopRequireDefault(_CanvasMaskManager);
 
@@ -22181,7 +22181,7 @@ var _CanvasRenderTarget = __webpack_require__(77);
 
 var _CanvasRenderTarget2 = _interopRequireDefault(_CanvasRenderTarget);
 
-var _mapCanvasBlendModesToPixi = __webpack_require__(142);
+var _mapCanvasBlendModesToPixi = __webpack_require__(145);
 
 var _mapCanvasBlendModesToPixi2 = _interopRequireDefault(_mapCanvasBlendModesToPixi);
 
@@ -22974,7 +22974,7 @@ Mesh.DRAW_MODES = {
 
 /* eslint-disable no-undef */
 
-var Loader = __webpack_require__(216).default;
+var Loader = __webpack_require__(219).default;
 var Resource = __webpack_require__(50).default;
 var async = __webpack_require__(102);
 var b64 = __webpack_require__(103);
@@ -22997,7 +22997,7 @@ module.exports.default = Loader;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const program_1 = __webpack_require__(9);
-const type_1 = __webpack_require__(15);
+const type_1 = __webpack_require__(16);
 const utils_1 = __webpack_require__(31);
 class UserInputTokenGraphic extends PIXI.Container {
     constructor(target, token) {
@@ -23162,9 +23162,9 @@ function scopeGraphicsGenerator(block) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const peg = __webpack_require__(117);
-const _ = __webpack_require__(16);
-const type_1 = __webpack_require__(15);
+const peg = __webpack_require__(119);
+const _ = __webpack_require__(11);
+const type_1 = __webpack_require__(16);
 class PlaceholderToken {
     constructor(text) {
         this.text = text;
@@ -23600,15 +23600,15 @@ var _SystemRenderer2 = __webpack_require__(76);
 
 var _SystemRenderer3 = _interopRequireDefault(_SystemRenderer2);
 
-var _MaskManager = __webpack_require__(149);
+var _MaskManager = __webpack_require__(152);
 
 var _MaskManager2 = _interopRequireDefault(_MaskManager);
 
-var _StencilManager = __webpack_require__(150);
+var _StencilManager = __webpack_require__(153);
 
 var _StencilManager2 = _interopRequireDefault(_StencilManager);
 
-var _FilterManager = __webpack_require__(148);
+var _FilterManager = __webpack_require__(151);
 
 var _FilterManager2 = _interopRequireDefault(_FilterManager);
 
@@ -23620,27 +23620,27 @@ var _ObjectRenderer = __webpack_require__(28);
 
 var _ObjectRenderer2 = _interopRequireDefault(_ObjectRenderer);
 
-var _TextureManager = __webpack_require__(144);
+var _TextureManager = __webpack_require__(147);
 
 var _TextureManager2 = _interopRequireDefault(_TextureManager);
 
-var _BaseTexture = __webpack_require__(14);
+var _BaseTexture = __webpack_require__(15);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
-var _TextureGarbageCollector = __webpack_require__(143);
+var _TextureGarbageCollector = __webpack_require__(146);
 
 var _TextureGarbageCollector2 = _interopRequireDefault(_TextureGarbageCollector);
 
-var _WebGLState = __webpack_require__(145);
+var _WebGLState = __webpack_require__(148);
 
 var _WebGLState2 = _interopRequireDefault(_WebGLState);
 
-var _mapWebGLDrawModesToPixi = __webpack_require__(153);
+var _mapWebGLDrawModesToPixi = __webpack_require__(156);
 
 var _mapWebGLDrawModesToPixi2 = _interopRequireDefault(_mapWebGLDrawModesToPixi);
 
-var _validateContext = __webpack_require__(154);
+var _validateContext = __webpack_require__(157);
 
 var _validateContext2 = _interopRequireDefault(_validateContext);
 
@@ -24829,7 +24829,7 @@ exports.default = RenderTarget;
 exports.__esModule = true;
 exports.loader = exports.prepare = exports.particles = exports.mesh = exports.loaders = exports.interaction = exports.filters = exports.extras = exports.extract = exports.accessibility = undefined;
 
-var _polyfill = __webpack_require__(204);
+var _polyfill = __webpack_require__(207);
 
 Object.keys(_polyfill).forEach(function (key) {
     if (key === "default" || key === "__esModule") return;
@@ -24853,15 +24853,15 @@ Object.keys(_core).forEach(function (key) {
     });
 });
 
-var _deprecation = __webpack_require__(170);
+var _deprecation = __webpack_require__(173);
 
 var _deprecation2 = _interopRequireDefault(_deprecation);
 
-var _accessibility = __webpack_require__(126);
+var _accessibility = __webpack_require__(129);
 
 var accessibility = _interopRequireWildcard(_accessibility);
 
-var _extract = __webpack_require__(172);
+var _extract = __webpack_require__(175);
 
 var extract = _interopRequireWildcard(_extract);
 
@@ -24869,27 +24869,27 @@ var _extras = __webpack_require__(87);
 
 var extras = _interopRequireWildcard(_extras);
 
-var _filters = __webpack_require__(185);
+var _filters = __webpack_require__(188);
 
 var filters = _interopRequireWildcard(_filters);
 
-var _interaction = __webpack_require__(189);
+var _interaction = __webpack_require__(192);
 
 var interaction = _interopRequireWildcard(_interaction);
 
-var _loaders = __webpack_require__(190);
+var _loaders = __webpack_require__(193);
 
 var loaders = _interopRequireWildcard(_loaders);
 
-var _mesh = __webpack_require__(195);
+var _mesh = __webpack_require__(198);
 
 var mesh = _interopRequireWildcard(_mesh);
 
-var _particles = __webpack_require__(198);
+var _particles = __webpack_require__(201);
 
 var particles = _interopRequireWildcard(_particles);
 
-var _prepare = __webpack_require__(207);
+var _prepare = __webpack_require__(210);
 
 var prepare = _interopRequireWildcard(_prepare);
 
@@ -24975,9 +24975,9 @@ exports.uuidv4 = uuidv4;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(16);
+const _ = __webpack_require__(11);
 const index_1 = __webpack_require__(24);
-const type_1 = __webpack_require__(15);
+const type_1 = __webpack_require__(16);
 const utils_1 = __webpack_require__(31);
 const program_1 = __webpack_require__(9);
 const MINIMUM_ARG_WIDTH = 26;
@@ -25130,7 +25130,7 @@ exports.definitionNodeDrawer = new DefinitionNodeDrawer();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(16);
+const _ = __webpack_require__(11);
 const index_1 = __webpack_require__(24);
 const program_1 = __webpack_require__(9);
 const FLOW_VERTICAL_MARGIN = 20;
@@ -27036,7 +27036,7 @@ var _utils = __webpack_require__(2);
 
 var _const = __webpack_require__(0);
 
-var _Texture = __webpack_require__(11);
+var _Texture = __webpack_require__(12);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -27916,7 +27916,7 @@ var _BaseRenderTexture = __webpack_require__(84);
 
 var _BaseRenderTexture2 = _interopRequireDefault(_BaseRenderTexture);
 
-var _Texture2 = __webpack_require__(11);
+var _Texture2 = __webpack_require__(12);
 
 var _Texture3 = _interopRequireDefault(_Texture2);
 
@@ -28069,7 +28069,7 @@ exports.default = RenderTexture;
 exports.__esModule = true;
 exports.Ticker = exports.shared = undefined;
 
-var _Ticker = __webpack_require__(161);
+var _Ticker = __webpack_require__(164);
 
 var _Ticker2 = _interopRequireDefault(_Ticker);
 
@@ -30008,9 +30008,9 @@ function reqType(xhr) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const common_1 = __webpack_require__(224);
-const io_1 = __webpack_require__(225);
-const string_1 = __webpack_require__(226);
+const common_1 = __webpack_require__(226);
+const io_1 = __webpack_require__(227);
+const string_1 = __webpack_require__(228);
 const graphic_1 = __webpack_require__(24);
 const builtinModules = new Map();
 builtinModules.set('common', common_1.blockList);
@@ -30178,10 +30178,10 @@ exports.Module = Module;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const WebFont = __webpack_require__(229);
+const WebFont = __webpack_require__(232);
 const PIXI = __webpack_require__(30);
-const menu_1 = __webpack_require__(222);
-const context_1 = __webpack_require__(220);
+const menu_1 = __webpack_require__(224);
+const context_1 = __webpack_require__(104);
 const validator_1 = __webpack_require__(230);
 const KOMODI_STYLE = `
 .komodi-container {
@@ -30225,10 +30225,10 @@ class KomodiClass extends context_1.KomodiContext {
         this.consoleMenu = new menu_1.ConsoleMenu();
         this.fixed.addChild(this.sideMenu, this.consoleMenu, this.topMenu);
         this.topMenu.addMenu('Project Name', () => {
-            let projectName = window.prompt('Project Name:', this.topMenu.projectName);
+            let projectName = window.prompt('Project Name:', this.projectName);
             if (!projectName || projectName == '')
                 return;
-            this.topMenu.projectName = projectName;
+            this.projectName = projectName;
         });
         this.topMenu.addMenu('Open', () => {
             if (window.confirm('Current progress will be lost')) {
@@ -30253,7 +30253,7 @@ class KomodiClass extends context_1.KomodiContext {
             let serialized = this.serializer.serializeProgram(), blob = new Blob([JSON.stringify(serialized)], { type: 'octet/stream' }), url = URL.createObjectURL(blob);
             let fakeLink = document.createElement('a');
             fakeLink.href = url;
-            fakeLink.download = this.topMenu.projectName + '.komodi';
+            fakeLink.download = this.projectName + '.komodi';
             fakeLink.click();
             URL.revokeObjectURL(url);
         });
@@ -30270,8 +30270,11 @@ class KomodiClass extends context_1.KomodiContext {
         });
         this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2, roundPixels: true });
     }
+    get projectName() {
+        return this._projectName;
+    }
     set projectName(projectName) {
-        super.projectName = projectName;
+        this._projectName = projectName;
         this.topMenu.projectName = projectName;
     }
     init() {
@@ -30279,12 +30282,13 @@ class KomodiClass extends context_1.KomodiContext {
         this.sideMenu.init();
     }
     newProject() {
-        this.topMenu.projectName = "Untitled Komodi Project";
+        this.projectName = "Untitled Komodi Project";
         this.module.addUserModule('main');
         this.module.editingModule = 'main';
     }
     clearProject() {
         this.module.clear();
+        this.consoleMenu.result.text = menu_1.ConsoleMenu.DEFAULT_RESULT;
     }
     initializeDOM(parent) {
         let resize = () => {
@@ -34678,7 +34682,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _extractUniformsFromSrc = __webpack_require__(146);
+var _extractUniformsFromSrc = __webpack_require__(149);
 
 var _extractUniformsFromSrc2 = _interopRequireDefault(_extractUniformsFromSrc);
 
@@ -36236,7 +36240,7 @@ function areArraysEqual(array1, array2) {
 
 exports.__esModule = true;
 
-var _BaseTexture2 = __webpack_require__(14);
+var _BaseTexture2 = __webpack_require__(15);
 
 var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
@@ -36512,7 +36516,7 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _BaseTexture2 = __webpack_require__(14);
+var _BaseTexture2 = __webpack_require__(15);
 
 var _BaseTexture3 = _interopRequireDefault(_BaseTexture2);
 
@@ -36841,7 +36845,7 @@ function createSource(path, type) {
 exports.__esModule = true;
 exports.BitmapText = exports.TilingSpriteRenderer = exports.TilingSprite = exports.TextureTransform = exports.AnimatedSprite = undefined;
 
-var _AnimatedSprite = __webpack_require__(174);
+var _AnimatedSprite = __webpack_require__(177);
 
 Object.defineProperty(exports, 'AnimatedSprite', {
   enumerable: true,
@@ -36859,7 +36863,7 @@ Object.defineProperty(exports, 'TextureTransform', {
   }
 });
 
-var _TilingSprite = __webpack_require__(176);
+var _TilingSprite = __webpack_require__(179);
 
 Object.defineProperty(exports, 'TilingSprite', {
   enumerable: true,
@@ -36868,7 +36872,7 @@ Object.defineProperty(exports, 'TilingSprite', {
   }
 });
 
-var _TilingSpriteRenderer = __webpack_require__(180);
+var _TilingSpriteRenderer = __webpack_require__(183);
 
 Object.defineProperty(exports, 'TilingSpriteRenderer', {
   enumerable: true,
@@ -36877,7 +36881,7 @@ Object.defineProperty(exports, 'TilingSpriteRenderer', {
   }
 });
 
-var _BitmapText = __webpack_require__(175);
+var _BitmapText = __webpack_require__(178);
 
 Object.defineProperty(exports, 'BitmapText', {
   enumerable: true,
@@ -36886,11 +36890,11 @@ Object.defineProperty(exports, 'BitmapText', {
   }
 });
 
-__webpack_require__(177);
+__webpack_require__(180);
 
-__webpack_require__(178);
+__webpack_require__(181);
 
-__webpack_require__(179);
+__webpack_require__(182);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38125,7 +38129,7 @@ exports.getResourcePath = getResourcePath;
 
 var _resourceLoader = __webpack_require__(23);
 
-var _url = __webpack_require__(104);
+var _url = __webpack_require__(106);
 
 var _url2 = _interopRequireDefault(_url);
 
@@ -38164,7 +38168,7 @@ exports.default = function () {
 
 var _resourceLoader = __webpack_require__(23);
 
-var _Texture = __webpack_require__(11);
+var _Texture = __webpack_require__(12);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -38670,6 +38674,101 @@ function encodeBinary(input) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const PIXI = __webpack_require__(30);
+const attacher_1 = __webpack_require__(225);
+const module_1 = __webpack_require__(51);
+const serializer_1 = __webpack_require__(229);
+class KomodiContext {
+    constructor() {
+        this.container = new PIXI.Container();
+        this.stage = new PIXI.Container();
+        this.fixed = new PIXI.Container();
+        this.attacher = new attacher_1.Attacher(this);
+        this.module = new module_1.Module(this);
+        this.serializer = new serializer_1.Serializer(this);
+        this.container.interactive = true;
+        this.container.addChild(this.stage, this.fixed);
+        this.fixed.interactive = true;
+    }
+    get projectName() {
+        return this._projectName;
+    }
+    set projectName(projectName) {
+        this._projectName = projectName;
+    }
+    init() {
+        this.attacher.init();
+    }
+    registerBlock(block) {
+        this.attacher.registerBlock(block);
+        this.module.addBlockToModule(block.moduleName, block);
+    }
+    unregisterBlock(block) {
+        this.attacher.removeBlock(block);
+        this.module.deleteBlockFromModule(block.moduleName, block);
+    }
+}
+exports.KomodiContext = KomodiContext;
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(11);
+const index_1 = __webpack_require__(9);
+function dependencyCheck(block, module, context) {
+    if (!module.hasBlockClass(block.definition.id)) {
+        context.result.error.push(`Broken dependency "${block.definition.definition}"`);
+    }
+}
+exports.dependencyCheck = dependencyCheck;
+function freeBlockDefinitionCheck(block, module, context) {
+    if (block.attachInfo == null && !(block instanceof index_1.Definition)) {
+        context.result.warning.push("Only definition can be unbound.");
+    }
+}
+exports.freeBlockDefinitionCheck = freeBlockDefinitionCheck;
+function argumentCheck(block, module, context) {
+    for (let argumentName of block.definition.argumentNames) {
+        let argumentBlock = block.getArgument(argumentName);
+        if (argumentBlock == null) {
+            context.result.warning.push("All argument should be filled.");
+            break;
+        }
+    }
+}
+exports.argumentCheck = argumentCheck;
+function addToScopeTree(block, module, context) {
+    context.scopeTree.push(block);
+}
+exports.addToScopeTree = addToScopeTree;
+function checkScopeTree(parentBlock) {
+    return (block, module, context) => {
+        if (!_.includes(context.scopeTree, parentBlock)) {
+            context.result.error.push(`"${block.definition.definition}" is in the wrong scope.`);
+        }
+    };
+}
+exports.checkScopeTree = checkScopeTree;
+exports.validatorPreAll = [
+    dependencyCheck, freeBlockDefinitionCheck, argumentCheck
+];
+exports.validatorIntoAll = [
+    addToScopeTree,
+];
+
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -38693,8 +38792,8 @@ function encodeBinary(input) {
 
 
 
-var punycode = __webpack_require__(211);
-var util = __webpack_require__(228);
+var punycode = __webpack_require__(214);
+var util = __webpack_require__(231);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -38769,7 +38868,7 @@ var protocolPattern = /^([a-z0-9.+-]+:)/i,
       'gopher:': true,
       'file:': true
     },
-    querystring = __webpack_require__(214);
+    querystring = __webpack_require__(217);
 
 function urlParse(url, parseQueryString, slashesDenoteHost) {
   if (url && util.isObject(url) && url instanceof Url) return url;
@@ -39405,7 +39504,7 @@ Url.prototype.parseHost = function() {
 
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -39433,7 +39532,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39530,14 +39629,14 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 107 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var arrays  = __webpack_require__(8),
-    objects = __webpack_require__(13);
+    objects = __webpack_require__(14);
 
 var compiler = {
   /*
@@ -39555,18 +39654,18 @@ var compiler = {
    */
   passes: {
     check: {
-      reportUndefinedRules:     __webpack_require__(115),
-      reportDuplicateRules:     __webpack_require__(112),
-      reportDuplicateLabels:    __webpack_require__(111),
-      reportInfiniteRecursion:  __webpack_require__(113),
-      reportInfiniteRepetition: __webpack_require__(114)
+      reportUndefinedRules:     __webpack_require__(117),
+      reportDuplicateRules:     __webpack_require__(114),
+      reportDuplicateLabels:    __webpack_require__(113),
+      reportInfiniteRecursion:  __webpack_require__(115),
+      reportInfiniteRepetition: __webpack_require__(116)
     },
     transform: {
-      removeProxyRules:         __webpack_require__(110)
+      removeProxyRules:         __webpack_require__(112)
     },
     generate: {
-      generateBytecode:         __webpack_require__(108),
-      generateJS:               __webpack_require__(109)
+      generateBytecode:         __webpack_require__(110),
+      generateJS:               __webpack_require__(111)
     }
   },
 
@@ -39610,14 +39709,14 @@ module.exports = compiler;
 
 
 /***/ }),
-/* 108 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var arrays  = __webpack_require__(8),
-    objects = __webpack_require__(13),
+    objects = __webpack_require__(14),
     asts    = __webpack_require__(17),
     visitor = __webpack_require__(7),
     op      = __webpack_require__(57),
@@ -40248,14 +40347,14 @@ module.exports = generateBytecode;
 
 
 /***/ }),
-/* 109 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var arrays  = __webpack_require__(8),
-    objects = __webpack_require__(13),
+    objects = __webpack_require__(14),
     asts    = __webpack_require__(17),
     op      = __webpack_require__(57),
     js      = __webpack_require__(56);
@@ -41649,7 +41748,7 @@ module.exports = generateJS;
 
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41698,15 +41797,15 @@ module.exports = removeProxyRules;
 
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GrammarError = __webpack_require__(12),
+var GrammarError = __webpack_require__(13),
     arrays       = __webpack_require__(8),
-    objects      = __webpack_require__(13),
+    objects      = __webpack_require__(14),
     visitor      = __webpack_require__(7);
 
 /* Checks that each label is defined only once within each scope. */
@@ -41759,13 +41858,13 @@ module.exports = reportDuplicateLabels;
 
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GrammarError = __webpack_require__(12),
+var GrammarError = __webpack_require__(13),
     visitor      = __webpack_require__(7);
 
 /* Checks that each rule is defined only once. */
@@ -41794,14 +41893,14 @@ module.exports = reportDuplicateRules;
 
 
 /***/ }),
-/* 113 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var arrays       = __webpack_require__(8),
-    GrammarError = __webpack_require__(12),
+    GrammarError = __webpack_require__(13),
     asts         = __webpack_require__(17),
     visitor      = __webpack_require__(7);
 
@@ -41858,13 +41957,13 @@ module.exports = reportInfiniteRecursion;
 
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GrammarError = __webpack_require__(12),
+var GrammarError = __webpack_require__(13),
     asts         = __webpack_require__(17),
     visitor      = __webpack_require__(7);
 
@@ -41900,13 +41999,13 @@ module.exports = reportInfiniteRepetition;
 
 
 /***/ }),
-/* 115 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var GrammarError = __webpack_require__(12),
+var GrammarError = __webpack_require__(13),
     asts         = __webpack_require__(17),
     visitor      = __webpack_require__(7);
 
@@ -41930,7 +42029,7 @@ module.exports = reportUndefinedRules;
 
 
 /***/ }),
-/* 116 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46977,22 +47076,22 @@ module.exports = {
 
 
 /***/ }),
-/* 117 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var arrays  = __webpack_require__(8),
-    objects = __webpack_require__(13);
+    objects = __webpack_require__(14);
 
 var peg = {
   /* PEG.js version (uses semantic versioning). */
   VERSION: "0.10.0",
 
-  GrammarError: __webpack_require__(12),
-  parser:       __webpack_require__(116),
-  compiler:     __webpack_require__(107),
+  GrammarError: __webpack_require__(13),
+  parser:       __webpack_require__(118),
+  compiler:     __webpack_require__(109),
 
   /*
    * Generates a parser from a specified grammar and returns it.
@@ -47042,7 +47141,7 @@ module.exports = peg;
 
 
 /***/ }),
-/* 118 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47061,7 +47160,7 @@ module.exports = classes;
 
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, exports) {
 
 var EMPTY_ARRAY_BUFFER = new ArrayBuffer(0);
@@ -47186,7 +47285,7 @@ module.exports = Buffer;
 
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -47417,7 +47516,7 @@ module.exports = Framebuffer;
 
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -47514,7 +47613,7 @@ module.exports = Shader;
 
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -47782,7 +47881,7 @@ VertexArrayObject.prototype.getSize = function()
 
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, exports) {
 
 
@@ -47814,7 +47913,7 @@ module.exports = createContext;
 
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
@@ -47829,7 +47928,562 @@ module.exports = {
 };
 
 /***/ }),
-/* 125 */
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var require;var require;(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.MultiStyleText = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = require("./pixi-multistyle-text").default;
+},{"./pixi-multistyle-text":2}],2:[function(require,module,exports){
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var MultiStyleText = (function (_super) {
+        __extends(MultiStyleText, _super);
+        function MultiStyleText(text, styles) {
+            var _this = _super.call(this, text) || this;
+            _this.styles = styles;
+            return _this;
+        }
+        Object.defineProperty(MultiStyleText.prototype, "styles", {
+            set: function (styles) {
+                this.textStyles = {};
+                this.textStyles["default"] = this.assign({}, MultiStyleText.DEFAULT_TAG_STYLE);
+                for (var style in styles) {
+                    if (style === "default") {
+                        this.assign(this.textStyles["default"], styles[style]);
+                    }
+                    else {
+                        this.textStyles[style] = this.assign({}, styles[style]);
+                    }
+                }
+                this._style = new PIXI.TextStyle(this.textStyles["default"]);
+                this.dirty = true;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        MultiStyleText.prototype.setTagStyle = function (tag, style) {
+            if (tag in this.textStyles) {
+                this.assign(this.textStyles[tag], style);
+            }
+            else {
+                this.textStyles[tag] = this.assign({}, style);
+            }
+            this._style = new PIXI.TextStyle(this.textStyles["default"]);
+            this.dirty = true;
+        };
+        MultiStyleText.prototype.deleteTagStyle = function (tag) {
+            if (tag === "default") {
+                this.textStyles["default"] = this.assign({}, MultiStyleText.DEFAULT_TAG_STYLE);
+            }
+            else {
+                delete this.textStyles[tag];
+            }
+            this._style = new PIXI.TextStyle(this.textStyles["default"]);
+            this.dirty = true;
+        };
+        MultiStyleText.prototype._getTextDataPerLine = function (lines) {
+            var outputTextData = [];
+            var tags = Object.keys(this.textStyles).join("|");
+            var re = new RegExp("</?(" + tags + ")>", "g");
+            var styleStack = [this.assign({}, this.textStyles["default"])];
+            var tagNameStack = ["default"];
+            for (var i = 0; i < lines.length; i++) {
+                var lineTextData = [];
+                var matches = [];
+                var matchArray = void 0;
+                while (matchArray = re.exec(lines[i])) {
+                    matches.push(matchArray);
+                }
+                if (matches.length === 0) {
+                    lineTextData.push(this.createTextData(lines[i], styleStack[styleStack.length - 1], tagNameStack[tagNameStack.length - 1]));
+                }
+                else {
+                    var currentSearchIdx = 0;
+                    for (var j = 0; j < matches.length; j++) {
+                        if (matches[j].index > currentSearchIdx) {
+                            lineTextData.push(this.createTextData(lines[i].substring(currentSearchIdx, matches[j].index), styleStack[styleStack.length - 1], tagNameStack[tagNameStack.length - 1]));
+                        }
+                        if (matches[j][0][1] === "/") {
+                            if (styleStack.length > 1) {
+                                styleStack.pop();
+                                tagNameStack.pop();
+                            }
+                        }
+                        else {
+                            styleStack.push(this.assign({}, styleStack[styleStack.length - 1], this.textStyles[matches[j][1]]));
+                            tagNameStack.push(matches[j][1]);
+                        }
+                        currentSearchIdx = matches[j].index + matches[j][0].length;
+                    }
+                    if (currentSearchIdx < lines[i].length) {
+                        lineTextData.push(this.createTextData(lines[i].substring(currentSearchIdx), styleStack[styleStack.length - 1], tagNameStack[tagNameStack.length - 1]));
+                    }
+                }
+                outputTextData.push(lineTextData);
+            }
+            return outputTextData;
+        };
+        MultiStyleText.prototype.getFontString = function (style) {
+            return new PIXI.TextStyle(style).toFontString();
+        };
+        MultiStyleText.prototype.createTextData = function (text, style, tagName) {
+            return {
+                text: text,
+                style: style,
+                width: 0,
+                height: 0,
+                fontProperties: undefined,
+                tagName: tagName
+            };
+        };
+        MultiStyleText.prototype.getDropShadowPadding = function () {
+            var _this = this;
+            var maxDistance = 0;
+            var maxBlur = 0;
+            Object.keys(this.textStyles).forEach(function (styleKey) {
+                var _a = _this.textStyles[styleKey], dropShadowDistance = _a.dropShadowDistance, dropShadowBlur = _a.dropShadowBlur;
+                maxDistance = Math.max(maxDistance, dropShadowDistance || 0);
+                maxBlur = Math.max(maxBlur, dropShadowBlur || 0);
+            });
+            return maxDistance + maxBlur;
+        };
+        MultiStyleText.prototype.updateText = function () {
+            var _this = this;
+            if (!this.dirty) {
+                return;
+            }
+            this.texture.baseTexture.resolution = this.resolution;
+            var textStyles = this.textStyles;
+            var outputText = this.text;
+            if (this._style.wordWrap) {
+                outputText = this.wordWrap(this.text);
+            }
+            var lines = outputText.split(/(?:\r\n|\r|\n)/);
+            var outputTextData = this._getTextDataPerLine(lines);
+            var lineWidths = [];
+            var lineYMins = [];
+            var lineYMaxs = [];
+            var baselines = [];
+            var maxLineWidth = 0;
+            for (var i = 0; i < lines.length; i++) {
+                var lineWidth = 0;
+                var lineYMin = 0;
+                var lineYMax = 0;
+                var baseline = 0;
+                for (var j = 0; j < outputTextData[i].length; j++) {
+                    var sty = outputTextData[i][j].style;
+                    this.context.font = this.getFontString(sty);
+                    outputTextData[i][j].width = this.context.measureText(outputTextData[i][j].text).width;
+                    if (outputTextData[i][j].text.length === 0) {
+                        outputTextData[i][j].width += (outputTextData[i][j].text.length - 1) * sty.letterSpacing;
+                        if (j > 0) {
+                            lineWidth += sty.letterSpacing / 2;
+                        }
+                        if (j < outputTextData[i].length - 1) {
+                            lineWidth += sty.letterSpacing / 2;
+                        }
+                    }
+                    lineWidth += outputTextData[i][j].width;
+                    outputTextData[i][j].fontProperties = PIXI.TextMetrics.measureFont(this.context.font);
+                    outputTextData[i][j].height =
+                        outputTextData[i][j].fontProperties.fontSize + outputTextData[i][j].style.strokeThickness;
+                    if (typeof sty.valign === "number") {
+                        lineYMin = Math.min(lineYMin, sty.valign - outputTextData[i][j].fontProperties.descent);
+                        lineYMax = Math.max(lineYMax, sty.valign + outputTextData[i][j].fontProperties.ascent);
+                    }
+                    else {
+                        lineYMin = Math.min(lineYMin, -outputTextData[i][j].fontProperties.descent);
+                        lineYMax = Math.max(lineYMax, outputTextData[i][j].fontProperties.ascent);
+                    }
+                }
+                lineWidths[i] = lineWidth;
+                lineYMins[i] = lineYMin;
+                lineYMaxs[i] = lineYMax;
+                maxLineWidth = Math.max(maxLineWidth, lineWidth);
+            }
+            var stylesArray = Object.keys(textStyles).map(function (key) { return textStyles[key]; });
+            var maxStrokeThickness = stylesArray.reduce(function (prev, cur) { return Math.max(prev, cur.strokeThickness || 0); }, 0);
+            var dropShadowPadding = this.getDropShadowPadding();
+            var totalHeight = lineYMaxs.reduce(function (prev, cur) { return prev + cur; }, 0) - lineYMins.reduce(function (prev, cur) { return prev + cur; }, 0);
+            var width = maxLineWidth + maxStrokeThickness + 2 * dropShadowPadding;
+            var height = totalHeight + 2 * dropShadowPadding;
+            this.canvas.width = (width + this.context.lineWidth) * this.resolution;
+            this.canvas.height = height * this.resolution;
+            this.context.scale(this.resolution, this.resolution);
+            this.context.textBaseline = "alphabetic";
+            this.context.lineJoin = "round";
+            var basePositionY = dropShadowPadding;
+            var drawingData = [];
+            for (var i = 0; i < outputTextData.length; i++) {
+                var line = outputTextData[i];
+                var linePositionX = void 0;
+                switch (this._style.align) {
+                    case "left":
+                        linePositionX = dropShadowPadding;
+                        break;
+                    case "center":
+                        linePositionX = dropShadowPadding + (maxLineWidth - lineWidths[i]) / 2;
+                        break;
+                    case "right":
+                        linePositionX = dropShadowPadding + maxLineWidth - lineWidths[i];
+                        break;
+                }
+                for (var j = 0; j < line.length; j++) {
+                    var _a = line[j], style = _a.style, text = _a.text, fontProperties = _a.fontProperties, width_1 = _a.width, height_1 = _a.height, tagName = _a.tagName;
+                    linePositionX += maxStrokeThickness / 2;
+                    var linePositionY = maxStrokeThickness / 2 + basePositionY + fontProperties.ascent;
+                    switch (style.valign) {
+                        case "top":
+                            break;
+                        case "baseline":
+                            linePositionY += lineYMaxs[i] - fontProperties.ascent;
+                            break;
+                        case "middle":
+                            linePositionY += (lineYMaxs[i] - lineYMins[i] - fontProperties.ascent - fontProperties.descent) / 2;
+                            break;
+                        case "bottom":
+                            linePositionY += lineYMaxs[i] - lineYMins[i] - fontProperties.ascent - fontProperties.descent;
+                            break;
+                        default:
+                            linePositionY += lineYMaxs[i] - fontProperties.ascent - style.valign;
+                            break;
+                    }
+                    if (style.letterSpacing === 0) {
+                        drawingData.push({
+                            text: text,
+                            style: style,
+                            x: linePositionX,
+                            y: linePositionY,
+                            width: width_1,
+                            ascent: fontProperties.ascent,
+                            descent: fontProperties.descent,
+                            tagName: tagName
+                        });
+                        linePositionX += line[j].width;
+                    }
+                    else {
+                        this.context.font = this.getFontString(line[j].style);
+                        for (var k = 0; k < text.length; k++) {
+                            if (k > 0 || j > 0) {
+                                linePositionX += style.letterSpacing / 2;
+                            }
+                            drawingData.push({
+                                text: text.charAt(k),
+                                style: style,
+                                x: linePositionX,
+                                y: linePositionY,
+                                width: width_1,
+                                ascent: fontProperties.ascent,
+                                descent: fontProperties.descent,
+                                tagName: tagName
+                            });
+                            linePositionX += this.context.measureText(text.charAt(k)).width;
+                            if (k < text.length - 1 || j < line.length - 1) {
+                                linePositionX += style.letterSpacing / 2;
+                            }
+                        }
+                    }
+                    linePositionX -= maxStrokeThickness / 2;
+                }
+                basePositionY += lineYMaxs[i] - lineYMins[i];
+            }
+            this.context.save();
+            drawingData.forEach(function (_a) {
+                var style = _a.style, text = _a.text, x = _a.x, y = _a.y;
+                if (!style.dropShadow) {
+                    return;
+                }
+                _this.context.font = _this.getFontString(style);
+                var dropFillStyle = style.dropShadowColor;
+                if (typeof dropFillStyle === "number") {
+                    dropFillStyle = PIXI.utils.hex2string(dropFillStyle);
+                }
+                _this.context.shadowColor = dropFillStyle;
+                _this.context.shadowBlur = style.dropShadowBlur;
+                _this.context.shadowOffsetX = Math.cos(style.dropShadowAngle) * style.dropShadowDistance * _this.resolution;
+                _this.context.shadowOffsetY = Math.sin(style.dropShadowAngle) * style.dropShadowDistance * _this.resolution;
+                _this.context.fillText(text, x, y);
+            });
+            this.context.restore();
+            drawingData.forEach(function (_a) {
+                var style = _a.style, text = _a.text, x = _a.x, y = _a.y, width = _a.width, ascent = _a.ascent, descent = _a.descent, tagName = _a.tagName;
+                _this.context.font = _this.getFontString(style);
+                var strokeStyle = style.stroke;
+                if (typeof strokeStyle === "number") {
+                    strokeStyle = PIXI.utils.hex2string(strokeStyle);
+                }
+                _this.context.strokeStyle = strokeStyle;
+                _this.context.lineWidth = style.strokeThickness;
+                var fillStyle = style.fill;
+                if (typeof fillStyle === "number") {
+                    fillStyle = PIXI.utils.hex2string(fillStyle);
+                }
+                else if (Array.isArray(fillStyle)) {
+                    for (var i = 0; i < fillStyle.length; i++) {
+                        var fill = fillStyle[i];
+                        if (typeof fill === "number") {
+                            fillStyle[i] = PIXI.utils.hex2string(fill);
+                        }
+                    }
+                }
+                _this.context.fillStyle = _this._generateFillStyle(new PIXI.TextStyle(style), [text]);
+                if (style.stroke && style.strokeThickness) {
+                    _this.context.strokeText(text, x, y);
+                }
+                if (style.fill) {
+                    _this.context.fillText(text, x, y);
+                }
+                var debugSpan = style.debug === undefined
+                    ? MultiStyleText.debugOptions.spans.enabled
+                    : style.debug;
+                if (debugSpan) {
+                    _this.context.lineWidth = 1;
+                    if (MultiStyleText.debugOptions.spans.bounding) {
+                        _this.context.fillStyle = MultiStyleText.debugOptions.spans.bounding;
+                        _this.context.strokeStyle = MultiStyleText.debugOptions.spans.bounding;
+                        _this.context.beginPath();
+                        _this.context.rect(x, y - ascent, width, ascent + descent);
+                        _this.context.fill();
+                        _this.context.stroke();
+                        _this.context.stroke();
+                    }
+                    if (MultiStyleText.debugOptions.spans.baseline) {
+                        _this.context.strokeStyle = MultiStyleText.debugOptions.spans.baseline;
+                        _this.context.beginPath();
+                        _this.context.moveTo(x, y);
+                        _this.context.lineTo(x + width, y);
+                        _this.context.closePath();
+                        _this.context.stroke();
+                    }
+                    if (MultiStyleText.debugOptions.spans.top) {
+                        _this.context.strokeStyle = MultiStyleText.debugOptions.spans.top;
+                        _this.context.beginPath();
+                        _this.context.moveTo(x, y - ascent);
+                        _this.context.lineTo(x + width, y - ascent);
+                        _this.context.closePath();
+                        _this.context.stroke();
+                    }
+                    if (MultiStyleText.debugOptions.spans.bottom) {
+                        _this.context.strokeStyle = MultiStyleText.debugOptions.spans.bottom;
+                        _this.context.beginPath();
+                        _this.context.moveTo(x, y + descent);
+                        _this.context.lineTo(x + width, y + descent);
+                        _this.context.closePath();
+                        _this.context.stroke();
+                    }
+                    if (MultiStyleText.debugOptions.spans.text) {
+                        _this.context.fillStyle = "#ffffff";
+                        _this.context.strokeStyle = "#000000";
+                        _this.context.lineWidth = 2;
+                        _this.context.font = "8px monospace";
+                        _this.context.strokeText(tagName, x, y - ascent + 8);
+                        _this.context.fillText(tagName, x, y - ascent + 8);
+                        _this.context.strokeText(width.toFixed(2) + "x" + (ascent + descent).toFixed(2), x, y - ascent + 16);
+                        _this.context.fillText(width.toFixed(2) + "x" + (ascent + descent).toFixed(2), x, y - ascent + 16);
+                    }
+                }
+            });
+            if (MultiStyleText.debugOptions.objects.enabled) {
+                if (MultiStyleText.debugOptions.objects.bounding) {
+                    this.context.fillStyle = MultiStyleText.debugOptions.objects.bounding;
+                    this.context.beginPath();
+                    this.context.rect(0, 0, width, height);
+                    this.context.fill();
+                }
+                if (MultiStyleText.debugOptions.objects.text) {
+                    this.context.fillStyle = "#ffffff";
+                    this.context.strokeStyle = "#000000";
+                    this.context.lineWidth = 2;
+                    this.context.font = "8px monospace";
+                    this.context.strokeText(width.toFixed(2) + "x" + height.toFixed(2), 0, 8, width);
+                    this.context.fillText(width.toFixed(2) + "x" + height.toFixed(2), 0, 8, width);
+                }
+            }
+            this.updateTexture();
+        };
+        MultiStyleText.prototype.wordWrap = function (text) {
+            var result = '';
+            var tags = Object.keys(this.textStyles).join("|");
+            var re = new RegExp("(</?(" + tags + ")>)", "g");
+            var lines = text.split("\n");
+            var wordWrapWidth = this._style.wordWrapWidth;
+            var styleStack = [this.assign({}, this.textStyles["default"])];
+            this.context.font = this.getFontString(this.textStyles["default"]);
+            for (var i = 0; i < lines.length; i++) {
+                var spaceLeft = wordWrapWidth;
+                var words = lines[i].split(" ");
+                for (var j = 0; j < words.length; j++) {
+                    var parts = words[j].split(re);
+                    for (var k = 0; k < parts.length; k++) {
+                        if (re.test(parts[k])) {
+                            result += parts[k];
+                            if (parts[k][1] === "/") {
+                                k++;
+                                styleStack.pop();
+                            }
+                            else {
+                                k++;
+                                styleStack.push(this.assign({}, styleStack[styleStack.length - 1], this.textStyles[parts[k]]));
+                            }
+                            this.context.font = this.getFontString(styleStack[styleStack.length - 1]);
+                            continue;
+                        }
+                        var partWidth = this.context.measureText(parts[k]).width;
+                        if (this._style.breakWords && partWidth > spaceLeft) {
+                            var characters = parts[k].split('');
+                            if (j > 0 && k === 0) {
+                                result += " ";
+                                spaceLeft -= this.context.measureText(" ").width;
+                            }
+                            for (var c = 0; c < characters.length; c++) {
+                                var characterWidth = this.context.measureText(characters[c]).width;
+                                if (characterWidth > spaceLeft) {
+                                    result += "\n" + characters[c];
+                                    spaceLeft = wordWrapWidth - characterWidth;
+                                }
+                                else {
+                                    if (j > 0 && k === 0 && c === 0) {
+                                        result += " ";
+                                    }
+                                    result += characters[c];
+                                    spaceLeft -= characterWidth;
+                                }
+                            }
+                        }
+                        else if (this._style.breakWords) {
+                            result += parts[k];
+                            spaceLeft -= partWidth;
+                        }
+                        else {
+                            var paddedPartWidth = partWidth + (k === 0 ? this.context.measureText(" ").width : 0);
+                            if (j === 0 || paddedPartWidth > spaceLeft) {
+                                if (j > 0) {
+                                    result += "\n";
+                                }
+                                result += parts[k];
+                                spaceLeft = wordWrapWidth - partWidth;
+                            }
+                            else {
+                                spaceLeft -= paddedPartWidth;
+                                if (k === 0) {
+                                    result += " ";
+                                }
+                                result += parts[k];
+                            }
+                        }
+                    }
+                }
+                if (i < lines.length - 1) {
+                    result += '\n';
+                }
+            }
+            return result;
+        };
+        MultiStyleText.prototype.updateTexture = function () {
+            var texture = this._texture;
+            var dropShadowPadding = this.getDropShadowPadding();
+            texture.baseTexture.hasLoaded = true;
+            texture.baseTexture.resolution = this.resolution;
+            texture.baseTexture.realWidth = this.canvas.width;
+            texture.baseTexture.realHeight = this.canvas.height;
+            texture.baseTexture.width = this.canvas.width / this.resolution;
+            texture.baseTexture.height = this.canvas.height / this.resolution;
+            texture.trim.width = texture.frame.width = this.canvas.width / this.resolution;
+            texture.trim.height = texture.frame.height = this.canvas.height / this.resolution;
+            texture.trim.x = -this._style.padding - dropShadowPadding;
+            texture.trim.y = -this._style.padding - dropShadowPadding;
+            texture.orig.width = texture.frame.width - (this._style.padding + dropShadowPadding) * 2;
+            texture.orig.height = texture.frame.height - (this._style.padding + dropShadowPadding) * 2;
+            this._onTextureUpdate();
+            texture.baseTexture.emit('update', texture.baseTexture);
+            this.dirty = false;
+        };
+        MultiStyleText.prototype.assign = function (destination) {
+            var sources = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                sources[_i - 1] = arguments[_i];
+            }
+            for (var _a = 0, sources_1 = sources; _a < sources_1.length; _a++) {
+                var source = sources_1[_a];
+                for (var key in source) {
+                    destination[key] = source[key];
+                }
+            }
+            return destination;
+        };
+        return MultiStyleText;
+    }(PIXI.Text));
+    MultiStyleText.DEFAULT_TAG_STYLE = {
+        align: "left",
+        breakWords: false,
+        dropShadow: false,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowBlur: 0,
+        dropShadowColor: "#000000",
+        dropShadowDistance: 5,
+        fill: "black",
+        fillGradientType: PIXI.TEXT_GRADIENT.LINEAR_VERTICAL,
+        fontFamily: "Arial",
+        fontSize: 26,
+        fontStyle: "normal",
+        fontVariant: "normal",
+        fontWeight: "normal",
+        letterSpacing: 0,
+        lineHeight: 0,
+        lineJoin: "miter",
+        miterLimit: 10,
+        padding: 0,
+        stroke: "black",
+        strokeThickness: 0,
+        textBaseline: "alphabetic",
+        valign: "baseline",
+        wordWrap: false,
+        wordWrapWidth: 100
+    };
+    MultiStyleText.debugOptions = {
+        spans: {
+            enabled: false,
+            baseline: "#44BB44",
+            top: "#BB4444",
+            bottom: "#4444BB",
+            bounding: "rgba(255, 255, 255, 0.1)",
+            text: true
+        },
+        objects: {
+            enabled: false,
+            bounding: "rgba(255, 255, 255, 0.05)",
+            text: true
+        }
+    };
+    exports.default = MultiStyleText;
+});
+
+},{}]},{},[1])(1)
+});
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vZGVfbW9kdWxlcy9icm93c2VyLXBhY2svX3ByZWx1ZGUuanMiLCJpbmRleC5qcyIsInBpeGktbXVsdGlzdHlsZS10ZXh0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FDQUE7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztJQ0VBLFlBQVksQ0FBQzs7SUFxRGI7UUFBNEMsa0NBQVM7UUFnRHBELHdCQUFZLElBQVksRUFBRSxNQUFvQjtZQUE5QyxZQUNDLGtCQUFNLElBQUksQ0FBQyxTQUdYO1lBREEsS0FBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUM7O1FBQ3RCLENBQUM7UUFFRCxzQkFBVyxrQ0FBTTtpQkFBakIsVUFBa0IsTUFBb0I7Z0JBQ3JDLElBQUksQ0FBQyxVQUFVLEdBQUcsRUFBRSxDQUFDO2dCQUVyQixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxHQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsRUFBRSxFQUFFLGNBQWMsQ0FBQyxpQkFBaUIsQ0FBQyxDQUFDO2dCQUUvRSxHQUFHLENBQUMsQ0FBQyxJQUFJLEtBQUssSUFBSSxNQUFNLENBQUMsQ0FBQyxDQUFDO29CQUMxQixFQUFFLENBQUMsQ0FBQyxLQUFLLEtBQUssU0FBUyxDQUFDLENBQUMsQ0FBQzt3QkFDekIsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxFQUFFLE1BQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDO29CQUN4RCxDQUFDO29CQUFDLElBQUksQ0FBQyxDQUFDO3dCQUNQLElBQUksQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxFQUFFLEVBQUUsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUM7b0JBQ3pELENBQUM7Z0JBQ0YsQ0FBQztnQkFFRCxJQUFJLENBQUMsTUFBTSxHQUFHLElBQUksSUFBSSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLFNB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QWUsRUFBRSxJQUFJLENBQUMsRUFBRSxHQUFHLENBQUM7UUFDNUIsY0FBYyxFQUFFLENBQUM7UUFDakIsZUFBZSxFQUFFLFNBQVM7UUFDMUIsa0JBQWtCLEVBQUUsQ0FBQztRQUNyQixJQUFJLEVBQUUsT0FBTztRQUNiLGdCQUFnQixFQUFFLElBQUksQ0FBQyxhQUFhLENBQUMsZUFBZTtRQUNwRCxVQUFVLEVBQUUsT0FBTztRQUNuQixRQUFRLEVBQUUsRUFBRTtRQUNaLFNBQVMsRUFBRSxRQUFRO1FBQ25CLFdBQVcsRUFBRSxRQUFRO1FBQ3JCLFVBQVUsRUFBRSxRQUFRO1FBQ3BCLGFBQWEsRUFBRSxDQUFDO1FBQ2hCLFVBQVUsRUFBRSxDQUFDO1FBQ2IsUUFBUSxFQUFFLE9BQU87UUFDakIsVUFBVSxFQUFFLEVBQUU7UUFDZCxPQUFPLEVBQUUsQ0FBQztRQUNWLE1BQU0sRUFBRSxPQUFPO1FBQ2YsZUFBZSxFQUFFLENBQUM7UUFDbEIsWUFBWSxFQUFFLFlBQVk7UUFDMUIsTUFBTSxFQUFFLFVBQVU7UUFDbEIsUUFBUSxFQUFFLEtBQUs7UUFDZixhQUFhLEVBQUUsR0FBRztLQUNsQixDQUFDO0lBRVksMkJBQVksR0FBb0I7UUFDN0MsS0FBSyxFQUFFO1lBQ04sT0FBTyxFQUFFLEtBQUs7WUFDZCxRQUFRLEVBQUUsU0FBUztZQUNuQixHQUFHLEVBQUUsU0FBUztZQUNkLE1BQU0sRUFBRSxTQUFTO1lBQ2pCLFFBQVEsRUFBRSwwQkFBMEI7WUFDcEMsSUFBSSxFQUFFLElBQUk7U0FDVjtRQUNELE9BQU8sRUFBRTtZQUNSLE9BQU8sRUFBRSxLQUFLO1lBQ2QsUUFBUSxFQUFFLDJCQUEyQjtZQUNyQyxJQUFJLEVBQUUsSUFBSTtTQUNWO0tBQ0QsQ0FBQyIsImZpbGUiOiJnZW5lcmF0ZWQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uIGUodCxuLHIpe2Z1bmN0aW9uIHMobyx1KXtpZighbltvXSl7aWYoIXRbb10pe3ZhciBhPXR5cGVvZiByZXF1aXJlPT1cImZ1bmN0aW9uXCImJnJlcXVpcmU7aWYoIXUmJmEpcmV0dXJuIGEobywhMCk7aWYoaSlyZXR1cm4gaShvLCEwKTt2YXIgZj1uZXcgRXJyb3IoXCJDYW5ub3QgZmluZCBtb2R1bGUgJ1wiK28rXCInXCIpO3Rocm93IGYuY29kZT1cIk1PRFVMRV9OT1RfRk9VTkRcIixmfXZhciBsPW5bb109e2V4cG9ydHM6e319O3Rbb11bMF0uY2FsbChsLmV4cG9ydHMsZnVuY3Rpb24oZSl7dmFyIG49dFtvXVsxXVtlXTtyZXR1cm4gcyhuP246ZSl9LGwsbC5leHBvcnRzLGUsdCxuLHIpfXJldHVybiBuW29dLmV4cG9ydHN9dmFyIGk9dHlwZW9mIHJlcXVpcmU9PVwiZnVuY3Rpb25cIiYmcmVxdWlyZTtmb3IodmFyIG89MDtvPHIubGVuZ3RoO28rKylzKHJbb10pO3JldHVybiBzfSkiLCJtb2R1bGUuZXhwb3J0cyA9IHJlcXVpcmUoXCIuL3BpeGktbXVsdGlzdHlsZS10ZXh0XCIpLmRlZmF1bHQ7IiwiLy8vIDxyZWZlcmVuY2UgdHlwZXM9XCJwaXhpLmpzXCIgLz5cblxuXCJ1c2Ugc3RyaWN0XCI7XG5cbmV4cG9ydCBpbnRlcmZhY2UgRXh0ZW5kZWRUZXh0U3R5bGUgZXh0ZW5kcyBQSVhJLlRleHRTdHlsZU9wdGlvbnMge1xuXHR2YWxpZ24/OiBcInRvcFwiIHwgXCJtaWRkbGVcIiB8IFwiYm90dG9tXCIgfCBcImJhc2VsaW5lXCIgfCBudW1iZXI7XG5cdGRlYnVnPzogYm9vbGVhbjtcbn1cblxuZXhwb3J0IGludGVyZmFjZSBUZXh0U3R5bGVTZXQge1xuXHRba2V5OiBzdHJpbmddOiBFeHRlbmRlZFRleHRTdHlsZTtcbn1cblxuaW50ZXJmYWNlIEZvbnRQcm9wZXJ0aWVzIHtcblx0YXNjZW50OiBudW1iZXI7XG5cdGRlc2NlbnQ6IG51bWJlcjtcblx0Zm9udFNpemU6IG51bWJlcjtcbn1cblxuaW50ZXJmYWNlIFRleHREYXRhIHtcblx0dGV4dDogc3RyaW5nO1xuXHRzdHlsZTogRXh0ZW5kZWRUZXh0U3R5bGU7XG5cdHdpZHRoOiBudW1iZXI7XG5cdGhlaWdodDogbnVtYmVyO1xuXHRmb250UHJvcGVydGllczogRm9udFByb3BlcnRpZXM7XG5cdHRhZ05hbWU6IHN0cmluZztcbn1cblxuaW50ZXJmYWNlIFRleHREcmF3aW5nRGF0YSB7XG5cdHRleHQ6IHN0cmluZztcblx0c3R5bGU6IEV4dGVuZGVkVGV4dFN0eWxlO1xuXHR4OiBudW1iZXI7XG5cdHk6IG51bWJlcjtcblx0d2lkdGg6IG51bWJlcjtcblx0YXNjZW50OiBudW1iZXI7XG5cdGRlc2NlbnQ6IG51bWJlcjtcblx0dGFnTmFtZTogc3RyaW5nO1xufVxuXG5leHBvcnQgaW50ZXJmYWNlIE1zdERlYnVnT3B0aW9ucyB7XG5cdHNwYW5zOiB7XG5cdFx0ZW5hYmxlZD86IGJvb2xlYW47XG5cdFx0YmFzZWxpbmU/OiBzdHJpbmc7XG5cdFx0dG9wPzogc3RyaW5nO1xuXHRcdGJvdHRvbT86IHN0cmluZztcblx0XHRib3VuZGluZz86IHN0cmluZztcblx0XHR0ZXh0PzogYm9vbGVhbjtcblx0fTtcblx0b2JqZWN0czoge1xuXHRcdGVuYWJsZWQ/OiBib29sZWFuO1xuXHRcdGJvdW5kaW5nPzogc3RyaW5nO1xuXHRcdHRleHQ/OiBib29sZWFuO1xuXHR9XG59XG5cbmV4cG9ydCBkZWZhdWx0IGNsYXNzIE11bHRpU3R5bGVUZXh0IGV4dGVuZHMgUElYSS5UZXh0IHtcblx0cHJpdmF0ZSBzdGF0aWMgREVGQVVMVF9UQUdfU1RZTEU6IEV4dGVuZGVkVGV4dFN0eWxlID0ge1xuXHRcdGFsaWduOiBcImxlZnRcIixcblx0XHRicmVha1dvcmRzOiBmYWxzZSxcblx0XHQvLyBkZWJ1ZyBpbnRlbnRpb25hbGx5IG5vdCBpbmNsdWRlZFxuXHRcdGRyb3BTaGFkb3c6IGZhbHNlLFxuXHRcdGRyb3BTaGFkb3dBbmdsZTogTWF0aC5QSSAvIDYsXG5cdFx0ZHJvcFNoYWRvd0JsdXI6IDAsXG5cdFx0ZHJvcFNoYWRvd0NvbG9yOiBcIiMwMDAwMDBcIixcblx0XHRkcm9wU2hhZG93RGlzdGFuY2U6IDUsXG5cdFx0ZmlsbDogXCJibGFja1wiLFxuXHRcdGZpbGxHcmFkaWVudFR5cGU6IFBJWEkuVEVYVF9HUkFESUVOVC5MSU5FQVJfVkVSVElDQUwsXG5cdFx0Zm9udEZhbWlseTogXCJBcmlhbFwiLFxuXHRcdGZvbnRTaXplOiAyNixcblx0XHRmb250U3R5bGU6IFwibm9ybWFsXCIsXG5cdFx0Zm9udFZhcmlhbnQ6IFwibm9ybWFsXCIsXG5cdFx0Zm9udFdlaWdodDogXCJub3JtYWxcIixcblx0XHRsZXR0ZXJTcGFjaW5nOiAwLFxuXHRcdGxpbmVIZWlnaHQ6IDAsXG5cdFx0bGluZUpvaW46IFwibWl0ZXJcIixcblx0XHRtaXRlckxpbWl0OiAxMCxcblx0XHRwYWRkaW5nOiAwLFxuXHRcdHN0cm9rZTogXCJibGFja1wiLFxuXHRcdHN0cm9rZVRoaWNrbmVzczogMCxcblx0XHR0ZXh0QmFzZWxpbmU6IFwiYWxwaGFiZXRpY1wiLFxuXHRcdHZhbGlnbjogXCJiYXNlbGluZVwiLFxuXHRcdHdvcmRXcmFwOiBmYWxzZSxcblx0XHR3b3JkV3JhcFdpZHRoOiAxMDBcblx0fTtcblxuXHRwdWJsaWMgc3RhdGljIGRlYnVnT3B0aW9uczogTXN0RGVidWdPcHRpb25zID0ge1xuXHRcdHNwYW5zOiB7XG5cdFx0XHRlbmFibGVkOiBmYWxzZSxcblx0XHRcdGJhc2VsaW5lOiBcIiM0NEJCNDRcIixcblx0XHRcdHRvcDogXCIjQkI0NDQ0XCIsXG5cdFx0XHRib3R0b206IFwiIzQ0NDRCQlwiLFxuXHRcdFx0Ym91bmRpbmc6IFwicmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpXCIsXG5cdFx0XHR0ZXh0OiB0cnVlXG5cdFx0fSxcblx0XHRvYmplY3RzOiB7XG5cdFx0XHRlbmFibGVkOiBmYWxzZSxcblx0XHRcdGJvdW5kaW5nOiBcInJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSlcIixcblx0XHRcdHRleHQ6IHRydWVcblx0XHR9XG5cdH07XG5cblx0cHJpdmF0ZSB0ZXh0U3R5bGVzOiBUZXh0U3R5bGVTZXQ7XG5cblx0Y29uc3RydWN0b3IodGV4dDogc3RyaW5nLCBzdHlsZXM6IFRleHRTdHlsZVNldCkge1xuXHRcdHN1cGVyKHRleHQpO1xuXG5cdFx0dGhpcy5zdHlsZXMgPSBzdHlsZXM7XG5cdH1cblxuXHRwdWJsaWMgc2V0IHN0eWxlcyhzdHlsZXM6IFRleHRTdHlsZVNldCkge1xuXHRcdHRoaXMudGV4dFN0eWxlcyA9IHt9O1xuXG5cdFx0dGhpcy50ZXh0U3R5bGVzW1wiZGVmYXVsdFwiXSA9IHRoaXMuYXNzaWduKHt9LCBNdWx0aVN0eWxlVGV4dC5ERUZBVUxUX1RBR19TVFlMRSk7XG5cblx0XHRmb3IgKGxldCBzdHlsZSBpbiBzdHlsZXMpIHtcblx0XHRcdGlmIChzdHlsZSA9PT0gXCJkZWZhdWx0XCIpIHtcblx0XHRcdFx0dGhpcy5hc3NpZ24odGhpcy50ZXh0U3R5bGVzW1wiZGVmYXVsdFwiXSwgc3R5bGVzW3N0eWxlXSk7XG5cdFx0XHR9IGVsc2Uge1xuXHRcdFx0XHR0aGlzLnRleHRTdHlsZXNbc3R5bGVdID0gdGhpcy5hc3NpZ24oe30sIHN0eWxlc1tzdHlsZV0pO1xuXHRcdFx0fVxuXHRcdH1cblxuXHRcdHRoaXMuX3N0eWxlID0gbmV3IFBJWEkuVGV4dFN0eWxlKHRoaXMudGV4dFN0eWxlc1tcImRlZmF1bHRcIl0pO1xuXHRcdHRoaXMuZGlydHkgPSB0cnVlO1xuXHR9XG5cblx0cHVibGljIHNldFRhZ1N0eWxlKHRhZzogc3RyaW5nLCBzdHlsZTogRXh0ZW5kZWRUZXh0U3R5bGUpOiB2b2lkIHtcblx0XHRpZiAodGFnIGluIHRoaXMudGV4dFN0eWxlcykge1xuXHRcdFx0dGhpcy5hc3NpZ24odGhpcy50ZXh0U3R5bGVzW3RhZ10sIHN0eWxlKTtcblx0XHR9IGVsc2Uge1xuXHRcdFx0dGhpcy50ZXh0U3R5bGVzW3RhZ10gPSB0aGlzLmFzc2lnbih7fSwgc3R5bGUpO1xuXHRcdH1cblxuXHRcdHRoaXMuX3N0eWxlID0gbmV3IFBJWEkuVGV4dFN0eWxlKHRoaXMudGV4dFN0eWxlc1tcImRlZmF1bHRcIl0pO1xuXHRcdHRoaXMuZGlydHkgPSB0cnVlO1xuXHR9XG5cblx0cHVibGljIGRlbGV0ZVRhZ1N0eWxlKHRhZzogc3RyaW5nKTogdm9pZCB7XG5cdFx0aWYgKHRhZyA9PT0gXCJkZWZhdWx0XCIpIHtcblx0XHRcdHRoaXMudGV4dFN0eWxlc1tcImRlZmF1bHRcIl0gPSB0aGlzLmFzc2lnbih7fSwgTXVsdGlTdHlsZVRleHQuREVGQVVMVF9UQUdfU1RZTEUpO1xuXHRcdH0gZWxzZSB7XG5cdFx0XHRkZWxldGUgdGhpcy50ZXh0U3R5bGVzW3RhZ107XG5cdFx0fVxuXG5cdFx0dGhpcy5fc3R5bGUgPSBuZXcgUElYSS5UZXh0U3R5bGUodGhpcy50ZXh0U3R5bGVzW1wiZGVmYXVsdFwiXSk7XG5cdFx0dGhpcy5kaXJ0eSA9IHRydWU7XG5cdH1cblxuXHRwcml2YXRlIF9nZXRUZXh0RGF0YVBlckxpbmUgKGxpbmVzOiBzdHJpbmdbXSkge1xuXHRcdGxldCBvdXRwdXRUZXh0RGF0YTogVGV4dERhdGFbXVtdID0gW107XG5cdFx0bGV0IHRhZ3MgPSBPYmplY3Qua2V5cyh0aGlzLnRleHRTdHlsZXMpLmpvaW4oXCJ8XCIpO1xuXHRcdGxldCByZSA9IG5ldyBSZWdFeHAoYDxcXC8/KCR7dGFnc30pPmAsIFwiZ1wiKTtcblxuXHRcdGxldCBzdHlsZVN0YWNrID0gW3RoaXMuYXNzaWduKHt9LCB0aGlzLnRleHRTdHlsZXNbXCJkZWZhdWx0XCJdKV07XG5cdFx0bGV0IHRhZ05hbWVTdGFjayA9IFtcImRlZmF1bHRcIl07XG5cblx0XHQvLyBkZXRlcm1pbmUgdGhlIGdyb3VwIG9mIHdvcmQgZm9yIGVhY2ggbGluZVxuXHRcdGZvciAobGV0IGkgPSAwOyBpIDwgbGluZXMubGVuZ3RoOyBpKyspIHtcblx0XHRcdGxldCBsaW5lVGV4dERhdGE6IFRleHREYXRhW10gPSBbXTtcblxuXHRcdFx0Ly8gZmluZCB0YWdzIGluc2lkZSB0aGUgc3RyaW5nXG5cdFx0XHRsZXQgbWF0Y2hlczogUmVnRXhwRXhlY0FycmF5W10gPSBbXTtcblx0XHRcdGxldCBtYXRjaEFycmF5OiBSZWdFeHBFeGVjQXJyYXk7XG5cblx0XHRcdHdoaWxlIChtYXRjaEFycmF5ID0gcmUuZXhlYyhsaW5lc1tpXSkpIHtcblx0XHRcdFx0bWF0Y2hlcy5wdXNoKG1hdGNoQXJyYXkpO1xuXHRcdFx0fVxuXG5cdFx0XHQvLyBpZiB0aGVyZSBpcyBubyBtYXRjaCwgd2Ugc3RpbGwgbmVlZCB0byBhZGQgdGhlIGxpbmUgd2l0aCB0aGUgZGVmYXVsdCBzdHlsZVxuXHRcdFx0aWYgKG1hdGNoZXMubGVuZ3RoID09PSAwKSB7XG5cdFx0XHRcdGxpbmVUZXh0RGF0YS5wdXNoKHRoaXMuY3JlYXRlVGV4dERhdGEobGluZXNbaV0sIHN0eWxlU3RhY2tbc3R5bGVTdGFjay5sZW5ndGggLSAxXSwgdGFnTmFtZVN0YWNrW3RhZ05hbWVTdGFjay5sZW5ndGggLSAxXSkpO1xuXHRcdFx0fVxuXHRcdFx0ZWxzZSB7XG5cdFx0XHRcdC8vIFdlIGdvdCBhIG1hdGNoISBhZGQgdGhlIHRleHQgd2l0aCB0aGUgbmVlZGVkIHN0eWxlXG5cdFx0XHRcdGxldCBjdXJyZW50U2VhcmNoSWR4ID0gMDtcblx0XHRcdFx0Zm9yIChsZXQgaiA9IDA7IGogPCBtYXRjaGVzLmxlbmd0aDsgaisrKSB7XG5cdFx0XHRcdFx0Ly8gaWYgaW5kZXggPiAwLCBpdCBtZWFucyB3ZSBoYXZlIGNoYXJhY3RlcnMgYmVmb3JlIHRoZSBtYXRjaCxcblx0XHRcdFx0XHQvLyBzbyB3ZSBuZWVkIHRvIGFkZCBpdCB3aXRoIHRoZSBkZWZhdWx0IHN0eWxlXG5cdFx0XHRcdFx0aWYgKG1hdGNoZXNbal0uaW5kZXggPiBjdXJyZW50U2VhcmNoSWR4KSB7XG5cdFx0XHRcdFx0XHRsaW5lVGV4dERhdGEucHVzaCh0aGlzLmNyZWF0ZVRleHREYXRhKFxuXHRcdFx0XHRcdFx0XHRsaW5lc1tpXS5zdWJzdHJpbmcoY3VycmVudFNlYXJjaElkeCwgbWF0Y2hlc1tqXS5pbmRleCksXG5cdFx0XHRcdFx0XHRcdHN0eWxlU3RhY2tbc3R5bGVTdGFjay5sZW5ndGggLSAxXSxcblx0XHRcdFx0XHRcdFx0dGFnTmFtZVN0YWNrW3RhZ05hbWVTdGFjay5sZW5ndGggLSAxXVxuXHRcdFx0XHRcdFx0KSk7XG5cdFx0XHRcdFx0fVxuXG5cdFx0XHRcdFx0aWYgKG1hdGNoZXNbal1bMF1bMV0gPT09IFwiL1wiKSB7IC8vIHJlc2V0IHRoZSBzdHlsZSBpZiBlbmQgb2YgdGFnXG5cdFx0XHRcdFx0XHRpZiAoc3R5bGVTdGFjay5sZW5ndGggPiAxKSB7XG5cdFx0XHRcdFx0XHRcdHN0eWxlU3RhY2sucG9wKCk7XG5cdFx0XHRcdFx0XHRcdHRhZ05hbWVTdGFjay5wb3AoKTtcblx0XHRcdFx0XHRcdH1cblx0XHRcdFx0XHR9IGVsc2UgeyAvLyBzZXQgdGhlIGN1cnJlbnQgc3R5bGVcblx0XHRcdFx0XHRcdHN0eWxlU3RhY2sucHVzaCh0aGlzLmFzc2lnbih7fSwgc3R5bGVTdGFja1tzdHlsZVN0YWNrLmxlbmd0aCAtIDFdLCB0aGlzLnRleHRTdHlsZXNbbWF0Y2hlc1tqXVsxXV0pKTtcblx0XHRcdFx0XHRcdHRhZ05hbWVTdGFjay5wdXNoKG1hdGNoZXNbal1bMV0pO1xuXHRcdFx0XHRcdH1cblxuXHRcdFx0XHRcdC8vIHVwZGF0ZSB0aGUgY3VycmVudCBzZWFyY2ggaW5kZXhcblx0XHRcdFx0XHRjdXJyZW50U2VhcmNoSWR4ID0gbWF0Y2hlc1tqXS5pbmRleCArIG1hdGNoZXNbal1bMF0ubGVuZ3RoO1xuXHRcdFx0XHR9XG5cblx0XHRcdFx0Ly8gaXMgdGhlcmUgYW55IGNoYXJhY3RlciBsZWZ0P1xuXHRcdFx0XHRpZiAoY3VycmVudFNlYXJjaElkeCA8IGxpbmVzW2ldLmxlbmd0aCkge1xuXHRcdFx0XHRcdGxpbmVUZXh0RGF0YS5wdXNoKHRoaXMuY3JlYXRlVGV4dERhdGEoXG5cdFx0XHRcdFx0XHRsaW5lc1tpXS5zdWJzdHJpbmcoY3VycmVudFNlYXJjaElkeCksXG5cdFx0XHRcdFx0XHRzdHlsZVN0YWNrW3N0eWxlU3RhY2subGVuZ3RoIC0gMV0sXG5cdFx0XHRcdFx0XHR0YWdOYW1lU3RhY2tbdGFnTmFtZVN0YWNrLmxlbmd0aCAtIDFdXG5cdFx0XHRcdFx0KSk7XG5cdFx0XHRcdH1cblx0XHRcdH1cblxuXHRcdFx0b3V0cHV0VGV4dERhdGEucHVzaChsaW5lVGV4dERhdGEpO1xuXHRcdH1cblxuXHRcdHJldHVybiBvdXRwdXRUZXh0RGF0YTtcblx0fVxuXG5cdHByaXZhdGUgZ2V0Rm9udFN0cmluZyhzdHlsZTogRXh0ZW5kZWRUZXh0U3R5bGUpOiBzdHJpbmcge1xuXHRcdHJldHVybiBuZXcgUElYSS5UZXh0U3R5bGUoc3R5bGUpLnRvRm9udFN0cmluZygpO1xuXHR9XG5cblx0cHJpdmF0ZSBjcmVhdGVUZXh0RGF0YSh0ZXh0OiBzdHJpbmcsIHN0eWxlOiBFeHRlbmRlZFRleHRTdHlsZSwgdGFnTmFtZTogc3RyaW5nKTogVGV4dERhdGEge1xuXHRcdHJldHVybiB7XG5cdFx0XHR0ZXh0LFxuXHRcdFx0c3R5bGUsXG5cdFx0XHR3aWR0aDogMCxcblx0XHRcdGhlaWdodDogMCxcblx0XHRcdGZvbnRQcm9wZXJ0aWVzOiB1bmRlZmluZWQsXG5cdFx0XHR0YWdOYW1lXG5cdFx0fTtcblx0fVxuXG5cdHByaXZhdGUgZ2V0RHJvcFNoYWRvd1BhZGRpbmcoKTogbnVtYmVyIHtcblx0XHRsZXQgbWF4RGlzdGFuY2UgPSAwO1xuXHRcdGxldCBtYXhCbHVyID0gMDtcblxuXHRcdCBPYmplY3Qua2V5cyh0aGlzLnRleHRTdHlsZXMpLmZvckVhY2goKHN0eWxlS2V5KSA9PiB7XG5cdFx0XHRsZXQgeyBkcm9wU2hhZG93RGlzdGFuY2UsIGRyb3BTaGFkb3dCbHVyIH0gPSB0aGlzLnRleHRTdHlsZXNbc3R5bGVLZXldO1xuXHRcdFx0bWF4RGlzdGFuY2UgPSBNYXRoLm1heChtYXhEaXN0YW5jZSwgZHJvcFNoYWRvd0Rpc3RhbmNlIHx8IDApO1xuXHRcdFx0bWF4Qmx1ciA9IE1hdGgubWF4KG1heEJsdXIsIGRyb3BTaGFkb3dCbHVyIHx8IDApO1xuXHRcdH0pO1xuXG5cdFx0cmV0dXJuIG1heERpc3RhbmNlICsgbWF4Qmx1cjtcblx0fVxuXG5cdHB1YmxpYyB1cGRhdGVUZXh0KCk6IHZvaWQge1xuXHRcdGlmICghdGhpcy5kaXJ0eSkge1xuXHRcdFx0cmV0dXJuO1xuXHRcdH1cblxuXHRcdHRoaXMudGV4dHVyZS5iYXNlVGV4dHVyZS5yZXNvbHV0aW9uID0gdGhpcy5yZXNvbHV0aW9uO1xuXHRcdGxldCB0ZXh0U3R5bGVzID0gdGhpcy50ZXh0U3R5bGVzO1xuXHRcdGxldCBvdXRwdXRUZXh0ID0gdGhpcy50ZXh0O1xuXG5cdFx0aWYodGhpcy5fc3R5bGUud29yZFdyYXApIHtcblx0XHRcdG91dHB1dFRleHQgPSB0aGlzLndvcmRXcmFwKHRoaXMudGV4dCk7XG5cdFx0fVxuXG5cdFx0Ly8gc3BsaXQgdGV4dCBpbnRvIGxpbmVzXG5cdFx0bGV0IGxpbmVzID0gb3V0cHV0VGV4dC5zcGxpdCgvKD86XFxyXFxufFxccnxcXG4pLyk7XG5cblx0XHQvLyBnZXQgdGhlIHRleHQgZGF0YSB3aXRoIHNwZWNpZmljIHN0eWxlc1xuXHRcdGxldCBvdXRwdXRUZXh0RGF0YSA9IHRoaXMuX2dldFRleHREYXRhUGVyTGluZShsaW5lcyk7XG5cblx0XHQvLyBjYWxjdWxhdGUgdGV4dCB3aWR0aCBhbmQgaGVpZ2h0XG5cdFx0bGV0IGxpbmVXaWR0aHM6IG51bWJlcltdID0gW107XG5cdFx0bGV0IGxpbmVZTWluczogbnVtYmVyW10gPSBbXTtcblx0XHRsZXQgbGluZVlNYXhzOiBudW1iZXJbXSA9IFtdO1xuXHRcdGxldCBiYXNlbGluZXM6IG51bWJlcltdID0gW107XG5cdFx0bGV0IG1heExpbmVXaWR0aCA9IDA7XG5cblx0XHRmb3IgKGxldCBpID0gMDsgaSA8IGxpbmVzLmxlbmd0aDsgaSsrKSB7XG5cdFx0XHRsZXQgbGluZVdpZHRoID0gMDtcblx0XHRcdGxldCBsaW5lWU1pbiA9IDA7XG5cdFx0XHRsZXQgbGluZVlNYXggPSAwO1xuXHRcdFx0bGV0IGJhc2VsaW5lID0gMDtcblx0XHRcdGZvciAobGV0IGogPSAwOyBqIDwgb3V0cHV0VGV4dERhdGFbaV0ubGVuZ3RoOyBqKyspIHtcblx0XHRcdFx0bGV0IHN0eSA9IG91dHB1dFRleHREYXRhW2ldW2pdLnN0eWxlO1xuXG5cdFx0XHRcdHRoaXMuY29udGV4dC5mb250ID0gdGhpcy5nZXRGb250U3RyaW5nKHN0eSk7XG5cblx0XHRcdFx0Ly8gc2F2ZSB0aGUgd2lkdGhcblx0XHRcdFx0b3V0cHV0VGV4dERhdGFbaV1bal0ud2lkdGggPSB0aGlzLmNvbnRleHQubWVhc3VyZVRleHQob3V0cHV0VGV4dERhdGFbaV1bal0udGV4dCkud2lkdGg7XG5cblx0XHRcdFx0aWYgKG91dHB1dFRleHREYXRhW2ldW2pdLnRleHQubGVuZ3RoID09PSAwKSB7XG5cdFx0XHRcdFx0b3V0cHV0VGV4dERhdGFbaV1bal0ud2lkdGggKz0gKG91dHB1dFRleHREYXRhW2ldW2pdLnRleHQubGVuZ3RoIC0gMSkgKiBzdHkubGV0dGVyU3BhY2luZztcblxuXHRcdFx0XHRcdGlmIChqID4gMCkge1xuXHRcdFx0XHRcdFx0bGluZVdpZHRoICs9IHN0eS5sZXR0ZXJTcGFjaW5nIC8gMjsgLy8gc3BhY2luZyBiZWZvcmUgZmlyc3QgY2hhcmFjdGVyXG5cdFx0XHRcdFx0fVxuXG5cdFx0XHRcdFx0aWYgKGogPCBvdXRwdXRUZXh0RGF0YVtpXS5sZW5ndGggLSAxKSB7XG5cdFx0XHRcdFx0XHRsaW5lV2lkdGggKz0gc3R5LmxldHRlclNwYWNpbmcgLyAyOyAvLyBzcGFjaW5nIGFmdGVyIGxhc3QgY2hhcmFjdGVyXG5cdFx0XHRcdFx0fVxuXHRcdFx0XHR9XG5cblx0XHRcdFx0bGluZVdpZHRoICs9IG91dHB1dFRleHREYXRhW2ldW2pdLndpZHRoO1xuXG5cdFx0XHRcdC8vIHNhdmUgdGhlIGZvbnQgcHJvcGVydGllc1xuXHRcdFx0XHRvdXRwdXRUZXh0RGF0YVtpXVtqXS5mb250UHJvcGVydGllcyA9IFBJWEkuVGV4dE1ldHJpY3MubWVhc3VyZUZvbnQodGhpcy5jb250ZXh0LmZvbnQpO1xuXG5cdFx0XHRcdC8vIHNhdmUgdGhlIGhlaWdodFxuXHRcdFx0XHRvdXRwdXRUZXh0RGF0YVtpXVtqXS5oZWlnaHQgPVxuXHRcdFx0XHRcdFx0b3V0cHV0VGV4dERhdGFbaV1bal0uZm9udFByb3BlcnRpZXMuZm9udFNpemUgKyBvdXRwdXRUZXh0RGF0YVtpXVtqXS5zdHlsZS5zdHJva2VUaGlja25lc3M7XG5cblx0XHRcdFx0aWYgKHR5cGVvZiBzdHkudmFsaWduID09PSBcIm51bWJlclwiKSB7XG5cdFx0XHRcdFx0bGluZVlNaW4gPSBNYXRoLm1pbihsaW5lWU1pbiwgc3R5LnZhbGlnbiAtIG91dHB1dFRleHREYXRhW2ldW2pdLmZvbnRQcm9wZXJ0aWVzLmRlc2NlbnQpO1xuXHRcdFx0XHRcdGxpbmVZTWF4ID0gTWF0aC5tYXgobGluZVlNYXgsIHN0eS52YWxpZ24gKyBvdXRwdXRUZXh0RGF0YVtpXVtqXS5mb250UHJvcGVydGllcy5hc2NlbnQpO1xuXHRcdFx0XHR9IGVsc2Uge1xuXHRcdFx0XHRcdGxpbmVZTWluID0gTWF0aC5taW4obGluZVlNaW4sIC1vdXRwdXRUZXh0RGF0YVtpXVtqXS5mb250UHJvcGVydGllcy5kZXNjZW50KTtcblx0XHRcdFx0XHRsaW5lWU1heCA9IE1hdGgubWF4KGxpbmVZTWF4LCBvdXRwdXRUZXh0RGF0YVtpXVtqXS5mb250UHJvcGVydGllcy5hc2NlbnQpO1xuXHRcdFx0XHR9XG5cdFx0XHR9XG5cblx0XHRcdGxpbmVXaWR0aHNbaV0gPSBsaW5lV2lkdGg7XG5cdFx0XHRsaW5lWU1pbnNbaV0gPSBsaW5lWU1pbjtcblx0XHRcdGxpbmVZTWF4c1tpXSA9IGxpbmVZTWF4O1xuXHRcdFx0bWF4TGluZVdpZHRoID0gTWF0aC5tYXgobWF4TGluZVdpZHRoLCBsaW5lV2lkdGgpO1xuXHRcdH1cblxuXHRcdC8vIHRyYW5zZm9ybSBzdHlsZXMgaW4gYXJyYXlcblx0XHRsZXQgc3R5bGVzQXJyYXkgPSBPYmplY3Qua2V5cyh0ZXh0U3R5bGVzKS5tYXAoKGtleSkgPT4gdGV4dFN0eWxlc1trZXldKTtcblxuXHRcdGxldCBtYXhTdHJva2VUaGlja25lc3MgPSBzdHlsZXNBcnJheS5yZWR1Y2UoKHByZXYsIGN1cikgPT4gTWF0aC5tYXgocHJldiwgY3VyLnN0cm9rZVRoaWNrbmVzcyB8fCAwKSwgMCk7XG5cblx0XHRsZXQgZHJvcFNoYWRvd1BhZGRpbmcgPSB0aGlzLmdldERyb3BTaGFkb3dQYWRkaW5nKCk7XG5cblx0XHRsZXQgdG90YWxIZWlnaHQgPSBsaW5lWU1heHMucmVkdWNlKChwcmV2LCBjdXIpID0+IHByZXYgKyBjdXIsIDApIC0gbGluZVlNaW5zLnJlZHVjZSgocHJldiwgY3VyKSA9PiBwcmV2ICsgY3VyLCAwKTtcblxuXHRcdC8vIGRlZmluZSB0aGUgcmlnaHQgd2lkdGggYW5kIGhlaWdodFxuXHRcdGxldCB3aWR0aCA9IG1heExpbmVXaWR0aCArIG1heFN0cm9rZVRoaWNrbmVzcyArIDIgKiBkcm9wU2hhZG93UGFkZGluZztcblx0XHRsZXQgaGVpZ2h0ID0gdG90YWxIZWlnaHQgKyAyICogZHJvcFNoYWRvd1BhZGRpbmc7XG5cblx0XHR0aGlzLmNhbnZhcy53aWR0aCA9ICh3aWR0aCArIHRoaXMuY29udGV4dC5saW5lV2lkdGgpICogdGhpcy5yZXNvbHV0aW9uO1xuXHRcdHRoaXMuY2FudmFzLmhlaWdodCA9IGhlaWdodCAqIHRoaXMucmVzb2x1dGlvbjtcblxuXHRcdHRoaXMuY29udGV4dC5zY2FsZSh0aGlzLnJlc29sdXRpb24sIHRoaXMucmVzb2x1dGlvbik7XG5cblx0XHR0aGlzLmNvbnRleHQudGV4dEJhc2VsaW5lID0gXCJhbHBoYWJldGljXCI7XG5cdFx0dGhpcy5jb250ZXh0LmxpbmVKb2luID0gXCJyb3VuZFwiO1xuXG5cdFx0bGV0IGJhc2VQb3NpdGlvblkgPSBkcm9wU2hhZG93UGFkZGluZztcblxuXHRcdGxldCBkcmF3aW5nRGF0YTogVGV4dERyYXdpbmdEYXRhW10gPSBbXTtcblxuXHRcdC8vIENvbXB1dGUgdGhlIGRyYXdpbmcgZGF0YVxuXHRcdGZvciAobGV0IGkgPSAwOyBpIDwgb3V0cHV0VGV4dERhdGEubGVuZ3RoOyBpKyspIHtcblx0XHRcdGxldCBsaW5lID0gb3V0cHV0VGV4dERhdGFbaV07XG5cdFx0XHRsZXQgbGluZVBvc2l0aW9uWDogbnVtYmVyO1xuXG5cdFx0XHRzd2l0Y2ggKHRoaXMuX3N0eWxlLmFsaWduKSB7XG5cdFx0XHRcdGNhc2UgXCJsZWZ0XCI6XG5cdFx0XHRcdFx0bGluZVBvc2l0aW9uWCA9IGRyb3BTaGFkb3dQYWRkaW5nO1xuXHRcdFx0XHRcdGJyZWFrO1xuXG5cdFx0XHRcdGNhc2UgXCJjZW50ZXJcIjpcblx0XHRcdFx0XHRsaW5lUG9zaXRpb25YID0gZHJvcFNoYWRvd1BhZGRpbmcgKyAobWF4TGluZVdpZHRoIC0gbGluZVdpZHRoc1tpXSkgLyAyO1xuXHRcdFx0XHRcdGJyZWFrO1xuXG5cdFx0XHRcdGNhc2UgXCJyaWdodFwiOlxuXHRcdFx0XHRcdGxpbmVQb3NpdGlvblggPSBkcm9wU2hhZG93UGFkZGluZyArIG1heExpbmVXaWR0aCAtIGxpbmVXaWR0aHNbaV07XG5cdFx0XHRcdFx0YnJlYWs7XG5cdFx0XHR9XG5cblx0XHRcdGZvciAobGV0IGogPSAwOyBqIDwgbGluZS5sZW5ndGg7IGorKykge1xuXHRcdFx0XHRsZXQgeyBzdHlsZSwgdGV4dCwgZm9udFByb3BlcnRpZXMsIHdpZHRoLCBoZWlnaHQsIHRhZ05hbWUgfSA9IGxpbmVbal07XG5cblx0XHRcdFx0bGluZVBvc2l0aW9uWCArPSBtYXhTdHJva2VUaGlja25lc3MgLyAyO1xuXG5cdFx0XHRcdGxldCBsaW5lUG9zaXRpb25ZID0gbWF4U3Ryb2tlVGhpY2tuZXNzIC8gMiArIGJhc2VQb3NpdGlvblkgKyBmb250UHJvcGVydGllcy5hc2NlbnQ7XG5cblx0XHRcdFx0c3dpdGNoIChzdHlsZS52YWxpZ24pIHtcblx0XHRcdFx0XHRjYXNlIFwidG9wXCI6XG5cdFx0XHRcdFx0XHQvLyBubyBuZWVkIHRvIGRvIGFueXRoaW5nXG5cdFx0XHRcdFx0XHRicmVhaztcblxuXHRcdFx0XHRcdGNhc2UgXCJiYXNlbGluZVwiOlxuXHRcdFx0XHRcdFx0bGluZVBvc2l0aW9uWSArPSBsaW5lWU1heHNbaV0gLSBmb250UHJvcGVydGllcy5hc2NlbnQ7XG5cdFx0XHRcdFx0XHRicmVhaztcblxuXHRcdFx0XHRcdGNhc2UgXCJtaWRkbGVcIjpcblx0XHRcdFx0XHRcdGxpbmVQb3NpdGlvblkgKz0gKGxpbmVZTWF4c1tpXSAtIGxpbmVZTWluc1tpXSAtIGZvbnRQcm9wZXJ0aWVzLmFzY2VudCAtIGZvbnRQcm9wZXJ0aWVzLmRlc2NlbnQpIC8gMjtcblx0XHRcdFx0XHRcdGJyZWFrO1xuXG5cdFx0XHRcdFx0Y2FzZSBcImJvdHRvbVwiOlxuXHRcdFx0XHRcdFx0bGluZVBvc2l0aW9uWSArPSBsaW5lWU1heHNbaV0gLSBsaW5lWU1pbnNbaV0gLSBmb250UHJvcGVydGllcy5hc2NlbnQgLSBmb250UHJvcGVydGllcy5kZXNjZW50O1xuXHRcdFx0XHRcdFx0YnJlYWs7XG5cblx0XHRcdFx0XHRkZWZhdWx0OlxuXHRcdFx0XHRcdFx0Ly8gQSBudW1iZXIgLSBvZmZzZXQgZnJvbSBiYXNlbGluZSwgcG9zaXRpdmUgaXMgaGlnaGVyXG5cdFx0XHRcdFx0XHRsaW5lUG9zaXRpb25ZICs9IGxpbmVZTWF4c1tpXSAtIGZvbnRQcm9wZXJ0aWVzLmFzY2VudCAtIHN0eWxlLnZhbGlnbjtcblx0XHRcdFx0XHRcdGJyZWFrO1xuXHRcdFx0XHR9XG5cblx0XHRcdFx0aWYgKHN0eWxlLmxldHRlclNwYWNpbmcgPT09IDApIHtcblx0XHRcdFx0XHRkcmF3aW5nRGF0YS5wdXNoKHtcblx0XHRcdFx0XHRcdHRleHQsXG5cdFx0XHRcdFx0XHRzdHlsZSxcblx0XHRcdFx0XHRcdHg6IGxpbmVQb3NpdGlvblgsXG5cdFx0XHRcdFx0XHR5OiBsaW5lUG9zaXRpb25ZLFxuXHRcdFx0XHRcdFx0d2lkdGgsXG5cdFx0XHRcdFx0XHRhc2NlbnQ6IGZvbnRQcm9wZXJ0aWVzLmFzY2VudCxcblx0XHRcdFx0XHRcdGRlc2NlbnQ6IGZvbnRQcm9wZXJ0aWVzLmRlc2NlbnQsXG5cdFx0XHRcdFx0XHR0YWdOYW1lXG5cdFx0XHRcdFx0fSk7XG5cblx0XHRcdFx0XHRsaW5lUG9zaXRpb25YICs9IGxpbmVbal0ud2lkdGg7XG5cdFx0XHRcdH0gZWxzZSB7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LmZvbnQgPSB0aGlzLmdldEZvbnRTdHJpbmcobGluZVtqXS5zdHlsZSk7XG5cblx0XHRcdFx0XHRmb3IgKGxldCBrID0gMDsgayA8IHRleHQubGVuZ3RoOyBrKyspIHtcblx0XHRcdFx0XHRcdGlmIChrID4gMCB8fCBqID4gMCkge1xuXHRcdFx0XHRcdFx0XHRsaW5lUG9zaXRpb25YICs9IHN0eWxlLmxldHRlclNwYWNpbmcgLyAyO1xuXHRcdFx0XHRcdFx0fVxuXG5cdFx0XHRcdFx0XHRkcmF3aW5nRGF0YS5wdXNoKHtcblx0XHRcdFx0XHRcdFx0dGV4dDogdGV4dC5jaGFyQXQoayksXG5cdFx0XHRcdFx0XHRcdHN0eWxlLFxuXHRcdFx0XHRcdFx0XHR4OiBsaW5lUG9zaXRpb25YLFxuXHRcdFx0XHRcdFx0XHR5OiBsaW5lUG9zaXRpb25ZLFxuXHRcdFx0XHRcdFx0XHR3aWR0aCxcblx0XHRcdFx0XHRcdFx0YXNjZW50OiBmb250UHJvcGVydGllcy5hc2NlbnQsXG5cdFx0XHRcdFx0XHRcdGRlc2NlbnQ6IGZvbnRQcm9wZXJ0aWVzLmRlc2NlbnQsXG5cdFx0XHRcdFx0XHRcdHRhZ05hbWVcblx0XHRcdFx0XHRcdH0pO1xuXG5cdFx0XHRcdFx0XHRsaW5lUG9zaXRpb25YICs9IHRoaXMuY29udGV4dC5tZWFzdXJlVGV4dCh0ZXh0LmNoYXJBdChrKSkud2lkdGg7XG5cblx0XHRcdFx0XHRcdGlmIChrIDwgdGV4dC5sZW5ndGggLSAxIHx8IGogPCBsaW5lLmxlbmd0aCAtIDEpIHtcblx0XHRcdFx0XHRcdFx0bGluZVBvc2l0aW9uWCArPSBzdHlsZS5sZXR0ZXJTcGFjaW5nIC8gMjtcblx0XHRcdFx0XHRcdH1cblx0XHRcdFx0XHR9XG5cdFx0XHRcdH1cblxuXHRcdFx0XHRsaW5lUG9zaXRpb25YIC09IG1heFN0cm9rZVRoaWNrbmVzcyAvIDI7XG5cdFx0XHR9XG5cblx0XHRcdGJhc2VQb3NpdGlvblkgKz0gbGluZVlNYXhzW2ldIC0gbGluZVlNaW5zW2ldO1xuXHRcdH1cblxuXHRcdHRoaXMuY29udGV4dC5zYXZlKCk7XG5cblx0XHQvLyBGaXJzdCBwYXNzOiBkcmF3IHRoZSBzaGFkb3dzIG9ubHlcblx0XHRkcmF3aW5nRGF0YS5mb3JFYWNoKCh7IHN0eWxlLCB0ZXh0LCB4LCB5IH0pID0+IHtcblx0XHRcdGlmICghc3R5bGUuZHJvcFNoYWRvdykge1xuXHRcdFx0XHRyZXR1cm47IC8vIFRoaXMgdGV4dCBkb2Vzbid0IGhhdmUgYSBzaGFkb3dcblx0XHRcdH1cblxuXHRcdFx0dGhpcy5jb250ZXh0LmZvbnQgPSB0aGlzLmdldEZvbnRTdHJpbmcoc3R5bGUpO1xuXG5cdFx0XHRsZXQgZHJvcEZpbGxTdHlsZSA9IHN0eWxlLmRyb3BTaGFkb3dDb2xvcjtcblx0XHRcdGlmICh0eXBlb2YgZHJvcEZpbGxTdHlsZSA9PT0gXCJudW1iZXJcIikge1xuXHRcdFx0XHRkcm9wRmlsbFN0eWxlID0gUElYSS51dGlscy5oZXgyc3RyaW5nKGRyb3BGaWxsU3R5bGUpO1xuXHRcdFx0fVxuXHRcdFx0dGhpcy5jb250ZXh0LnNoYWRvd0NvbG9yID0gZHJvcEZpbGxTdHlsZTtcblx0XHRcdHRoaXMuY29udGV4dC5zaGFkb3dCbHVyID0gc3R5bGUuZHJvcFNoYWRvd0JsdXI7XG5cdFx0XHR0aGlzLmNvbnRleHQuc2hhZG93T2Zmc2V0WCA9IE1hdGguY29zKHN0eWxlLmRyb3BTaGFkb3dBbmdsZSkgKiBzdHlsZS5kcm9wU2hhZG93RGlzdGFuY2UgKiB0aGlzLnJlc29sdXRpb247XG5cdFx0XHR0aGlzLmNvbnRleHQuc2hhZG93T2Zmc2V0WSA9IE1hdGguc2luKHN0eWxlLmRyb3BTaGFkb3dBbmdsZSkgKiBzdHlsZS5kcm9wU2hhZG93RGlzdGFuY2UgKiB0aGlzLnJlc29sdXRpb247XG5cblx0XHRcdHRoaXMuY29udGV4dC5maWxsVGV4dCh0ZXh0LCB4LCB5KTtcblx0XHR9KTtcblxuXHRcdHRoaXMuY29udGV4dC5yZXN0b3JlKCk7XG5cblx0XHQvLyBTZWNvbmQgcGFzczogZHJhdyBzdHJva2VzIGFuZCBmaWxsc1xuXHRcdGRyYXdpbmdEYXRhLmZvckVhY2goKHsgc3R5bGUsIHRleHQsIHgsIHksIHdpZHRoLCBhc2NlbnQsIGRlc2NlbnQsIHRhZ05hbWUgfSkgPT4ge1xuXHRcdFx0dGhpcy5jb250ZXh0LmZvbnQgPSB0aGlzLmdldEZvbnRTdHJpbmcoc3R5bGUpO1xuXG5cdFx0XHRsZXQgc3Ryb2tlU3R5bGUgPSBzdHlsZS5zdHJva2U7XG5cdFx0XHRpZiAodHlwZW9mIHN0cm9rZVN0eWxlID09PSBcIm51bWJlclwiKSB7XG5cdFx0XHRcdHN0cm9rZVN0eWxlID0gUElYSS51dGlscy5oZXgyc3RyaW5nKHN0cm9rZVN0eWxlKTtcblx0XHRcdH1cblxuXHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVN0eWxlID0gc3Ryb2tlU3R5bGU7XG5cdFx0XHR0aGlzLmNvbnRleHQubGluZVdpZHRoID0gc3R5bGUuc3Ryb2tlVGhpY2tuZXNzO1xuXG5cdFx0XHQvLyBzZXQgY2FudmFzIHRleHQgc3R5bGVzXG5cdFx0XHRsZXQgZmlsbFN0eWxlID0gc3R5bGUuZmlsbDtcblx0XHRcdGlmICh0eXBlb2YgZmlsbFN0eWxlID09PSBcIm51bWJlclwiKSB7XG5cdFx0XHRcdGZpbGxTdHlsZSA9IFBJWEkudXRpbHMuaGV4MnN0cmluZyhmaWxsU3R5bGUpO1xuXHRcdFx0fSBlbHNlIGlmIChBcnJheS5pc0FycmF5KGZpbGxTdHlsZSkpIHtcblx0XHRcdFx0Zm9yIChsZXQgaSA9IDA7IGkgPCBmaWxsU3R5bGUubGVuZ3RoOyBpKyspIHtcblx0XHRcdFx0XHRsZXQgZmlsbCA9IGZpbGxTdHlsZVtpXTtcblx0XHRcdFx0XHRpZiAodHlwZW9mIGZpbGwgPT09IFwibnVtYmVyXCIpIHtcblx0XHRcdFx0XHRcdGZpbGxTdHlsZVtpXSA9IFBJWEkudXRpbHMuaGV4MnN0cmluZyhmaWxsKTtcblx0XHRcdFx0XHR9XG5cdFx0XHRcdH1cblx0XHRcdH1cblx0XHRcdHRoaXMuY29udGV4dC5maWxsU3R5bGUgPSB0aGlzLl9nZW5lcmF0ZUZpbGxTdHlsZShuZXcgUElYSS5UZXh0U3R5bGUoc3R5bGUpLCBbdGV4dF0pIGFzIHN0cmluZyB8IENhbnZhc0dyYWRpZW50O1xuXHRcdFx0Ly8gVHlwZWNhc3QgcmVxdWlyZWQgZm9yIHByb3BlciB0eXBlY2hlY2tpbmdcblxuXHRcdFx0aWYgKHN0eWxlLnN0cm9rZSAmJiBzdHlsZS5zdHJva2VUaGlja25lc3MpIHtcblx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVRleHQodGV4dCwgeCwgeSk7XG5cdFx0XHR9XG5cblx0XHRcdGlmIChzdHlsZS5maWxsKSB7XG5cdFx0XHRcdHRoaXMuY29udGV4dC5maWxsVGV4dCh0ZXh0LCB4LCB5KTtcblx0XHRcdH1cblxuXHRcdFx0bGV0IGRlYnVnU3BhbiA9IHN0eWxlLmRlYnVnID09PSB1bmRlZmluZWRcblx0XHRcdFx0PyBNdWx0aVN0eWxlVGV4dC5kZWJ1Z09wdGlvbnMuc3BhbnMuZW5hYmxlZFxuXHRcdFx0XHQ6IHN0eWxlLmRlYnVnO1xuXG5cdFx0XHRpZiAoZGVidWdTcGFuKSB7XG5cdFx0XHRcdHRoaXMuY29udGV4dC5saW5lV2lkdGggPSAxO1xuXG5cdFx0XHRcdGlmIChNdWx0aVN0eWxlVGV4dC5kZWJ1Z09wdGlvbnMuc3BhbnMuYm91bmRpbmcpIHtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQuZmlsbFN0eWxlID0gTXVsdGlTdHlsZVRleHQuZGVidWdPcHRpb25zLnNwYW5zLmJvdW5kaW5nO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2VTdHlsZSA9IE11bHRpU3R5bGVUZXh0LmRlYnVnT3B0aW9ucy5zcGFucy5ib3VuZGluZztcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQuYmVnaW5QYXRoKCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnJlY3QoeCwgeSAtIGFzY2VudCwgd2lkdGgsIGFzY2VudCArIGRlc2NlbnQpO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5maWxsKCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZSgpO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2UoKTsgLy8geWVzLCB0d2ljZVxuXHRcdFx0XHR9XG5cblx0XHRcdFx0aWYgKE11bHRpU3R5bGVUZXh0LmRlYnVnT3B0aW9ucy5zcGFucy5iYXNlbGluZSkge1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2VTdHlsZSA9IE11bHRpU3R5bGVUZXh0LmRlYnVnT3B0aW9ucy5zcGFucy5iYXNlbGluZTtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQuYmVnaW5QYXRoKCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0Lm1vdmVUbyh4LCB5KTtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQubGluZVRvKHggKyB3aWR0aCwgeSk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LmNsb3NlUGF0aCgpO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2UoKTtcblx0XHRcdFx0fVxuXG5cdFx0XHRcdGlmIChNdWx0aVN0eWxlVGV4dC5kZWJ1Z09wdGlvbnMuc3BhbnMudG9wKSB7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVN0eWxlID0gTXVsdGlTdHlsZVRleHQuZGVidWdPcHRpb25zLnNwYW5zLnRvcDtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQuYmVnaW5QYXRoKCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0Lm1vdmVUbyh4LCB5IC0gYXNjZW50KTtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQubGluZVRvKHggKyB3aWR0aCwgeSAtIGFzY2VudCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LmNsb3NlUGF0aCgpO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2UoKTtcblx0XHRcdFx0fVxuXG5cdFx0XHRcdGlmIChNdWx0aVN0eWxlVGV4dC5kZWJ1Z09wdGlvbnMuc3BhbnMuYm90dG9tKSB7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVN0eWxlID0gTXVsdGlTdHlsZVRleHQuZGVidWdPcHRpb25zLnNwYW5zLmJvdHRvbTtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQuYmVnaW5QYXRoKCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0Lm1vdmVUbyh4LCB5ICsgZGVzY2VudCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LmxpbmVUbyh4ICsgd2lkdGgsIHkgKyBkZXNjZW50KTtcblx0XHRcdFx0XHR0aGlzLmNvbnRleHQuY2xvc2VQYXRoKCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZSgpO1xuXHRcdFx0XHR9XG5cblx0XHRcdFx0aWYgKE11bHRpU3R5bGVUZXh0LmRlYnVnT3B0aW9ucy5zcGFucy50ZXh0KSB7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LmZpbGxTdHlsZSA9IFwiI2ZmZmZmZlwiO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2VTdHlsZSA9IFwiIzAwMDAwMFwiO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5saW5lV2lkdGggPSAyO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5mb250ID0gXCI4cHggbW9ub3NwYWNlXCI7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVRleHQodGFnTmFtZSwgeCwgeSAtIGFzY2VudCArIDgpO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5maWxsVGV4dCh0YWdOYW1lLCB4LCB5IC0gYXNjZW50ICsgOCk7XG5cdFx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVRleHQoYCR7d2lkdGgudG9GaXhlZCgyKX14JHsoYXNjZW50ICsgZGVzY2VudCkudG9GaXhlZCgyKX1gLCB4LCB5IC0gYXNjZW50ICsgMTYpO1xuXHRcdFx0XHRcdHRoaXMuY29udGV4dC5maWxsVGV4dChgJHt3aWR0aC50b0ZpeGVkKDIpfXgkeyhhc2NlbnQgKyBkZXNjZW50KS50b0ZpeGVkKDIpfWAsIHgsIHkgLSBhc2NlbnQgKyAxNik7XG5cdFx0XHRcdH1cblx0XHRcdH1cblx0XHR9KTtcblxuXHRcdGlmIChNdWx0aVN0eWxlVGV4dC5kZWJ1Z09wdGlvbnMub2JqZWN0cy5lbmFibGVkKSB7XG5cdFx0XHRpZiAoTXVsdGlTdHlsZVRleHQuZGVidWdPcHRpb25zLm9iamVjdHMuYm91bmRpbmcpIHtcblx0XHRcdFx0dGhpcy5jb250ZXh0LmZpbGxTdHlsZSA9IE11bHRpU3R5bGVUZXh0LmRlYnVnT3B0aW9ucy5vYmplY3RzLmJvdW5kaW5nO1xuXHRcdFx0XHR0aGlzLmNvbnRleHQuYmVnaW5QYXRoKCk7XG5cdFx0XHRcdHRoaXMuY29udGV4dC5yZWN0KDAsIDAsIHdpZHRoLCBoZWlnaHQpO1xuXHRcdFx0XHR0aGlzLmNvbnRleHQuZmlsbCgpO1xuXHRcdFx0fVxuXG5cdFx0XHRpZiAoTXVsdGlTdHlsZVRleHQuZGVidWdPcHRpb25zLm9iamVjdHMudGV4dCkge1xuXHRcdFx0XHR0aGlzLmNvbnRleHQuZmlsbFN0eWxlID0gXCIjZmZmZmZmXCI7XG5cdFx0XHRcdHRoaXMuY29udGV4dC5zdHJva2VTdHlsZSA9IFwiIzAwMDAwMFwiO1xuXHRcdFx0XHR0aGlzLmNvbnRleHQubGluZVdpZHRoID0gMjtcblx0XHRcdFx0dGhpcy5jb250ZXh0LmZvbnQgPSBcIjhweCBtb25vc3BhY2VcIjtcblx0XHRcdFx0dGhpcy5jb250ZXh0LnN0cm9rZVRleHQoYCR7d2lkdGgudG9GaXhlZCgyKX14JHtoZWlnaHQudG9GaXhlZCgyKX1gLCAwLCA4LCB3aWR0aCk7XG5cdFx0XHRcdHRoaXMuY29udGV4dC5maWxsVGV4dChgJHt3aWR0aC50b0ZpeGVkKDIpfXgke2hlaWdodC50b0ZpeGVkKDIpfWAsIDAsIDgsIHdpZHRoKTtcblx0XHRcdH1cblx0XHR9XG5cblx0XHR0aGlzLnVwZGF0ZVRleHR1cmUoKTtcblx0fVxuXG5cdHByb3RlY3RlZCB3b3JkV3JhcCh0ZXh0OiBzdHJpbmcpOiBzdHJpbmcge1xuXHRcdC8vIEdyZWVkeSB3cmFwcGluZyBhbGdvcml0aG0gdGhhdCB3aWxsIHdyYXAgd29yZHMgYXMgdGhlIGxpbmUgZ3Jvd3MgbG9uZ2VyIHRoYW4gaXRzIGhvcml6b250YWwgYm91bmRzLlxuXHRcdGxldCByZXN1bHQgPSAnJztcblx0XHRsZXQgdGFncyA9IE9iamVjdC5rZXlzKHRoaXMudGV4dFN0eWxlcykuam9pbihcInxcIik7XG5cdFx0bGV0IHJlID0gbmV3IFJlZ0V4cChgKDxcXC8/KCR7dGFnc30pPilgLCBcImdcIik7XG5cblx0XHRjb25zdCBsaW5lcyA9IHRleHQuc3BsaXQoXCJcXG5cIik7XG5cdFx0Y29uc3Qgd29yZFdyYXBXaWR0aCA9IHRoaXMuX3N0eWxlLndvcmRXcmFwV2lkdGg7XG5cdFx0bGV0IHN0eWxlU3RhY2sgPSBbdGhpcy5hc3NpZ24oe30sIHRoaXMudGV4dFN0eWxlc1tcImRlZmF1bHRcIl0pXTtcblx0XHR0aGlzLmNvbnRleHQuZm9udCA9IHRoaXMuZ2V0Rm9udFN0cmluZyh0aGlzLnRleHRTdHlsZXNbXCJkZWZhdWx0XCJdKTtcblxuXHRcdGZvciAobGV0IGkgPSAwOyBpIDwgbGluZXMubGVuZ3RoOyBpKyspIHtcblx0XHRcdGxldCBzcGFjZUxlZnQgPSB3b3JkV3JhcFdpZHRoO1xuXHRcdFx0Y29uc3Qgd29yZHMgPSBsaW5lc1tpXS5zcGxpdChcIiBcIik7XG5cblx0XHRcdGZvciAobGV0IGogPSAwOyBqIDwgd29yZHMubGVuZ3RoOyBqKyspIHtcblx0XHRcdFx0Y29uc3QgcGFydHMgPSB3b3Jkc1tqXS5zcGxpdChyZSk7XG5cblx0XHRcdFx0Zm9yIChsZXQgayA9IDA7IGsgPCBwYXJ0cy5sZW5ndGg7IGsrKykge1xuXHRcdFx0XHRcdGlmIChyZS50ZXN0KHBhcnRzW2tdKSkge1xuXHRcdFx0XHRcdFx0cmVzdWx0ICs9IHBhcnRzW2tdO1xuXHRcdFx0XHRcdFx0aWYgKHBhcnRzW2tdWzFdID09PSBcIi9cIikge1xuXHRcdFx0XHRcdFx0XHRrKys7XG5cdFx0XHRcdFx0XHRcdHN0eWxlU3RhY2sucG9wKCk7XG5cdFx0XHRcdFx0XHR9IGVsc2Uge1xuXHRcdFx0XHRcdFx0XHRrKys7XG5cdFx0XHRcdFx0XHRcdHN0eWxlU3RhY2sucHVzaCh0aGlzLmFzc2lnbih7fSwgc3R5bGVTdGFja1tzdHlsZVN0YWNrLmxlbmd0aCAtIDFdLCB0aGlzLnRleHRTdHlsZXNbcGFydHNba11dKSk7XG5cdFx0XHRcdFx0XHR9XG5cdFx0XHRcdFx0XHR0aGlzLmNvbnRleHQuZm9udCA9IHRoaXMuZ2V0Rm9udFN0cmluZyhzdHlsZVN0YWNrW3N0eWxlU3RhY2subGVuZ3RoIC0gMV0pO1xuXHRcdFx0XHRcdFx0Y29udGludWU7XG5cdFx0XHRcdFx0fVxuXG5cdFx0XHRcdFx0Y29uc3QgcGFydFdpZHRoID0gdGhpcy5jb250ZXh0Lm1lYXN1cmVUZXh0KHBhcnRzW2tdKS53aWR0aDtcblxuXHRcdFx0XHRcdGlmICh0aGlzLl9zdHlsZS5icmVha1dvcmRzICYmIHBhcnRXaWR0aCA+IHNwYWNlTGVmdCkge1xuXHRcdFx0XHRcdFx0Ly8gUGFydCBzaG91bGQgYmUgc3BsaXQgaW4gdGhlIG1pZGRsZVxuXHRcdFx0XHRcdFx0Y29uc3QgY2hhcmFjdGVycyA9IHBhcnRzW2tdLnNwbGl0KCcnKTtcblxuXHRcdFx0XHRcdFx0aWYgKGogPiAwICYmIGsgPT09IDApIHtcblx0XHRcdFx0XHRcdFx0cmVzdWx0ICs9IFwiIFwiO1xuXHRcdFx0XHRcdFx0XHRzcGFjZUxlZnQgLT0gdGhpcy5jb250ZXh0Lm1lYXN1cmVUZXh0KFwiIFwiKS53aWR0aDtcblx0XHRcdFx0XHRcdH1cblxuXHRcdFx0XHRcdFx0Zm9yIChsZXQgYyA9IDA7IGMgPCBjaGFyYWN0ZXJzLmxlbmd0aDsgYysrKSB7XG5cdFx0XHRcdFx0XHRcdGNvbnN0IGNoYXJhY3RlcldpZHRoID0gdGhpcy5jb250ZXh0Lm1lYXN1cmVUZXh0KGNoYXJhY3RlcnNbY10pLndpZHRoO1xuXG5cdFx0XHRcdFx0XHRcdGlmIChjaGFyYWN0ZXJXaWR0aCA+IHNwYWNlTGVmdCkge1xuXHRcdFx0XHRcdFx0XHRcdHJlc3VsdCArPSBgXFxuJHtjaGFyYWN0ZXJzW2NdfWA7XG5cdFx0XHRcdFx0XHRcdFx0c3BhY2VMZWZ0ID0gd29yZFdyYXBXaWR0aCAtIGNoYXJhY3RlcldpZHRoO1xuXHRcdFx0XHRcdFx0XHR9IGVsc2Uge1xuXHRcdFx0XHRcdFx0XHRcdGlmIChqID4gMCAmJiBrID09PSAwICYmIGMgPT09IDApIHtcblx0XHRcdFx0XHRcdFx0XHRcdHJlc3VsdCArPSBcIiBcIjtcblx0XHRcdFx0XHRcdFx0XHR9XG5cblx0XHRcdFx0XHRcdFx0XHRyZXN1bHQgKz0gY2hhcmFjdGVyc1tjXTtcblx0XHRcdFx0XHRcdFx0XHRzcGFjZUxlZnQgLT0gY2hhcmFjdGVyV2lkdGg7XG5cdFx0XHRcdFx0XHRcdH1cblx0XHRcdFx0XHRcdH1cblx0XHRcdFx0XHR9IGVsc2UgaWYodGhpcy5fc3R5bGUuYnJlYWtXb3Jkcykge1xuXHRcdFx0XHRcdFx0cmVzdWx0ICs9IHBhcnRzW2tdO1xuXHRcdFx0XHRcdFx0c3BhY2VMZWZ0IC09IHBhcnRXaWR0aDtcblx0XHRcdFx0XHR9IGVsc2Uge1xuXHRcdFx0XHRcdFx0Y29uc3QgcGFkZGVkUGFydFdpZHRoID1cblx0XHRcdFx0XHRcdFx0cGFydFdpZHRoICsgKGsgPT09IDAgPyB0aGlzLmNvbnRleHQubWVhc3VyZVRleHQoXCIgXCIpLndpZHRoIDogMCk7XG5cblx0XHRcdFx0XHRcdGlmIChqID09PSAwIHx8IHBhZGRlZFBhcnRXaWR0aCA+IHNwYWNlTGVmdCkge1xuXHRcdFx0XHRcdFx0XHQvLyBTa2lwIHByaW50aW5nIHRoZSBuZXdsaW5lIGlmIGl0J3MgdGhlIGZpcnN0IHdvcmQgb2YgdGhlIGxpbmUgdGhhdCBpc1xuXHRcdFx0XHRcdFx0XHQvLyBncmVhdGVyIHRoYW4gdGhlIHdvcmQgd3JhcCB3aWR0aC5cblx0XHRcdFx0XHRcdFx0aWYgKGogPiAwKSB7XG5cdFx0XHRcdFx0XHRcdFx0cmVzdWx0ICs9IFwiXFxuXCI7XG5cdFx0XHRcdFx0XHRcdH1cblx0XHRcdFx0XHRcdFx0cmVzdWx0ICs9IHBhcnRzW2tdO1xuXHRcdFx0XHRcdFx0XHRzcGFjZUxlZnQgPSB3b3JkV3JhcFdpZHRoIC0gcGFydFdpZHRoO1xuXHRcdFx0XHRcdFx0fSBlbHNlIHtcblx0XHRcdFx0XHRcdFx0c3BhY2VMZWZ0IC09IHBhZGRlZFBhcnRXaWR0aDtcblxuXHRcdFx0XHRcdFx0XHRpZiAoayA9PT0gMCkge1xuXHRcdFx0XHRcdFx0XHRcdHJlc3VsdCArPSBcIiBcIjtcblx0XHRcdFx0XHRcdFx0fVxuXG5cdFx0XHRcdFx0XHRcdHJlc3VsdCArPSBwYXJ0c1trXTtcblx0XHRcdFx0XHRcdH1cblx0XHRcdFx0XHR9XG5cdFx0XHRcdH1cblx0XHRcdH1cblxuXHRcdFx0aWYgKGkgPCBsaW5lcy5sZW5ndGggLSAxKSB7XG5cdFx0XHRcdHJlc3VsdCArPSAnXFxuJztcblx0XHRcdH1cblx0XHR9XG5cblx0XHRyZXR1cm4gcmVzdWx0O1xuXHR9XG5cblx0cHJvdGVjdGVkIHVwZGF0ZVRleHR1cmUoKSB7XG5cdFx0Y29uc3QgdGV4dHVyZSA9IHRoaXMuX3RleHR1cmU7XG5cblx0XHRsZXQgZHJvcFNoYWRvd1BhZGRpbmcgPSB0aGlzLmdldERyb3BTaGFkb3dQYWRkaW5nKCk7XG5cblx0XHR0ZXh0dXJlLmJhc2VUZXh0dXJlLmhhc0xvYWRlZCA9IHRydWU7XG5cdFx0dGV4dHVyZS5iYXNlVGV4dHVyZS5yZXNvbHV0aW9uID0gdGhpcy5yZXNvbHV0aW9uO1xuXG5cdFx0dGV4dHVyZS5iYXNlVGV4dHVyZS5yZWFsV2lkdGggPSB0aGlzLmNhbnZhcy53aWR0aDtcblx0XHR0ZXh0dXJlLmJhc2VUZXh0dXJlLnJlYWxIZWlnaHQgPSB0aGlzLmNhbnZhcy5oZWlnaHQ7XG5cdFx0dGV4dHVyZS5iYXNlVGV4dHVyZS53aWR0aCA9IHRoaXMuY2FudmFzLndpZHRoIC8gdGhpcy5yZXNvbHV0aW9uO1xuXHRcdHRleHR1cmUuYmFzZVRleHR1cmUuaGVpZ2h0ID0gdGhpcy5jYW52YXMuaGVpZ2h0IC8gdGhpcy5yZXNvbHV0aW9uO1xuXHRcdHRleHR1cmUudHJpbS53aWR0aCA9IHRleHR1cmUuZnJhbWUud2lkdGggPSB0aGlzLmNhbnZhcy53aWR0aCAvIHRoaXMucmVzb2x1dGlvbjtcblx0XHR0ZXh0dXJlLnRyaW0uaGVpZ2h0ID0gdGV4dHVyZS5mcmFtZS5oZWlnaHQgPSB0aGlzLmNhbnZhcy5oZWlnaHQgLyB0aGlzLnJlc29sdXRpb247XG5cblx0XHR0ZXh0dXJlLnRyaW0ueCA9IC10aGlzLl9zdHlsZS5wYWRkaW5nIC0gZHJvcFNoYWRvd1BhZGRpbmc7XG5cdFx0dGV4dHVyZS50cmltLnkgPSAtdGhpcy5fc3R5bGUucGFkZGluZyAtIGRyb3BTaGFkb3dQYWRkaW5nO1xuXG5cdFx0dGV4dHVyZS5vcmlnLndpZHRoID0gdGV4dHVyZS5mcmFtZS53aWR0aCAtICh0aGlzLl9zdHlsZS5wYWRkaW5nICsgZHJvcFNoYWRvd1BhZGRpbmcpICogMjtcblx0XHR0ZXh0dXJlLm9yaWcuaGVpZ2h0ID0gdGV4dHVyZS5mcmFtZS5oZWlnaHQgLSAodGhpcy5fc3R5bGUucGFkZGluZyArIGRyb3BTaGFkb3dQYWRkaW5nKSAqIDI7XG5cblx0XHQvLyBjYWxsIHNwcml0ZSBvblRleHR1cmVVcGRhdGUgdG8gdXBkYXRlIHNjYWxlIGlmIF93aWR0aCBvciBfaGVpZ2h0IHdlcmUgc2V0XG5cdFx0dGhpcy5fb25UZXh0dXJlVXBkYXRlKCk7XG5cblx0XHR0ZXh0dXJlLmJhc2VUZXh0dXJlLmVtaXQoJ3VwZGF0ZScsIHRleHR1cmUuYmFzZVRleHR1cmUpO1xuXG5cdFx0dGhpcy5kaXJ0eSA9IGZhbHNlO1xuXHR9XG5cblx0Ly8gTGF6eSBmaWxsIGZvciBPYmplY3QuYXNzaWduXG5cdHByaXZhdGUgYXNzaWduKGRlc3RpbmF0aW9uOiBhbnksIC4uLnNvdXJjZXM6IGFueVtdKTogYW55IHtcblx0XHRmb3IgKGxldCBzb3VyY2Ugb2Ygc291cmNlcykge1xuXHRcdFx0Zm9yIChsZXQga2V5IGluIHNvdXJjZSkge1xuXHRcdFx0XHRkZXN0aW5hdGlvbltrZXldID0gc291cmNlW2tleV07XG5cdFx0XHR9XG5cdFx0fVxuXG5cdFx0cmV0dXJuIGRlc3RpbmF0aW9uO1xuXHR9XG59XG4iXX0=
+
+
+/***/ }),
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48328,7 +48982,7 @@ core.CanvasRenderer.registerPlugin('accessibility', AccessibilityManager);
 //# sourceMappingURL=AccessibilityManager.js.map
 
 /***/ }),
-/* 126 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48345,7 +48999,7 @@ Object.defineProperty(exports, 'accessibleTarget', {
   }
 });
 
-var _AccessibilityManager = __webpack_require__(125);
+var _AccessibilityManager = __webpack_require__(128);
 
 Object.defineProperty(exports, 'AccessibilityManager', {
   enumerable: true,
@@ -48358,7 +49012,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 127 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48374,7 +49028,7 @@ var _RenderTexture = __webpack_require__(45);
 
 var _RenderTexture2 = _interopRequireDefault(_RenderTexture);
 
-var _Texture = __webpack_require__(11);
+var _Texture = __webpack_require__(12);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -48396,7 +49050,7 @@ var _Bounds = __webpack_require__(38);
 
 var _Bounds2 = _interopRequireDefault(_Bounds);
 
-var _bezierCurveTo2 = __webpack_require__(129);
+var _bezierCurveTo2 = __webpack_require__(132);
 
 var _bezierCurveTo3 = _interopRequireDefault(_bezierCurveTo2);
 
@@ -49535,7 +50189,7 @@ Graphics._SPRITE_TEXTURE = null;
 //# sourceMappingURL=Graphics.js.map
 
 /***/ }),
-/* 128 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49809,7 +50463,7 @@ _CanvasRenderer2.default.registerPlugin('graphics', CanvasGraphicsRenderer);
 //# sourceMappingURL=CanvasGraphicsRenderer.js.map
 
 /***/ }),
-/* 129 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49864,7 +50518,7 @@ function bezierCurveTo(fromX, fromY, cpX, cpY, cpX2, cpY2, toX, toY) {
 //# sourceMappingURL=bezierCurveTo.js.map
 
 /***/ }),
-/* 130 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49884,27 +50538,27 @@ var _WebGLRenderer = __webpack_require__(27);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
-var _WebGLGraphicsData = __webpack_require__(131);
+var _WebGLGraphicsData = __webpack_require__(134);
 
 var _WebGLGraphicsData2 = _interopRequireDefault(_WebGLGraphicsData);
 
-var _PrimitiveShader = __webpack_require__(132);
+var _PrimitiveShader = __webpack_require__(135);
 
 var _PrimitiveShader2 = _interopRequireDefault(_PrimitiveShader);
 
-var _buildPoly = __webpack_require__(134);
+var _buildPoly = __webpack_require__(137);
 
 var _buildPoly2 = _interopRequireDefault(_buildPoly);
 
-var _buildRectangle = __webpack_require__(135);
+var _buildRectangle = __webpack_require__(138);
 
 var _buildRectangle2 = _interopRequireDefault(_buildRectangle);
 
-var _buildRoundedRectangle = __webpack_require__(136);
+var _buildRoundedRectangle = __webpack_require__(139);
 
 var _buildRoundedRectangle2 = _interopRequireDefault(_buildRoundedRectangle);
 
-var _buildCircle = __webpack_require__(133);
+var _buildCircle = __webpack_require__(136);
 
 var _buildCircle2 = _interopRequireDefault(_buildCircle);
 
@@ -50134,7 +50788,7 @@ _WebGLRenderer2.default.registerPlugin('graphics', GraphicsRenderer);
 //# sourceMappingURL=GraphicsRenderer.js.map
 
 /***/ }),
-/* 131 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50282,7 +50936,7 @@ exports.default = WebGLGraphicsData;
 //# sourceMappingURL=WebGLGraphicsData.js.map
 
 /***/ }),
-/* 132 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50332,7 +50986,7 @@ exports.default = PrimitiveShader;
 //# sourceMappingURL=PrimitiveShader.js.map
 
 /***/ }),
-/* 133 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50430,7 +51084,7 @@ function buildCircle(graphicsData, webGLData, webGLDataNativeLines) {
 //# sourceMappingURL=buildCircle.js.map
 
 /***/ }),
-/* 134 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50521,7 +51175,7 @@ function buildPoly(graphicsData, webGLData, webGLDataNativeLines) {
 //# sourceMappingURL=buildPoly.js.map
 
 /***/ }),
-/* 135 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50602,7 +51256,7 @@ function buildRectangle(graphicsData, webGLData, webGLDataNativeLines) {
 //# sourceMappingURL=buildRectangle.js.map
 
 /***/ }),
-/* 136 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50763,7 +51417,7 @@ function quadraticBezierCurve(fromX, fromY, cpX, cpY, toX, toY) {
 //# sourceMappingURL=buildRoundedRectangle.js.map
 
 /***/ }),
-/* 137 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50882,7 +51536,7 @@ exports.default = Circle;
 //# sourceMappingURL=Circle.js.map
 
 /***/ }),
-/* 138 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51009,7 +51663,7 @@ exports.default = Ellipse;
 //# sourceMappingURL=Ellipse.js.map
 
 /***/ }),
-/* 139 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51145,7 +51799,7 @@ exports.default = Polygon;
 //# sourceMappingURL=Polygon.js.map
 
 /***/ }),
-/* 140 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51283,7 +51937,7 @@ exports.default = RoundedRectangle;
 //# sourceMappingURL=RoundedRectangle.js.map
 
 /***/ }),
-/* 141 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51457,7 +52111,7 @@ exports.default = CanvasMaskManager;
 //# sourceMappingURL=CanvasMaskManager.js.map
 
 /***/ }),
-/* 142 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51534,7 +52188,7 @@ function mapCanvasBlendModesToPixi() {
 //# sourceMappingURL=mapCanvasBlendModesToPixi.js.map
 
 /***/ }),
-/* 143 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51659,7 +52313,7 @@ exports.default = TextureGarbageCollector;
 //# sourceMappingURL=TextureGarbageCollector.js.map
 
 /***/ }),
-/* 144 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51920,7 +52574,7 @@ exports.default = TextureManager;
 //# sourceMappingURL=TextureManager.js.map
 
 /***/ }),
-/* 145 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51928,7 +52582,7 @@ exports.default = TextureManager;
 
 exports.__esModule = true;
 
-var _mapWebGLBlendModesToPixi = __webpack_require__(152);
+var _mapWebGLBlendModesToPixi = __webpack_require__(155);
 
 var _mapWebGLBlendModesToPixi2 = _interopRequireDefault(_mapWebGLBlendModesToPixi);
 
@@ -52205,7 +52859,7 @@ exports.default = WebGLState;
 //# sourceMappingURL=WebGLState.js.map
 
 /***/ }),
-/* 146 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52272,7 +52926,7 @@ function extractUniformsFromString(string) {
 //# sourceMappingURL=extractUniformsFromSrc.js.map
 
 /***/ }),
-/* 147 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52336,7 +52990,7 @@ function calculateSpriteMatrix(outputMatrix, filterArea, textureSize, sprite) {
 //# sourceMappingURL=filterTransforms.js.map
 
 /***/ }),
-/* 148 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52362,7 +53016,7 @@ var _Shader = __webpack_require__(18);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
-var _filterTransforms = __webpack_require__(147);
+var _filterTransforms = __webpack_require__(150);
 
 var filterTransforms = _interopRequireWildcard(_filterTransforms);
 
@@ -52935,7 +53589,7 @@ exports.default = FilterManager;
 //# sourceMappingURL=FilterManager.js.map
 
 /***/ }),
-/* 149 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53150,7 +53804,7 @@ exports.default = MaskManager;
 //# sourceMappingURL=MaskManager.js.map
 
 /***/ }),
-/* 150 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53308,7 +53962,7 @@ exports.default = StencilManager;
 //# sourceMappingURL=StencilManager.js.map
 
 /***/ }),
-/* 151 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53388,7 +54042,7 @@ function generateIfTestSrc(maxIfs) {
 //# sourceMappingURL=checkMaxIfStatmentsInShader.js.map
 
 /***/ }),
-/* 152 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53442,7 +54096,7 @@ function mapWebGLBlendModesToPixi(gl) {
 //# sourceMappingURL=mapWebGLBlendModesToPixi.js.map
 
 /***/ }),
-/* 153 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53479,7 +54133,7 @@ function mapWebGLDrawModesToPixi(gl) {
 //# sourceMappingURL=mapWebGLDrawModesToPixi.js.map
 
 /***/ }),
-/* 154 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53500,7 +54154,7 @@ function validateContext(gl) {
 //# sourceMappingURL=validateContext.js.map
 
 /***/ }),
-/* 155 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53658,7 +54312,7 @@ _CanvasRenderer2.default.registerPlugin('sprite', CanvasSpriteRenderer);
 //# sourceMappingURL=CanvasSpriteRenderer.js.map
 
 /***/ }),
-/* 156 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53716,7 +54370,7 @@ exports.default = Buffer;
 //# sourceMappingURL=BatchBuffer.js.map
 
 /***/ }),
-/* 157 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53736,15 +54390,15 @@ var _createIndicesForQuads = __webpack_require__(47);
 
 var _createIndicesForQuads2 = _interopRequireDefault(_createIndicesForQuads);
 
-var _generateMultiTextureShader = __webpack_require__(158);
+var _generateMultiTextureShader = __webpack_require__(161);
 
 var _generateMultiTextureShader2 = _interopRequireDefault(_generateMultiTextureShader);
 
-var _checkMaxIfStatmentsInShader = __webpack_require__(151);
+var _checkMaxIfStatmentsInShader = __webpack_require__(154);
 
 var _checkMaxIfStatmentsInShader2 = _interopRequireDefault(_checkMaxIfStatmentsInShader);
 
-var _BatchBuffer = __webpack_require__(156);
+var _BatchBuffer = __webpack_require__(159);
 
 var _BatchBuffer2 = _interopRequireDefault(_BatchBuffer);
 
@@ -54263,7 +54917,7 @@ _WebGLRenderer2.default.registerPlugin('sprite', SpriteRenderer);
 //# sourceMappingURL=SpriteRenderer.js.map
 
 /***/ }),
-/* 158 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54331,7 +54985,7 @@ function generateSampleSrc(maxTextures) {
 //# sourceMappingURL=generateMultiTextureShader.js.map
 
 /***/ }),
-/* 159 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54345,7 +54999,7 @@ var _Sprite2 = __webpack_require__(43);
 
 var _Sprite3 = _interopRequireDefault(_Sprite2);
 
-var _Texture = __webpack_require__(11);
+var _Texture = __webpack_require__(12);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
@@ -54367,7 +55021,7 @@ var _TextMetrics = __webpack_require__(82);
 
 var _TextMetrics2 = _interopRequireDefault(_TextMetrics);
 
-var _trimCanvas = __webpack_require__(169);
+var _trimCanvas = __webpack_require__(172);
 
 var _trimCanvas2 = _interopRequireDefault(_trimCanvas);
 
@@ -54991,7 +55645,7 @@ exports.default = Text;
 //# sourceMappingURL=Text.js.map
 
 /***/ }),
-/* 160 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55258,7 +55912,7 @@ exports.default = Spritesheet;
 //# sourceMappingURL=Spritesheet.js.map
 
 /***/ }),
-/* 161 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55274,7 +55928,7 @@ var _settings2 = _interopRequireDefault(_settings);
 
 var _const = __webpack_require__(0);
 
-var _TickerListener = __webpack_require__(162);
+var _TickerListener = __webpack_require__(165);
 
 var _TickerListener2 = _interopRequireDefault(_TickerListener);
 
@@ -55736,7 +56390,7 @@ exports.default = Ticker;
 //# sourceMappingURL=Ticker.js.map
 
 /***/ }),
-/* 162 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55915,7 +56569,7 @@ exports.default = TickerListener;
 //# sourceMappingURL=TickerListener.js.map
 
 /***/ }),
-/* 163 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55934,7 +56588,7 @@ function canUploadSameBuffer() {
 //# sourceMappingURL=canUploadSameBuffer.js.map
 
 /***/ }),
-/* 164 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55943,7 +56597,7 @@ function canUploadSameBuffer() {
 exports.__esModule = true;
 exports.default = determineCrossOrigin;
 
-var _url2 = __webpack_require__(104);
+var _url2 = __webpack_require__(106);
 
 var _url3 = _interopRequireDefault(_url2);
 
@@ -55995,7 +56649,7 @@ function determineCrossOrigin(url) {
 //# sourceMappingURL=determineCrossOrigin.js.map
 
 /***/ }),
-/* 165 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56043,7 +56697,7 @@ function mapPremultipliedBlendModes() {
 //# sourceMappingURL=mapPremultipliedBlendModes.js.map
 
 /***/ }),
-/* 166 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56070,7 +56724,7 @@ function maxRecommendedTextures(max) {
 //# sourceMappingURL=maxRecommendedTextures.js.map
 
 /***/ }),
-/* 167 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56137,7 +56791,7 @@ function performMixins() {
 //# sourceMappingURL=mixin.js.map
 
 /***/ }),
-/* 168 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56208,7 +56862,7 @@ exports.default = {
 //# sourceMappingURL=pluginTarget.js.map
 
 /***/ }),
-/* 169 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56289,7 +56943,7 @@ function trimCanvas(canvas) {
 //# sourceMappingURL=trimCanvas.js.map
 
 /***/ }),
-/* 170 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57390,7 +58044,7 @@ function deprecation(core) {
 //# sourceMappingURL=deprecation.js.map
 
 /***/ }),
-/* 171 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57575,7 +58229,7 @@ core.CanvasRenderer.registerPlugin('extract', CanvasExtract);
 //# sourceMappingURL=CanvasExtract.js.map
 
 /***/ }),
-/* 172 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57583,7 +58237,7 @@ core.CanvasRenderer.registerPlugin('extract', CanvasExtract);
 
 exports.__esModule = true;
 
-var _WebGLExtract = __webpack_require__(173);
+var _WebGLExtract = __webpack_require__(176);
 
 Object.defineProperty(exports, 'webgl', {
   enumerable: true,
@@ -57592,7 +58246,7 @@ Object.defineProperty(exports, 'webgl', {
   }
 });
 
-var _CanvasExtract = __webpack_require__(171);
+var _CanvasExtract = __webpack_require__(174);
 
 Object.defineProperty(exports, 'canvas', {
   enumerable: true,
@@ -57605,7 +58259,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 173 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57833,7 +58487,7 @@ core.WebGLRenderer.registerPlugin('extract', WebGLExtract);
 //# sourceMappingURL=WebGLExtract.js.map
 
 /***/ }),
-/* 174 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58247,7 +58901,7 @@ exports.default = AnimatedSprite;
 //# sourceMappingURL=AnimatedSprite.js.map
 
 /***/ }),
-/* 175 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58840,7 +59494,7 @@ BitmapText.fonts = {};
 //# sourceMappingURL=BitmapText.js.map
 
 /***/ }),
-/* 176 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59295,7 +59949,7 @@ exports.default = TilingSprite;
 //# sourceMappingURL=TilingSprite.js.map
 
 /***/ }),
-/* 177 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59305,11 +59959,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _Texture = __webpack_require__(11);
+var _Texture = __webpack_require__(12);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _BaseTexture = __webpack_require__(14);
+var _BaseTexture = __webpack_require__(15);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
@@ -59704,7 +60358,7 @@ DisplayObject.prototype._cacheAsBitmapDestroy = function _cacheAsBitmapDestroy(o
 //# sourceMappingURL=cacheAsBitmap.js.map
 
 /***/ }),
-/* 178 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59743,7 +60397,7 @@ core.Container.prototype.getChildByName = function getChildByName(name) {
 //# sourceMappingURL=getChildByName.js.map
 
 /***/ }),
-/* 179 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59781,7 +60435,7 @@ core.DisplayObject.prototype.getGlobalPosition = function getGlobalPosition() {
 //# sourceMappingURL=getGlobalPosition.js.map
 
 /***/ }),
-/* 180 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59948,7 +60602,7 @@ core.WebGLRenderer.registerPlugin('tilingSprite', TilingSpriteRenderer);
 //# sourceMappingURL=TilingSpriteRenderer.js.map
 
 /***/ }),
-/* 181 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60127,7 +60781,7 @@ exports.default = BlurFilter;
 //# sourceMappingURL=BlurFilter.js.map
 
 /***/ }),
-/* 182 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60683,7 +61337,7 @@ ColorMatrixFilter.prototype.grayscale = ColorMatrixFilter.prototype.greyscale;
 //# sourceMappingURL=ColorMatrixFilter.js.map
 
 /***/ }),
-/* 183 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60798,7 +61452,7 @@ exports.default = DisplacementFilter;
 //# sourceMappingURL=DisplacementFilter.js.map
 
 /***/ }),
-/* 184 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60857,7 +61511,7 @@ exports.default = FXAAFilter;
 //# sourceMappingURL=FXAAFilter.js.map
 
 /***/ }),
-/* 185 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60865,7 +61519,7 @@ exports.default = FXAAFilter;
 
 exports.__esModule = true;
 
-var _FXAAFilter = __webpack_require__(184);
+var _FXAAFilter = __webpack_require__(187);
 
 Object.defineProperty(exports, 'FXAAFilter', {
   enumerable: true,
@@ -60874,7 +61528,7 @@ Object.defineProperty(exports, 'FXAAFilter', {
   }
 });
 
-var _NoiseFilter = __webpack_require__(186);
+var _NoiseFilter = __webpack_require__(189);
 
 Object.defineProperty(exports, 'NoiseFilter', {
   enumerable: true,
@@ -60883,7 +61537,7 @@ Object.defineProperty(exports, 'NoiseFilter', {
   }
 });
 
-var _DisplacementFilter = __webpack_require__(183);
+var _DisplacementFilter = __webpack_require__(186);
 
 Object.defineProperty(exports, 'DisplacementFilter', {
   enumerable: true,
@@ -60892,7 +61546,7 @@ Object.defineProperty(exports, 'DisplacementFilter', {
   }
 });
 
-var _BlurFilter = __webpack_require__(181);
+var _BlurFilter = __webpack_require__(184);
 
 Object.defineProperty(exports, 'BlurFilter', {
   enumerable: true,
@@ -60919,7 +61573,7 @@ Object.defineProperty(exports, 'BlurYFilter', {
   }
 });
 
-var _ColorMatrixFilter = __webpack_require__(182);
+var _ColorMatrixFilter = __webpack_require__(185);
 
 Object.defineProperty(exports, 'ColorMatrixFilter', {
   enumerable: true,
@@ -60928,7 +61582,7 @@ Object.defineProperty(exports, 'ColorMatrixFilter', {
   }
 });
 
-var _VoidFilter = __webpack_require__(187);
+var _VoidFilter = __webpack_require__(190);
 
 Object.defineProperty(exports, 'VoidFilter', {
   enumerable: true,
@@ -60941,7 +61595,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 186 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61043,7 +61697,7 @@ exports.default = NoiseFilter;
 //# sourceMappingURL=NoiseFilter.js.map
 
 /***/ }),
-/* 187 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -61098,7 +61752,7 @@ exports.default = VoidFilter;
 //# sourceMappingURL=VoidFilter.js.map
 
 /***/ }),
-/* 188 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62863,7 +63517,7 @@ core.CanvasRenderer.registerPlugin('interaction', InteractionManager);
 //# sourceMappingURL=InteractionManager.js.map
 
 /***/ }),
-/* 189 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62880,7 +63534,7 @@ Object.defineProperty(exports, 'InteractionData', {
   }
 });
 
-var _InteractionManager = __webpack_require__(188);
+var _InteractionManager = __webpack_require__(191);
 
 Object.defineProperty(exports, 'InteractionManager', {
   enumerable: true,
@@ -62920,7 +63574,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 190 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62981,7 +63635,7 @@ var _Application = __webpack_require__(68);
 
 var _Application2 = _interopRequireDefault(_Application);
 
-var _loader = __webpack_require__(191);
+var _loader = __webpack_require__(194);
 
 var _loader2 = _interopRequireDefault(_loader);
 
@@ -63053,7 +63707,7 @@ AppPrototype.destroy = function destroy(removeView) {
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 191 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63065,7 +63719,7 @@ var _resourceLoader = __webpack_require__(23);
 
 var _resourceLoader2 = _interopRequireDefault(_resourceLoader);
 
-var _blob = __webpack_require__(217);
+var _blob = __webpack_require__(220);
 
 var _eventemitter = __webpack_require__(10);
 
@@ -63229,7 +63883,7 @@ Resource.setExtensionXhrType('fnt', Resource.XHR_RESPONSE_TYPE.DOCUMENT);
 //# sourceMappingURL=loader.js.map
 
 /***/ }),
-/* 192 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63620,7 +64274,7 @@ exports.default = NineSlicePlane;
 //# sourceMappingURL=NineSlicePlane.js.map
 
 /***/ }),
-/* 193 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63861,7 +64515,7 @@ exports.default = Rope;
 //# sourceMappingURL=Rope.js.map
 
 /***/ }),
-/* 194 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64149,7 +64803,7 @@ core.CanvasRenderer.registerPlugin('mesh', MeshSpriteRenderer);
 //# sourceMappingURL=CanvasMeshRenderer.js.map
 
 /***/ }),
-/* 195 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64166,7 +64820,7 @@ Object.defineProperty(exports, 'Mesh', {
   }
 });
 
-var _MeshRenderer = __webpack_require__(196);
+var _MeshRenderer = __webpack_require__(199);
 
 Object.defineProperty(exports, 'MeshRenderer', {
   enumerable: true,
@@ -64175,7 +64829,7 @@ Object.defineProperty(exports, 'MeshRenderer', {
   }
 });
 
-var _CanvasMeshRenderer = __webpack_require__(194);
+var _CanvasMeshRenderer = __webpack_require__(197);
 
 Object.defineProperty(exports, 'CanvasMeshRenderer', {
   enumerable: true,
@@ -64193,7 +64847,7 @@ Object.defineProperty(exports, 'Plane', {
   }
 });
 
-var _NineSlicePlane = __webpack_require__(192);
+var _NineSlicePlane = __webpack_require__(195);
 
 Object.defineProperty(exports, 'NineSlicePlane', {
   enumerable: true,
@@ -64202,7 +64856,7 @@ Object.defineProperty(exports, 'NineSlicePlane', {
   }
 });
 
-var _Rope = __webpack_require__(193);
+var _Rope = __webpack_require__(196);
 
 Object.defineProperty(exports, 'Rope', {
   enumerable: true,
@@ -64215,7 +64869,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 196 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64371,7 +65025,7 @@ core.WebGLRenderer.registerPlugin('mesh', MeshRenderer);
 //# sourceMappingURL=MeshRenderer.js.map
 
 /***/ }),
-/* 197 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64754,7 +65408,7 @@ exports.default = ParticleContainer;
 //# sourceMappingURL=ParticleContainer.js.map
 
 /***/ }),
-/* 198 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64762,7 +65416,7 @@ exports.default = ParticleContainer;
 
 exports.__esModule = true;
 
-var _ParticleContainer = __webpack_require__(197);
+var _ParticleContainer = __webpack_require__(200);
 
 Object.defineProperty(exports, 'ParticleContainer', {
   enumerable: true,
@@ -64771,7 +65425,7 @@ Object.defineProperty(exports, 'ParticleContainer', {
   }
 });
 
-var _ParticleRenderer = __webpack_require__(200);
+var _ParticleRenderer = __webpack_require__(203);
 
 Object.defineProperty(exports, 'ParticleRenderer', {
   enumerable: true,
@@ -64784,7 +65438,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 199 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65032,7 +65686,7 @@ exports.default = ParticleBuffer;
 //# sourceMappingURL=ParticleBuffer.js.map
 
 /***/ }),
-/* 200 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65044,11 +65698,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _ParticleShader = __webpack_require__(201);
+var _ParticleShader = __webpack_require__(204);
 
 var _ParticleShader2 = _interopRequireDefault(_ParticleShader);
 
-var _ParticleBuffer = __webpack_require__(199);
+var _ParticleBuffer = __webpack_require__(202);
 
 var _ParticleBuffer2 = _interopRequireDefault(_ParticleBuffer);
 
@@ -65513,7 +66167,7 @@ core.WebGLRenderer.registerPlugin('particle', ParticleRenderer);
 //# sourceMappingURL=ParticleRenderer.js.map
 
 /***/ }),
-/* 201 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65561,7 +66215,7 @@ exports.default = ParticleShader;
 //# sourceMappingURL=ParticleShader.js.map
 
 /***/ }),
-/* 202 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65584,13 +66238,13 @@ if (!Math.sign) {
 //# sourceMappingURL=Math.sign.js.map
 
 /***/ }),
-/* 203 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _objectAssign = __webpack_require__(106);
+var _objectAssign = __webpack_require__(108);
 
 var _objectAssign2 = _interopRequireDefault(_objectAssign);
 
@@ -65604,17 +66258,17 @@ if (!Object.assign) {
 //# sourceMappingURL=Object.assign.js.map
 
 /***/ }),
-/* 204 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(203);
+__webpack_require__(206);
+
+__webpack_require__(208);
 
 __webpack_require__(205);
-
-__webpack_require__(202);
 
 if (!window.ArrayBuffer) {
     window.ArrayBuffer = Array;
@@ -65634,7 +66288,7 @@ if (!window.Uint16Array) {
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 205 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65715,7 +66369,7 @@ if (!global.cancelAnimationFrame) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ }),
-/* 206 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65840,7 +66494,7 @@ core.CanvasRenderer.registerPlugin('prepare', CanvasPrepare);
 //# sourceMappingURL=CanvasPrepare.js.map
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65848,7 +66502,7 @@ core.CanvasRenderer.registerPlugin('prepare', CanvasPrepare);
 
 exports.__esModule = true;
 
-var _WebGLPrepare = __webpack_require__(209);
+var _WebGLPrepare = __webpack_require__(212);
 
 Object.defineProperty(exports, 'webgl', {
   enumerable: true,
@@ -65857,7 +66511,7 @@ Object.defineProperty(exports, 'webgl', {
   }
 });
 
-var _CanvasPrepare = __webpack_require__(206);
+var _CanvasPrepare = __webpack_require__(209);
 
 Object.defineProperty(exports, 'canvas', {
   enumerable: true,
@@ -65884,7 +66538,7 @@ Object.defineProperty(exports, 'CountLimiter', {
   }
 });
 
-var _TimeLimiter = __webpack_require__(208);
+var _TimeLimiter = __webpack_require__(211);
 
 Object.defineProperty(exports, 'TimeLimiter', {
   enumerable: true,
@@ -65897,7 +66551,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 208 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65960,7 +66614,7 @@ exports.default = TimeLimiter;
 //# sourceMappingURL=TimeLimiter.js.map
 
 /***/ }),
-/* 209 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66087,7 +66741,7 @@ core.WebGLRenderer.registerPlugin('prepare', WebGLPrepare);
 //# sourceMappingURL=WebGLPrepare.js.map
 
 /***/ }),
-/* 210 */
+/* 213 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -66277,7 +66931,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 211 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
@@ -66813,10 +67467,10 @@ process.umask = function() { return 0; };
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(105)(module), __webpack_require__(34)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(107)(module), __webpack_require__(34)))
 
 /***/ }),
-/* 212 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66907,7 +67561,7 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 213 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66999,18 +67653,18 @@ var objectKeys = Object.keys || function (obj) {
 
 
 /***/ }),
-/* 214 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-exports.decode = exports.parse = __webpack_require__(212);
-exports.encode = exports.stringify = __webpack_require__(213);
+exports.decode = exports.parse = __webpack_require__(215);
+exports.encode = exports.stringify = __webpack_require__(216);
 
 
 /***/ }),
-/* 215 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67045,7 +67699,7 @@ module.exports = function removeItems(arr, startIdx, removeCount)
 
 
 /***/ }),
-/* 216 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67668,7 +68322,7 @@ exports.default = Loader;
 //# sourceMappingURL=Loader.js.map
 
 /***/ }),
-/* 217 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67761,7 +68415,7 @@ function blobMiddlewareFactory() {
 //# sourceMappingURL=blob.js.map
 
 /***/ }),
-/* 218 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67771,13 +68425,13 @@ exports.ICON_FONT = ["Arial", "FontAwesome"];
 
 
 /***/ }),
-/* 219 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const definition_1 = __webpack_require__(218);
+const definition_1 = __webpack_require__(221);
 var MENU_COLOR;
 (function (MENU_COLOR) {
     MENU_COLOR[MENU_COLOR["BACKGROUND_GREY"] = 15921906] = "BACKGROUND_GREY";
@@ -67946,51 +68600,7 @@ exports.SimpleButton = SimpleButton;
 
 
 /***/ }),
-/* 220 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(30);
-const attacher_1 = __webpack_require__(223);
-const module_1 = __webpack_require__(51);
-const serializer_1 = __webpack_require__(227);
-class KomodiContext {
-    constructor() {
-        this.container = new PIXI.Container();
-        this.stage = new PIXI.Container();
-        this.fixed = new PIXI.Container();
-        this.attacher = new attacher_1.Attacher(this);
-        this.module = new module_1.Module(this);
-        this.serializer = new serializer_1.Serializer(this);
-        this.container.interactive = true;
-        this.container.addChild(this.stage, this.fixed);
-        this.fixed.interactive = true;
-    }
-    get projectName() {
-        return this._projectName;
-    }
-    set projectName(projectName) {
-        this._projectName = projectName;
-    }
-    init() {
-        this.attacher.init();
-    }
-    registerBlock(block) {
-        this.attacher.registerBlock(block);
-        this.module.addBlockToModule(block.moduleName, block);
-    }
-    unregisterBlock(block) {
-        this.attacher.removeBlock(block);
-        this.module.deleteBlockFromModule(block.moduleName, block);
-    }
-}
-exports.KomodiContext = KomodiContext;
-
-
-/***/ }),
-/* 221 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68003,15 +68613,16 @@ module.exports = Komodi;
 
 
 /***/ }),
-/* 222 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const PIXI = __webpack_require__(30);
+const MultiStyleText = __webpack_require__(127);
 const graphic_1 = __webpack_require__(24);
-const ui_1 = __webpack_require__(219);
+const ui_1 = __webpack_require__(222);
 const module_1 = __webpack_require__(51);
 const TOP_MENU_HEIGHT = 85;
 const TOP_MENU_BUTTON_HEIGHT = 30;
@@ -68019,7 +68630,7 @@ const SIDE_MENU_WIDTH = 260;
 const MODULE_SELECTOR_END_Y = 400;
 const EDIT_BUTTON_MARGIN = 8;
 const EDIT_BUTTON_HEIGHT = 40;
-const CONSOLE_MENU_HEIGHT = 140;
+const CONSOLE_MENU_HEIGHT = 160;
 const CONSOLE_MENU_TIP_WIDTH = 120;
 const CONSOLE_MENU_TIP_HEIGHT = 30;
 class TopMenu extends PIXI.Container {
@@ -68224,8 +68835,19 @@ class ConsoleMenu extends PIXI.Container {
         this.label = new PIXI.Text('Output', {
             fontSize: 16, align: 'center'
         });
-        this.result = new PIXI.Text('Waiting for validator...', {
-            fontSize: 14, fill: ui_1.MENU_COLOR.TEXT_SEMI_BLACK
+        this.result = new MultiStyleText(ConsoleMenu.DEFAULT_RESULT, {
+            default: {
+                fontSize: 14, fill: ui_1.MENU_COLOR.TEXT_SEMI_BLACK
+            },
+            heading: {
+                fontSize: 16, fontWeight: 'bold'
+            },
+            warning: {
+                fill: 0xbca316
+            },
+            error: {
+                fill: 0xD8000C
+            }
         });
         this.addChild(this.background);
         this.addChild(this.label, this.result);
@@ -68250,17 +68872,18 @@ class ConsoleMenu extends PIXI.Container {
         this.background.lineTo(SIDE_MENU_WIDTH, tipTop);
     }
 }
+ConsoleMenu.DEFAULT_RESULT = 'Waiting for validator...';
 exports.ConsoleMenu = ConsoleMenu;
 
 
 /***/ }),
-/* 223 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(16);
+const _ = __webpack_require__(11);
 const index_1 = __webpack_require__(9);
 const utils_1 = __webpack_require__(31);
 const INDICATOR_COLOR = 0x505050;
@@ -68461,7 +69084,7 @@ exports.Attacher = Attacher;
 
 
 /***/ }),
-/* 224 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68473,7 +69096,8 @@ const node_drawer_1 = __webpack_require__(32);
 const definition_parser_1 = __webpack_require__(25);
 const module_1 = __webpack_require__(51);
 const utils_1 = __webpack_require__(31);
-const type_1 = __webpack_require__(15);
+const type_1 = __webpack_require__(16);
+const validating_functions_1 = __webpack_require__(105);
 class DefinitionStart extends index_1.Definition {
     constructor() {
         super(DefinitionStart.definition);
@@ -68531,6 +69155,7 @@ class DefinitionFunction extends index_1.Definition {
             if (token instanceof definition_parser_1.ExpressionToken) {
                 let argumentDefinition = definition_parser_1.parseBlockDefinition({
                     id: utils_1.uuidv4(), definition: `${token.identifier}: ${token.type}`,
+                    validatorPre: [validating_functions_1.checkScopeTree(this)],
                     nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
                 });
                 this.addExport(module_1.ExportScope.INTERNAL, index_1.createAnonymousExpression(argumentDefinition));
@@ -68539,6 +69164,7 @@ class DefinitionFunction extends index_1.Definition {
         if (definition.returnType != type_1.KomodiType.empty) {
             let returnBlockDefinition = definition_parser_1.parseBlockDefinition({
                 id: utils_1.uuidv4(), definition: `return [result: ${definition.returnType}]`,
+                validatorPre: [validating_functions_1.checkScopeTree(this)],
                 nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
             });
             this.addExport(module_1.ExportScope.INTERNAL, index_1.createAnonymousCommand(returnBlockDefinition));
@@ -68573,7 +69199,7 @@ exports.blockList = [
 
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68610,7 +69236,7 @@ exports.blockList = [
 
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68660,7 +69286,7 @@ exports.blockList = [
 
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68670,7 +69296,7 @@ const index_1 = __webpack_require__(9);
 const definition_parser_1 = __webpack_require__(25);
 const node_drawer_1 = __webpack_require__(32);
 const scope_drawer_1 = __webpack_require__(33);
-const type_1 = __webpack_require__(15);
+const type_1 = __webpack_require__(16);
 const NOT_FOUND_ID = 'NotFound';
 class Serializer {
     constructor(context) {
@@ -68840,62 +69466,15 @@ exports.Serializer = Serializer;
 
 
 /***/ }),
-/* 228 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-  isString: function(arg) {
-    return typeof(arg) === 'string';
-  },
-  isObject: function(arg) {
-    return typeof(arg) === 'object' && arg !== null;
-  },
-  isNull: function(arg) {
-    return arg === null;
-  },
-  isNullOrUndefined: function(arg) {
-    return arg == null;
-  }
-};
-
-
-/***/ }),
-/* 229 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
-function w(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
-function ea(a){return a.o.location.hostname||a.a.location.hostname}function z(a,b,c){function d(){m&&e&&f&&(m(g),m=null)}b=t(a,"link",{rel:"stylesheet",href:b,media:"all"});var e=!1,f=!0,g=null,m=c||null;da?(b.onload=function(){e=!0;d()},b.onerror=function(){e=!0;g=Error("Stylesheet failed to load");d()}):setTimeout(function(){e=!0;d()},0);u(a,"head",b)}
-function A(a,b,c,d){var e=a.c.getElementsByTagName("head")[0];if(e){var f=t(a,"script",{src:b}),g=!1;f.onload=f.onreadystatechange=function(){g||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(g=!0,c&&c(null),f.onload=f.onreadystatechange=null,"HEAD"==f.parentNode.tagName&&e.removeChild(f))};e.appendChild(f);setTimeout(function(){g||(g=!0,c&&c(Error("Script load timeout")))},d||5E3);return f}return null};function B(){this.a=0;this.c=null}function C(a){a.a++;return function(){a.a--;D(a)}}function E(a,b){a.c=b;D(a)}function D(a){0==a.a&&a.c&&(a.c(),a.c=null)};function F(a){this.a=a||"-"}F.prototype.c=function(a){for(var b=[],c=0;c<arguments.length;c++)b.push(arguments[c].replace(/[\W_]+/g,"").toLowerCase());return b.join(this.a)};function G(a,b){this.c=a;this.f=4;this.a="n";var c=(b||"n4").match(/^([nio])([1-9])$/i);c&&(this.a=c[1],this.f=parseInt(c[2],10))}function fa(a){return H(a)+" "+(a.f+"00")+" 300px "+I(a.c)}function I(a){var b=[];a=a.split(/,\s*/);for(var c=0;c<a.length;c++){var d=a[c].replace(/['"]/g,"");-1!=d.indexOf(" ")||/^\d/.test(d)?b.push("'"+d+"'"):b.push(d)}return b.join(",")}function J(a){return a.a+a.f}function H(a){var b="normal";"o"===a.a?b="oblique":"i"===a.a&&(b="italic");return b}
-function ga(a){var b=4,c="n",d=null;a&&((d=a.match(/(normal|oblique|italic)/i))&&d[1]&&(c=d[1].substr(0,1).toLowerCase()),(d=a.match(/([1-9]00|normal|bold)/i))&&d[1]&&(/bold/i.test(d[1])?b=7:/[1-9]00/.test(d[1])&&(b=parseInt(d[1].substr(0,1),10))));return c+b};function ha(a,b){this.c=a;this.f=a.o.document.documentElement;this.h=b;this.a=new F("-");this.j=!1!==b.events;this.g=!1!==b.classes}function ia(a){a.g&&w(a.f,[a.a.c("wf","loading")]);K(a,"loading")}function L(a){if(a.g){var b=y(a.f,a.a.c("wf","active")),c=[],d=[a.a.c("wf","loading")];b||c.push(a.a.c("wf","inactive"));w(a.f,c,d)}K(a,"inactive")}function K(a,b,c){if(a.j&&a.h[b])if(c)a.h[b](c.c,J(c));else a.h[b]()};function ja(){this.c={}}function ka(a,b,c){var d=[],e;for(e in b)if(b.hasOwnProperty(e)){var f=a.c[e];f&&d.push(f(b[e],c))}return d};function M(a,b){this.c=a;this.f=b;this.a=t(this.c,"span",{"aria-hidden":"true"},this.f)}function N(a){u(a.c,"body",a.a)}function O(a){return"display:block;position:absolute;top:-9999px;left:-9999px;font-size:300px;width:auto;height:auto;line-height:normal;margin:0;padding:0;font-variant:normal;white-space:nowrap;font-family:"+I(a.c)+";"+("font-style:"+H(a)+";font-weight:"+(a.f+"00")+";")};function P(a,b,c,d,e,f){this.g=a;this.j=b;this.a=d;this.c=c;this.f=e||3E3;this.h=f||void 0}P.prototype.start=function(){var a=this.c.o.document,b=this,c=q(),d=new Promise(function(d,e){function f(){q()-c>=b.f?e():a.fonts.load(fa(b.a),b.h).then(function(a){1<=a.length?d():setTimeout(f,25)},function(){e()})}f()}),e=null,f=new Promise(function(a,d){e=setTimeout(d,b.f)});Promise.race([f,d]).then(function(){e&&(clearTimeout(e),e=null);b.g(b.a)},function(){b.j(b.a)})};function Q(a,b,c,d,e,f,g){this.v=a;this.B=b;this.c=c;this.a=d;this.s=g||"BESbswy";this.f={};this.w=e||3E3;this.u=f||null;this.m=this.j=this.h=this.g=null;this.g=new M(this.c,this.s);this.h=new M(this.c,this.s);this.j=new M(this.c,this.s);this.m=new M(this.c,this.s);a=new G(this.a.c+",serif",J(this.a));a=O(a);this.g.a.style.cssText=a;a=new G(this.a.c+",sans-serif",J(this.a));a=O(a);this.h.a.style.cssText=a;a=new G("serif",J(this.a));a=O(a);this.j.a.style.cssText=a;a=new G("sans-serif",J(this.a));a=
-O(a);this.m.a.style.cssText=a;N(this.g);N(this.h);N(this.j);N(this.m)}var R={D:"serif",C:"sans-serif"},S=null;function T(){if(null===S){var a=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent);S=!!a&&(536>parseInt(a[1],10)||536===parseInt(a[1],10)&&11>=parseInt(a[2],10))}return S}Q.prototype.start=function(){this.f.serif=this.j.a.offsetWidth;this.f["sans-serif"]=this.m.a.offsetWidth;this.A=q();U(this)};
-function la(a,b,c){for(var d in R)if(R.hasOwnProperty(d)&&b===a.f[R[d]]&&c===a.f[R[d]])return!0;return!1}function U(a){var b=a.g.a.offsetWidth,c=a.h.a.offsetWidth,d;(d=b===a.f.serif&&c===a.f["sans-serif"])||(d=T()&&la(a,b,c));d?q()-a.A>=a.w?T()&&la(a,b,c)&&(null===a.u||a.u.hasOwnProperty(a.a.c))?V(a,a.v):V(a,a.B):ma(a):V(a,a.v)}function ma(a){setTimeout(p(function(){U(this)},a),50)}function V(a,b){setTimeout(p(function(){v(this.g.a);v(this.h.a);v(this.j.a);v(this.m.a);b(this.a)},a),0)};function W(a,b,c){this.c=a;this.a=b;this.f=0;this.m=this.j=!1;this.s=c}var X=null;W.prototype.g=function(a){var b=this.a;b.g&&w(b.f,[b.a.c("wf",a.c,J(a).toString(),"active")],[b.a.c("wf",a.c,J(a).toString(),"loading"),b.a.c("wf",a.c,J(a).toString(),"inactive")]);K(b,"fontactive",a);this.m=!0;na(this)};
-W.prototype.h=function(a){var b=this.a;if(b.g){var c=y(b.f,b.a.c("wf",a.c,J(a).toString(),"active")),d=[],e=[b.a.c("wf",a.c,J(a).toString(),"loading")];c||d.push(b.a.c("wf",a.c,J(a).toString(),"inactive"));w(b.f,d,e)}K(b,"fontinactive",a);na(this)};function na(a){0==--a.f&&a.j&&(a.m?(a=a.a,a.g&&w(a.f,[a.a.c("wf","active")],[a.a.c("wf","loading"),a.a.c("wf","inactive")]),K(a,"active")):L(a.a))};function oa(a){this.j=a;this.a=new ja;this.h=0;this.f=this.g=!0}oa.prototype.load=function(a){this.c=new ca(this.j,a.context||this.j);this.g=!1!==a.events;this.f=!1!==a.classes;pa(this,new ha(this.c,a),a)};
-function qa(a,b,c,d,e){var f=0==--a.h;(a.f||a.g)&&setTimeout(function(){var a=e||null,m=d||null||{};if(0===c.length&&f)L(b.a);else{b.f+=c.length;f&&(b.j=f);var h,l=[];for(h=0;h<c.length;h++){var k=c[h],n=m[k.c],r=b.a,x=k;r.g&&w(r.f,[r.a.c("wf",x.c,J(x).toString(),"loading")]);K(r,"fontloading",x);r=null;if(null===X)if(window.FontFace){var x=/Gecko.*Firefox\/(\d+)/.exec(window.navigator.userAgent),xa=/OS X.*Version\/10\..*Safari/.exec(window.navigator.userAgent)&&/Apple/.exec(window.navigator.vendor);
-X=x?42<parseInt(x[1],10):xa?!1:!0}else X=!1;X?r=new P(p(b.g,b),p(b.h,b),b.c,k,b.s,n):r=new Q(p(b.g,b),p(b.h,b),b.c,k,b.s,a,n);l.push(r)}for(h=0;h<l.length;h++)l[h].start()}},0)}function pa(a,b,c){var d=[],e=c.timeout;ia(b);var d=ka(a.a,c,a.c),f=new W(a.c,b,e);a.h=d.length;b=0;for(c=d.length;b<c;b++)d[b].load(function(b,d,c){qa(a,f,b,d,c)})};function ra(a,b){this.c=a;this.a=b}
-ra.prototype.load=function(a){function b(){if(f["__mti_fntLst"+d]){var c=f["__mti_fntLst"+d](),e=[],h;if(c)for(var l=0;l<c.length;l++){var k=c[l].fontfamily;void 0!=c[l].fontStyle&&void 0!=c[l].fontWeight?(h=c[l].fontStyle+c[l].fontWeight,e.push(new G(k,h))):e.push(new G(k))}a(e)}else setTimeout(function(){b()},50)}var c=this,d=c.a.projectId,e=c.a.version;if(d){var f=c.c.o;A(this.c,(c.a.api||"https://fast.fonts.net/jsapi")+"/"+d+".js"+(e?"?v="+e:""),function(e){e?a([]):(f["__MonotypeConfiguration__"+
-d]=function(){return c.a},b())}).id="__MonotypeAPIScript__"+d}else a([])};function sa(a,b){this.c=a;this.a=b}sa.prototype.load=function(a){var b,c,d=this.a.urls||[],e=this.a.families||[],f=this.a.testStrings||{},g=new B;b=0;for(c=d.length;b<c;b++)z(this.c,d[b],C(g));var m=[];b=0;for(c=e.length;b<c;b++)if(d=e[b].split(":"),d[1])for(var h=d[1].split(","),l=0;l<h.length;l+=1)m.push(new G(d[0],h[l]));else m.push(new G(d[0]));E(g,function(){a(m,f)})};function ta(a,b){a?this.c=a:this.c=ua;this.a=[];this.f=[];this.g=b||""}var ua="https://fonts.googleapis.com/css";function va(a,b){for(var c=b.length,d=0;d<c;d++){var e=b[d].split(":");3==e.length&&a.f.push(e.pop());var f="";2==e.length&&""!=e[1]&&(f=":");a.a.push(e.join(f))}}
-function wa(a){if(0==a.a.length)throw Error("No fonts to load!");if(-1!=a.c.indexOf("kit="))return a.c;for(var b=a.a.length,c=[],d=0;d<b;d++)c.push(a.a[d].replace(/ /g,"+"));b=a.c+"?family="+c.join("%7C");0<a.f.length&&(b+="&subset="+a.f.join(","));0<a.g.length&&(b+="&text="+encodeURIComponent(a.g));return b};function ya(a){this.f=a;this.a=[];this.c={}}
-var za={latin:"BESbswy","latin-ext":"\u00e7\u00f6\u00fc\u011f\u015f",cyrillic:"\u0439\u044f\u0416",greek:"\u03b1\u03b2\u03a3",khmer:"\u1780\u1781\u1782",Hanuman:"\u1780\u1781\u1782"},Aa={thin:"1",extralight:"2","extra-light":"2",ultralight:"2","ultra-light":"2",light:"3",regular:"4",book:"4",medium:"5","semi-bold":"6",semibold:"6","demi-bold":"6",demibold:"6",bold:"7","extra-bold":"8",extrabold:"8","ultra-bold":"8",ultrabold:"8",black:"9",heavy:"9",l:"3",r:"4",b:"7"},Ba={i:"i",italic:"i",n:"n",normal:"n"},
-Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra|ultra)-?)?bold|black|heavy|l|r|b|[1-9]00)?(n|i|normal|italic)?$/;
-function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
-g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
-
-
-/***/ }),
 /* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(16);
-const context_1 = __webpack_require__(220);
-const validating_functions_1 = __webpack_require__(231);
+const _ = __webpack_require__(11);
+const context_1 = __webpack_require__(104);
+const validating_functions_1 = __webpack_require__(105);
 class ValidationContext {
     constructor(initialize = true) {
         if (initialize) {
@@ -68958,7 +69537,7 @@ class Validator {
         let validationResult = '';
         let modules = this.context.module.getModuleList();
         for (let moduleName of modules.userModule) {
-            validationResult += `<Module "${moduleName}">\n`;
+            validationResult += `<heading>Module "${moduleName}"\n</heading>`;
             let cnt = 0;
             for (let block of this.context.module.blockListOf(moduleName).values()) {
                 if (block.attachInfo == null) {
@@ -68971,10 +69550,10 @@ class Validator {
                             validationResult += `[INFO] ${infoString}\n`;
                         }
                         for (let warningString of result.warning) {
-                            validationResult += `[WARNING] ${warningString}\n`;
+                            validationResult += `<warning>[WARNING] ${warningString}\n</warning>`;
                         }
                         for (let errorString of result.error) {
-                            validationResult += `[ERROR] ${errorString}\n`;
+                            validationResult += `<error>[ERROR] ${errorString}\n</error>`;
                         }
                     }
                     else {
@@ -68985,6 +69564,7 @@ class Validator {
             if (this.context.module.blockListOf(moduleName).size == 0) {
                 validationResult += "Nothing to validate.\n";
             }
+            validationResult += "\n";
         }
         return validationResult;
     }
@@ -68998,49 +69578,45 @@ exports.Validator = Validator;
 
 "use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(16);
-const index_1 = __webpack_require__(9);
-function dependencyCheck(block, module, context) {
-    if (!module.hasBlockClass(block.definition.id)) {
-        context.result.error.push(`Broken dependency "${block.definition.definition}"`);
-    }
-}
-exports.dependencyCheck = dependencyCheck;
-function freeBlockDefinitionCheck(block, module, context) {
-    if (block.attachInfo == null && !(block instanceof index_1.Definition)) {
-        context.result.warning.push("Only definition can be unbound.");
-    }
-}
-exports.freeBlockDefinitionCheck = freeBlockDefinitionCheck;
-function argumentCheck(block, module, context) {
-    for (let argumentName of block.definition.argumentNames) {
-        let argumentBlock = block.getArgument(argumentName);
-        if (argumentBlock == null) {
-            context.result.warning.push("All argument should be filled.");
-            break;
-        }
-    }
-}
-exports.argumentCheck = argumentCheck;
-function addToScopeTree(block, module, context) {
-    context.scopeTree.push(block);
-}
-exports.addToScopeTree = addToScopeTree;
-function checkScopeTree(block) {
-    return (block, module, context) => {
-        if (!_.includes(context.scopeTree, block)) {
-            context.result.error.push(`"${block.definition.definition}" is in the wrong scope.`);
-        }
-    };
-}
-exports.checkScopeTree = checkScopeTree;
-exports.validatorPreAll = [
-    dependencyCheck, freeBlockDefinitionCheck, argumentCheck
-];
-exports.validatorIntoAll = [
-    addToScopeTree,
-];
+
+module.exports = {
+  isString: function(arg) {
+    return typeof(arg) === 'string';
+  },
+  isObject: function(arg) {
+    return typeof(arg) === 'object' && arg !== null;
+  },
+  isNull: function(arg) {
+    return arg === null;
+  },
+  isNullOrUndefined: function(arg) {
+    return arg == null;
+  }
+};
+
+
+/***/ }),
+/* 232 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
+function w(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1)if(b[e]===d[g]){f=!0;break}f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1)if(d[e]===c[g]){f=!0;break}f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++)if(c[d]==b)return!0;return!1}
+function ea(a){return a.o.location.hostname||a.a.location.hostname}function z(a,b,c){function d(){m&&e&&f&&(m(g),m=null)}b=t(a,"link",{rel:"stylesheet",href:b,media:"all"});var e=!1,f=!0,g=null,m=c||null;da?(b.onload=function(){e=!0;d()},b.onerror=function(){e=!0;g=Error("Stylesheet failed to load");d()}):setTimeout(function(){e=!0;d()},0);u(a,"head",b)}
+function A(a,b,c,d){var e=a.c.getElementsByTagName("head")[0];if(e){var f=t(a,"script",{src:b}),g=!1;f.onload=f.onreadystatechange=function(){g||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(g=!0,c&&c(null),f.onload=f.onreadystatechange=null,"HEAD"==f.parentNode.tagName&&e.removeChild(f))};e.appendChild(f);setTimeout(function(){g||(g=!0,c&&c(Error("Script load timeout")))},d||5E3);return f}return null};function B(){this.a=0;this.c=null}function C(a){a.a++;return function(){a.a--;D(a)}}function E(a,b){a.c=b;D(a)}function D(a){0==a.a&&a.c&&(a.c(),a.c=null)};function F(a){this.a=a||"-"}F.prototype.c=function(a){for(var b=[],c=0;c<arguments.length;c++)b.push(arguments[c].replace(/[\W_]+/g,"").toLowerCase());return b.join(this.a)};function G(a,b){this.c=a;this.f=4;this.a="n";var c=(b||"n4").match(/^([nio])([1-9])$/i);c&&(this.a=c[1],this.f=parseInt(c[2],10))}function fa(a){return H(a)+" "+(a.f+"00")+" 300px "+I(a.c)}function I(a){var b=[];a=a.split(/,\s*/);for(var c=0;c<a.length;c++){var d=a[c].replace(/['"]/g,"");-1!=d.indexOf(" ")||/^\d/.test(d)?b.push("'"+d+"'"):b.push(d)}return b.join(",")}function J(a){return a.a+a.f}function H(a){var b="normal";"o"===a.a?b="oblique":"i"===a.a&&(b="italic");return b}
+function ga(a){var b=4,c="n",d=null;a&&((d=a.match(/(normal|oblique|italic)/i))&&d[1]&&(c=d[1].substr(0,1).toLowerCase()),(d=a.match(/([1-9]00|normal|bold)/i))&&d[1]&&(/bold/i.test(d[1])?b=7:/[1-9]00/.test(d[1])&&(b=parseInt(d[1].substr(0,1),10))));return c+b};function ha(a,b){this.c=a;this.f=a.o.document.documentElement;this.h=b;this.a=new F("-");this.j=!1!==b.events;this.g=!1!==b.classes}function ia(a){a.g&&w(a.f,[a.a.c("wf","loading")]);K(a,"loading")}function L(a){if(a.g){var b=y(a.f,a.a.c("wf","active")),c=[],d=[a.a.c("wf","loading")];b||c.push(a.a.c("wf","inactive"));w(a.f,c,d)}K(a,"inactive")}function K(a,b,c){if(a.j&&a.h[b])if(c)a.h[b](c.c,J(c));else a.h[b]()};function ja(){this.c={}}function ka(a,b,c){var d=[],e;for(e in b)if(b.hasOwnProperty(e)){var f=a.c[e];f&&d.push(f(b[e],c))}return d};function M(a,b){this.c=a;this.f=b;this.a=t(this.c,"span",{"aria-hidden":"true"},this.f)}function N(a){u(a.c,"body",a.a)}function O(a){return"display:block;position:absolute;top:-9999px;left:-9999px;font-size:300px;width:auto;height:auto;line-height:normal;margin:0;padding:0;font-variant:normal;white-space:nowrap;font-family:"+I(a.c)+";"+("font-style:"+H(a)+";font-weight:"+(a.f+"00")+";")};function P(a,b,c,d,e,f){this.g=a;this.j=b;this.a=d;this.c=c;this.f=e||3E3;this.h=f||void 0}P.prototype.start=function(){var a=this.c.o.document,b=this,c=q(),d=new Promise(function(d,e){function f(){q()-c>=b.f?e():a.fonts.load(fa(b.a),b.h).then(function(a){1<=a.length?d():setTimeout(f,25)},function(){e()})}f()}),e=null,f=new Promise(function(a,d){e=setTimeout(d,b.f)});Promise.race([f,d]).then(function(){e&&(clearTimeout(e),e=null);b.g(b.a)},function(){b.j(b.a)})};function Q(a,b,c,d,e,f,g){this.v=a;this.B=b;this.c=c;this.a=d;this.s=g||"BESbswy";this.f={};this.w=e||3E3;this.u=f||null;this.m=this.j=this.h=this.g=null;this.g=new M(this.c,this.s);this.h=new M(this.c,this.s);this.j=new M(this.c,this.s);this.m=new M(this.c,this.s);a=new G(this.a.c+",serif",J(this.a));a=O(a);this.g.a.style.cssText=a;a=new G(this.a.c+",sans-serif",J(this.a));a=O(a);this.h.a.style.cssText=a;a=new G("serif",J(this.a));a=O(a);this.j.a.style.cssText=a;a=new G("sans-serif",J(this.a));a=
+O(a);this.m.a.style.cssText=a;N(this.g);N(this.h);N(this.j);N(this.m)}var R={D:"serif",C:"sans-serif"},S=null;function T(){if(null===S){var a=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent);S=!!a&&(536>parseInt(a[1],10)||536===parseInt(a[1],10)&&11>=parseInt(a[2],10))}return S}Q.prototype.start=function(){this.f.serif=this.j.a.offsetWidth;this.f["sans-serif"]=this.m.a.offsetWidth;this.A=q();U(this)};
+function la(a,b,c){for(var d in R)if(R.hasOwnProperty(d)&&b===a.f[R[d]]&&c===a.f[R[d]])return!0;return!1}function U(a){var b=a.g.a.offsetWidth,c=a.h.a.offsetWidth,d;(d=b===a.f.serif&&c===a.f["sans-serif"])||(d=T()&&la(a,b,c));d?q()-a.A>=a.w?T()&&la(a,b,c)&&(null===a.u||a.u.hasOwnProperty(a.a.c))?V(a,a.v):V(a,a.B):ma(a):V(a,a.v)}function ma(a){setTimeout(p(function(){U(this)},a),50)}function V(a,b){setTimeout(p(function(){v(this.g.a);v(this.h.a);v(this.j.a);v(this.m.a);b(this.a)},a),0)};function W(a,b,c){this.c=a;this.a=b;this.f=0;this.m=this.j=!1;this.s=c}var X=null;W.prototype.g=function(a){var b=this.a;b.g&&w(b.f,[b.a.c("wf",a.c,J(a).toString(),"active")],[b.a.c("wf",a.c,J(a).toString(),"loading"),b.a.c("wf",a.c,J(a).toString(),"inactive")]);K(b,"fontactive",a);this.m=!0;na(this)};
+W.prototype.h=function(a){var b=this.a;if(b.g){var c=y(b.f,b.a.c("wf",a.c,J(a).toString(),"active")),d=[],e=[b.a.c("wf",a.c,J(a).toString(),"loading")];c||d.push(b.a.c("wf",a.c,J(a).toString(),"inactive"));w(b.f,d,e)}K(b,"fontinactive",a);na(this)};function na(a){0==--a.f&&a.j&&(a.m?(a=a.a,a.g&&w(a.f,[a.a.c("wf","active")],[a.a.c("wf","loading"),a.a.c("wf","inactive")]),K(a,"active")):L(a.a))};function oa(a){this.j=a;this.a=new ja;this.h=0;this.f=this.g=!0}oa.prototype.load=function(a){this.c=new ca(this.j,a.context||this.j);this.g=!1!==a.events;this.f=!1!==a.classes;pa(this,new ha(this.c,a),a)};
+function qa(a,b,c,d,e){var f=0==--a.h;(a.f||a.g)&&setTimeout(function(){var a=e||null,m=d||null||{};if(0===c.length&&f)L(b.a);else{b.f+=c.length;f&&(b.j=f);var h,l=[];for(h=0;h<c.length;h++){var k=c[h],n=m[k.c],r=b.a,x=k;r.g&&w(r.f,[r.a.c("wf",x.c,J(x).toString(),"loading")]);K(r,"fontloading",x);r=null;if(null===X)if(window.FontFace){var x=/Gecko.*Firefox\/(\d+)/.exec(window.navigator.userAgent),xa=/OS X.*Version\/10\..*Safari/.exec(window.navigator.userAgent)&&/Apple/.exec(window.navigator.vendor);
+X=x?42<parseInt(x[1],10):xa?!1:!0}else X=!1;X?r=new P(p(b.g,b),p(b.h,b),b.c,k,b.s,n):r=new Q(p(b.g,b),p(b.h,b),b.c,k,b.s,a,n);l.push(r)}for(h=0;h<l.length;h++)l[h].start()}},0)}function pa(a,b,c){var d=[],e=c.timeout;ia(b);var d=ka(a.a,c,a.c),f=new W(a.c,b,e);a.h=d.length;b=0;for(c=d.length;b<c;b++)d[b].load(function(b,d,c){qa(a,f,b,d,c)})};function ra(a,b){this.c=a;this.a=b}
+ra.prototype.load=function(a){function b(){if(f["__mti_fntLst"+d]){var c=f["__mti_fntLst"+d](),e=[],h;if(c)for(var l=0;l<c.length;l++){var k=c[l].fontfamily;void 0!=c[l].fontStyle&&void 0!=c[l].fontWeight?(h=c[l].fontStyle+c[l].fontWeight,e.push(new G(k,h))):e.push(new G(k))}a(e)}else setTimeout(function(){b()},50)}var c=this,d=c.a.projectId,e=c.a.version;if(d){var f=c.c.o;A(this.c,(c.a.api||"https://fast.fonts.net/jsapi")+"/"+d+".js"+(e?"?v="+e:""),function(e){e?a([]):(f["__MonotypeConfiguration__"+
+d]=function(){return c.a},b())}).id="__MonotypeAPIScript__"+d}else a([])};function sa(a,b){this.c=a;this.a=b}sa.prototype.load=function(a){var b,c,d=this.a.urls||[],e=this.a.families||[],f=this.a.testStrings||{},g=new B;b=0;for(c=d.length;b<c;b++)z(this.c,d[b],C(g));var m=[];b=0;for(c=e.length;b<c;b++)if(d=e[b].split(":"),d[1])for(var h=d[1].split(","),l=0;l<h.length;l+=1)m.push(new G(d[0],h[l]));else m.push(new G(d[0]));E(g,function(){a(m,f)})};function ta(a,b){a?this.c=a:this.c=ua;this.a=[];this.f=[];this.g=b||""}var ua="https://fonts.googleapis.com/css";function va(a,b){for(var c=b.length,d=0;d<c;d++){var e=b[d].split(":");3==e.length&&a.f.push(e.pop());var f="";2==e.length&&""!=e[1]&&(f=":");a.a.push(e.join(f))}}
+function wa(a){if(0==a.a.length)throw Error("No fonts to load!");if(-1!=a.c.indexOf("kit="))return a.c;for(var b=a.a.length,c=[],d=0;d<b;d++)c.push(a.a[d].replace(/ /g,"+"));b=a.c+"?family="+c.join("%7C");0<a.f.length&&(b+="&subset="+a.f.join(","));0<a.g.length&&(b+="&text="+encodeURIComponent(a.g));return b};function ya(a){this.f=a;this.a=[];this.c={}}
+var za={latin:"BESbswy","latin-ext":"\u00e7\u00f6\u00fc\u011f\u015f",cyrillic:"\u0439\u044f\u0416",greek:"\u03b1\u03b2\u03a3",khmer:"\u1780\u1781\u1782",Hanuman:"\u1780\u1781\u1782"},Aa={thin:"1",extralight:"2","extra-light":"2",ultralight:"2","ultra-light":"2",light:"3",regular:"4",book:"4",medium:"5","semi-bold":"6",semibold:"6","demi-bold":"6",demibold:"6",bold:"7","extra-bold":"8",extrabold:"8","ultra-bold":"8",ultrabold:"8",black:"9",heavy:"9",l:"3",r:"4",b:"7"},Ba={i:"i",italic:"i",n:"n",normal:"n"},
+Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra|ultra)-?)?bold|black|heavy|l|r|b|[1-9]00)?(n|i|normal|italic)?$/;
+function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
+g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
 
 
 /***/ })

@@ -62,10 +62,10 @@ export class KomodiClass extends KomodiContext {
 
         // setup top menu
         this.topMenu.addMenu('Project Name', () => {
-            let projectName = window.prompt('Project Name:', this.topMenu.projectName);
+            let projectName = window.prompt('Project Name:', this.projectName);
             if (!projectName || projectName == '') return;
 
-            this.topMenu.projectName = projectName;
+            this.projectName = projectName;
         });
         this.topMenu.addMenu('Open', () => {
             if (window.confirm('Current progress will be lost')) {
@@ -95,7 +95,7 @@ export class KomodiClass extends KomodiContext {
                 url = URL.createObjectURL(blob);
             let fakeLink = document.createElement('a');
             fakeLink.href = url;
-            fakeLink.download = this.topMenu.projectName + '.komodi';
+            fakeLink.download = this.projectName + '.komodi';
             fakeLink.click();
             URL.revokeObjectURL(url);
         });
@@ -118,8 +118,12 @@ export class KomodiClass extends KomodiContext {
         );
     }
 
+    get projectName() {
+        return this._projectName;
+    }
+
     set projectName(projectName: string) {
-        super.projectName = projectName;
+        this._projectName = projectName;
         this.topMenu.projectName = projectName;
     }
 
@@ -129,13 +133,14 @@ export class KomodiClass extends KomodiContext {
     }
 
     newProject() {
-        this.topMenu.projectName = "Untitled Komodi Project";
+        this.projectName = "Untitled Komodi Project";
         this.module.addUserModule('main');
         this.module.editingModule = 'main';
     }
 
     clearProject() {
         this.module.clear();
+        this.consoleMenu.result.text = ConsoleMenu.DEFAULT_RESULT;
     }
 
     initializeDOM(parent: HTMLElement) {

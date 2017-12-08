@@ -1,4 +1,6 @@
 import * as PIXI from "pixi.js";
+import * as MultiStyleText from "pixi-multistyle-text";
+import MultiStyleTextClass from "pixi-multistyle-text";
 import {BlockGenerator} from "./graphic";
 import {BlockClass} from "./program";
 import {ListSelector, MENU_COLOR, SimpleButton} from "./common/ui";
@@ -13,7 +15,7 @@ const MODULE_SELECTOR_END_Y = 400;
 const EDIT_BUTTON_MARGIN = 8;
 const EDIT_BUTTON_HEIGHT = 40;
 
-const CONSOLE_MENU_HEIGHT = 140;
+const CONSOLE_MENU_HEIGHT = 160;
 const CONSOLE_MENU_TIP_WIDTH = 120;
 const CONSOLE_MENU_TIP_HEIGHT = 30;
 
@@ -264,10 +266,12 @@ export class SideMenu extends PIXI.Container {
 }
 
 export class ConsoleMenu extends PIXI.Container {
+    static readonly DEFAULT_RESULT = 'Waiting for validator...';
+
     background: PIXI.Graphics = new PIXI.Graphics();
 
     label: PIXI.Text;
-    result: PIXI.Text;
+    result: MultiStyleTextClass;
 
     constructor() {
         super();
@@ -277,8 +281,19 @@ export class ConsoleMenu extends PIXI.Container {
             fontSize: 16, align : 'center'
         });
 
-        this.result = new PIXI.Text('Waiting for validator...', {
-            fontSize: 14, fill: MENU_COLOR.TEXT_SEMI_BLACK
+        this.result = new (<any>MultiStyleText)(ConsoleMenu.DEFAULT_RESULT, {
+            default: {
+                fontSize: 14, fill: MENU_COLOR.TEXT_SEMI_BLACK
+            },
+            heading: {
+                fontSize: 16, fontWeight: 'bold'
+            },
+            warning: {
+                fill: 0xbca316
+            },
+            error: {
+                fill: 0xD8000C
+            }
         });
 
         this.addChild(this.background);

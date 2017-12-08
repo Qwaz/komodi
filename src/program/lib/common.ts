@@ -14,6 +14,7 @@ import {ExportScope, parseScopeString} from "../module";
 import {uuidv4} from "../../common/utils";
 import {KomodiType} from "../../type";
 import {KomodiContext} from "../../context";
+import {checkScopeTree} from "../validator/validating_functions";
 
 export class DefinitionStart extends Definition {
     static readonly definition = parseBlockDefinition({
@@ -73,22 +74,24 @@ export class DefinitionFunction extends Definition {
     private updateExport() {
         this.clearExport();
 
+        // Function
         let scope = parseScopeString(this.scope);
         let definition = parseBlockDefinition({
             id: uuidv4(), definition: this.define,
             nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
         });
-
         if (definition.returnType == KomodiType.empty) {
             this.addExport(scope, createAnonymousCommand(definition));
         } else {
             this.addExport(scope, createAnonymousExpression(definition));
         }
 
+        // Argument
         definition.tokens.forEach((token) => {
             if (token instanceof ExpressionToken) {
                 let argumentDefinition = parseBlockDefinition({
                     id: uuidv4(), definition: `${token.identifier}: ${token.type}`,
+                    validatorPre: [checkScopeTree(this)],
                     nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
                 });
 
@@ -96,9 +99,11 @@ export class DefinitionFunction extends Definition {
             }
         });
 
+        // Return
         if (definition.returnType != KomodiType.empty) {
             let returnBlockDefinition = parseBlockDefinition({
                 id: uuidv4(), definition: `return [result: ${definition.returnType}]`,
+                validatorPre: [checkScopeTree(this)],
                 nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
             });
             this.addExport(ExportScope.INTERNAL, createAnonymousCommand(returnBlockDefinition));

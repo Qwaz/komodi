@@ -87,7 +87,7 @@ export class Validator {
 
         let modules = this.context.module.getModuleList();
         for (let moduleName of modules.userModule) {
-            validationResult += `<Module "${moduleName}">\n`;
+            validationResult += `<heading>Module "${moduleName}"\n</heading>`;
             let cnt = 0;
             for (let block of this.context.module.blockListOf(moduleName).values()) {
                 if (block.attachInfo == null) {
@@ -100,10 +100,10 @@ export class Validator {
                             validationResult += `[INFO] ${infoString}\n`;
                         }
                         for (let warningString of result.warning) {
-                            validationResult += `[WARNING] ${warningString}\n`;
+                            validationResult += `<warning>[WARNING] ${warningString}\n</warning>`;
                         }
                         for (let errorString of result.error) {
-                            validationResult += `[ERROR] ${errorString}\n`;
+                            validationResult += `<error>[ERROR] ${errorString}\n</error>`;
                         }
                     } else {
                         validationResult += 'OK!\n';
@@ -113,6 +113,7 @@ export class Validator {
             if (this.context.module.blockListOf(moduleName).size == 0) {
                 validationResult += "Nothing to validate.\n";
             }
+            validationResult += "\n";
         }
 
         return validationResult;
