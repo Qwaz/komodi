@@ -68416,6 +68416,7 @@ const definition_parser_1 = __webpack_require__(30);
 const module_1 = __webpack_require__(51);
 const utils_1 = __webpack_require__(29);
 const type_1 = __webpack_require__(31);
+const global_1 = __webpack_require__(6);
 class DefinitionStart extends index_1.Definition {
     constructor() {
         super(DefinitionStart.definition);
@@ -68447,7 +68448,13 @@ class DefinitionFunction extends index_1.Definition {
     set define(value) {
         this._define = value;
         if (this.initialized) {
-            this.updateExport();
+            this.exportInfo.forEach((data) => {
+                global_1.Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            });
+            this.exportInfo[0].scope = module_1.parseScopeString(value);
+            this.exportInfo.forEach((data) => {
+                global_1.Komodi.module.addExport(this.moduleName, data.scope, data.blockClass);
+            });
         }
     }
     updateExport() {
