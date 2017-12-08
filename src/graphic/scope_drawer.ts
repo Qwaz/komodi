@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import {BlockGraphic, ScopeDrawer} from "./index";
 import {Coordinate} from "../common/definition";
 import {BlockBase} from "../program/index";
-import {Komodi} from "../global";
+import {Komodi} from "../komodi";
 
 const FLOW_VERTICAL_MARGIN = 20;
 const SPLIT_VERTICAL_MARGIN = 15;

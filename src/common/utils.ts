@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Komodi} from "../global";
+import {Komodi} from "../komodi";
 
 export function centerChild(target: PIXI.DisplayObject, x: number, y: number) {
     let localBounds = target.getLocalBounds();

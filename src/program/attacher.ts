@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import {Block, BlockBase, Command, Definition, Expression} from "./index";
 import {Coordinate} from "../common/definition";
 import {getMousePoint} from "../common/utils";
-import {Komodi} from "../global";
+import {Komodi} from "../komodi";
 import {ExpressionToken} from "./definition_parser";
 
 export interface ArgumentAttach {

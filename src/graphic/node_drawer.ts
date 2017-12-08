@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import {BlockGraphic, NodeDrawer} from "./index";
 import {KomodiType, typeToColor} from "../type";
 import {centerChild} from "../common/utils";
-import {Komodi} from "../global";
+import {Komodi} from "../komodi";
 import {Token} from "../program/definition_parser";
 import {BlockBase} from "../program";
 

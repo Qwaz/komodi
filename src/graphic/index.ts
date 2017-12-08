@@ -1,5 +1,5 @@
-import {Block, BlockBase, BlockClass, VirtualBlock} from "../program/index";
-import {Komodi} from "../global";
+import {Block, BlockBase, BlockClass, VirtualBlock} from "../program";
+import {Komodi} from "../komodi";
 import {BlockDefinition, Token, UserInputToken} from "../program/definition_parser";
 import {typeToColor} from "../type";
 import {getMousePoint} from "../common/utils";

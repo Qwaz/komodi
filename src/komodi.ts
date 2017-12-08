@@ -1,10 +1,11 @@
+import ValidateWorker = require("worker-loader?name=[name].js!./worker");
 import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
 import {Attacher} from "./program/attacher";
 import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
 import {deserializeProgram, serializeProgram} from "./program/serializer";
-import {Block} from "./program/index";
+import {Block} from "./program";
 import {Module} from "./program/module";
 
 const KOMODI_STYLE = `
@@ -56,6 +57,8 @@ class KomodiClass {
     attacher: Attacher = new Attacher();
 
     module: Module = new Module();
+
+    worker: Worker = new ValidateWorker();
 
     constructor() {
         this.komodiDiv = document.createElement("div");
@@ -118,6 +121,10 @@ class KomodiClass {
             } else {
                 this.module.addUserModule(moduleName);
             }
+        });
+
+        this.topMenu.addMenu('Signal', () => {
+            this.worker.postMessage('Hello, worker!');
         });
 
         // renderer initialization

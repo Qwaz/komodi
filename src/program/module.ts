@@ -2,8 +2,8 @@ import {Block, BlockClass} from "./index";
 import {blockList as commonBlockList} from "./lib/common"
 import {blockList as ioBlockList} from "./lib/io"
 import {blockList as stringBlockList} from "./lib/string"
-import {Komodi} from "../global";
-import {BlockGraphic} from "../graphic/index";
+import {Komodi} from "../komodi";
+import {BlockGraphic} from "../graphic";
 
 const builtinModules: Map<string, BlockClass[]> = new Map();
 

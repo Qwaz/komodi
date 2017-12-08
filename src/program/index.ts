@@ -2,7 +2,7 @@ import * as _ from "lodash";
 import {BlockGraphic} from "../graphic";
 import {KomodiType} from "../type";
 import {BlockDefinition, UserInputToken} from "./definition_parser";
-import {Komodi} from "../global";
+import {Komodi} from "../komodi";
 import {AttachInfo, ScopeAttach} from "./attacher";
 import {ExportScope} from "./module";
 

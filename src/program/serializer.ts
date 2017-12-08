@@ -1,5 +1,5 @@
 import {Coordinate} from "../common/definition";
-import {Komodi} from "../global";
+import {Komodi} from "../komodi";
 import {Block, BlockClass, createAnonymousCommand, createAnonymousExpression} from "./index";
 import {AttachInfo} from "./attacher";
 import {parseBlockDefinition} from "./definition_parser";

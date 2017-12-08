@@ -13,7 +13,7 @@ import {ExpressionToken, parseBlockDefinition} from "../definition_parser";
 import {ExportScope, parseScopeString} from "../module";
 import {uuidv4} from "../../common/utils";
 import {KomodiType} from "../../type";
-import {Komodi} from "../../global";
+import {Komodi} from "../../komodi";
 
 export class DefinitionStart extends Definition {
     static readonly definition = parseBlockDefinition({

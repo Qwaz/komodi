@@ -1,4 +1,4 @@
-import {Komodi} from "./global";
+import {Komodi} from "./komodi";
 
 export = {
     initializeDOM: Komodi.initializeDOM.bind(Komodi),

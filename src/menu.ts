@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import {Komodi} from "./global";
+import {Komodi} from "./komodi";
 import {BlockGenerator} from "./graphic/index";
 import {BlockClass} from "./program/index";
 import {ListSelector, MENU_COLOR, SimpleButton} from "./common/ui";
