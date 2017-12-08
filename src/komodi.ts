@@ -1,12 +1,8 @@
-import ValidateWorker = require("worker-loader?name=[name].js!./worker");
 import * as WebFont from "webfontloader";
 
 import * as PIXI from "pixi.js";
-import {Attacher} from "./program/attacher";
 import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
-import {deserializeProgram, serializeProgram} from "./program/serializer";
-import {Block} from "./program";
-import {Module} from "./program/module";
+import {KomodiContext} from "./context";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -40,44 +36,33 @@ const KOMODI_STYLE = `
     background-size:50px 50px;
 }`;
 
-class KomodiClass {
+export class KomodiClass extends KomodiContext {
     readonly renderer: PIXI.CanvasRenderer | PIXI.WebGLRenderer;
 
     private komodiDiv: HTMLDivElement;
 
-    readonly container: PIXI.Container = new PIXI.Container();
-    readonly stage: PIXI.Container = new PIXI.Container();
-    readonly fixed: PIXI.Container = new PIXI.Container();
-    private background: PIXI.Graphics = new PIXI.Graphics();
-
-    topMenu: TopMenu = new TopMenu();
-    sideMenu: SideMenu = new SideMenu();
-    bottomMenu: ConsoleMenu = new ConsoleMenu();
-
-    attacher: Attacher = new Attacher();
-
-    module: Module = new Module();
-
-    worker: Worker = new ValidateWorker();
+    readonly topMenu: TopMenu;
+    readonly sideMenu: SideMenu;
+    readonly consoleMenu: ConsoleMenu;
 
     constructor() {
+        super();
+
         this.komodiDiv = document.createElement("div");
         this.komodiDiv.classList.add("komodi-container");
 
-        this.container.interactive = true;
-        this.container.addChild(this.stage, this.fixed, this.background);
+        this.topMenu = new TopMenu();
+        this.sideMenu = new SideMenu(this);
+        this.consoleMenu = new ConsoleMenu();
 
-        this.background.alpha = 0;
-
-        this.fixed.interactive = true;
-        this.fixed.addChild(this.sideMenu, this.bottomMenu, this.topMenu);
+        this.fixed.addChild(this.sideMenu, this.consoleMenu, this.topMenu);
 
         // setup top menu
         this.topMenu.addMenu('Project Name', () => {
-            let projectName = window.prompt('Project Name:', Komodi.topMenu.projectName);
+            let projectName = window.prompt('Project Name:', this.topMenu.projectName);
             if (!projectName || projectName == '') return;
 
-            Komodi.topMenu.projectName = projectName;
+            this.topMenu.projectName = projectName;
         });
         this.topMenu.addMenu('Open', () => {
             if (window.confirm('Current progress will be lost')) {
@@ -93,7 +78,7 @@ class KomodiClass {
                         let reader = new FileReader();
                         reader.onload = (e) => {
                             this.clearProject();
-                            deserializeProgram(JSON.parse(reader.result));
+                            this.serializer.deserializeProgram(JSON.parse(reader.result));
                         };
                         reader.readAsText(file);
                     }
@@ -102,7 +87,7 @@ class KomodiClass {
         });
 
         this.topMenu.addMenu('Save', () => {
-            let serialized = serializeProgram(),
+            let serialized = this.serializer.serializeProgram(),
                 blob = new Blob([JSON.stringify(serialized)], {type: 'octet/stream'}),
                 url = URL.createObjectURL(blob);
             let fakeLink = document.createElement('a');
@@ -123,8 +108,8 @@ class KomodiClass {
             }
         });
 
-        this.topMenu.addMenu('Signal', () => {
-            this.worker.postMessage('Hello, worker!');
+        this.topMenu.addMenu('Validate', () => {
+            // TODO: Validate the code
         });
 
         // renderer initialization
@@ -134,8 +119,13 @@ class KomodiClass {
         );
     }
 
+    set projectName(projectName: string) {
+        super.projectName = projectName;
+        this.topMenu.projectName = projectName;
+    }
+
     init() {
-        this.attacher.init();
+        super.init();
         this.sideMenu.init();
     }
 
@@ -149,26 +139,16 @@ class KomodiClass {
         this.module.clear();
     }
 
-    registerBlock(block: Block) {
-        this.attacher.registerBlock(block);
-    }
-
-    unregisterBlock(block: Block) {
-        this.attacher.removeBlock(block);
-    }
-
     initializeDOM(parent: HTMLElement) {
         let resize = () => {
             let screenWidth = parent.clientWidth;
             let screenHeight = parent.clientHeight;
 
             this.renderer.resize(screenWidth, screenHeight);
-            this.background.clear();
-            this.background.drawRect(0, 0, screenWidth, screenHeight);
 
             this.topMenu.update(screenWidth, screenHeight);
             this.sideMenu.update(screenWidth, screenHeight);
-            this.bottomMenu.update(screenWidth, screenHeight);
+            this.consoleMenu.update(screenWidth, screenHeight);
         };
 
         this.renderer.autoResize = true;
@@ -210,7 +190,3 @@ class KomodiClass {
         });
     }
 }
-
-export const Komodi = new KomodiClass();
-Komodi.init();
-Komodi.newProject();

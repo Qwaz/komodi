@@ -2,9 +2,9 @@ import * as _ from "lodash";
 import {BlockGraphic} from "../graphic";
 import {KomodiType} from "../type";
 import {BlockDefinition, UserInputToken} from "./definition_parser";
-import {Komodi} from "../komodi";
 import {AttachInfo, ScopeAttach} from "./attacher";
 import {ExportScope} from "./module";
+import {KomodiContext} from "../context";
 
 export interface BlockClass {
     new (): Block;
@@ -67,7 +67,8 @@ export abstract class Block extends BlockBase {
 
     private _initialized = false;
 
-    protected moduleName: string;
+    context: KomodiContext;
+    moduleName: string;
     protected exportInfo: {scope: ExportScope, blockClass: BlockClass}[] = [];
 
     constructor(definition: BlockDefinition) {
@@ -101,15 +102,15 @@ export abstract class Block extends BlockBase {
         throw new Error(`getInput failed: ${inputName} does not exist`);
     }
 
-    init(moduleName: string) {
+    init(context: KomodiContext, moduleName: string) {
+        this.context = context;
         this.moduleName = moduleName;
         this.definition.tokens.forEach((token) => {
             if (token instanceof UserInputToken) {
                 (<any>this)[token.identifier] = token.validator.defaultValue;
             }
         });
-        Komodi.registerBlock(this);
-        Komodi.module.addBlockToModule(moduleName, this);
+        this.context.registerBlock(this);
         this._initialized = true;
 
         this.updateGraphic();
@@ -121,12 +122,12 @@ export abstract class Block extends BlockBase {
             scope: scope,
             blockClass: blockClass
         });
-        Komodi.module.addExport(this.moduleName, scope, blockClass);
+        this.context.module.addExport(this.moduleName, scope, blockClass);
     }
 
     clearExport() {
         this.exportInfo.forEach((data) => {
-            Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            this.context.module.deleteExport(this.moduleName, data.scope, data.blockClass);
         });
 
         this.exportInfo.length = 0;
@@ -140,9 +141,9 @@ export abstract class Block extends BlockBase {
 
     setExportId(idArray: string[]) {
         this.exportInfo.forEach((data, i) => {
-            Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            this.context.module.deleteExport(this.moduleName, data.scope, data.blockClass);
             data.blockClass.definition.id = idArray[i];
-            Komodi.module.addExport(this.moduleName, data.scope, data.blockClass);
+            this.context.module.addExport(this.moduleName, data.scope, data.blockClass);
         });
     }
 
@@ -247,7 +248,7 @@ export abstract class Block extends BlockBase {
         this.clearExport();
 
         this.graphic.destroy();
-        Komodi.unregisterBlock(this);
+        this.context.unregisterBlock(this);
     }
 }
 

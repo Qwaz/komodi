@@ -2,8 +2,8 @@ import {Block, BlockClass} from "./index";
 import {blockList as commonBlockList} from "./lib/common"
 import {blockList as ioBlockList} from "./lib/io"
 import {blockList as stringBlockList} from "./lib/string"
-import {Komodi} from "../komodi";
 import {BlockGraphic} from "../graphic";
+import {KomodiContext} from "../context";
 
 const builtinModules: Map<string, BlockClass[]> = new Map();
 
@@ -28,6 +28,10 @@ interface ExportResult {
 
 export class Module extends PIXI.utils.EventEmitter {
     static readonly EDITING_MODULE_CHANGE = 'editingModuleChange';
+    // moduleName: string
+    static readonly ADD_MODULE = 'addModule';
+    // moduleName: string
+    static readonly DELETE_MODULE = 'deleteModule';
     static readonly EXPORT_UPDATE = 'exportUpdate';
 
     private readonly exports: Map<string, ExportResult>;
@@ -37,7 +41,7 @@ export class Module extends PIXI.utils.EventEmitter {
 
     private _editingModule: string | null = null;
 
-    constructor() {
+    constructor(private readonly context: KomodiContext) {
         super();
 
         this.exports = new Map();
@@ -78,10 +82,10 @@ export class Module extends PIXI.utils.EventEmitter {
 
     set editingModule(moduleName: string | null) {
         // clear stage
-        for (let i = 0; i < Komodi.stage.children.length;) {
-            let child = Komodi.stage.children[i];
+        for (let i = 0; i < this.context.stage.children.length;) {
+            let child = this.context.stage.children[i];
             if (child instanceof BlockGraphic) {
-                Komodi.stage.removeChild(child);
+                this.context.stage.removeChild(child);
             } else {
                 i++;
             }
@@ -93,7 +97,7 @@ export class Module extends PIXI.utils.EventEmitter {
             // setup stage
             for (let block of this.userModuleBlocks.get(moduleName)!.values()) {
                 if (block.attachInfo == null) {
-                    Komodi.stage.addChild(block.graphic);
+                    this.context.stage.addChild(block.graphic);
                 }
             }
         }
@@ -150,7 +154,7 @@ export class Module extends PIXI.utils.EventEmitter {
             internalScope: new Set(),
             globalScope: new Set()
         });
-        Komodi.sideMenu.moduleSelector.addModule(moduleName);
+        this.emit(Module.ADD_MODULE, moduleName);
     }
 
     deleteUserModule(moduleName: string) {
@@ -163,7 +167,7 @@ export class Module extends PIXI.utils.EventEmitter {
         }
         this.userModuleBlocks.delete(moduleName);
         this.exports.delete(moduleName);
-        Komodi.sideMenu.moduleSelector.deleteModule(moduleName);
+        this.emit(Module.DELETE_MODULE, moduleName);
     }
 
     addExport(moduleName: string, scope: ExportScope, blockClass: BlockClass) {

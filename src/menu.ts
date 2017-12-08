@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js";
-import {Komodi} from "./komodi";
-import {BlockGenerator} from "./graphic/index";
-import {BlockClass} from "./program/index";
+import {BlockGenerator} from "./graphic";
+import {BlockClass} from "./program";
 import {ListSelector, MENU_COLOR, SimpleButton} from "./common/ui";
 import {Module} from "./program/module";
+import {KomodiClass} from "./komodi";
 
 const TOP_MENU_HEIGHT = 85;
 const TOP_MENU_BUTTON_HEIGHT = 30;
@@ -86,7 +86,7 @@ export class ModuleSelector extends PIXI.Container {
 
     readonly selector: ListSelector;
 
-    constructor() {
+    constructor(private komodi: KomodiClass) {
         super();
 
         // setup module selector
@@ -96,7 +96,7 @@ export class ModuleSelector extends PIXI.Container {
 
     init() {
         // built-in module
-        let modules = Komodi.module.getModuleList();
+        let modules = this.komodi.module.getModuleList();
 
         this.selector.addLabel('\uf02d  built-in modules');
         for (let moduleName of modules.builtinModule) {
@@ -109,8 +109,8 @@ export class ModuleSelector extends PIXI.Container {
             this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
         });
 
-        Komodi.module.on(Module.EDITING_MODULE_CHANGE, (changedModuleName: string | null) => {
-            let modules = Komodi.module.getModuleList();
+        this.komodi.module.on(Module.EDITING_MODULE_CHANGE, (changedModuleName: string | null) => {
+            let modules = this.komodi.module.getModuleList();
             for (let moduleName of modules.userModule) {
                 if (moduleName == changedModuleName) {
                     this.selector.changeText(moduleName, `${moduleName} \uf040`);
@@ -118,6 +118,14 @@ export class ModuleSelector extends PIXI.Container {
                     this.selector.changeText(moduleName, moduleName);
                 }
             }
+        });
+
+        this.komodi.module.on(Module.ADD_MODULE, (moduleName: string) => {
+            this.selector.addButton(moduleName, moduleName);
+        });
+
+        this.komodi.module.on(Module.DELETE_MODULE, (moduleName: string) => {
+            this.selector.deleteButton(moduleName);
         });
 
         this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
@@ -135,18 +143,18 @@ export class ModuleSelector extends PIXI.Container {
 export class BlockGeneratorList extends PIXI.Container {
     blockList: BlockGenerator[] = [];
 
-    constructor() {
+    constructor(private komodi: KomodiClass) {
         super();
     }
 
     init() {
-        Komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, () => {
+        this.komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, () => {
             this.update();
         });
-        Komodi.module.on(Module.EDITING_MODULE_CHANGE, () => {
+        this.komodi.module.on(Module.EDITING_MODULE_CHANGE, () => {
             this.update();
         });
-        Komodi.module.on(Module.EXPORT_UPDATE, () => {
+        this.komodi.module.on(Module.EXPORT_UPDATE, () => {
             this.update();
         });
     }
@@ -154,15 +162,15 @@ export class BlockGeneratorList extends PIXI.Container {
     private update() {
         this.clear();
 
-        let moduleName = Komodi.sideMenu.moduleSelector.selector.getSelectedKey();
+        let moduleName = this.komodi.sideMenu.moduleSelector.selector.getSelectedKey();
         if (moduleName) {
             const VERTICAL_PADDING = 10;
 
-            let exportResult = Komodi.module.exportOf(moduleName);
+            let exportResult = this.komodi.module.exportOf(moduleName);
 
             let currentY = 0;
             let addGenerator = (blockClass: BlockClass) => {
-                let generator = new BlockGenerator(blockClass);
+                let generator = new BlockGenerator(this.komodi, blockClass);
                 this.addChild(generator);
                 generator.x = SIDE_MENU_WIDTH*.5;
                 generator.y = currentY + VERTICAL_PADDING + generator.height;
@@ -173,7 +181,7 @@ export class BlockGeneratorList extends PIXI.Container {
             for (let blockClass of exportResult.globalScope) {
                 addGenerator(blockClass);
             }
-            if (Komodi.module.editingModule == moduleName) {
+            if (this.komodi.module.editingModule == moduleName) {
                 for (let blockClass of exportResult.internalScope) {
                     addGenerator(blockClass);
                 }
@@ -194,12 +202,15 @@ export class SideMenu extends PIXI.Container {
     background: PIXI.Graphics = new PIXI.Graphics();
     outline: PIXI.Graphics = new PIXI.Graphics();
 
-    moduleSelector: ModuleSelector = new ModuleSelector();
-    blockGeneratorList: BlockGeneratorList = new BlockGeneratorList();
+    moduleSelector: ModuleSelector;
+    blockGeneratorList: BlockGeneratorList;
     editButton: SimpleButton;
 
-    constructor() {
+    constructor(private komodi: KomodiClass) {
         super();
+
+        this.moduleSelector = new ModuleSelector(komodi);
+        this.blockGeneratorList = new BlockGeneratorList(komodi);
 
         this.interactive = true;
 
@@ -212,10 +223,10 @@ export class SideMenu extends PIXI.Container {
         label.x = this.editButton.width*.5 - label.width*.5;
         label.y = this.editButton.height*.5 - label.height*.5;
         this.editButton.on('click', () => {
-            Komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
+            this.komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
         });
         this.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName: string | null) => {
-            if (moduleName && Komodi.module.checkUserModuleExist(moduleName, true)) {
+            if (moduleName && this.komodi.module.checkUserModuleExist(moduleName, true)) {
                 this.editButton.visible = true;
             } else {
                 this.editButton.visible = false;

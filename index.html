@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="node_modules/font-awesome/css/font-awesome.min.css">
     <style>
         * {padding: 0; margin: 0}
-        #komodi {
+        #komodiDiv {
             position: absolute;
             top: 0;
             bottom: 0;
@@ -23,12 +23,11 @@
     </style>
 </head>
 <body>
-<div id="komodi"></div>
+<div id="komodiDiv"></div>
 <script src="komodi.js"></script>
 <script>
-    Komodi.initializeDOM(document.getElementById("komodi"));
-
-    Komodi.start();
+    komodi.initializeDOM(document.getElementById("komodiDiv"));
+    komodi.start();
 </script>
 </body>
 </html>

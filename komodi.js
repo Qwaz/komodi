@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["Komodi"] = factory();
+		exports["komodi"] = factory();
 	else
-		root["Komodi"] = factory();
+		root["komodi"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 220);
+/******/ 	return __webpack_require__(__webpack_require__.s = 221);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -476,7 +476,7 @@ Object.defineProperty(exports, 'Bounds', {
   }
 });
 
-var _DisplayObject = __webpack_require__(69);
+var _DisplayObject = __webpack_require__(70);
 
 Object.defineProperty(exports, 'DisplayObject', {
   enumerable: true,
@@ -485,7 +485,7 @@ Object.defineProperty(exports, 'DisplayObject', {
   }
 });
 
-var _Container = __webpack_require__(20);
+var _Container = __webpack_require__(19);
 
 Object.defineProperty(exports, 'Container', {
   enumerable: true,
@@ -494,7 +494,7 @@ Object.defineProperty(exports, 'Container', {
   }
 });
 
-var _Transform = __webpack_require__(70);
+var _Transform = __webpack_require__(71);
 
 Object.defineProperty(exports, 'Transform', {
   enumerable: true,
@@ -503,7 +503,7 @@ Object.defineProperty(exports, 'Transform', {
   }
 });
 
-var _TransformStatic = __webpack_require__(71);
+var _TransformStatic = __webpack_require__(72);
 
 Object.defineProperty(exports, 'TransformStatic', {
   enumerable: true,
@@ -566,7 +566,7 @@ Object.defineProperty(exports, 'Text', {
   }
 });
 
-var _TextStyle = __webpack_require__(82);
+var _TextStyle = __webpack_require__(83);
 
 Object.defineProperty(exports, 'TextStyle', {
   enumerable: true,
@@ -575,7 +575,7 @@ Object.defineProperty(exports, 'TextStyle', {
   }
 });
 
-var _TextMetrics = __webpack_require__(81);
+var _TextMetrics = __webpack_require__(82);
 
 Object.defineProperty(exports, 'TextMetrics', {
   enumerable: true,
@@ -593,7 +593,7 @@ Object.defineProperty(exports, 'Graphics', {
   }
 });
 
-var _GraphicsData = __webpack_require__(72);
+var _GraphicsData = __webpack_require__(73);
 
 Object.defineProperty(exports, 'GraphicsData', {
   enumerable: true,
@@ -656,7 +656,7 @@ Object.defineProperty(exports, 'RenderTexture', {
   }
 });
 
-var _BaseRenderTexture = __webpack_require__(83);
+var _BaseRenderTexture = __webpack_require__(84);
 
 Object.defineProperty(exports, 'BaseRenderTexture', {
   enumerable: true,
@@ -665,7 +665,7 @@ Object.defineProperty(exports, 'BaseRenderTexture', {
   }
 });
 
-var _VideoBaseTexture = __webpack_require__(85);
+var _VideoBaseTexture = __webpack_require__(86);
 
 Object.defineProperty(exports, 'VideoBaseTexture', {
   enumerable: true,
@@ -674,7 +674,7 @@ Object.defineProperty(exports, 'VideoBaseTexture', {
   }
 });
 
-var _TextureUvs = __webpack_require__(84);
+var _TextureUvs = __webpack_require__(85);
 
 Object.defineProperty(exports, 'TextureUvs', {
   enumerable: true,
@@ -683,7 +683,7 @@ Object.defineProperty(exports, 'TextureUvs', {
   }
 });
 
-var _CanvasRenderTarget = __webpack_require__(76);
+var _CanvasRenderTarget = __webpack_require__(77);
 
 Object.defineProperty(exports, 'CanvasRenderTarget', {
   enumerable: true,
@@ -692,7 +692,7 @@ Object.defineProperty(exports, 'CanvasRenderTarget', {
   }
 });
 
-var _Shader = __webpack_require__(19);
+var _Shader = __webpack_require__(18);
 
 Object.defineProperty(exports, 'Shader', {
   enumerable: true,
@@ -701,7 +701,7 @@ Object.defineProperty(exports, 'Shader', {
   }
 });
 
-var _WebGLManager = __webpack_require__(22);
+var _WebGLManager = __webpack_require__(21);
 
 Object.defineProperty(exports, 'WebGLManager', {
   enumerable: true,
@@ -710,7 +710,7 @@ Object.defineProperty(exports, 'WebGLManager', {
   }
 });
 
-var _ObjectRenderer = __webpack_require__(29);
+var _ObjectRenderer = __webpack_require__(28);
 
 Object.defineProperty(exports, 'ObjectRenderer', {
   enumerable: true,
@@ -719,7 +719,7 @@ Object.defineProperty(exports, 'ObjectRenderer', {
   }
 });
 
-var _RenderTarget = __webpack_require__(30);
+var _RenderTarget = __webpack_require__(29);
 
 Object.defineProperty(exports, 'RenderTarget', {
   enumerable: true,
@@ -728,7 +728,7 @@ Object.defineProperty(exports, 'RenderTarget', {
   }
 });
 
-var _Quad = __webpack_require__(80);
+var _Quad = __webpack_require__(81);
 
 Object.defineProperty(exports, 'Quad', {
   enumerable: true,
@@ -737,7 +737,7 @@ Object.defineProperty(exports, 'Quad', {
   }
 });
 
-var _SpriteMaskFilter = __webpack_require__(79);
+var _SpriteMaskFilter = __webpack_require__(80);
 
 Object.defineProperty(exports, 'SpriteMaskFilter', {
   enumerable: true,
@@ -746,7 +746,7 @@ Object.defineProperty(exports, 'SpriteMaskFilter', {
   }
 });
 
-var _Filter = __webpack_require__(78);
+var _Filter = __webpack_require__(79);
 
 Object.defineProperty(exports, 'Filter', {
   enumerable: true,
@@ -755,7 +755,7 @@ Object.defineProperty(exports, 'Filter', {
   }
 });
 
-var _Application = __webpack_require__(67);
+var _Application = __webpack_require__(68);
 
 Object.defineProperty(exports, 'Application', {
   enumerable: true,
@@ -764,7 +764,7 @@ Object.defineProperty(exports, 'Application', {
   }
 });
 
-var _autoDetectRenderer = __webpack_require__(68);
+var _autoDetectRenderer = __webpack_require__(69);
 
 Object.defineProperty(exports, 'autoDetectRenderer', {
   enumerable: true,
@@ -785,11 +785,11 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(20);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
-var _WebGLRenderer = __webpack_require__(28);
+var _WebGLRenderer = __webpack_require__(27);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -1543,7 +1543,7 @@ Object.defineProperty(exports, 'Point', {
   }
 });
 
-var _ObservablePoint = __webpack_require__(74);
+var _ObservablePoint = __webpack_require__(75);
 
 Object.defineProperty(exports, 'ObservablePoint', {
   enumerable: true,
@@ -1561,7 +1561,7 @@ Object.defineProperty(exports, 'Matrix', {
   }
 });
 
-var _GroupD = __webpack_require__(73);
+var _GroupD = __webpack_require__(74);
 
 Object.defineProperty(exports, 'GroupD8', {
   enumerable: true,
@@ -1624,11 +1624,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var gl = {
     createContext:          __webpack_require__(123),
-    setVertexAttribArrays:  __webpack_require__(58),
+    setVertexAttribArrays:  __webpack_require__(59),
     GLBuffer:               __webpack_require__(119),
     GLFramebuffer:          __webpack_require__(120),
     GLShader:               __webpack_require__(121),
-    GLTexture:              __webpack_require__(57),
+    GLTexture:              __webpack_require__(58),
     VertexArrayObject:      __webpack_require__(122),
     shader:                 __webpack_require__(124)
 };
@@ -1651,187 +1651,6 @@ if (typeof window !== 'undefined')
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const ValidateWorker = __webpack_require__(230);
-const WebFont = __webpack_require__(228);
-const PIXI = __webpack_require__(92);
-const attacher_1 = __webpack_require__(222);
-const menu_1 = __webpack_require__(221);
-const serializer_1 = __webpack_require__(226);
-const module_1 = __webpack_require__(51);
-const KOMODI_STYLE = `
-.komodi-container {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-image: linear-gradient(
-        0deg,
-        transparent 24%,
-        rgba(0, 0, 0, .15) 25%,
-        rgba(0, 0, 0, .15) 26%,
-        transparent 27%,
-        transparent 74%,
-        rgba(0, 0, 0, .15) 75%,
-        rgba(0, 0, 0, .15) 76%,
-        transparent 77%, transparent
-    ), linear-gradient(
-        90deg,
-        transparent 24%,
-        rgba(0, 0, 0, .15) 25%,
-        rgba(0, 0, 0, .15) 26%,
-        transparent 27%,
-        transparent 74%,
-        rgba(0, 0, 0, .15) 75%,
-        rgba(0, 0, 0, .15) 76%,
-        transparent 77%,
-        transparent
-    );
-    background-size:50px 50px;
-}`;
-class KomodiClass {
-    constructor() {
-        this.container = new PIXI.Container();
-        this.stage = new PIXI.Container();
-        this.fixed = new PIXI.Container();
-        this.background = new PIXI.Graphics();
-        this.topMenu = new menu_1.TopMenu();
-        this.sideMenu = new menu_1.SideMenu();
-        this.bottomMenu = new menu_1.ConsoleMenu();
-        this.attacher = new attacher_1.Attacher();
-        this.module = new module_1.Module();
-        this.worker = new ValidateWorker();
-        this.komodiDiv = document.createElement("div");
-        this.komodiDiv.classList.add("komodi-container");
-        this.container.interactive = true;
-        this.container.addChild(this.stage, this.fixed, this.background);
-        this.background.alpha = 0;
-        this.fixed.interactive = true;
-        this.fixed.addChild(this.sideMenu, this.bottomMenu, this.topMenu);
-        this.topMenu.addMenu('Project Name', () => {
-            let projectName = window.prompt('Project Name:', exports.Komodi.topMenu.projectName);
-            if (!projectName || projectName == '')
-                return;
-            exports.Komodi.topMenu.projectName = projectName;
-        });
-        this.topMenu.addMenu('Open', () => {
-            if (window.confirm('Current progress will be lost')) {
-                let fakeInput = document.createElement('input');
-                fakeInput.setAttribute('type', 'file');
-                fakeInput.setAttribute('accept', '.komodi');
-                fakeInput.click();
-                fakeInput.addEventListener('change', () => {
-                    if (fakeInput.files && fakeInput.files[0]) {
-                        let file = fakeInput.files[0];
-                        let reader = new FileReader();
-                        reader.onload = (e) => {
-                            this.clearProject();
-                            serializer_1.deserializeProgram(JSON.parse(reader.result));
-                        };
-                        reader.readAsText(file);
-                    }
-                });
-            }
-        });
-        this.topMenu.addMenu('Save', () => {
-            let serialized = serializer_1.serializeProgram(), blob = new Blob([JSON.stringify(serialized)], { type: 'octet/stream' }), url = URL.createObjectURL(blob);
-            let fakeLink = document.createElement('a');
-            fakeLink.href = url;
-            fakeLink.download = this.topMenu.projectName + '.komodi';
-            fakeLink.click();
-            URL.revokeObjectURL(url);
-        });
-        this.topMenu.addMenu('New Module', () => {
-            let moduleName = window.prompt('Please choose module name');
-            if (!moduleName || moduleName == '')
-                return;
-            if (this.module.checkModuleExist(moduleName, true)) {
-                window.alert('Module name already exists!');
-            }
-            else {
-                this.module.addUserModule(moduleName);
-            }
-        });
-        this.topMenu.addMenu('Signal', () => {
-            this.worker.postMessage('Hello, worker!');
-        });
-        this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2, roundPixels: true });
-    }
-    init() {
-        this.attacher.init();
-        this.sideMenu.init();
-    }
-    newProject() {
-        this.topMenu.projectName = "Untitled Komodi Project";
-        this.module.addUserModule('main');
-        this.module.editingModule = 'main';
-    }
-    clearProject() {
-        this.module.clear();
-    }
-    registerBlock(block) {
-        this.attacher.registerBlock(block);
-    }
-    unregisterBlock(block) {
-        this.attacher.removeBlock(block);
-    }
-    initializeDOM(parent) {
-        let resize = () => {
-            let screenWidth = parent.clientWidth;
-            let screenHeight = parent.clientHeight;
-            this.renderer.resize(screenWidth, screenHeight);
-            this.background.clear();
-            this.background.drawRect(0, 0, screenWidth, screenHeight);
-            this.topMenu.update(screenWidth, screenHeight);
-            this.sideMenu.update(screenWidth, screenHeight);
-            this.bottomMenu.update(screenWidth, screenHeight);
-        };
-        this.renderer.autoResize = true;
-        this.komodiDiv.appendChild(this.renderer.view);
-        parent.appendChild(this.komodiDiv);
-        window.addEventListener('resize', resize, true);
-        resize();
-        let styleNode = document.createElement("style");
-        styleNode.type = 'text/css';
-        styleNode.appendChild(document.createTextNode(KOMODI_STYLE));
-        document.head.appendChild(styleNode);
-    }
-    start() {
-        let update = () => {
-            this.renderer.render(this.container);
-        };
-        WebFont.load({
-            custom: {
-                families: ['FontAwesome'],
-                testStrings: {
-                    'FontAwesome': '\uF13b'
-                },
-            },
-            active: function () {
-                function loop() {
-                    requestAnimationFrame(loop);
-                    update();
-                }
-                loop();
-            },
-            inactive: function () {
-                alert("Komodi initialization failed");
-            },
-        });
-    }
-}
-exports.Komodi = new KomodiClass();
-exports.Komodi.init();
-exports.Komodi.newProject();
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
@@ -2062,14 +1881,14 @@ var substr = 'ab'.substr(-1) === 'b'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(210)))
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var objects = __webpack_require__(13),
-    arrays  = __webpack_require__(9);
+    arrays  = __webpack_require__(8);
 
 /* Simple AST node visitor builder. */
 var visitor = {
@@ -2141,7 +1960,7 @@ module.exports = visitor;
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2253,6 +2072,259 @@ var arrays = {
 };
 
 module.exports = arrays;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(16);
+const graphic_1 = __webpack_require__(24);
+const type_1 = __webpack_require__(15);
+const definition_parser_1 = __webpack_require__(25);
+class BlockBase {
+    constructor(definition) {
+        this.definition = definition;
+    }
+    getExtra(extraName) {
+        if (_.includes(this.definition.extraNames, extraName)) {
+            return this[extraName];
+        }
+        throw new Error(`getExtra failed: ${extraName} does not exist`);
+    }
+}
+exports.BlockBase = BlockBase;
+class VirtualBlock extends BlockBase {
+    constructor(blockClass) {
+        super(blockClass.definition);
+    }
+    getArgument(argumentName) {
+        if (_.includes(this.definition.argumentNames, argumentName)) {
+            return null;
+        }
+        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
+    }
+    ;
+    getScope(scopeName) {
+        if (_.includes(this.definition.scopeNames, scopeName)) {
+            return [];
+        }
+        throw new Error(`getScope failed: ${scopeName} does not exist`);
+    }
+    getInput(inputName) {
+        if (_.includes(this.definition.inputNames, inputName)) {
+            let token = this.definition.tokens.find((token) => {
+                return token.kind == "user_input" && token.identifier == inputName;
+            });
+            return token.validator.defaultValue;
+        }
+        throw new Error(`getInput failed: ${inputName} does not exist`);
+    }
+}
+exports.VirtualBlock = VirtualBlock;
+class Block extends BlockBase {
+    constructor(definition) {
+        super(definition);
+        this.attachInfo = null;
+        this._initialized = false;
+        this.exportInfo = [];
+        this.graphic = new graphic_1.BlockGraphic(this);
+    }
+    get initialized() {
+        return this._initialized;
+    }
+    getArgument(argumentName) {
+        if (_.includes(this.definition.argumentNames, argumentName)) {
+            return this[argumentName];
+        }
+        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
+    }
+    getScope(scopeName) {
+        if (_.includes(this.definition.scopeNames, scopeName)) {
+            return this[scopeName];
+        }
+        throw new Error(`getScope failed: ${scopeName} does not exist`);
+    }
+    getInput(inputName) {
+        if (_.includes(this.definition.inputNames, inputName)) {
+            return this[inputName];
+        }
+        throw new Error(`getInput failed: ${inputName} does not exist`);
+    }
+    init(context, moduleName) {
+        this.context = context;
+        this.moduleName = moduleName;
+        this.definition.tokens.forEach((token) => {
+            if (token instanceof definition_parser_1.UserInputToken) {
+                this[token.identifier] = token.validator.defaultValue;
+            }
+        });
+        this.context.registerBlock(this);
+        this._initialized = true;
+        this.updateGraphic();
+    }
+    addExport(scope, blockClass) {
+        this.exportInfo.push({
+            scope: scope,
+            blockClass: blockClass
+        });
+        this.context.module.addExport(this.moduleName, scope, blockClass);
+    }
+    clearExport() {
+        this.exportInfo.forEach((data) => {
+            this.context.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+        });
+        this.exportInfo.length = 0;
+    }
+    getExportId() {
+        return this.exportInfo.map((data) => data.blockClass.definition.id);
+    }
+    setExportId(idArray) {
+        this.exportInfo.forEach((data, i) => {
+            this.context.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            data.blockClass.definition.id = idArray[i];
+            this.context.module.addExport(this.moduleName, data.scope, data.blockClass);
+        });
+    }
+    attachBlock(attachInfo, block) {
+        if (attachInfo.target != this) {
+            throw new Error("attachBlock failed: invalid attach target");
+        }
+        switch (attachInfo.attachType) {
+            case "argument":
+                if (block instanceof Expression == false)
+                    throw new Error("attachBlock failed: attach value should be an Expression");
+                if (this.getArgument(attachInfo.argumentName) != null) {
+                    throw new Error(`attachBlock failed: argument ${attachInfo.argumentName} is not empty`);
+                }
+                block.attachInfo = attachInfo;
+                this[attachInfo.argumentName] = block;
+                break;
+            case "scope":
+                if (!(block instanceof Command)) {
+                    throw new Error("attachBlock failed: attach value should be a Command");
+                }
+                let scope = this.getScope(attachInfo.scopeName);
+                if (attachInfo.scopeIndex < 0 || scope.length < attachInfo.scopeIndex) {
+                    throw new Error("attachBlock failed: invalid scope index");
+                }
+                for (let i = attachInfo.scopeIndex; i < scope.length; i++) {
+                    scope[i].attachInfo.scopeIndex++;
+                }
+                block.attachInfo = attachInfo;
+                scope.splice(attachInfo.scopeIndex, 0, block);
+                break;
+        }
+        this.graphic.addChild(block.graphic);
+        this.updateGraphic();
+    }
+    detachBlock(block) {
+        let attachInfo = block.attachInfo;
+        if (attachInfo == null) {
+            throw new Error("detachBlock failed: target is not attached");
+        }
+        if (attachInfo.target != this) {
+            throw new Error("detachBlock failed: wrong parent");
+        }
+        switch (attachInfo.attachType) {
+            case "argument":
+                if (this.getArgument(attachInfo.argumentName) != block) {
+                    throw new Error("detachBlock failed: inconsistent attach");
+                }
+                block.attachInfo = null;
+                this[attachInfo.argumentName] = null;
+                break;
+            case "scope":
+                let scope = this.getScope(attachInfo.scopeName);
+                if (scope[attachInfo.scopeIndex] != block) {
+                    throw new Error("detachBlock failed: inconsistent attach");
+                }
+                for (let i = attachInfo.scopeIndex + 1; i < scope.length; i++) {
+                    scope[i].attachInfo.scopeIndex--;
+                }
+                block.attachInfo = null;
+                scope.splice(attachInfo.scopeIndex, 1);
+                break;
+        }
+        this.graphic.removeChild(block.graphic);
+        this.updateGraphic();
+    }
+    updateGraphic() {
+        let now = this;
+        while (true) {
+            now.graphic.update();
+            if (now.attachInfo == null)
+                break;
+            now = now.attachInfo.target;
+        }
+    }
+    destroy() {
+        for (let argumentName of this.definition.argumentNames) {
+            let argumentBlock = this.getArgument(argumentName);
+            if (argumentBlock) {
+                argumentBlock.destroy();
+            }
+        }
+        for (let scopeName of this.definition.scopeNames) {
+            for (let scopeBlock of this.getScope(scopeName)) {
+                scopeBlock.destroy();
+            }
+        }
+        this.clearExport();
+        this.graphic.destroy();
+        this.context.unregisterBlock(this);
+    }
+}
+exports.Block = Block;
+class Expression extends Block {
+    constructor(def) {
+        if (def.returnType == type_1.KomodiType.empty)
+            throw new Error("new Expression failed: Expression must have a return type");
+        super(def);
+    }
+}
+exports.Expression = Expression;
+class Command extends Block {
+    constructor(def) {
+        if (def.returnType != type_1.KomodiType.empty)
+            throw new Error("new Command failed: Command must not have a return type");
+        super(def);
+    }
+}
+exports.Command = Command;
+class Definition extends Block {
+    constructor(def) {
+        if (def.returnType != type_1.KomodiType.empty)
+            throw new Error("new Definition failed: Definition must not have a return type");
+        super(def);
+    }
+}
+exports.Definition = Definition;
+function createAnonymousCommand(definition) {
+    return _a = class extends Command {
+            constructor() {
+                super(definition);
+            }
+        },
+        _a.definition = definition,
+        _a;
+    var _a;
+}
+exports.createAnonymousCommand = createAnonymousCommand;
+function createAnonymousExpression(definition) {
+    return _a = class extends Expression {
+            constructor() {
+                super(definition);
+            }
+        },
+        _a.definition = definition,
+        _a;
+    var _a;
+}
+exports.createAnonymousExpression = createAnonymousExpression;
 
 
 /***/ }),
@@ -2588,11 +2660,11 @@ var _BaseTexture = __webpack_require__(14);
 
 var _BaseTexture2 = _interopRequireDefault(_BaseTexture);
 
-var _VideoBaseTexture = __webpack_require__(85);
+var _VideoBaseTexture = __webpack_require__(86);
 
 var _VideoBaseTexture2 = _interopRequireDefault(_VideoBaseTexture);
 
-var _TextureUvs = __webpack_require__(84);
+var _TextureUvs = __webpack_require__(85);
 
 var _TextureUvs2 = _interopRequireDefault(_TextureUvs);
 
@@ -4210,260 +4282,6 @@ exports.default = BaseTexture;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(17);
-const graphic_1 = __webpack_require__(25);
-const type_1 = __webpack_require__(16);
-const definition_parser_1 = __webpack_require__(26);
-const komodi_1 = __webpack_require__(6);
-class BlockBase {
-    constructor(definition) {
-        this.definition = definition;
-    }
-    getExtra(extraName) {
-        if (_.includes(this.definition.extraNames, extraName)) {
-            return this[extraName];
-        }
-        throw new Error(`getExtra failed: ${extraName} does not exist`);
-    }
-}
-exports.BlockBase = BlockBase;
-class VirtualBlock extends BlockBase {
-    constructor(blockClass) {
-        super(blockClass.definition);
-    }
-    getArgument(argumentName) {
-        if (_.includes(this.definition.argumentNames, argumentName)) {
-            return null;
-        }
-        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
-    }
-    ;
-    getScope(scopeName) {
-        if (_.includes(this.definition.scopeNames, scopeName)) {
-            return [];
-        }
-        throw new Error(`getScope failed: ${scopeName} does not exist`);
-    }
-    getInput(inputName) {
-        if (_.includes(this.definition.inputNames, inputName)) {
-            let token = this.definition.tokens.find((token) => {
-                return token.kind == "user_input" && token.identifier == inputName;
-            });
-            return token.validator.defaultValue;
-        }
-        throw new Error(`getInput failed: ${inputName} does not exist`);
-    }
-}
-exports.VirtualBlock = VirtualBlock;
-class Block extends BlockBase {
-    constructor(definition) {
-        super(definition);
-        this.attachInfo = null;
-        this._initialized = false;
-        this.exportInfo = [];
-        this.graphic = new graphic_1.BlockGraphic(this);
-    }
-    get initialized() {
-        return this._initialized;
-    }
-    getArgument(argumentName) {
-        if (_.includes(this.definition.argumentNames, argumentName)) {
-            return this[argumentName];
-        }
-        throw new Error(`getArgument failed: argument ${argumentName} does not exist`);
-    }
-    getScope(scopeName) {
-        if (_.includes(this.definition.scopeNames, scopeName)) {
-            return this[scopeName];
-        }
-        throw new Error(`getScope failed: ${scopeName} does not exist`);
-    }
-    getInput(inputName) {
-        if (_.includes(this.definition.inputNames, inputName)) {
-            return this[inputName];
-        }
-        throw new Error(`getInput failed: ${inputName} does not exist`);
-    }
-    init(moduleName) {
-        this.moduleName = moduleName;
-        this.definition.tokens.forEach((token) => {
-            if (token instanceof definition_parser_1.UserInputToken) {
-                this[token.identifier] = token.validator.defaultValue;
-            }
-        });
-        komodi_1.Komodi.registerBlock(this);
-        komodi_1.Komodi.module.addBlockToModule(moduleName, this);
-        this._initialized = true;
-        this.updateGraphic();
-    }
-    addExport(scope, blockClass) {
-        this.exportInfo.push({
-            scope: scope,
-            blockClass: blockClass
-        });
-        komodi_1.Komodi.module.addExport(this.moduleName, scope, blockClass);
-    }
-    clearExport() {
-        this.exportInfo.forEach((data) => {
-            komodi_1.Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
-        });
-        this.exportInfo.length = 0;
-    }
-    getExportId() {
-        return this.exportInfo.map((data) => data.blockClass.definition.id);
-    }
-    setExportId(idArray) {
-        this.exportInfo.forEach((data, i) => {
-            komodi_1.Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
-            data.blockClass.definition.id = idArray[i];
-            komodi_1.Komodi.module.addExport(this.moduleName, data.scope, data.blockClass);
-        });
-    }
-    attachBlock(attachInfo, block) {
-        if (attachInfo.target != this) {
-            throw new Error("attachBlock failed: invalid attach target");
-        }
-        switch (attachInfo.attachType) {
-            case "argument":
-                if (block instanceof Expression == false)
-                    throw new Error("attachBlock failed: attach value should be an Expression");
-                if (this.getArgument(attachInfo.argumentName) != null) {
-                    throw new Error(`attachBlock failed: argument ${attachInfo.argumentName} is not empty`);
-                }
-                block.attachInfo = attachInfo;
-                this[attachInfo.argumentName] = block;
-                break;
-            case "scope":
-                if (!(block instanceof Command)) {
-                    throw new Error("attachBlock failed: attach value should be a Command");
-                }
-                let scope = this.getScope(attachInfo.scopeName);
-                if (attachInfo.scopeIndex < 0 || scope.length < attachInfo.scopeIndex) {
-                    throw new Error("attachBlock failed: invalid scope index");
-                }
-                for (let i = attachInfo.scopeIndex; i < scope.length; i++) {
-                    scope[i].attachInfo.scopeIndex++;
-                }
-                block.attachInfo = attachInfo;
-                scope.splice(attachInfo.scopeIndex, 0, block);
-                break;
-        }
-        this.graphic.addChild(block.graphic);
-        this.updateGraphic();
-    }
-    detachBlock(block) {
-        let attachInfo = block.attachInfo;
-        if (attachInfo == null) {
-            throw new Error("detachBlock failed: target is not attached");
-        }
-        if (attachInfo.target != this) {
-            throw new Error("detachBlock failed: wrong parent");
-        }
-        switch (attachInfo.attachType) {
-            case "argument":
-                if (this.getArgument(attachInfo.argumentName) != block) {
-                    throw new Error("detachBlock failed: inconsistent attach");
-                }
-                block.attachInfo = null;
-                this[attachInfo.argumentName] = null;
-                break;
-            case "scope":
-                let scope = this.getScope(attachInfo.scopeName);
-                if (scope[attachInfo.scopeIndex] != block) {
-                    throw new Error("detachBlock failed: inconsistent attach");
-                }
-                for (let i = attachInfo.scopeIndex + 1; i < scope.length; i++) {
-                    scope[i].attachInfo.scopeIndex--;
-                }
-                block.attachInfo = null;
-                scope.splice(attachInfo.scopeIndex, 1);
-                break;
-        }
-        this.graphic.removeChild(block.graphic);
-        this.updateGraphic();
-    }
-    updateGraphic() {
-        let now = this;
-        while (true) {
-            now.graphic.update();
-            if (now.attachInfo == null)
-                break;
-            now = now.attachInfo.target;
-        }
-    }
-    destroy() {
-        for (let argumentName of this.definition.argumentNames) {
-            let argumentBlock = this.getArgument(argumentName);
-            if (argumentBlock) {
-                argumentBlock.destroy();
-            }
-        }
-        for (let scopeName of this.definition.scopeNames) {
-            for (let scopeBlock of this.getScope(scopeName)) {
-                scopeBlock.destroy();
-            }
-        }
-        this.clearExport();
-        this.graphic.destroy();
-        komodi_1.Komodi.unregisterBlock(this);
-    }
-}
-exports.Block = Block;
-class Expression extends Block {
-    constructor(def) {
-        if (def.returnType == type_1.KomodiType.empty)
-            throw new Error("new Expression failed: Expression must have a return type");
-        super(def);
-    }
-}
-exports.Expression = Expression;
-class Command extends Block {
-    constructor(def) {
-        if (def.returnType != type_1.KomodiType.empty)
-            throw new Error("new Command failed: Command must not have a return type");
-        super(def);
-    }
-}
-exports.Command = Command;
-class Definition extends Block {
-    constructor(def) {
-        if (def.returnType != type_1.KomodiType.empty)
-            throw new Error("new Definition failed: Definition must not have a return type");
-        super(def);
-    }
-}
-exports.Definition = Definition;
-function createAnonymousCommand(definition) {
-    return _a = class extends Command {
-            constructor() {
-                super(definition);
-            }
-        },
-        _a.definition = definition,
-        _a;
-    var _a;
-}
-exports.createAnonymousCommand = createAnonymousCommand;
-function createAnonymousExpression(definition) {
-    return _a = class extends Expression {
-            constructor() {
-                super(definition);
-            }
-        },
-        _a.definition = definition,
-        _a;
-    var _a;
-}
-exports.createAnonymousExpression = createAnonymousExpression;
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
 var KomodiType;
 (function (KomodiType) {
     KomodiType["string"] = "string";
@@ -4487,7 +4305,7 @@ exports.typeToColor = typeToColor;
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -21579,14 +21397,14 @@ exports.typeToColor = typeToColor;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34), __webpack_require__(105)(module)))
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var arrays  = __webpack_require__(9),
-    visitor = __webpack_require__(8);
+var arrays  = __webpack_require__(8),
+    visitor = __webpack_require__(7);
 
 /* AST utilities. */
 var asts = {
@@ -21651,7 +21469,7 @@ module.exports = asts;
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21720,7 +21538,7 @@ exports.default = Shader;
 //# sourceMappingURL=Shader.js.map
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21732,7 +21550,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _utils = __webpack_require__(2);
 
-var _DisplayObject2 = __webpack_require__(69);
+var _DisplayObject2 = __webpack_require__(70);
 
 var _DisplayObject3 = _interopRequireDefault(_DisplayObject2);
 
@@ -22343,7 +22161,7 @@ Container.prototype.containerUpdateTransform = Container.prototype.updateTransfo
 //# sourceMappingURL=Container.js.map
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22351,7 +22169,7 @@ Container.prototype.containerUpdateTransform = Container.prototype.updateTransfo
 
 exports.__esModule = true;
 
-var _SystemRenderer2 = __webpack_require__(75);
+var _SystemRenderer2 = __webpack_require__(76);
 
 var _SystemRenderer3 = _interopRequireDefault(_SystemRenderer2);
 
@@ -22359,7 +22177,7 @@ var _CanvasMaskManager = __webpack_require__(141);
 
 var _CanvasMaskManager2 = _interopRequireDefault(_CanvasMaskManager);
 
-var _CanvasRenderTarget = __webpack_require__(76);
+var _CanvasRenderTarget = __webpack_require__(77);
 
 var _CanvasRenderTarget2 = _interopRequireDefault(_CanvasRenderTarget);
 
@@ -22710,7 +22528,7 @@ _utils.pluginTarget.mixin(CanvasRenderer);
 //# sourceMappingURL=CanvasRenderer.js.map
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22770,7 +22588,7 @@ exports.default = WebGLManager;
 //# sourceMappingURL=WebGLManager.js.map
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23143,7 +22961,7 @@ Mesh.DRAW_MODES = {
 //# sourceMappingURL=Mesh.js.map
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23172,15 +22990,14 @@ module.exports.default = Loader;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const program_1 = __webpack_require__(15);
-const komodi_1 = __webpack_require__(6);
-const type_1 = __webpack_require__(16);
+const program_1 = __webpack_require__(9);
+const type_1 = __webpack_require__(15);
 const utils_1 = __webpack_require__(31);
 class UserInputTokenGraphic extends PIXI.Container {
     constructor(target, token) {
@@ -23193,10 +23010,10 @@ class UserInputTokenGraphic extends PIXI.Container {
             this.buttonMode = true;
             let prevMouse = new PIXI.Point();
             this.on('mousedown', () => {
-                prevMouse = utils_1.getMousePoint();
+                prevMouse = utils_1.getMousePoint(target.context);
             });
             this.on('mouseup', () => {
-                let currentMouse = utils_1.getMousePoint();
+                let currentMouse = utils_1.getMousePoint(target.context);
                 if (prevMouse.x == currentMouse.x && prevMouse.y == currentMouse.y) {
                     let result = token.validator.updateInput(target.getInput(token.identifier));
                     if (result != null) {
@@ -23250,21 +23067,22 @@ class BlockGraphicBase extends PIXI.Container {
 }
 exports.BlockGraphicBase = BlockGraphicBase;
 class BlockGenerator extends BlockGraphicBase {
-    constructor(blockClass) {
+    constructor(context, blockClass) {
         super(new program_1.VirtualBlock(blockClass));
+        this.context = context;
         this.blockClass = blockClass;
         this.logic.graphic = this;
         this.definition = blockClass.definition;
         this.buttonMode = true;
         this.on('mousedown', (e) => {
-            if (komodi_1.Komodi.module.editingModule) {
+            if (this.context.module.editingModule) {
                 let globalPosition = this.getGlobalPosition();
                 let block = new blockClass();
-                block.init(komodi_1.Komodi.module.editingModule);
-                komodi_1.Komodi.fixed.addChild(block.graphic);
+                block.init(this.context, this.context.module.editingModule);
+                this.context.fixed.addChild(block.graphic);
                 block.graphic.x = globalPosition.x;
                 block.graphic.y = globalPosition.y;
-                komodi_1.Komodi.attacher.setDragging(block, true);
+                this.context.attacher.setDragging(block, true);
                 e.stopPropagation();
             }
         });
@@ -23281,20 +23099,20 @@ class BlockGraphic extends BlockGraphicBase {
         super(logic);
         let prevMouse = null;
         this.on('mousedown', (e) => {
-            prevMouse = utils_1.getMousePoint();
+            prevMouse = utils_1.getMousePoint(logic.context);
             e.stopPropagation();
         });
         this.on('mousemove', () => {
             if (prevMouse) {
-                let currentMouse = utils_1.getMousePoint();
+                let currentMouse = utils_1.getMousePoint(logic.context);
                 if (prevMouse.x != currentMouse.x || prevMouse.y != currentMouse.y) {
                     let position = this.getGlobalPosition();
                     if (logic.attachInfo != null) {
                         logic.attachInfo.target.detachBlock(logic);
                     }
-                    komodi_1.Komodi.stage.addChild(this);
-                    this.position = komodi_1.Komodi.stage.toLocal(position);
-                    komodi_1.Komodi.attacher.setDragging(logic);
+                    logic.context.stage.addChild(this);
+                    this.position = logic.context.stage.toLocal(position);
+                    logic.context.attacher.setDragging(logic);
                 }
             }
         });
@@ -23338,15 +23156,15 @@ function scopeGraphicsGenerator(block) {
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const peg = __webpack_require__(117);
-const _ = __webpack_require__(17);
-const type_1 = __webpack_require__(16);
+const _ = __webpack_require__(16);
+const type_1 = __webpack_require__(15);
 class PlaceholderToken {
     constructor(text) {
         this.text = text;
@@ -23493,7 +23311,7 @@ validatorMap.set('definition', {
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23768,7 +23586,7 @@ function buildNativeLine(graphicsData, webGLData) {
 //# sourceMappingURL=buildLine.js.map
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23776,7 +23594,7 @@ function buildNativeLine(graphicsData, webGLData) {
 
 exports.__esModule = true;
 
-var _SystemRenderer2 = __webpack_require__(75);
+var _SystemRenderer2 = __webpack_require__(76);
 
 var _SystemRenderer3 = _interopRequireDefault(_SystemRenderer2);
 
@@ -23792,11 +23610,11 @@ var _FilterManager = __webpack_require__(148);
 
 var _FilterManager2 = _interopRequireDefault(_FilterManager);
 
-var _RenderTarget = __webpack_require__(30);
+var _RenderTarget = __webpack_require__(29);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
-var _ObjectRenderer = __webpack_require__(29);
+var _ObjectRenderer = __webpack_require__(28);
 
 var _ObjectRenderer2 = _interopRequireDefault(_ObjectRenderer);
 
@@ -24585,7 +24403,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 //# sourceMappingURL=WebGLRenderer.js.map
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24593,7 +24411,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(21);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -24668,7 +24486,7 @@ exports.default = ObjectRenderer;
 //# sourceMappingURL=ObjectRenderer.js.map
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25000,21 +24818,143 @@ exports.default = RenderTarget;
 //# sourceMappingURL=RenderTarget.js.map
 
 /***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {
+
+exports.__esModule = true;
+exports.loader = exports.prepare = exports.particles = exports.mesh = exports.loaders = exports.interaction = exports.filters = exports.extras = exports.extract = exports.accessibility = undefined;
+
+var _polyfill = __webpack_require__(204);
+
+Object.keys(_polyfill).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _polyfill[key];
+        }
+    });
+});
+
+var _core = __webpack_require__(1);
+
+Object.keys(_core).forEach(function (key) {
+    if (key === "default" || key === "__esModule") return;
+    Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+            return _core[key];
+        }
+    });
+});
+
+var _deprecation = __webpack_require__(170);
+
+var _deprecation2 = _interopRequireDefault(_deprecation);
+
+var _accessibility = __webpack_require__(126);
+
+var accessibility = _interopRequireWildcard(_accessibility);
+
+var _extract = __webpack_require__(172);
+
+var extract = _interopRequireWildcard(_extract);
+
+var _extras = __webpack_require__(87);
+
+var extras = _interopRequireWildcard(_extras);
+
+var _filters = __webpack_require__(185);
+
+var filters = _interopRequireWildcard(_filters);
+
+var _interaction = __webpack_require__(189);
+
+var interaction = _interopRequireWildcard(_interaction);
+
+var _loaders = __webpack_require__(190);
+
+var loaders = _interopRequireWildcard(_loaders);
+
+var _mesh = __webpack_require__(195);
+
+var mesh = _interopRequireWildcard(_mesh);
+
+var _particles = __webpack_require__(198);
+
+var particles = _interopRequireWildcard(_particles);
+
+var _prepare = __webpack_require__(207);
+
+var prepare = _interopRequireWildcard(_prepare);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// export core
+_core.utils.mixins.performMixins();
+
+/**
+ * Alias for {@link PIXI.loaders.shared}.
+ * @name loader
+ * @memberof PIXI
+ * @type {PIXI.loader.Loader}
+ */
+
+
+// handle mixins now, after all code has been added, including deprecation
+
+
+// export libs
+// import polyfills. Done as an export to make sure polyfills are imported first
+var loader = loaders.shared || null;
+
+exports.accessibility = accessibility;
+exports.extract = extract;
+exports.extras = extras;
+exports.filters = filters;
+exports.interaction = interaction;
+exports.loaders = loaders;
+exports.mesh = mesh;
+exports.particles = particles;
+exports.prepare = prepare;
+exports.loader = loader;
+
+// Apply the deprecations
+
+if (typeof _deprecation2.default === 'function') {
+    (0, _deprecation2.default)(exports);
+}
+
+// Always export PixiJS globally.
+global.PIXI = exports; // eslint-disable-line
+//# sourceMappingURL=index.js.map
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
+
+/***/ }),
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const komodi_1 = __webpack_require__(6);
+const PIXI = __webpack_require__(30);
+const komodi_1 = __webpack_require__(52);
 function centerChild(target, x, y) {
     let localBounds = target.getLocalBounds();
     target.x = x - localBounds.width * .5;
     target.y = y - localBounds.height * .5;
 }
 exports.centerChild = centerChild;
-function getMousePoint() {
-    return komodi_1.Komodi.renderer.plugins.interaction.mouse.global.clone();
+function getMousePoint(komodi) {
+    if (komodi instanceof komodi_1.KomodiClass) {
+        return komodi.renderer.plugins.interaction.mouse.global.clone();
+    }
+    return new PIXI.Point(0, 0);
 }
 exports.getMousePoint = getMousePoint;
 function uuidv4() {
@@ -25033,11 +24973,11 @@ exports.uuidv4 = uuidv4;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(17);
-const index_1 = __webpack_require__(25);
-const type_1 = __webpack_require__(16);
+const _ = __webpack_require__(16);
+const index_1 = __webpack_require__(24);
+const type_1 = __webpack_require__(15);
 const utils_1 = __webpack_require__(31);
-const komodi_1 = __webpack_require__(6);
+const program_1 = __webpack_require__(9);
 const MINIMUM_ARG_WIDTH = 26;
 const PADDING = 5;
 const BLOCK_HEIGHT = 35;
@@ -25130,10 +25070,14 @@ function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
                 if (graphic) {
                     graphic.x = nowX + width * .5;
                     graphic.y = top + TIP_HEIGHT;
-                    komodi_1.Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
+                    if (block instanceof program_1.Block) {
+                        block.context.attacher.removeArgumentCoordinate(block, token.identifier);
+                    }
                 }
                 else {
-                    komodi_1.Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
+                    if (block instanceof program_1.Block) {
+                        block.context.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
+                    }
                 }
                 break;
         }
@@ -25184,9 +25128,9 @@ exports.definitionNodeDrawer = new DefinitionNodeDrawer();
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(17);
-const index_1 = __webpack_require__(25);
-const komodi_1 = __webpack_require__(6);
+const _ = __webpack_require__(16);
+const index_1 = __webpack_require__(24);
+const program_1 = __webpack_require__(9);
 const FLOW_VERTICAL_MARGIN = 20;
 const SPLIT_VERTICAL_MARGIN = 15;
 const SPLIT_HORIZONTAL_MARGIN = 40;
@@ -25224,7 +25168,9 @@ function defaultDrawScope(block, getScopeGraphics) {
                 nowY += rect.height + FLOW_VERTICAL_MARGIN;
             }
         }
-        komodi_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        if (block instanceof program_1.Block) {
+            block.context.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        }
         return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
     }
     else if (definition.scopeNames.length >= 2) {
@@ -25258,7 +25204,9 @@ function defaultDrawScope(block, getScopeGraphics) {
                 x: nowX,
                 y: nowY,
             });
-            komodi_1.Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            if (block instanceof program_1.Block) {
+                block.context.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            }
             nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
         }
         let maxY = _(endOffset).map((coord) => coord.y).max();
@@ -27090,7 +27038,7 @@ var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _Container2 = __webpack_require__(20);
+var _Container2 = __webpack_require__(19);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -27708,7 +27656,7 @@ exports.__esModule = true;
 
 var _utils = __webpack_require__(2);
 
-var _canUseNewCanvasBlendModes = __webpack_require__(77);
+var _canUseNewCanvasBlendModes = __webpack_require__(78);
 
 var _canUseNewCanvasBlendModes2 = _interopRequireDefault(_canUseNewCanvasBlendModes);
 
@@ -27962,7 +27910,7 @@ exports.default = CanvasTinter;
 
 exports.__esModule = true;
 
-var _BaseRenderTexture = __webpack_require__(83);
+var _BaseRenderTexture = __webpack_require__(84);
 
 var _BaseRenderTexture2 = _interopRequireDefault(_BaseRenderTexture);
 
@@ -28901,11 +28849,11 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _parseUri = __webpack_require__(54);
+var _parseUri = __webpack_require__(55);
 
 var _parseUri2 = _interopRequireDefault(_parseUri);
 
-var _miniSignals = __webpack_require__(53);
+var _miniSignals = __webpack_require__(54);
 
 var _miniSignals2 = _interopRequireDefault(_miniSignals);
 
@@ -30058,11 +30006,10 @@ function reqType(xhr) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const common_1 = __webpack_require__(223);
-const io_1 = __webpack_require__(224);
-const string_1 = __webpack_require__(225);
-const komodi_1 = __webpack_require__(6);
-const graphic_1 = __webpack_require__(25);
+const common_1 = __webpack_require__(224);
+const io_1 = __webpack_require__(225);
+const string_1 = __webpack_require__(226);
+const graphic_1 = __webpack_require__(24);
 const builtinModules = new Map();
 builtinModules.set('common', common_1.blockList);
 builtinModules.set('io', io_1.blockList);
@@ -30081,8 +30028,9 @@ function parseScopeString(str) {
 }
 exports.parseScopeString = parseScopeString;
 class Module extends PIXI.utils.EventEmitter {
-    constructor() {
+    constructor(context) {
         super();
+        this.context = context;
         this._editingModule = null;
         this.exports = new Map();
         this.idToBlockClass = new Map();
@@ -30118,10 +30066,10 @@ class Module extends PIXI.utils.EventEmitter {
         return this._editingModule;
     }
     set editingModule(moduleName) {
-        for (let i = 0; i < komodi_1.Komodi.stage.children.length;) {
-            let child = komodi_1.Komodi.stage.children[i];
+        for (let i = 0; i < this.context.stage.children.length;) {
+            let child = this.context.stage.children[i];
             if (child instanceof graphic_1.BlockGraphic) {
-                komodi_1.Komodi.stage.removeChild(child);
+                this.context.stage.removeChild(child);
             }
             else {
                 i++;
@@ -30131,7 +30079,7 @@ class Module extends PIXI.utils.EventEmitter {
             this.checkUserModuleExist(moduleName);
             for (let block of this.userModuleBlocks.get(moduleName).values()) {
                 if (block.attachInfo == null) {
-                    komodi_1.Komodi.stage.addChild(block.graphic);
+                    this.context.stage.addChild(block.graphic);
                 }
             }
         }
@@ -30178,7 +30126,7 @@ class Module extends PIXI.utils.EventEmitter {
             internalScope: new Set(),
             globalScope: new Set()
         });
-        komodi_1.Komodi.sideMenu.moduleSelector.addModule(moduleName);
+        this.emit(Module.ADD_MODULE, moduleName);
     }
     deleteUserModule(moduleName) {
         this.checkUserModuleExist(moduleName);
@@ -30189,7 +30137,7 @@ class Module extends PIXI.utils.EventEmitter {
         }
         this.userModuleBlocks.delete(moduleName);
         this.exports.delete(moduleName);
-        komodi_1.Komodi.sideMenu.moduleSelector.deleteModule(moduleName);
+        this.emit(Module.DELETE_MODULE, moduleName);
     }
     addExport(moduleName, scope, blockClass) {
         this.checkUserModuleExist(moduleName);
@@ -30215,12 +30163,175 @@ class Module extends PIXI.utils.EventEmitter {
     }
 }
 Module.EDITING_MODULE_CHANGE = 'editingModuleChange';
+Module.ADD_MODULE = 'addModule';
+Module.DELETE_MODULE = 'deleteModule';
 Module.EXPORT_UPDATE = 'exportUpdate';
 exports.Module = Module;
 
 
 /***/ }),
 /* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const WebFont = __webpack_require__(229);
+const PIXI = __webpack_require__(30);
+const menu_1 = __webpack_require__(222);
+const context_1 = __webpack_require__(220);
+const KOMODI_STYLE = `
+.komodi-container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-image: linear-gradient(
+        0deg,
+        transparent 24%,
+        rgba(0, 0, 0, .15) 25%,
+        rgba(0, 0, 0, .15) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(0, 0, 0, .15) 75%,
+        rgba(0, 0, 0, .15) 76%,
+        transparent 77%, transparent
+    ), linear-gradient(
+        90deg,
+        transparent 24%,
+        rgba(0, 0, 0, .15) 25%,
+        rgba(0, 0, 0, .15) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(0, 0, 0, .15) 75%,
+        rgba(0, 0, 0, .15) 76%,
+        transparent 77%,
+        transparent
+    );
+    background-size:50px 50px;
+}`;
+class KomodiClass extends context_1.KomodiContext {
+    constructor() {
+        super();
+        this.komodiDiv = document.createElement("div");
+        this.komodiDiv.classList.add("komodi-container");
+        this.topMenu = new menu_1.TopMenu();
+        this.sideMenu = new menu_1.SideMenu(this);
+        this.consoleMenu = new menu_1.ConsoleMenu();
+        this.fixed.addChild(this.sideMenu, this.consoleMenu, this.topMenu);
+        this.topMenu.addMenu('Project Name', () => {
+            let projectName = window.prompt('Project Name:', this.topMenu.projectName);
+            if (!projectName || projectName == '')
+                return;
+            this.topMenu.projectName = projectName;
+        });
+        this.topMenu.addMenu('Open', () => {
+            if (window.confirm('Current progress will be lost')) {
+                let fakeInput = document.createElement('input');
+                fakeInput.setAttribute('type', 'file');
+                fakeInput.setAttribute('accept', '.komodi');
+                fakeInput.click();
+                fakeInput.addEventListener('change', () => {
+                    if (fakeInput.files && fakeInput.files[0]) {
+                        let file = fakeInput.files[0];
+                        let reader = new FileReader();
+                        reader.onload = (e) => {
+                            this.clearProject();
+                            this.serializer.deserializeProgram(JSON.parse(reader.result));
+                        };
+                        reader.readAsText(file);
+                    }
+                });
+            }
+        });
+        this.topMenu.addMenu('Save', () => {
+            let serialized = this.serializer.serializeProgram(), blob = new Blob([JSON.stringify(serialized)], { type: 'octet/stream' }), url = URL.createObjectURL(blob);
+            let fakeLink = document.createElement('a');
+            fakeLink.href = url;
+            fakeLink.download = this.topMenu.projectName + '.komodi';
+            fakeLink.click();
+            URL.revokeObjectURL(url);
+        });
+        this.topMenu.addMenu('New Module', () => {
+            let moduleName = window.prompt('Please choose module name');
+            if (!moduleName || moduleName == '')
+                return;
+            if (this.module.checkModuleExist(moduleName, true)) {
+                window.alert('Module name already exists!');
+            }
+            else {
+                this.module.addUserModule(moduleName);
+            }
+        });
+        this.topMenu.addMenu('Validate', () => {
+        });
+        this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2, roundPixels: true });
+    }
+    set projectName(projectName) {
+        super.projectName = projectName;
+        this.topMenu.projectName = projectName;
+    }
+    init() {
+        super.init();
+        this.sideMenu.init();
+    }
+    newProject() {
+        this.topMenu.projectName = "Untitled Komodi Project";
+        this.module.addUserModule('main');
+        this.module.editingModule = 'main';
+    }
+    clearProject() {
+        this.module.clear();
+    }
+    initializeDOM(parent) {
+        let resize = () => {
+            let screenWidth = parent.clientWidth;
+            let screenHeight = parent.clientHeight;
+            this.renderer.resize(screenWidth, screenHeight);
+            this.topMenu.update(screenWidth, screenHeight);
+            this.sideMenu.update(screenWidth, screenHeight);
+            this.consoleMenu.update(screenWidth, screenHeight);
+        };
+        this.renderer.autoResize = true;
+        this.komodiDiv.appendChild(this.renderer.view);
+        parent.appendChild(this.komodiDiv);
+        window.addEventListener('resize', resize, true);
+        resize();
+        let styleNode = document.createElement("style");
+        styleNode.type = 'text/css';
+        styleNode.appendChild(document.createTextNode(KOMODI_STYLE));
+        document.head.appendChild(styleNode);
+    }
+    start() {
+        let update = () => {
+            this.renderer.render(this.container);
+        };
+        WebFont.load({
+            custom: {
+                families: ['FontAwesome'],
+                testStrings: {
+                    'FontAwesome': '\uF13b'
+                },
+            },
+            active: function () {
+                function loop() {
+                    requestAnimationFrame(loop);
+                    update();
+                }
+                loop();
+            },
+            inactive: function () {
+                alert("Komodi initialization failed");
+            },
+        });
+    }
+}
+exports.KomodiClass = KomodiClass;
+
+
+/***/ }),
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30871,7 +30982,7 @@ earcut.flatten = function (data) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31043,7 +31154,7 @@ module.exports = exports['default'];
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31080,7 +31191,7 @@ module.exports = function parseURI (str, opts) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31145,7 +31256,7 @@ module.exports = js;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31206,7 +31317,7 @@ module.exports = opcodes;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports) {
 
 
@@ -31545,7 +31656,7 @@ module.exports = Texture;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 // var GL_MAP = {};
@@ -31606,7 +31717,7 @@ module.exports = setVertexAttribArrays;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 
@@ -31692,7 +31803,7 @@ module.exports = compileProgram;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /**
@@ -31776,12 +31887,12 @@ module.exports = defaultValue;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 var mapType = __webpack_require__(37);
-var mapSize = __webpack_require__(64);
+var mapSize = __webpack_require__(65);
 
 /**
  * Extracts the attributes
@@ -31823,11 +31934,11 @@ module.exports = extractAttributes;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var mapType = __webpack_require__(37);
-var defaultValue = __webpack_require__(60);
+var defaultValue = __webpack_require__(61);
 
 /**
  * Extracts the uniforms
@@ -31864,7 +31975,7 @@ module.exports = extractUniforms;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /**
@@ -32011,7 +32122,7 @@ module.exports = generateUniformAccessObject;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports) {
 
 /**
@@ -32053,7 +32164,7 @@ module.exports = mapSize;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports) {
 
 /**
@@ -32077,7 +32188,7 @@ module.exports = setPrecision;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32140,7 +32251,7 @@ exports.default = {
 //# sourceMappingURL=accessibleTarget.js.map
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32150,9 +32261,9 @@ exports.__esModule = true;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _autoDetectRenderer = __webpack_require__(68);
+var _autoDetectRenderer = __webpack_require__(69);
 
-var _Container = __webpack_require__(20);
+var _Container = __webpack_require__(19);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -32368,7 +32479,7 @@ exports.default = Application;
 //# sourceMappingURL=Application.js.map
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32381,11 +32492,11 @@ var _utils = __webpack_require__(2);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(20);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
-var _WebGLRenderer = __webpack_require__(28);
+var _WebGLRenderer = __webpack_require__(27);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -32442,7 +32553,7 @@ function autoDetectRenderer(options, arg1, arg2, arg3) {
 //# sourceMappingURL=autoDetectRenderer.js.map
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32462,11 +32573,11 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _TransformStatic = __webpack_require__(71);
+var _TransformStatic = __webpack_require__(72);
 
 var _TransformStatic2 = _interopRequireDefault(_TransformStatic);
 
-var _Transform = __webpack_require__(70);
+var _Transform = __webpack_require__(71);
 
 var _Transform2 = _interopRequireDefault(_Transform);
 
@@ -33139,7 +33250,7 @@ DisplayObject.prototype.displayObjectUpdateTransform = DisplayObject.prototype.u
 //# sourceMappingURL=DisplayObject.js.map
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33325,7 +33436,7 @@ exports.default = Transform;
 //# sourceMappingURL=Transform.js.map
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33540,7 +33651,7 @@ exports.default = TransformStatic;
 //# sourceMappingURL=TransformStatic.js.map
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33667,7 +33778,7 @@ exports.default = GraphicsData;
 //# sourceMappingURL=GraphicsData.js.map
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33864,7 +33975,7 @@ exports.default = GroupD8;
 //# sourceMappingURL=GroupD8.js.map
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33986,7 +34097,7 @@ exports.default = ObservablePoint;
 //# sourceMappingURL=ObservablePoint.js.map
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34006,7 +34117,7 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _Container = __webpack_require__(20);
+var _Container = __webpack_require__(19);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -34354,7 +34465,7 @@ exports.default = SystemRenderer;
 //# sourceMappingURL=SystemRenderer.js.map
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34483,7 +34594,7 @@ exports.default = CanvasRenderTarget;
 //# sourceMappingURL=CanvasRenderTarget.js.map
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34549,7 +34660,7 @@ function canUseNewCanvasBlendModes() {
 //# sourceMappingURL=canUseNewCanvasBlendModes.js.map
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34750,7 +34861,7 @@ exports.default = Filter;
 //# sourceMappingURL=Filter.js.map
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34758,13 +34869,13 @@ exports.default = Filter;
 
 exports.__esModule = true;
 
-var _Filter2 = __webpack_require__(78);
+var _Filter2 = __webpack_require__(79);
 
 var _Filter3 = _interopRequireDefault(_Filter2);
 
 var _math = __webpack_require__(4);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34827,7 +34938,7 @@ exports.default = SpriteMaskFilter;
 //# sourceMappingURL=SpriteMaskFilter.js.map
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35013,7 +35124,7 @@ exports.default = Quad;
 //# sourceMappingURL=Quad.js.map
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -35320,7 +35431,7 @@ TextMetrics._fonts = {};
 //# sourceMappingURL=TextMetrics.js.map
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36109,7 +36220,7 @@ function areArraysEqual(array1, array2) {
 //# sourceMappingURL=TextStyle.js.map
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36273,7 +36384,7 @@ exports.default = BaseRenderTexture;
 //# sourceMappingURL=BaseRenderTexture.js.map
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36281,7 +36392,7 @@ exports.default = BaseRenderTexture;
 
 exports.__esModule = true;
 
-var _GroupD = __webpack_require__(73);
+var _GroupD = __webpack_require__(74);
 
 var _GroupD2 = _interopRequireDefault(_GroupD);
 
@@ -36383,7 +36494,7 @@ exports.default = TextureUvs;
 //# sourceMappingURL=TextureUvs.js.map
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36713,7 +36824,7 @@ function createSource(path, type) {
 //# sourceMappingURL=VideoBaseTexture.js.map
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36779,7 +36890,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36793,15 +36904,15 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _generateBlurVertSource = __webpack_require__(90);
+var _generateBlurVertSource = __webpack_require__(91);
 
 var _generateBlurVertSource2 = _interopRequireDefault(_generateBlurVertSource);
 
-var _generateBlurFragSource = __webpack_require__(89);
+var _generateBlurFragSource = __webpack_require__(90);
 
 var _generateBlurFragSource2 = _interopRequireDefault(_generateBlurFragSource);
 
-var _getMaxBlurKernelSize = __webpack_require__(91);
+var _getMaxBlurKernelSize = __webpack_require__(92);
 
 var _getMaxBlurKernelSize2 = _interopRequireDefault(_getMaxBlurKernelSize);
 
@@ -36950,7 +37061,7 @@ exports.default = BlurXFilter;
 //# sourceMappingURL=BlurXFilter.js.map
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36964,15 +37075,15 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _generateBlurVertSource = __webpack_require__(90);
+var _generateBlurVertSource = __webpack_require__(91);
 
 var _generateBlurVertSource2 = _interopRequireDefault(_generateBlurVertSource);
 
-var _generateBlurFragSource = __webpack_require__(89);
+var _generateBlurFragSource = __webpack_require__(90);
 
 var _generateBlurFragSource2 = _interopRequireDefault(_generateBlurFragSource);
 
-var _getMaxBlurKernelSize = __webpack_require__(91);
+var _getMaxBlurKernelSize = __webpack_require__(92);
 
 var _getMaxBlurKernelSize2 = _interopRequireDefault(_getMaxBlurKernelSize);
 
@@ -37120,7 +37231,7 @@ exports.default = BlurYFilter;
 //# sourceMappingURL=BlurYFilter.js.map
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37172,7 +37283,7 @@ function generateFragBlurSource(kernelSize) {
 //# sourceMappingURL=generateBlurFragSource.js.map
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37221,7 +37332,7 @@ function generateVertBlurSource(kernelSize, x) {
 //# sourceMappingURL=generateBlurVertSource.js.map
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37240,124 +37351,6 @@ function getMaxKernelSize(gl) {
     return kernelSize;
 }
 //# sourceMappingURL=getMaxBlurKernelSize.js.map
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-
-exports.__esModule = true;
-exports.loader = exports.prepare = exports.particles = exports.mesh = exports.loaders = exports.interaction = exports.filters = exports.extras = exports.extract = exports.accessibility = undefined;
-
-var _polyfill = __webpack_require__(204);
-
-Object.keys(_polyfill).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _polyfill[key];
-        }
-    });
-});
-
-var _core = __webpack_require__(1);
-
-Object.keys(_core).forEach(function (key) {
-    if (key === "default" || key === "__esModule") return;
-    Object.defineProperty(exports, key, {
-        enumerable: true,
-        get: function get() {
-            return _core[key];
-        }
-    });
-});
-
-var _deprecation = __webpack_require__(170);
-
-var _deprecation2 = _interopRequireDefault(_deprecation);
-
-var _accessibility = __webpack_require__(126);
-
-var accessibility = _interopRequireWildcard(_accessibility);
-
-var _extract = __webpack_require__(172);
-
-var extract = _interopRequireWildcard(_extract);
-
-var _extras = __webpack_require__(86);
-
-var extras = _interopRequireWildcard(_extras);
-
-var _filters = __webpack_require__(185);
-
-var filters = _interopRequireWildcard(_filters);
-
-var _interaction = __webpack_require__(189);
-
-var interaction = _interopRequireWildcard(_interaction);
-
-var _loaders = __webpack_require__(190);
-
-var loaders = _interopRequireWildcard(_loaders);
-
-var _mesh = __webpack_require__(195);
-
-var mesh = _interopRequireWildcard(_mesh);
-
-var _particles = __webpack_require__(198);
-
-var particles = _interopRequireWildcard(_particles);
-
-var _prepare = __webpack_require__(207);
-
-var prepare = _interopRequireWildcard(_prepare);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// export core
-_core.utils.mixins.performMixins();
-
-/**
- * Alias for {@link PIXI.loaders.shared}.
- * @name loader
- * @memberof PIXI
- * @type {PIXI.loader.Loader}
- */
-
-
-// handle mixins now, after all code has been added, including deprecation
-
-
-// export libs
-// import polyfills. Done as an export to make sure polyfills are imported first
-var loader = loaders.shared || null;
-
-exports.accessibility = accessibility;
-exports.extract = extract;
-exports.extras = extras;
-exports.filters = filters;
-exports.interaction = interaction;
-exports.loaders = loaders;
-exports.mesh = mesh;
-exports.particles = particles;
-exports.prepare = prepare;
-exports.loader = loader;
-
-// Apply the deprecations
-
-if (typeof _deprecation2.default === 'function') {
-    (0, _deprecation2.default)(exports);
-}
-
-// Always export PixiJS globally.
-global.PIXI = exports; // eslint-disable-line
-//# sourceMappingURL=index.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ }),
 /* 93 */
@@ -38053,15 +38046,15 @@ exports.default = function () {
     };
 };
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 var path = _interopRequireWildcard(_path);
 
 var _core = __webpack_require__(1);
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(23);
 
-var _extras = __webpack_require__(86);
+var _extras = __webpack_require__(87);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -38122,7 +38115,7 @@ exports.default = function () {
 
 exports.getResourcePath = getResourcePath;
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(23);
 
 var _url = __webpack_require__(104);
 
@@ -38161,7 +38154,7 @@ exports.default = function () {
     };
 };
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(23);
 
 var _Texture = __webpack_require__(11);
 
@@ -38179,7 +38172,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(23);
+var _Mesh2 = __webpack_require__(22);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -38693,7 +38686,7 @@ function encodeBinary(input) {
 
 
 var punycode = __webpack_require__(211);
-var util = __webpack_require__(227);
+var util = __webpack_require__(228);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -39535,7 +39528,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 "use strict";
 
 
-var arrays  = __webpack_require__(9),
+var arrays  = __webpack_require__(8),
     objects = __webpack_require__(13);
 
 var compiler = {
@@ -39543,7 +39536,7 @@ var compiler = {
    * AST node visitor builder. Useful mainly for plugins which manipulate the
    * AST.
    */
-  visitor: __webpack_require__(8),
+  visitor: __webpack_require__(7),
 
   /*
    * Compiler passes.
@@ -39615,12 +39608,12 @@ module.exports = compiler;
 "use strict";
 
 
-var arrays  = __webpack_require__(9),
+var arrays  = __webpack_require__(8),
     objects = __webpack_require__(13),
-    asts    = __webpack_require__(18),
-    visitor = __webpack_require__(8),
-    op      = __webpack_require__(56),
-    js      = __webpack_require__(55);
+    asts    = __webpack_require__(17),
+    visitor = __webpack_require__(7),
+    op      = __webpack_require__(57),
+    js      = __webpack_require__(56);
 
 /* Generates bytecode.
  *
@@ -40253,11 +40246,11 @@ module.exports = generateBytecode;
 "use strict";
 
 
-var arrays  = __webpack_require__(9),
+var arrays  = __webpack_require__(8),
     objects = __webpack_require__(13),
-    asts    = __webpack_require__(18),
-    op      = __webpack_require__(56),
-    js      = __webpack_require__(55);
+    asts    = __webpack_require__(17),
+    op      = __webpack_require__(57),
+    js      = __webpack_require__(56);
 
 /* Generates parser JavaScript code. */
 function generateJS(ast, options) {
@@ -41654,8 +41647,8 @@ module.exports = generateJS;
 "use strict";
 
 
-var arrays  = __webpack_require__(9),
-    visitor = __webpack_require__(8);
+var arrays  = __webpack_require__(8),
+    visitor = __webpack_require__(7);
 
 /*
  * Removes proxy rules -- that is, rules that only delegate to other rule.
@@ -41704,9 +41697,9 @@ module.exports = removeProxyRules;
 
 
 var GrammarError = __webpack_require__(12),
-    arrays       = __webpack_require__(9),
+    arrays       = __webpack_require__(8),
     objects      = __webpack_require__(13),
-    visitor      = __webpack_require__(8);
+    visitor      = __webpack_require__(7);
 
 /* Checks that each label is defined only once within each scope. */
 function reportDuplicateLabels(ast) {
@@ -41765,7 +41758,7 @@ module.exports = reportDuplicateLabels;
 
 
 var GrammarError = __webpack_require__(12),
-    visitor      = __webpack_require__(8);
+    visitor      = __webpack_require__(7);
 
 /* Checks that each rule is defined only once. */
 function reportDuplicateRules(ast) {
@@ -41799,10 +41792,10 @@ module.exports = reportDuplicateRules;
 "use strict";
 
 
-var arrays       = __webpack_require__(9),
+var arrays       = __webpack_require__(8),
     GrammarError = __webpack_require__(12),
-    asts         = __webpack_require__(18),
-    visitor      = __webpack_require__(8);
+    asts         = __webpack_require__(17),
+    visitor      = __webpack_require__(7);
 
 /*
  * Reports left recursion in the grammar, which prevents infinite recursion in
@@ -41864,8 +41857,8 @@ module.exports = reportInfiniteRecursion;
 
 
 var GrammarError = __webpack_require__(12),
-    asts         = __webpack_require__(18),
-    visitor      = __webpack_require__(8);
+    asts         = __webpack_require__(17),
+    visitor      = __webpack_require__(7);
 
 /*
  * Reports expressions that don't consume any input inside |*| or |+| in the
@@ -41906,8 +41899,8 @@ module.exports = reportInfiniteRepetition;
 
 
 var GrammarError = __webpack_require__(12),
-    asts         = __webpack_require__(18),
-    visitor      = __webpack_require__(8);
+    asts         = __webpack_require__(17),
+    visitor      = __webpack_require__(7);
 
 /* Checks that all referenced rules exist. */
 function reportUndefinedRules(ast) {
@@ -46982,7 +46975,7 @@ module.exports = {
 "use strict";
 
 
-var arrays  = __webpack_require__(9),
+var arrays  = __webpack_require__(8),
     objects = __webpack_require__(13);
 
 var peg = {
@@ -47189,7 +47182,7 @@ module.exports = Buffer;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var Texture = __webpack_require__(57);
+var Texture = __webpack_require__(58);
 
 /**
  * Helper class to create a webGL Framebuffer
@@ -47420,11 +47413,11 @@ module.exports = Framebuffer;
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var compileProgram = __webpack_require__(59),
-	extractAttributes = __webpack_require__(61),
-	extractUniforms = __webpack_require__(62),
-	setPrecision = __webpack_require__(65),
-	generateUniformAccessObject = __webpack_require__(63);
+var compileProgram = __webpack_require__(60),
+	extractAttributes = __webpack_require__(62),
+	extractUniforms = __webpack_require__(63),
+	setPrecision = __webpack_require__(66),
+	generateUniformAccessObject = __webpack_require__(64);
 
 /**
  * Helper class to create a webGL Shader
@@ -47518,7 +47511,7 @@ module.exports = Shader;
 
 
 // state object//
-var setVertexAttribArrays = __webpack_require__( 58 );
+var setVertexAttribArrays = __webpack_require__( 59 );
 
 /**
  * Helper class to work with WebGL VertexArrayObjects (vaos)
@@ -47817,13 +47810,13 @@ module.exports = createContext;
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-    compileProgram: __webpack_require__(59),
-    defaultValue: __webpack_require__(60),
-    extractAttributes: __webpack_require__(61),
-    extractUniforms: __webpack_require__(62),
-    generateUniformAccessObject: __webpack_require__(63),
-    setPrecision: __webpack_require__(65),
-    mapSize: __webpack_require__(64),
+    compileProgram: __webpack_require__(60),
+    defaultValue: __webpack_require__(61),
+    extractAttributes: __webpack_require__(62),
+    extractUniforms: __webpack_require__(63),
+    generateUniformAccessObject: __webpack_require__(64),
+    setPrecision: __webpack_require__(66),
+    mapSize: __webpack_require__(65),
     mapType: __webpack_require__(37)
 };
 
@@ -47844,7 +47837,7 @@ var _ismobilejs = __webpack_require__(36);
 
 var _ismobilejs2 = _interopRequireDefault(_ismobilejs);
 
-var _accessibleTarget = __webpack_require__(66);
+var _accessibleTarget = __webpack_require__(67);
 
 var _accessibleTarget2 = _interopRequireDefault(_accessibleTarget);
 
@@ -48335,7 +48328,7 @@ core.CanvasRenderer.registerPlugin('accessibility', AccessibilityManager);
 
 exports.__esModule = true;
 
-var _accessibleTarget = __webpack_require__(66);
+var _accessibleTarget = __webpack_require__(67);
 
 Object.defineProperty(exports, 'accessibleTarget', {
   enumerable: true,
@@ -48365,7 +48358,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Container2 = __webpack_require__(20);
+var _Container2 = __webpack_require__(19);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -48377,7 +48370,7 @@ var _Texture = __webpack_require__(11);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _GraphicsData = __webpack_require__(72);
+var _GraphicsData = __webpack_require__(73);
 
 var _GraphicsData2 = _interopRequireDefault(_GraphicsData);
 
@@ -48399,7 +48392,7 @@ var _bezierCurveTo2 = __webpack_require__(129);
 
 var _bezierCurveTo3 = _interopRequireDefault(_bezierCurveTo2);
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(20);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -49542,7 +49535,7 @@ Graphics._SPRITE_TEXTURE = null;
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(20);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -49875,11 +49868,11 @@ var _utils = __webpack_require__(2);
 
 var _const = __webpack_require__(0);
 
-var _ObjectRenderer2 = __webpack_require__(29);
+var _ObjectRenderer2 = __webpack_require__(28);
 
 var _ObjectRenderer3 = _interopRequireDefault(_ObjectRenderer2);
 
-var _WebGLRenderer = __webpack_require__(28);
+var _WebGLRenderer = __webpack_require__(27);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -50289,7 +50282,7 @@ exports.default = WebGLGraphicsData;
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(19);
+var _Shader2 = __webpack_require__(18);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -50340,7 +50333,7 @@ exports.default = PrimitiveShader;
 exports.__esModule = true;
 exports.default = buildCircle;
 
-var _buildLine = __webpack_require__(27);
+var _buildLine = __webpack_require__(26);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -50438,13 +50431,13 @@ function buildCircle(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildPoly;
 
-var _buildLine = __webpack_require__(27);
+var _buildLine = __webpack_require__(26);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
 var _utils = __webpack_require__(2);
 
-var _earcut = __webpack_require__(52);
+var _earcut = __webpack_require__(53);
 
 var _earcut2 = _interopRequireDefault(_earcut);
 
@@ -50529,7 +50522,7 @@ function buildPoly(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildRectangle;
 
-var _buildLine = __webpack_require__(27);
+var _buildLine = __webpack_require__(26);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -50610,11 +50603,11 @@ function buildRectangle(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildRoundedRectangle;
 
-var _earcut = __webpack_require__(52);
+var _earcut = __webpack_require__(53);
 
 var _earcut2 = _interopRequireDefault(_earcut);
 
-var _buildLine = __webpack_require__(27);
+var _buildLine = __webpack_require__(26);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -51467,7 +51460,7 @@ exports.default = mapCanvasBlendModesToPixi;
 
 var _const = __webpack_require__(0);
 
-var _canUseNewCanvasBlendModes = __webpack_require__(77);
+var _canUseNewCanvasBlendModes = __webpack_require__(78);
 
 var _canUseNewCanvasBlendModes2 = _interopRequireDefault(_canUseNewCanvasBlendModes);
 
@@ -51670,7 +51663,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _const = __webpack_require__(0);
 
-var _RenderTarget = __webpack_require__(30);
+var _RenderTarget = __webpack_require__(29);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
@@ -52343,21 +52336,21 @@ function calculateSpriteMatrix(outputMatrix, filterArea, textureSize, sprite) {
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(21);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
-var _RenderTarget = __webpack_require__(30);
+var _RenderTarget = __webpack_require__(29);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
-var _Quad = __webpack_require__(80);
+var _Quad = __webpack_require__(81);
 
 var _Quad2 = _interopRequireDefault(_Quad);
 
 var _math = __webpack_require__(4);
 
-var _Shader = __webpack_require__(19);
+var _Shader = __webpack_require__(18);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -52942,11 +52935,11 @@ exports.default = FilterManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(21);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
-var _SpriteMaskFilter = __webpack_require__(79);
+var _SpriteMaskFilter = __webpack_require__(80);
 
 var _SpriteMaskFilter2 = _interopRequireDefault(_SpriteMaskFilter);
 
@@ -53157,7 +53150,7 @@ exports.default = MaskManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(22);
+var _WebGLManager2 = __webpack_require__(21);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -53507,7 +53500,7 @@ function validateContext(gl) {
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(21);
+var _CanvasRenderer = __webpack_require__(20);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -53723,11 +53716,11 @@ exports.default = Buffer;
 
 exports.__esModule = true;
 
-var _ObjectRenderer2 = __webpack_require__(29);
+var _ObjectRenderer2 = __webpack_require__(28);
 
 var _ObjectRenderer3 = _interopRequireDefault(_ObjectRenderer2);
 
-var _WebGLRenderer = __webpack_require__(28);
+var _WebGLRenderer = __webpack_require__(27);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -54271,11 +54264,11 @@ _WebGLRenderer2.default.registerPlugin('sprite', SpriteRenderer);
 exports.__esModule = true;
 exports.default = generateMultiTextureShader;
 
-var _Shader = __webpack_require__(19);
+var _Shader = __webpack_require__(18);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54358,11 +54351,11 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _TextStyle = __webpack_require__(82);
+var _TextStyle = __webpack_require__(83);
 
 var _TextStyle2 = _interopRequireDefault(_TextStyle);
 
-var _TextMetrics = __webpack_require__(81);
+var _TextMetrics = __webpack_require__(82);
 
 var _TextMetrics2 = _interopRequireDefault(_TextMetrics);
 
@@ -58260,7 +58253,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _ObservablePoint = __webpack_require__(74);
+var _ObservablePoint = __webpack_require__(75);
 
 var _ObservablePoint2 = _interopRequireDefault(_ObservablePoint);
 
@@ -59794,7 +59787,7 @@ var core = _interopRequireWildcard(_core);
 
 var _const = __webpack_require__(0);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -59961,11 +59954,11 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _BlurXFilter = __webpack_require__(87);
+var _BlurXFilter = __webpack_require__(88);
 
 var _BlurXFilter2 = _interopRequireDefault(_BlurXFilter);
 
-var _BlurYFilter = __webpack_require__(88);
+var _BlurYFilter = __webpack_require__(89);
 
 var _BlurYFilter2 = _interopRequireDefault(_BlurYFilter);
 
@@ -60140,7 +60133,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -60696,7 +60689,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -60809,7 +60802,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -60900,7 +60893,7 @@ Object.defineProperty(exports, 'BlurFilter', {
   }
 });
 
-var _BlurXFilter = __webpack_require__(87);
+var _BlurXFilter = __webpack_require__(88);
 
 Object.defineProperty(exports, 'BlurXFilter', {
   enumerable: true,
@@ -60909,7 +60902,7 @@ Object.defineProperty(exports, 'BlurXFilter', {
   }
 });
 
-var _BlurYFilter = __webpack_require__(88);
+var _BlurYFilter = __webpack_require__(89);
 
 Object.defineProperty(exports, 'BlurYFilter', {
   enumerable: true,
@@ -60954,7 +60947,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -61054,7 +61047,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -62967,7 +62960,7 @@ Object.defineProperty(exports, 'textureParser', {
     }
 });
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(23);
 
 Object.defineProperty(exports, 'Resource', {
     enumerable: true,
@@ -62976,7 +62969,7 @@ Object.defineProperty(exports, 'Resource', {
     }
 });
 
-var _Application = __webpack_require__(67);
+var _Application = __webpack_require__(68);
 
 var _Application2 = _interopRequireDefault(_Application);
 
@@ -63060,7 +63053,7 @@ AppPrototype.destroy = function destroy(removeView) {
 
 exports.__esModule = true;
 
-var _resourceLoader = __webpack_require__(24);
+var _resourceLoader = __webpack_require__(23);
 
 var _resourceLoader2 = _interopRequireDefault(_resourceLoader);
 
@@ -63627,7 +63620,7 @@ exports.default = NineSlicePlane;
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(23);
+var _Mesh2 = __webpack_require__(22);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -63872,7 +63865,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _Mesh = __webpack_require__(23);
+var _Mesh = __webpack_require__(22);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -64156,7 +64149,7 @@ core.CanvasRenderer.registerPlugin('mesh', MeshSpriteRenderer);
 
 exports.__esModule = true;
 
-var _Mesh = __webpack_require__(23);
+var _Mesh = __webpack_require__(22);
 
 Object.defineProperty(exports, 'Mesh', {
   enumerable: true,
@@ -64230,11 +64223,11 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _Mesh = __webpack_require__(23);
+var _Mesh = __webpack_require__(22);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
-var _path = __webpack_require__(7);
+var _path = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65520,7 +65513,7 @@ core.WebGLRenderer.registerPlugin('particle', ParticleRenderer);
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(19);
+var _Shader2 = __webpack_require__(18);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -67054,11 +67047,11 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _miniSignals = __webpack_require__(53);
+var _miniSignals = __webpack_require__(54);
 
 var _miniSignals2 = _interopRequireDefault(_miniSignals);
 
-var _parseUri = __webpack_require__(54);
+var _parseUri = __webpack_require__(55);
 
 var _parseUri2 = _interopRequireDefault(_parseUri);
 
@@ -67950,11 +67943,42 @@ exports.SimpleButton = SimpleButton;
 
 "use strict";
 
-const komodi_1 = __webpack_require__(6);
-module.exports = {
-    initializeDOM: komodi_1.Komodi.initializeDOM.bind(komodi_1.Komodi),
-    start: komodi_1.Komodi.start.bind(komodi_1.Komodi),
-};
+Object.defineProperty(exports, "__esModule", { value: true });
+const PIXI = __webpack_require__(30);
+const attacher_1 = __webpack_require__(223);
+const module_1 = __webpack_require__(51);
+const serializer_1 = __webpack_require__(227);
+class KomodiContext {
+    constructor() {
+        this.container = new PIXI.Container();
+        this.stage = new PIXI.Container();
+        this.fixed = new PIXI.Container();
+        this.attacher = new attacher_1.Attacher(this);
+        this.module = new module_1.Module(this);
+        this.serializer = new serializer_1.Serializer(this);
+        this.container.interactive = true;
+        this.container.addChild(this.stage, this.fixed);
+        this.fixed.interactive = true;
+    }
+    get projectName() {
+        return this._projectName;
+    }
+    set projectName(projectName) {
+        this._projectName = projectName;
+    }
+    init() {
+        this.attacher.init();
+    }
+    registerBlock(block) {
+        this.attacher.registerBlock(block);
+        this.module.addBlockToModule(block.moduleName, block);
+    }
+    unregisterBlock(block) {
+        this.attacher.removeBlock(block);
+        this.module.deleteBlockFromModule(block.moduleName, block);
+    }
+}
+exports.KomodiContext = KomodiContext;
 
 
 /***/ }),
@@ -67963,10 +67987,22 @@ module.exports = {
 
 "use strict";
 
+const komodi_1 = __webpack_require__(52);
+const Komodi = new komodi_1.KomodiClass();
+Komodi.init();
+Komodi.newProject();
+module.exports = Komodi;
+
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(92);
-const komodi_1 = __webpack_require__(6);
-const index_1 = __webpack_require__(25);
+const PIXI = __webpack_require__(30);
+const graphic_1 = __webpack_require__(24);
 const ui_1 = __webpack_require__(219);
 const module_1 = __webpack_require__(51);
 const TOP_MENU_HEIGHT = 85;
@@ -68025,13 +68061,14 @@ class TopMenu extends PIXI.Container {
 }
 exports.TopMenu = TopMenu;
 class ModuleSelector extends PIXI.Container {
-    constructor() {
+    constructor(komodi) {
         super();
+        this.komodi = komodi;
         this.selector = new ui_1.ListSelector(SIDE_MENU_WIDTH);
         this.addChild(this.selector);
     }
     init() {
-        let modules = komodi_1.Komodi.module.getModuleList();
+        let modules = this.komodi.module.getModuleList();
         this.selector.addLabel('\uf02d  built-in modules');
         for (let moduleName of modules.builtinModule) {
             this.selector.addButton(moduleName, moduleName);
@@ -68040,8 +68077,8 @@ class ModuleSelector extends PIXI.Container {
         this.selector.on(ui_1.ListSelector.CHANGE, () => {
             this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
         });
-        komodi_1.Komodi.module.on(module_1.Module.EDITING_MODULE_CHANGE, (changedModuleName) => {
-            let modules = komodi_1.Komodi.module.getModuleList();
+        this.komodi.module.on(module_1.Module.EDITING_MODULE_CHANGE, (changedModuleName) => {
+            let modules = this.komodi.module.getModuleList();
             for (let moduleName of modules.userModule) {
                 if (moduleName == changedModuleName) {
                     this.selector.changeText(moduleName, `${moduleName} \uf040`);
@@ -68050,6 +68087,12 @@ class ModuleSelector extends PIXI.Container {
                     this.selector.changeText(moduleName, moduleName);
                 }
             }
+        });
+        this.komodi.module.on(module_1.Module.ADD_MODULE, (moduleName) => {
+            this.selector.addButton(moduleName, moduleName);
+        });
+        this.komodi.module.on(module_1.Module.DELETE_MODULE, (moduleName) => {
+            this.selector.deleteButton(moduleName);
         });
         this.emit(ModuleSelector.SELECTED_MODULE_CHANGE, this.selector.getSelectedKey());
     }
@@ -68063,30 +68106,31 @@ class ModuleSelector extends PIXI.Container {
 ModuleSelector.SELECTED_MODULE_CHANGE = 'selectedModuleChange';
 exports.ModuleSelector = ModuleSelector;
 class BlockGeneratorList extends PIXI.Container {
-    constructor() {
+    constructor(komodi) {
         super();
+        this.komodi = komodi;
         this.blockList = [];
     }
     init() {
-        komodi_1.Komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, () => {
+        this.komodi.sideMenu.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, () => {
             this.update();
         });
-        komodi_1.Komodi.module.on(module_1.Module.EDITING_MODULE_CHANGE, () => {
+        this.komodi.module.on(module_1.Module.EDITING_MODULE_CHANGE, () => {
             this.update();
         });
-        komodi_1.Komodi.module.on(module_1.Module.EXPORT_UPDATE, () => {
+        this.komodi.module.on(module_1.Module.EXPORT_UPDATE, () => {
             this.update();
         });
     }
     update() {
         this.clear();
-        let moduleName = komodi_1.Komodi.sideMenu.moduleSelector.selector.getSelectedKey();
+        let moduleName = this.komodi.sideMenu.moduleSelector.selector.getSelectedKey();
         if (moduleName) {
             const VERTICAL_PADDING = 10;
-            let exportResult = komodi_1.Komodi.module.exportOf(moduleName);
+            let exportResult = this.komodi.module.exportOf(moduleName);
             let currentY = 0;
             let addGenerator = (blockClass) => {
-                let generator = new index_1.BlockGenerator(blockClass);
+                let generator = new graphic_1.BlockGenerator(this.komodi, blockClass);
                 this.addChild(generator);
                 generator.x = SIDE_MENU_WIDTH * .5;
                 generator.y = currentY + VERTICAL_PADDING + generator.height;
@@ -68096,7 +68140,7 @@ class BlockGeneratorList extends PIXI.Container {
             for (let blockClass of exportResult.globalScope) {
                 addGenerator(blockClass);
             }
-            if (komodi_1.Komodi.module.editingModule == moduleName) {
+            if (this.komodi.module.editingModule == moduleName) {
                 for (let blockClass of exportResult.internalScope) {
                     addGenerator(blockClass);
                 }
@@ -68113,12 +68157,13 @@ class BlockGeneratorList extends PIXI.Container {
 }
 exports.BlockGeneratorList = BlockGeneratorList;
 class SideMenu extends PIXI.Container {
-    constructor() {
+    constructor(komodi) {
         super();
+        this.komodi = komodi;
         this.background = new PIXI.Graphics();
         this.outline = new PIXI.Graphics();
-        this.moduleSelector = new ModuleSelector();
-        this.blockGeneratorList = new BlockGeneratorList();
+        this.moduleSelector = new ModuleSelector(komodi);
+        this.blockGeneratorList = new BlockGeneratorList(komodi);
         this.interactive = true;
         this.addChild(this.background);
         this.addChild(this.moduleSelector, this.blockGeneratorList);
@@ -68128,10 +68173,10 @@ class SideMenu extends PIXI.Container {
         label.x = this.editButton.width * .5 - label.width * .5;
         label.y = this.editButton.height * .5 - label.height * .5;
         this.editButton.on('click', () => {
-            komodi_1.Komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
+            this.komodi.module.editingModule = this.moduleSelector.selector.getSelectedKey();
         });
         this.moduleSelector.on(ModuleSelector.SELECTED_MODULE_CHANGE, (moduleName) => {
-            if (moduleName && komodi_1.Komodi.module.checkUserModuleExist(moduleName, true)) {
+            if (moduleName && this.komodi.module.checkUserModuleExist(moduleName, true)) {
                 this.editButton.visible = true;
             }
             else {
@@ -68195,21 +68240,21 @@ exports.ConsoleMenu = ConsoleMenu;
 
 
 /***/ }),
-/* 222 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(17);
-const index_1 = __webpack_require__(15);
+const _ = __webpack_require__(16);
+const index_1 = __webpack_require__(9);
 const utils_1 = __webpack_require__(31);
-const komodi_1 = __webpack_require__(6);
 const INDICATOR_COLOR = 0x505050;
 const INDICATOR_RADIUS = 3;
 const NEAR = 120;
 class Attacher {
-    constructor() {
+    constructor(context) {
+        this.context = context;
         this.initialDrag = false;
         this.dragging = null;
         this.mouseOffset = { x: 0, y: 0 };
@@ -68217,16 +68262,16 @@ class Attacher {
         this.map = new Map();
     }
     init() {
-        komodi_1.Komodi.stage.addChild(this.indicator);
-        komodi_1.Komodi.container.on('mousemove', () => {
+        this.context.stage.addChild(this.indicator);
+        this.context.container.on('mousemove', () => {
             this.updateDragging();
         });
-        komodi_1.Komodi.fixed.on('mouseover', () => {
+        this.context.fixed.on('mouseover', () => {
             if (!this.initialDrag) {
                 this.stopDragging();
             }
         });
-        komodi_1.Komodi.container.on('mouseup', () => {
+        this.context.container.on('mouseup', () => {
             this.stopDragging();
         });
     }
@@ -68240,8 +68285,6 @@ class Attacher {
         this.map.delete(block);
     }
     setArgumentCoordinate(block, argumentName, coord) {
-        if (!(block instanceof index_1.Block))
-            return;
         let argumentAttach = this.map.get(block).argumentAttach;
         if (argumentAttach.has(argumentName)) {
             let targetCoord = argumentAttach.get(argumentName);
@@ -68259,16 +68302,12 @@ class Attacher {
         }
     }
     removeArgumentCoordinate(block, argumentName) {
-        if (!(block instanceof index_1.Block))
-            return;
         let argumentAttach = this.map.get(block).argumentAttach;
         if (argumentAttach.has(argumentName)) {
             this.map.get(block).argumentAttach.delete(argumentName);
         }
     }
     setScopeCoordinate(block, scopeName, coordinates) {
-        if (!(block instanceof index_1.Block))
-            return;
         let scopeAttach = this.map.get(block).scopeAttach;
         if (!scopeAttach.has(scopeName)) {
             scopeAttach.set(scopeName, []);
@@ -68316,8 +68355,8 @@ class Attacher {
                 attachPoint = info;
             }
         };
-        if (komodi_1.Komodi.module.editingModule) {
-            let blocks = komodi_1.Komodi.module.blockListOf(komodi_1.Komodi.module.editingModule);
+        if (this.context.module.editingModule) {
+            let blocks = this.context.module.blockListOf(this.context.module.editingModule);
             for (let block of blocks) {
                 let attach = this.map.get(block);
                 if (this.dragging instanceof index_1.Expression) {
@@ -68343,14 +68382,14 @@ class Attacher {
         if (this.dragging != null) {
             return;
         }
-        if (block.graphic.parent == komodi_1.Komodi.fixed) {
-            komodi_1.Komodi.stage.setChildIndex(this.indicator, komodi_1.Komodi.stage.children.length - 1);
+        if (block.graphic.parent == this.context.fixed) {
+            this.context.stage.setChildIndex(this.indicator, this.context.stage.children.length - 1);
         }
         else {
-            komodi_1.Komodi.stage.setChildIndex(this.indicator, komodi_1.Komodi.stage.getChildIndex(block.graphic) - 1);
+            this.context.stage.setChildIndex(this.indicator, this.context.stage.getChildIndex(block.graphic) - 1);
         }
         let blockGlobal = block.graphic.getGlobalPosition();
-        let currentMouse = utils_1.getMousePoint();
+        let currentMouse = utils_1.getMousePoint(block.context);
         this.mouseOffset.x = currentMouse.x - blockGlobal.x;
         this.mouseOffset.y = currentMouse.y - blockGlobal.y;
         this.dragging = block;
@@ -68359,10 +68398,10 @@ class Attacher {
     }
     updateDragging() {
         if (this.dragging != null) {
-            let mouse = utils_1.getMousePoint();
+            let mouse = utils_1.getMousePoint(this.dragging.context);
             let globalX = mouse.x - this.mouseOffset.x;
             let globalY = mouse.y - this.mouseOffset.y;
-            this.dragging.graphic.position = komodi_1.Komodi.stage.toLocal(new PIXI.Point(globalX, globalY));
+            this.dragging.graphic.position = this.context.stage.toLocal(new PIXI.Point(globalX, globalY));
             let attachInfo = this.getNearestAttachPoint(globalX, globalY);
             if (attachInfo != null) {
                 let globalPosition = attachInfo.target.graphic.getGlobalPosition();
@@ -68382,8 +68421,8 @@ class Attacher {
             }
             else if (this.initialDrag) {
                 let position = this.dragging.graphic.getGlobalPosition();
-                komodi_1.Komodi.stage.addChild(this.dragging.graphic);
-                this.dragging.graphic.position = komodi_1.Komodi.stage.toLocal(position);
+                this.context.stage.addChild(this.dragging.graphic);
+                this.dragging.graphic.position = this.context.stage.toLocal(position);
             }
             this.dragging.graphic.alpha = 1;
             this.dragging = null;
@@ -68408,20 +68447,19 @@ exports.Attacher = Attacher;
 
 
 /***/ }),
-/* 223 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(15);
+const index_1 = __webpack_require__(9);
 const scope_drawer_1 = __webpack_require__(33);
 const node_drawer_1 = __webpack_require__(32);
-const definition_parser_1 = __webpack_require__(26);
+const definition_parser_1 = __webpack_require__(25);
 const module_1 = __webpack_require__(51);
 const utils_1 = __webpack_require__(31);
-const type_1 = __webpack_require__(16);
-const komodi_1 = __webpack_require__(6);
+const type_1 = __webpack_require__(15);
 class DefinitionStart extends index_1.Definition {
     constructor() {
         super(DefinitionStart.definition);
@@ -68444,7 +68482,13 @@ class DefinitionFunction extends index_1.Definition {
     set scope(value) {
         this._scope = value;
         if (this.initialized) {
-            this.updateExport();
+            this.exportInfo.forEach((data) => {
+                this.context.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            });
+            this.exportInfo[0].scope = module_1.parseScopeString(value);
+            this.exportInfo.forEach((data) => {
+                this.context.module.addExport(this.moduleName, data.scope, data.blockClass);
+            });
         }
     }
     get define() {
@@ -68453,13 +68497,7 @@ class DefinitionFunction extends index_1.Definition {
     set define(value) {
         this._define = value;
         if (this.initialized) {
-            this.exportInfo.forEach((data) => {
-                komodi_1.Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
-            });
-            this.exportInfo[0].scope = module_1.parseScopeString(value);
-            this.exportInfo.forEach((data) => {
-                komodi_1.Komodi.module.addExport(this.moduleName, data.scope, data.blockClass);
-            });
+            this.updateExport();
         }
     }
     updateExport() {
@@ -68492,8 +68530,8 @@ class DefinitionFunction extends index_1.Definition {
             this.addExport(module_1.ExportScope.INTERNAL, index_1.createAnonymousCommand(returnBlockDefinition));
         }
     }
-    init(moduleName) {
-        super.init(moduleName);
+    init(context, moduleName) {
+        super.init(context, moduleName);
         this.updateExport();
     }
 }
@@ -68521,16 +68559,16 @@ exports.blockList = [
 
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(15);
+const index_1 = __webpack_require__(9);
 const node_drawer_1 = __webpack_require__(32);
 const scope_drawer_1 = __webpack_require__(33);
-const definition_parser_1 = __webpack_require__(26);
+const definition_parser_1 = __webpack_require__(25);
 class ExpReadLine extends index_1.Expression {
     constructor() {
         super(ExpReadLine.definition);
@@ -68558,16 +68596,16 @@ exports.blockList = [
 
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(15);
+const index_1 = __webpack_require__(9);
 const node_drawer_1 = __webpack_require__(32);
 const scope_drawer_1 = __webpack_require__(33);
-const definition_parser_1 = __webpack_require__(26);
+const definition_parser_1 = __webpack_require__(25);
 class ExpConstantString extends index_1.Expression {
     constructor() {
         super(ExpConstantString.definition);
@@ -68608,185 +68646,187 @@ exports.blockList = [
 
 
 /***/ }),
-/* 226 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const komodi_1 = __webpack_require__(6);
-const index_1 = __webpack_require__(15);
-const definition_parser_1 = __webpack_require__(26);
+const index_1 = __webpack_require__(9);
+const definition_parser_1 = __webpack_require__(25);
 const node_drawer_1 = __webpack_require__(32);
 const scope_drawer_1 = __webpack_require__(33);
-const type_1 = __webpack_require__(16);
+const type_1 = __webpack_require__(15);
 const NOT_FOUND_ID = 'NotFound';
-function serializeBlock(block) {
-    let result = {
-        id: block.definition.id,
-        data: {},
-        exportId: block.getExportId()
-    };
-    if (!komodi_1.Komodi.module.hasBlockClass(block.definition.id)) {
-        result.id = NOT_FOUND_ID;
-        result.definition = block.definition.definition;
+class Serializer {
+    constructor(context) {
+        this.context = context;
+        this.delayed = new Set();
     }
-    for (let inputName of block.definition.inputNames) {
-        result.data[inputName] = block.getInput(inputName);
-    }
-    for (let argumentName of block.definition.argumentNames) {
-        let argumentBlock = block.getArgument(argumentName);
-        if (argumentBlock) {
-            result.data[argumentName] = serializeBlock(argumentBlock);
+    serializeBlock(block) {
+        let result = {
+            id: block.definition.id,
+            data: {},
+            exportId: block.getExportId()
+        };
+        if (!this.context.module.hasBlockClass(block.definition.id)) {
+            result.id = NOT_FOUND_ID;
+            result.definition = block.definition.definition;
         }
-    }
-    for (let scopeName of block.definition.scopeNames) {
-        result.data[scopeName] = block.getScope(scopeName).map(serializeBlock);
-    }
-    for (let extraName of block.definition.extraNames) {
-        result.data[extraName] = block.getExtra(extraName);
-    }
-    return result;
-}
-function serializeProgram() {
-    let modules = [];
-    for (let moduleName of komodi_1.Komodi.module.getModuleList().userModule) {
-        let freeBlocks = [];
-        for (let block of komodi_1.Komodi.module.blockListOf(moduleName)) {
-            if (block.attachInfo == null) {
-                freeBlocks.push({
-                    position: { x: block.graphic.x, y: block.graphic.y },
-                    blockData: serializeBlock(block)
-                });
-            }
+        for (let inputName of block.definition.inputNames) {
+            result.data[inputName] = block.getInput(inputName);
         }
-        modules.push({
-            moduleName: moduleName,
-            freeBlocks: freeBlocks
-        });
-    }
-    return {
-        projectName: komodi_1.Komodi.topMenu.projectName,
-        modules: modules
-    };
-}
-exports.serializeProgram = serializeProgram;
-let delayed;
-function deserializeBlock(moduleName, blockData) {
-    let blockClass;
-    if (komodi_1.Komodi.module.hasBlockClass(blockData.id)) {
-        blockClass = komodi_1.Komodi.module.getBlockClass(blockData.id);
-    }
-    else if (blockData.id == NOT_FOUND_ID) {
-        let definition = definition_parser_1.parseBlockDefinition({
-            id: NOT_FOUND_ID, definition: blockData.definition,
-            nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
-        });
-        if (definition.returnType == type_1.KomodiType.empty) {
-            blockClass = index_1.createAnonymousCommand(definition);
-        }
-        else {
-            blockClass = index_1.createAnonymousExpression(definition);
-        }
-    }
-    else {
-        return null;
-    }
-    let block = new blockClass();
-    block.init(moduleName);
-    for (let inputName of blockClass.definition.inputNames) {
-        block[inputName] = blockData.data[inputName];
-    }
-    for (let argumentName of blockClass.definition.argumentNames) {
-        if (blockData.data.hasOwnProperty(argumentName)) {
-            let argumentBlockData = blockData.data[argumentName];
-            let argumentBlock = deserializeBlock(moduleName, argumentBlockData);
-            let argumentAttachInfo = {
-                attachType: "argument",
-                target: block,
-                argumentName: argumentName
-            };
+        for (let argumentName of block.definition.argumentNames) {
+            let argumentBlock = block.getArgument(argumentName);
             if (argumentBlock) {
-                block.attachBlock(argumentAttachInfo, argumentBlock);
-            }
-            else {
-                delayed.add({
-                    blockData: argumentBlockData,
-                    attachInfo: argumentAttachInfo,
-                    moduleName: moduleName
-                });
+                result.data[argumentName] = this.serializeBlock(argumentBlock);
             }
         }
-    }
-    for (let scopeName of blockClass.definition.scopeNames) {
-        let cnt = 0;
-        for (let scopeBlockData of blockData.data[scopeName]) {
-            let scopeBlock = deserializeBlock(moduleName, scopeBlockData);
-            let scopeAttachInfo = {
-                attachType: "scope",
-                target: block,
-                scopeName: scopeName,
-                scopeIndex: cnt
-            };
-            cnt++;
-            if (scopeBlock) {
-                block.attachBlock(scopeAttachInfo, scopeBlock);
-            }
-            else {
-                delayed.add({
-                    blockData: scopeBlockData,
-                    attachInfo: scopeAttachInfo,
-                    moduleName: moduleName
-                });
-            }
+        for (let scopeName of block.definition.scopeNames) {
+            result.data[scopeName] = block.getScope(scopeName).map(this.serializeBlock.bind(this));
         }
+        for (let extraName of block.definition.extraNames) {
+            result.data[extraName] = block.getExtra(extraName);
+        }
+        return result;
     }
-    block.setExportId(blockData.exportId);
-    block.updateGraphic();
-    return block;
-}
-function deserializeProgram(program) {
-    komodi_1.Komodi.topMenu.projectName = program.projectName;
-    delayed = new Set();
-    for (let module of program.modules) {
-        komodi_1.Komodi.module.addUserModule(module.moduleName);
-        for (let freeBlock of module.freeBlocks) {
-            delayed.add({
-                blockData: freeBlock.blockData,
-                position: freeBlock.position,
-                moduleName: module.moduleName
+    serializeProgram() {
+        let modules = [];
+        for (let moduleName of this.context.module.getModuleList().userModule) {
+            let freeBlocks = [];
+            for (let block of this.context.module.blockListOf(moduleName)) {
+                if (block.attachInfo == null) {
+                    freeBlocks.push({
+                        position: { x: block.graphic.x, y: block.graphic.y },
+                        blockData: this.serializeBlock(block)
+                    });
+                }
+            }
+            modules.push({
+                moduleName: moduleName,
+                freeBlocks: freeBlocks
             });
         }
+        return {
+            projectName: this.context.projectName,
+            modules: modules
+        };
     }
-    let isDelayedFreeBlock = (delayedBlock) => {
-        return delayedBlock.hasOwnProperty('position');
-    };
-    while (delayed.size > 0) {
-        for (let delayedBlock of delayed.values()) {
-            if (isDelayedFreeBlock(delayedBlock)) {
-                let block = deserializeBlock(delayedBlock.moduleName, delayedBlock.blockData);
-                if (block) {
-                    block.graphic.x = delayedBlock.position.x;
-                    block.graphic.y = delayedBlock.position.y;
-                    delayed.delete(delayedBlock);
-                }
+    deserializeBlock(moduleName, blockData) {
+        let blockClass;
+        if (this.context.module.hasBlockClass(blockData.id)) {
+            blockClass = this.context.module.getBlockClass(blockData.id);
+        }
+        else if (blockData.id == NOT_FOUND_ID) {
+            let definition = definition_parser_1.parseBlockDefinition({
+                id: NOT_FOUND_ID, definition: blockData.definition,
+                nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+            });
+            if (definition.returnType == type_1.KomodiType.empty) {
+                blockClass = index_1.createAnonymousCommand(definition);
             }
             else {
-                let block = deserializeBlock(delayedBlock.moduleName, delayedBlock.blockData);
-                if (block) {
-                    delayedBlock.attachInfo.target.attachBlock(delayedBlock.attachInfo, block);
-                    delayed.delete(delayedBlock);
+                blockClass = index_1.createAnonymousExpression(definition);
+            }
+        }
+        else {
+            return null;
+        }
+        let block = new blockClass();
+        block.init(this.context, moduleName);
+        for (let inputName of blockClass.definition.inputNames) {
+            block[inputName] = blockData.data[inputName];
+        }
+        for (let argumentName of blockClass.definition.argumentNames) {
+            if (blockData.data.hasOwnProperty(argumentName)) {
+                let argumentBlockData = blockData.data[argumentName];
+                let argumentBlock = this.deserializeBlock(moduleName, argumentBlockData);
+                let argumentAttachInfo = {
+                    attachType: "argument",
+                    target: block,
+                    argumentName: argumentName
+                };
+                if (argumentBlock) {
+                    block.attachBlock(argumentAttachInfo, argumentBlock);
+                }
+                else {
+                    this.delayed.add({
+                        blockData: argumentBlockData,
+                        attachInfo: argumentAttachInfo,
+                        moduleName: moduleName
+                    });
                 }
             }
         }
+        for (let scopeName of blockClass.definition.scopeNames) {
+            let cnt = 0;
+            for (let scopeBlockData of blockData.data[scopeName]) {
+                let scopeBlock = this.deserializeBlock(moduleName, scopeBlockData);
+                let scopeAttachInfo = {
+                    attachType: "scope",
+                    target: block,
+                    scopeName: scopeName,
+                    scopeIndex: cnt
+                };
+                cnt++;
+                if (scopeBlock) {
+                    block.attachBlock(scopeAttachInfo, scopeBlock);
+                }
+                else {
+                    this.delayed.add({
+                        blockData: scopeBlockData,
+                        attachInfo: scopeAttachInfo,
+                        moduleName: moduleName
+                    });
+                }
+            }
+        }
+        block.setExportId(blockData.exportId);
+        block.updateGraphic();
+        return block;
     }
-    komodi_1.Komodi.module.editingModule = program.modules[0].moduleName;
+    deserializeProgram(program) {
+        this.context.projectName = program.projectName;
+        for (let module of program.modules) {
+            this.context.module.addUserModule(module.moduleName);
+            for (let freeBlock of module.freeBlocks) {
+                this.delayed.add({
+                    blockData: freeBlock.blockData,
+                    position: freeBlock.position,
+                    moduleName: module.moduleName
+                });
+            }
+        }
+        let isDelayedFreeBlock = (delayedBlock) => {
+            return delayedBlock.hasOwnProperty('position');
+        };
+        while (this.delayed.size > 0) {
+            for (let delayedBlock of this.delayed.values()) {
+                if (isDelayedFreeBlock(delayedBlock)) {
+                    let block = this.deserializeBlock(delayedBlock.moduleName, delayedBlock.blockData);
+                    if (block) {
+                        block.graphic.x = delayedBlock.position.x;
+                        block.graphic.y = delayedBlock.position.y;
+                        this.delayed.delete(delayedBlock);
+                    }
+                }
+                else {
+                    let block = this.deserializeBlock(delayedBlock.moduleName, delayedBlock.blockData);
+                    if (block) {
+                        delayedBlock.attachInfo.target.attachBlock(delayedBlock.attachInfo, block);
+                        this.delayed.delete(delayedBlock);
+                    }
+                }
+            }
+        }
+        this.context.module.editingModule = program.modules[0].moduleName;
+    }
 }
-exports.deserializeProgram = deserializeProgram;
+exports.Serializer = Serializer;
 
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68809,7 +68849,7 @@ module.exports = {
 
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
@@ -68831,15 +68871,6 @@ function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].
 g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
 
-
-/***/ }),
-/* 229 */,
-/* 230 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = function() {
-  return new Worker(__webpack_require__.p + "worker.js");
-};
 
 /***/ })
 /******/ ]);

@@ -1,9 +1,9 @@
 import * as _ from "lodash";
-import {Block, BlockBase, Command, Definition, Expression} from "./index";
+import {Block, Command, Definition, Expression} from "./index";
 import {Coordinate} from "../common/definition";
 import {getMousePoint} from "../common/utils";
-import {Komodi} from "../komodi";
 import {ExpressionToken} from "./definition_parser";
+import {KomodiContext} from "../context";
 
 export interface ArgumentAttach {
     attachType: "argument";
@@ -40,20 +40,23 @@ export class Attacher {
 
     private map: Map <Block, AttachSet> = new Map();
 
-    init() {
-        Komodi.stage.addChild(this.indicator);
+    constructor(private readonly context: KomodiContext) {
+    }
 
-        Komodi.container.on('mousemove', () => {
+    init() {
+        this.context.stage.addChild(this.indicator);
+
+        this.context.container.on('mousemove', () => {
             this.updateDragging();
         });
 
-        Komodi.fixed.on('mouseover', () => {
+        this.context.fixed.on('mouseover', () => {
             if (!this.initialDrag) {
                 this.stopDragging();
             }
         });
 
-        Komodi.container.on('mouseup', () => {
+        this.context.container.on('mouseup', () => {
             this.stopDragging();
         });
     }
@@ -69,9 +72,7 @@ export class Attacher {
         this.map.delete(block);
     }
 
-    setArgumentCoordinate(block: BlockBase, argumentName: string, coord: Coordinate) {
-        if (!(block instanceof Block)) return;
-
+    setArgumentCoordinate(block: Block, argumentName: string, coord: Coordinate) {
         let argumentAttach = this.map.get(block)!.argumentAttach;
         if (argumentAttach.has(argumentName)) {
             let targetCoord = argumentAttach.get(argumentName)!;
@@ -88,18 +89,14 @@ export class Attacher {
         }
     }
 
-    removeArgumentCoordinate(block: BlockBase, argumentName: string) {
-        if (!(block instanceof Block)) return;
-
+    removeArgumentCoordinate(block: Block, argumentName: string) {
         let argumentAttach = this.map.get(block)!.argumentAttach;
         if (argumentAttach.has(argumentName)) {
             this.map.get(block)!.argumentAttach.delete(argumentName);
         }
     }
 
-    setScopeCoordinate(block: BlockBase, scopeName: string, coordinates: Coordinate[]) {
-        if (!(block instanceof Block)) return;
-
+    setScopeCoordinate(block: Block, scopeName: string, coordinates: Coordinate[]) {
         let scopeAttach = this.map.get(block)!.scopeAttach;
         if (!scopeAttach.has(scopeName)) {
             scopeAttach.set(scopeName, []);
@@ -154,8 +151,8 @@ export class Attacher {
             }
         };
 
-        if (Komodi.module.editingModule) {
-            let blocks = Komodi.module.blockListOf(Komodi.module.editingModule);
+        if (this.context.module.editingModule) {
+            let blocks = this.context.module.blockListOf(this.context.module.editingModule);
             for (let block of blocks) {
                 let attach = this.map.get(block)!;
                 if (this.dragging instanceof Expression) {
@@ -186,14 +183,14 @@ export class Attacher {
             return;
         }
 
-        if (block.graphic.parent == Komodi.fixed) {
-            Komodi.stage.setChildIndex(this.indicator, Komodi.stage.children.length-1);
+        if (block.graphic.parent == this.context.fixed) {
+            this.context.stage.setChildIndex(this.indicator, this.context.stage.children.length-1);
         } else {
-            Komodi.stage.setChildIndex(this.indicator, Komodi.stage.getChildIndex(block.graphic)-1);
+            this.context.stage.setChildIndex(this.indicator, this.context.stage.getChildIndex(block.graphic)-1);
         }
 
         let blockGlobal = block.graphic.getGlobalPosition();
-        let currentMouse = getMousePoint();
+        let currentMouse = getMousePoint(block.context);
         this.mouseOffset.x = currentMouse.x - blockGlobal.x;
         this.mouseOffset.y = currentMouse.y - blockGlobal.y;
         this.dragging = block;
@@ -203,11 +200,11 @@ export class Attacher {
 
     updateDragging() {
         if (this.dragging != null) {
-            let mouse = getMousePoint();
+            let mouse = getMousePoint(this.dragging.context);
 
             let globalX = mouse.x - this.mouseOffset.x;
             let globalY = mouse.y - this.mouseOffset.y;
-            this.dragging.graphic.position = Komodi.stage.toLocal(new PIXI.Point(
+            this.dragging.graphic.position = this.context.stage.toLocal(new PIXI.Point(
                 globalX, globalY
             ));
 
@@ -229,8 +226,8 @@ export class Attacher {
                 attachInfo.target.attachBlock(attachInfo, this.dragging);
             } else if (this.initialDrag) {
                 let position = this.dragging.graphic.getGlobalPosition();
-                Komodi.stage.addChild(this.dragging.graphic);
-                this.dragging.graphic.position = Komodi.stage.toLocal(position);
+                this.context.stage.addChild(this.dragging.graphic);
+                this.dragging.graphic.position = this.context.stage.toLocal(position);
             }
             this.dragging.graphic.alpha = 1;
             this.dragging = null;

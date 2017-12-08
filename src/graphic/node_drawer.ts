@@ -2,9 +2,8 @@ import * as _ from "lodash";
 import {BlockGraphic, NodeDrawer} from "./index";
 import {KomodiType, typeToColor} from "../type";
 import {centerChild} from "../common/utils";
-import {Komodi} from "../komodi";
 import {Token} from "../program/definition_parser";
-import {BlockBase} from "../program";
+import {Block, BlockBase} from "../program";
 
 const MINIMUM_ARG_WIDTH = 26;
 const PADDING = 5;
@@ -123,9 +122,13 @@ function defaultDrawNode(
                 if (graphic) {
                     graphic.x = nowX+width*.5;
                     graphic.y = top+TIP_HEIGHT;
-                    Komodi.attacher.removeArgumentCoordinate(block, token.identifier);
+                    if (block instanceof Block) {
+                        block.context.attacher.removeArgumentCoordinate(block, token.identifier);
+                    }
                 } else {
-                    Komodi.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX+width*.5, y: top+TIP_HEIGHT });
+                    if (block instanceof Block) {
+                        block.context.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX+width*.5, y: top+TIP_HEIGHT });
+                    }
                 }
                 break;
         }

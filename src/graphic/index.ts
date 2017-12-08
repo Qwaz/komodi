@@ -1,8 +1,8 @@
 import {Block, BlockBase, BlockClass, VirtualBlock} from "../program";
-import {Komodi} from "../komodi";
 import {BlockDefinition, Token, UserInputToken} from "../program/definition_parser";
 import {typeToColor} from "../type";
 import {getMousePoint} from "../common/utils";
+import {KomodiContext} from "../context";
 
 class UserInputTokenGraphic extends PIXI.Container {
     private graphics: PIXI.Graphics;
@@ -19,10 +19,10 @@ class UserInputTokenGraphic extends PIXI.Container {
 
             let prevMouse = new PIXI.Point();
             this.on('mousedown', () => {
-                prevMouse = getMousePoint();
+                prevMouse = getMousePoint(target.context);
             });
             this.on('mouseup', () => {
-                let currentMouse = getMousePoint();
+                let currentMouse = getMousePoint(target.context);
                 if (prevMouse.x == currentMouse.x && prevMouse.y == currentMouse.y) {
                     let result = token.validator.updateInput(target.getInput(token.identifier));
                     if (result != null) {
@@ -85,7 +85,7 @@ export abstract class BlockGraphicBase extends PIXI.Container {
 export class BlockGenerator extends BlockGraphicBase {
     readonly definition: BlockDefinition;
 
-    constructor(public readonly blockClass: BlockClass) {
+    constructor(private context: KomodiContext, public readonly blockClass: BlockClass) {
         super(new VirtualBlock(blockClass));
         this.logic.graphic = this;
 
@@ -93,16 +93,16 @@ export class BlockGenerator extends BlockGraphicBase {
         this.buttonMode = true;
 
         this.on('mousedown', (e: PIXI.interaction.InteractionEvent) => {
-            if (Komodi.module.editingModule) {
+            if (this.context.module.editingModule) {
                 let globalPosition = this.getGlobalPosition();
 
                 let block = new blockClass();
-                block.init(Komodi.module.editingModule);
+                block.init(this.context, this.context.module.editingModule);
 
-                Komodi.fixed.addChild(block.graphic);
+                this.context.fixed.addChild(block.graphic);
                 block.graphic.x = globalPosition.x;
                 block.graphic.y = globalPosition.y;
-                Komodi.attacher.setDragging(block, true);
+                this.context.attacher.setDragging(block, true);
 
                 e.stopPropagation();
             }
@@ -124,21 +124,21 @@ export class BlockGraphic extends BlockGraphicBase {
 
         let prevMouse: PIXI.Point | null = null;
         this.on('mousedown', (e: PIXI.interaction.InteractionEvent) => {
-            prevMouse = getMousePoint();
+            prevMouse = getMousePoint(logic.context);
             e.stopPropagation();
         });
         this.on('mousemove', () => {
             if (prevMouse) {
-                let currentMouse = getMousePoint();
+                let currentMouse = getMousePoint(logic.context);
                 if (prevMouse.x != currentMouse.x || prevMouse.y != currentMouse.y) {
                     let position = this.getGlobalPosition();
                     if (logic.attachInfo != null) {
                         logic.attachInfo.target.detachBlock(logic);
                     }
 
-                    Komodi.stage.addChild(this);
-                    this.position = Komodi.stage.toLocal(position);
-                    Komodi.attacher.setDragging(logic);
+                    logic.context.stage.addChild(this);
+                    this.position = logic.context.stage.toLocal(position);
+                    logic.context.attacher.setDragging(logic);
                 }
             }
         });

@@ -1,6 +1,7 @@
-import {Komodi} from "./komodi";
+import {KomodiClass} from "./komodi";
 
-export = {
-    initializeDOM: Komodi.initializeDOM.bind(Komodi),
-    start: Komodi.start.bind(Komodi),
-};
+const Komodi = new KomodiClass();
+Komodi.init();
+Komodi.newProject();
+
+export = Komodi;

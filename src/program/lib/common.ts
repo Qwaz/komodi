@@ -13,7 +13,7 @@ import {ExpressionToken, parseBlockDefinition} from "../definition_parser";
 import {ExportScope, parseScopeString} from "../module";
 import {uuidv4} from "../../common/utils";
 import {KomodiType} from "../../type";
-import {Komodi} from "../../komodi";
+import {KomodiContext} from "../../context";
 
 export class DefinitionStart extends Definition {
     static readonly definition = parseBlockDefinition({
@@ -49,7 +49,13 @@ export class DefinitionFunction extends Definition {
     set scope(value: string) {
         this._scope = value;
         if (this.initialized) {
-            this.updateExport();
+            this.exportInfo.forEach((data) => {
+                this.context.module.deleteExport(this.moduleName, data.scope, data.blockClass);
+            });
+            this.exportInfo[0].scope = parseScopeString(value);
+            this.exportInfo.forEach((data) => {
+                this.context.module.addExport(this.moduleName, data.scope, data.blockClass);
+            });
         }
     }
 
@@ -60,13 +66,7 @@ export class DefinitionFunction extends Definition {
     set define(value: string) {
         this._define = value;
         if (this.initialized) {
-            this.exportInfo.forEach((data) => {
-                Komodi.module.deleteExport(this.moduleName, data.scope, data.blockClass);
-            });
-            this.exportInfo[0].scope = parseScopeString(value);
-            this.exportInfo.forEach((data) => {
-                Komodi.module.addExport(this.moduleName, data.scope, data.blockClass);
-            });
+            this.updateExport();
         }
     }
 
@@ -105,8 +105,8 @@ export class DefinitionFunction extends Definition {
         }
     }
 
-    init(moduleName: string) {
-        super.init(moduleName);
+    init(context: KomodiContext, moduleName: string) {
+        super.init(context, moduleName);
         this.updateExport();
     }
 }

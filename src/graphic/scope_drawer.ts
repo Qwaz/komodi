@@ -1,8 +1,7 @@
 import * as _ from "lodash";
 import {BlockGraphic, ScopeDrawer} from "./index";
 import {Coordinate} from "../common/definition";
-import {BlockBase} from "../program/index";
-import {Komodi} from "../komodi";
+import {Block, BlockBase} from "../program";
 
 const FLOW_VERTICAL_MARGIN = 20;
 const SPLIT_VERTICAL_MARGIN = 15;
@@ -54,7 +53,9 @@ function defaultDrawScope(
             }
         }
 
-        Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        if (block instanceof Block) {
+            block.context.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        }
 
         return new PIXI.Rectangle(-widthSum*.5, 0, widthSum, nowY);
     } else if (definition.scopeNames.length >= 2) {
@@ -99,7 +100,9 @@ function defaultDrawScope(
                 y: nowY,
             });
 
-            Komodi.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            if (block instanceof Block) {
+                block.context.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            }
             nowX += widthList[scopeIndex]*.5 + SPLIT_HORIZONTAL_MARGIN;
         }
 
