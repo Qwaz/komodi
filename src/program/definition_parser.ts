@@ -2,6 +2,7 @@ import peg = require("pegjs");
 import * as _ from "lodash";
 import {KomodiType} from "../type";
 import {NodeDrawer, ScopeDrawer} from "../graphic";
+import {ValidationFunction} from "./validator";
 
 export class PlaceholderToken {
     kind: "placeholder" = "placeholder";
@@ -56,6 +57,8 @@ export interface BlockDefinitionBase {
     definition: string;
     scopeNames?: string[];
     extraNames?: string[];
+    validatorPre?: ValidationFunction[];
+    validatorInto?: ValidationFunction[];
     nodeDrawer: NodeDrawer;
     scopeDrawer: ScopeDrawer;
 }
@@ -69,6 +72,8 @@ export interface BlockDefinition {
     argumentNames: string[];
     scopeNames: string[];
     extraNames: string[];
+    validatorPre: ValidationFunction[];
+    validatorInto: ValidationFunction[];
     nodeDrawer: NodeDrawer;
     scopeDrawer: ScopeDrawer;
 }
@@ -114,8 +119,10 @@ export function parseBlockDefinition(definitionBase: BlockDefinitionBase): Block
         argumentNames: _.filter(parsed.tokens,
             <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken))
             .map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
-        extraNames: definitionBase.extraNames ? definitionBase.extraNames : [],
+        scopeNames: definitionBase.scopeNames || [],
+        extraNames: definitionBase.extraNames || [],
+        validatorPre: definitionBase.validatorPre || [],
+        validatorInto: definitionBase.validatorInto || [],
         nodeDrawer: definitionBase.nodeDrawer,
         scopeDrawer: definitionBase.scopeDrawer
     }

@@ -23245,8 +23245,10 @@ function parseBlockDefinition(definitionBase) {
             .map((token) => token.identifier),
         argumentNames: _.filter(parsed.tokens, ((token) => token instanceof ExpressionToken))
             .map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames ? definitionBase.scopeNames : [],
-        extraNames: definitionBase.extraNames ? definitionBase.extraNames : [],
+        scopeNames: definitionBase.scopeNames || [],
+        extraNames: definitionBase.extraNames || [],
+        validatorPre: definitionBase.validatorPre || [],
+        validatorInto: definitionBase.validatorInto || [],
         nodeDrawer: definitionBase.nodeDrawer,
         scopeDrawer: definitionBase.scopeDrawer
     };
@@ -30180,6 +30182,7 @@ const WebFont = __webpack_require__(229);
 const PIXI = __webpack_require__(30);
 const menu_1 = __webpack_require__(222);
 const context_1 = __webpack_require__(220);
+const validator_1 = __webpack_require__(230);
 const KOMODI_STYLE = `
 .komodi-container {
     margin: 0;
@@ -30214,6 +30217,7 @@ const KOMODI_STYLE = `
 class KomodiClass extends context_1.KomodiContext {
     constructor() {
         super();
+        this.validator = new validator_1.Validator();
         this.komodiDiv = document.createElement("div");
         this.komodiDiv.classList.add("komodi-container");
         this.topMenu = new menu_1.TopMenu();
@@ -30264,8 +30268,6 @@ class KomodiClass extends context_1.KomodiContext {
                 this.module.addUserModule(moduleName);
             }
         });
-        this.topMenu.addMenu('Validate', () => {
-        });
         this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2, roundPixels: true });
     }
     set projectName(projectName) {
@@ -30304,8 +30306,14 @@ class KomodiClass extends context_1.KomodiContext {
         document.head.appendChild(styleNode);
     }
     start() {
+        let updateCnt = 0;
         let update = () => {
             this.renderer.render(this.container);
+            updateCnt++;
+            if (updateCnt == 200) {
+                updateCnt = 0;
+                this.consoleMenu.result.text = this.validator.validate(this.serializer.serializeProgram());
+            }
         };
         WebFont.load({
             custom: {
@@ -68011,9 +68019,9 @@ const SIDE_MENU_WIDTH = 260;
 const MODULE_SELECTOR_END_Y = 400;
 const EDIT_BUTTON_MARGIN = 8;
 const EDIT_BUTTON_HEIGHT = 40;
-const BOTTOM_MENU_HEIGHT = 140;
-const BOTTOM_MENU_TIP_WIDTH = 120;
-const BOTTOM_MENU_TIP_HEIGHT = 30;
+const CONSOLE_MENU_HEIGHT = 140;
+const CONSOLE_MENU_TIP_WIDTH = 120;
+const CONSOLE_MENU_TIP_HEIGHT = 30;
 class TopMenu extends PIXI.Container {
     constructor() {
         super();
@@ -68216,21 +68224,27 @@ class ConsoleMenu extends PIXI.Container {
         this.label = new PIXI.Text('Output', {
             fontSize: 16, align: 'center'
         });
+        this.result = new PIXI.Text('Waiting for validator...', {
+            fontSize: 14, fill: ui_1.MENU_COLOR.TEXT_SEMI_BLACK
+        });
         this.addChild(this.background);
-        this.addChild(this.label);
+        this.addChild(this.label, this.result);
     }
     update(width, height) {
         const DIAGONAL_WIDTH = 10;
-        const tipTop = height - BOTTOM_MENU_HEIGHT - BOTTOM_MENU_TIP_HEIGHT;
-        this.label.x = SIDE_MENU_WIDTH + (BOTTOM_MENU_TIP_WIDTH - DIAGONAL_WIDTH) * .5 - this.label.width * .5;
-        this.label.y = height - BOTTOM_MENU_HEIGHT - BOTTOM_MENU_TIP_HEIGHT * .5 - this.label.height * .5;
+        const RESULT_MARGIN = 16;
+        const tipTop = height - CONSOLE_MENU_HEIGHT - CONSOLE_MENU_TIP_HEIGHT;
+        this.label.x = SIDE_MENU_WIDTH + (CONSOLE_MENU_TIP_WIDTH - DIAGONAL_WIDTH) * .5 - this.label.width * .5;
+        this.label.y = height - CONSOLE_MENU_HEIGHT - CONSOLE_MENU_TIP_HEIGHT * .5 - this.label.height * .5;
+        this.result.x = SIDE_MENU_WIDTH + RESULT_MARGIN;
+        this.result.y = height - CONSOLE_MENU_HEIGHT + RESULT_MARGIN;
         this.background.clear();
         this.background.beginFill(ui_1.MENU_COLOR.BACKGROUND_WHITE);
         this.background.lineStyle(1, ui_1.MENU_COLOR.OUTLINE);
         this.background.moveTo(SIDE_MENU_WIDTH, tipTop);
-        this.background.lineTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH - DIAGONAL_WIDTH, tipTop);
-        this.background.lineTo(SIDE_MENU_WIDTH + BOTTOM_MENU_TIP_WIDTH, height - BOTTOM_MENU_HEIGHT);
-        this.background.lineTo(width, height - BOTTOM_MENU_HEIGHT);
+        this.background.lineTo(SIDE_MENU_WIDTH + CONSOLE_MENU_TIP_WIDTH - DIAGONAL_WIDTH, tipTop);
+        this.background.lineTo(SIDE_MENU_WIDTH + CONSOLE_MENU_TIP_WIDTH, height - CONSOLE_MENU_HEIGHT);
+        this.background.lineTo(width, height - CONSOLE_MENU_HEIGHT);
         this.background.lineTo(width, height);
         this.background.lineTo(SIDE_MENU_WIDTH, height);
         this.background.lineTo(SIDE_MENU_WIDTH, tipTop);
@@ -68870,6 +68884,163 @@ Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra
 function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
+
+
+/***/ }),
+/* 230 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(16);
+const context_1 = __webpack_require__(220);
+const validating_functions_1 = __webpack_require__(231);
+class ValidationContext {
+    constructor(initialize = true) {
+        if (initialize) {
+            this.scopeTree = [];
+            this.result = {
+                info: [],
+                warning: [],
+                error: []
+            };
+        }
+    }
+    clone() {
+        let newContext = new ValidationContext(false);
+        newContext.scopeTree = _.clone(this.scopeTree);
+        newContext.result = this.result;
+        return newContext;
+    }
+}
+exports.ValidationContext = ValidationContext;
+class Validator {
+    constructor() {
+        this.context = new context_1.KomodiContext();
+    }
+    validateBlock(block, context) {
+        for (let argumentName of block.definition.argumentNames) {
+            let argumentBlock = block.getArgument(argumentName);
+            if (argumentBlock) {
+                this.validateBlock(argumentBlock, context);
+            }
+        }
+        for (let validationFunction of validating_functions_1.validatorPreAll) {
+            validationFunction(block, this.context.module, context);
+        }
+        for (let validationFunction of block.definition.validatorPre) {
+            validationFunction(block, this.context.module, context);
+        }
+        let intoContext = context.clone();
+        for (let validationFunction of validating_functions_1.validatorIntoAll) {
+            validationFunction(block, this.context.module, intoContext);
+        }
+        for (let validationFunction of block.definition.validatorInto) {
+            validationFunction(block, this.context.module, intoContext);
+        }
+        for (let scopeName of block.definition.scopeNames) {
+            let scopeContext = intoContext.clone();
+            for (let scopeBlock of block.getScope(scopeName)) {
+                scopeContext = this.validateBlock(scopeBlock, scopeContext);
+            }
+        }
+        return context;
+    }
+    validateFreeBlock(block) {
+        let context = new ValidationContext();
+        this.validateBlock(block, context);
+        return context.result;
+    }
+    validate(program) {
+        this.context.module.clear();
+        this.context.serializer.deserializeProgram(program);
+        let validationResult = '';
+        let modules = this.context.module.getModuleList();
+        for (let moduleName of modules.userModule) {
+            validationResult += `<Module "${moduleName}">\n`;
+            let cnt = 0;
+            for (let block of this.context.module.blockListOf(moduleName).values()) {
+                if (block.attachInfo == null) {
+                    cnt++;
+                    validationResult += `FreeBlock #${cnt}: `;
+                    let result = this.validateFreeBlock(block);
+                    if (result.info.length > 0 || result.warning.length > 0 || result.error.length > 0) {
+                        validationResult += '\n';
+                        for (let infoString of result.info) {
+                            validationResult += `[INFO] ${infoString}\n`;
+                        }
+                        for (let warningString of result.warning) {
+                            validationResult += `[WARNING] ${warningString}\n`;
+                        }
+                        for (let errorString of result.error) {
+                            validationResult += `[ERROR] ${errorString}\n`;
+                        }
+                    }
+                    else {
+                        validationResult += 'OK!\n';
+                    }
+                }
+            }
+            if (this.context.module.blockListOf(moduleName).size == 0) {
+                validationResult += "Nothing to validate.\n";
+            }
+        }
+        return validationResult;
+    }
+}
+exports.Validator = Validator;
+
+
+/***/ }),
+/* 231 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(16);
+const index_1 = __webpack_require__(9);
+function dependencyCheck(block, module, context) {
+    if (!module.hasBlockClass(block.definition.id)) {
+        context.result.error.push(`Broken dependency "${block.definition.definition}"`);
+    }
+}
+exports.dependencyCheck = dependencyCheck;
+function freeBlockDefinitionCheck(block, module, context) {
+    if (block.attachInfo == null && !(block instanceof index_1.Definition)) {
+        context.result.warning.push("Only definition can be unbound.");
+    }
+}
+exports.freeBlockDefinitionCheck = freeBlockDefinitionCheck;
+function argumentCheck(block, module, context) {
+    for (let argumentName of block.definition.argumentNames) {
+        let argumentBlock = block.getArgument(argumentName);
+        if (argumentBlock == null) {
+            context.result.warning.push("All argument should be filled.");
+            break;
+        }
+    }
+}
+exports.argumentCheck = argumentCheck;
+function addToScopeTree(block, module, context) {
+    context.scopeTree.push(block);
+}
+exports.addToScopeTree = addToScopeTree;
+function checkScopeTree(block) {
+    return (block, module, context) => {
+        if (!_.includes(context.scopeTree, block)) {
+            context.result.error.push(`"${block.definition.definition}" is in the wrong scope.`);
+        }
+    };
+}
+exports.checkScopeTree = checkScopeTree;
+exports.validatorPreAll = [
+    dependencyCheck, freeBlockDefinitionCheck, argumentCheck
+];
+exports.validatorIntoAll = [
+    addToScopeTree,
+];
 
 
 /***/ })

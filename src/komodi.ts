@@ -3,6 +3,7 @@ import * as WebFont from "webfontloader";
 import * as PIXI from "pixi.js";
 import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
 import {KomodiContext} from "./context";
+import {Validator} from "./program/validator";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -38,6 +39,8 @@ const KOMODI_STYLE = `
 
 export class KomodiClass extends KomodiContext {
     readonly renderer: PIXI.CanvasRenderer | PIXI.WebGLRenderer;
+
+    readonly validator = new Validator();
 
     private komodiDiv: HTMLDivElement;
 
@@ -108,10 +111,6 @@ export class KomodiClass extends KomodiContext {
             }
         });
 
-        this.topMenu.addMenu('Validate', () => {
-            // TODO: Validate the code
-        });
-
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
             1, 1,
@@ -165,8 +164,17 @@ export class KomodiClass extends KomodiContext {
     }
 
     start() {
+        let updateCnt = 0;
         let update = () => {
             this.renderer.render(this.container);
+
+            updateCnt++;
+            if (updateCnt == 200) {
+                updateCnt = 0;
+                this.consoleMenu.result.text = this.validator.validate(
+                    this.serializer.serializeProgram()
+                );
+            }
         };
 
         WebFont.load({

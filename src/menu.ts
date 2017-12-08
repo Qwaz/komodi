@@ -13,9 +13,9 @@ const MODULE_SELECTOR_END_Y = 400;
 const EDIT_BUTTON_MARGIN = 8;
 const EDIT_BUTTON_HEIGHT = 40;
 
-const BOTTOM_MENU_HEIGHT = 140;
-const BOTTOM_MENU_TIP_WIDTH = 120;
-const BOTTOM_MENU_TIP_HEIGHT = 30;
+const CONSOLE_MENU_HEIGHT = 140;
+const CONSOLE_MENU_TIP_WIDTH = 120;
+const CONSOLE_MENU_TIP_HEIGHT = 30;
 
 export class TopMenu extends PIXI.Container {
     background: PIXI.Graphics = new PIXI.Graphics();
@@ -267,6 +267,7 @@ export class ConsoleMenu extends PIXI.Container {
     background: PIXI.Graphics = new PIXI.Graphics();
 
     label: PIXI.Text;
+    result: PIXI.Text;
 
     constructor() {
         super();
@@ -276,16 +277,25 @@ export class ConsoleMenu extends PIXI.Container {
             fontSize: 16, align : 'center'
         });
 
+        this.result = new PIXI.Text('Waiting for validator...', {
+            fontSize: 14, fill: MENU_COLOR.TEXT_SEMI_BLACK
+        });
+
         this.addChild(this.background);
-        this.addChild(this.label);
+        this.addChild(this.label, this.result);
     }
 
     update(width: number, height: number) {
         const DIAGONAL_WIDTH = 10;
-        const tipTop = height-BOTTOM_MENU_HEIGHT-BOTTOM_MENU_TIP_HEIGHT;
+        const RESULT_MARGIN = 16;
 
-        this.label.x = SIDE_MENU_WIDTH + (BOTTOM_MENU_TIP_WIDTH-DIAGONAL_WIDTH)*.5 - this.label.width*.5;
-        this.label.y = height-BOTTOM_MENU_HEIGHT-BOTTOM_MENU_TIP_HEIGHT*.5 - this.label.height*.5;
+        const tipTop = height-CONSOLE_MENU_HEIGHT-CONSOLE_MENU_TIP_HEIGHT;
+
+        this.label.x = SIDE_MENU_WIDTH + (CONSOLE_MENU_TIP_WIDTH-DIAGONAL_WIDTH)*.5 - this.label.width*.5;
+        this.label.y = height-CONSOLE_MENU_HEIGHT-CONSOLE_MENU_TIP_HEIGHT*.5 - this.label.height*.5;
+
+        this.result.x = SIDE_MENU_WIDTH + RESULT_MARGIN;
+        this.result.y = height-CONSOLE_MENU_HEIGHT + RESULT_MARGIN;
 
         this.background.clear();
         this.background.beginFill(MENU_COLOR.BACKGROUND_WHITE);
@@ -293,9 +303,9 @@ export class ConsoleMenu extends PIXI.Container {
 
         // draw console area
         this.background.moveTo(SIDE_MENU_WIDTH, tipTop);
-        this.background.lineTo(SIDE_MENU_WIDTH+BOTTOM_MENU_TIP_WIDTH-DIAGONAL_WIDTH, tipTop);
-        this.background.lineTo(SIDE_MENU_WIDTH+BOTTOM_MENU_TIP_WIDTH, height-BOTTOM_MENU_HEIGHT);
-        this.background.lineTo(width, height-BOTTOM_MENU_HEIGHT);
+        this.background.lineTo(SIDE_MENU_WIDTH+CONSOLE_MENU_TIP_WIDTH-DIAGONAL_WIDTH, tipTop);
+        this.background.lineTo(SIDE_MENU_WIDTH+CONSOLE_MENU_TIP_WIDTH, height-CONSOLE_MENU_HEIGHT);
+        this.background.lineTo(width, height-CONSOLE_MENU_HEIGHT);
         this.background.lineTo(width, height);
         this.background.lineTo(SIDE_MENU_WIDTH, height);
         this.background.lineTo(SIDE_MENU_WIDTH, tipTop);
