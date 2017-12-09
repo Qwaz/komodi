@@ -485,7 +485,7 @@ Object.defineProperty(exports, 'DisplayObject', {
   }
 });
 
-var _Container = __webpack_require__(19);
+var _Container = __webpack_require__(20);
 
 Object.defineProperty(exports, 'Container', {
   enumerable: true,
@@ -692,7 +692,7 @@ Object.defineProperty(exports, 'CanvasRenderTarget', {
   }
 });
 
-var _Shader = __webpack_require__(18);
+var _Shader = __webpack_require__(19);
 
 Object.defineProperty(exports, 'Shader', {
   enumerable: true,
@@ -701,7 +701,7 @@ Object.defineProperty(exports, 'Shader', {
   }
 });
 
-var _WebGLManager = __webpack_require__(21);
+var _WebGLManager = __webpack_require__(22);
 
 Object.defineProperty(exports, 'WebGLManager', {
   enumerable: true,
@@ -710,7 +710,7 @@ Object.defineProperty(exports, 'WebGLManager', {
   }
 });
 
-var _ObjectRenderer = __webpack_require__(28);
+var _ObjectRenderer = __webpack_require__(30);
 
 Object.defineProperty(exports, 'ObjectRenderer', {
   enumerable: true,
@@ -719,7 +719,7 @@ Object.defineProperty(exports, 'ObjectRenderer', {
   }
 });
 
-var _RenderTarget = __webpack_require__(29);
+var _RenderTarget = __webpack_require__(31);
 
 Object.defineProperty(exports, 'RenderTarget', {
   enumerable: true,
@@ -785,11 +785,11 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _CanvasRenderer = __webpack_require__(20);
+var _CanvasRenderer = __webpack_require__(21);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
-var _WebGLRenderer = __webpack_require__(27);
+var _WebGLRenderer = __webpack_require__(29);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -1886,205 +1886,11 @@ var substr = 'ab'.substr(-1) === 'b'
 
 "use strict";
 
-
-var objects = __webpack_require__(14),
-    arrays  = __webpack_require__(8);
-
-/* Simple AST node visitor builder. */
-var visitor = {
-  build: function(functions) {
-    function visit(node) {
-      return functions[node.type].apply(null, arguments);
-    }
-
-    function visitNop() { }
-
-    function visitExpression(node) {
-      var extraArgs = Array.prototype.slice.call(arguments, 1);
-
-      visit.apply(null, [node.expression].concat(extraArgs));
-    }
-
-    function visitChildren(property) {
-      return function(node) {
-        var extraArgs = Array.prototype.slice.call(arguments, 1);
-
-        arrays.each(node[property], function(child) {
-          visit.apply(null, [child].concat(extraArgs));
-        });
-      };
-    }
-
-    var DEFAULT_FUNCTIONS = {
-          grammar: function(node) {
-            var extraArgs = Array.prototype.slice.call(arguments, 1);
-
-            if (node.initializer) {
-              visit.apply(null, [node.initializer].concat(extraArgs));
-            }
-
-            arrays.each(node.rules, function(rule) {
-              visit.apply(null, [rule].concat(extraArgs));
-            });
-          },
-
-          initializer:  visitNop,
-          rule:         visitExpression,
-          named:        visitExpression,
-          choice:       visitChildren("alternatives"),
-          action:       visitExpression,
-          sequence:     visitChildren("elements"),
-          labeled:      visitExpression,
-          text:         visitExpression,
-          simple_and:   visitExpression,
-          simple_not:   visitExpression,
-          optional:     visitExpression,
-          zero_or_more: visitExpression,
-          one_or_more:  visitExpression,
-          group:        visitExpression,
-          semantic_and: visitNop,
-          semantic_not: visitNop,
-          rule_ref:     visitNop,
-          literal:      visitNop,
-          "class":      visitNop,
-          any:          visitNop
-        };
-
-    objects.defaults(functions, DEFAULT_FUNCTIONS);
-
-    return visit;
-  }
-};
-
-module.exports = visitor;
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/* Array utilities. */
-var arrays = {
-  range: function(start, stop) {
-    var length = stop - start,
-        result = new Array(length),
-        i, j;
-
-    for (i = 0, j = start; i < length; i++, j++) {
-      result[i] = j;
-    }
-
-    return result;
-  },
-
-  find: function(array, valueOrPredicate) {
-    var length = array.length, i;
-
-    if (typeof valueOrPredicate === "function") {
-      for (i = 0; i < length; i++) {
-        if (valueOrPredicate(array[i])) {
-          return array[i];
-        }
-      }
-    } else {
-      for (i = 0; i < length; i++) {
-        if (array[i] === valueOrPredicate) {
-          return array[i];
-        }
-      }
-    }
-  },
-
-  indexOf: function(array, valueOrPredicate) {
-    var length = array.length, i;
-
-    if (typeof valueOrPredicate === "function") {
-      for (i = 0; i < length; i++) {
-        if (valueOrPredicate(array[i])) {
-          return i;
-        }
-      }
-    } else {
-      for (i = 0; i < length; i++) {
-        if (array[i] === valueOrPredicate) {
-          return i;
-        }
-      }
-    }
-
-    return -1;
-  },
-
-  contains: function(array, valueOrPredicate) {
-    return arrays.indexOf(array, valueOrPredicate) !== -1;
-  },
-
-  each: function(array, iterator) {
-    var length = array.length, i;
-
-    for (i = 0; i < length; i++) {
-      iterator(array[i], i);
-    }
-  },
-
-  map: function(array, iterator) {
-    var length = array.length,
-        result = new Array(length),
-        i;
-
-    for (i = 0; i < length; i++) {
-      result[i] = iterator(array[i], i);
-    }
-
-    return result;
-  },
-
-  pluck: function(array, key) {
-    return arrays.map(array, function (e) { return e[key]; });
-  },
-
-  every: function(array, predicate) {
-    var length = array.length, i;
-
-    for (i = 0; i < length; i++) {
-      if (!predicate(array[i])) {
-        return false;
-      }
-    }
-
-    return true;
-  },
-
-  some: function(array, predicate) {
-    var length = array.length, i;
-
-    for (i = 0; i < length; i++) {
-      if (predicate(array[i])) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-};
-
-module.exports = arrays;
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(11);
-const graphic_1 = __webpack_require__(24);
-const type_1 = __webpack_require__(16);
-const definition_parser_1 = __webpack_require__(25);
+const graphic_1 = __webpack_require__(25);
+const type_1 = __webpack_require__(17);
+const definition_parser_1 = __webpack_require__(16);
 class BlockBase {
     constructor(definition) {
         this.definition = definition;
@@ -2319,6 +2125,200 @@ function createAnonymousExpression(definition) {
     var _a;
 }
 exports.createAnonymousExpression = createAnonymousExpression;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var objects = __webpack_require__(14),
+    arrays  = __webpack_require__(9);
+
+/* Simple AST node visitor builder. */
+var visitor = {
+  build: function(functions) {
+    function visit(node) {
+      return functions[node.type].apply(null, arguments);
+    }
+
+    function visitNop() { }
+
+    function visitExpression(node) {
+      var extraArgs = Array.prototype.slice.call(arguments, 1);
+
+      visit.apply(null, [node.expression].concat(extraArgs));
+    }
+
+    function visitChildren(property) {
+      return function(node) {
+        var extraArgs = Array.prototype.slice.call(arguments, 1);
+
+        arrays.each(node[property], function(child) {
+          visit.apply(null, [child].concat(extraArgs));
+        });
+      };
+    }
+
+    var DEFAULT_FUNCTIONS = {
+          grammar: function(node) {
+            var extraArgs = Array.prototype.slice.call(arguments, 1);
+
+            if (node.initializer) {
+              visit.apply(null, [node.initializer].concat(extraArgs));
+            }
+
+            arrays.each(node.rules, function(rule) {
+              visit.apply(null, [rule].concat(extraArgs));
+            });
+          },
+
+          initializer:  visitNop,
+          rule:         visitExpression,
+          named:        visitExpression,
+          choice:       visitChildren("alternatives"),
+          action:       visitExpression,
+          sequence:     visitChildren("elements"),
+          labeled:      visitExpression,
+          text:         visitExpression,
+          simple_and:   visitExpression,
+          simple_not:   visitExpression,
+          optional:     visitExpression,
+          zero_or_more: visitExpression,
+          one_or_more:  visitExpression,
+          group:        visitExpression,
+          semantic_and: visitNop,
+          semantic_not: visitNop,
+          rule_ref:     visitNop,
+          literal:      visitNop,
+          "class":      visitNop,
+          any:          visitNop
+        };
+
+    objects.defaults(functions, DEFAULT_FUNCTIONS);
+
+    return visit;
+  }
+};
+
+module.exports = visitor;
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/* Array utilities. */
+var arrays = {
+  range: function(start, stop) {
+    var length = stop - start,
+        result = new Array(length),
+        i, j;
+
+    for (i = 0, j = start; i < length; i++, j++) {
+      result[i] = j;
+    }
+
+    return result;
+  },
+
+  find: function(array, valueOrPredicate) {
+    var length = array.length, i;
+
+    if (typeof valueOrPredicate === "function") {
+      for (i = 0; i < length; i++) {
+        if (valueOrPredicate(array[i])) {
+          return array[i];
+        }
+      }
+    } else {
+      for (i = 0; i < length; i++) {
+        if (array[i] === valueOrPredicate) {
+          return array[i];
+        }
+      }
+    }
+  },
+
+  indexOf: function(array, valueOrPredicate) {
+    var length = array.length, i;
+
+    if (typeof valueOrPredicate === "function") {
+      for (i = 0; i < length; i++) {
+        if (valueOrPredicate(array[i])) {
+          return i;
+        }
+      }
+    } else {
+      for (i = 0; i < length; i++) {
+        if (array[i] === valueOrPredicate) {
+          return i;
+        }
+      }
+    }
+
+    return -1;
+  },
+
+  contains: function(array, valueOrPredicate) {
+    return arrays.indexOf(array, valueOrPredicate) !== -1;
+  },
+
+  each: function(array, iterator) {
+    var length = array.length, i;
+
+    for (i = 0; i < length; i++) {
+      iterator(array[i], i);
+    }
+  },
+
+  map: function(array, iterator) {
+    var length = array.length,
+        result = new Array(length),
+        i;
+
+    for (i = 0; i < length; i++) {
+      result[i] = iterator(array[i], i);
+    }
+
+    return result;
+  },
+
+  pluck: function(array, key) {
+    return arrays.map(array, function (e) { return e[key]; });
+  },
+
+  every: function(array, predicate) {
+    var length = array.length, i;
+
+    for (i = 0; i < length; i++) {
+      if (!predicate(array[i])) {
+        return false;
+      }
+    }
+
+    return true;
+  },
+
+  some: function(array, predicate) {
+    var length = array.length, i;
+
+    for (i = 0; i < length; i++) {
+      if (predicate(array[i])) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+};
+
+module.exports = arrays;
 
 
 /***/ }),
@@ -21368,6 +21368,163 @@ exports.default = BaseTexture;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const peg = __webpack_require__(119);
+const _ = __webpack_require__(11);
+const type_1 = __webpack_require__(17);
+class PlaceholderToken {
+    constructor(text) {
+        this.text = text;
+        this.kind = "placeholder";
+    }
+}
+exports.PlaceholderToken = PlaceholderToken;
+class UserInputToken {
+    constructor(identifier, validator) {
+        this.identifier = identifier;
+        this.validator = validator;
+        this.kind = "user_input";
+    }
+}
+exports.UserInputToken = UserInputToken;
+class ExpressionToken {
+    constructor(identifier, type) {
+        this.identifier = identifier;
+        this.type = type;
+        this.kind = "expression";
+    }
+}
+exports.ExpressionToken = ExpressionToken;
+const PARSER_DEFINITION = `
+start = tokens: token+ returnType:(":" t:type { return t; })? {
+    return {
+        tokens: tokens,
+        returnType: returnType
+    };
+}
+
+SPACE = " "*
+PLACEHOLDER = $[^:\\[\\]\\{\\}]+
+IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
+
+type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
+validator = SPACE validator:("string" / "bool" / "int" / "scope" / "definition") SPACE { return validator; }
+
+token
+    = str: PLACEHOLDER
+        { return {tokenType: "placeholder", value: str}; }
+    / "[" identifier:IDENTIFIER ":" type: type "]"
+        { return {tokenType: "expression", identifier: identifier, type: type}; }
+    / "{" identifier:IDENTIFIER ":" validator: validator "}"
+        { return {tokenType: "user_input", identifier: identifier, validator: validator}; }
+`;
+const blockDefinitionParser = peg.generate(PARSER_DEFINITION);
+function parseDefinitionString(definition) {
+    let parsed = blockDefinitionParser.parse(definition);
+    parsed.tokens = _.map(parsed.tokens, (token) => {
+        switch (token.tokenType) {
+            case "placeholder":
+                return new PlaceholderToken(token.value);
+            case "expression":
+                return new ExpressionToken(token.identifier, token.type);
+            case "user_input":
+                let validatorId = token.validator;
+                if (!validatorMap.has(validatorId)) {
+                    throw new Error("parseBlockDefinition failed: unknown validator");
+                }
+                let validator = validatorMap.get(validatorId);
+                return new UserInputToken(token.identifier, validator);
+            default:
+                throw new Error("parseBlockDefinition failed: unknown token type");
+        }
+    });
+    parsed.returnType = parsed.returnType ? parsed.returnType : type_1.KomodiType.empty;
+    return parsed;
+}
+function parseBlockDefinition(definitionBase) {
+    let parsed = parseDefinitionString(definitionBase.definition);
+    return {
+        id: definitionBase.id,
+        definition: definitionBase.definition,
+        tokens: parsed.tokens,
+        returnType: parsed.returnType,
+        inputNames: _.filter(parsed.tokens, ((token) => token instanceof UserInputToken))
+            .map((token) => token.identifier),
+        argumentNames: _.filter(parsed.tokens, ((token) => token instanceof ExpressionToken))
+            .map((token) => token.identifier),
+        scopeNames: definitionBase.scopeNames || [],
+        validatorPre: definitionBase.validatorPre || [],
+        validatorInto: definitionBase.validatorInto || [],
+        nodeDrawer: definitionBase.nodeDrawer,
+        scopeDrawer: definitionBase.scopeDrawer,
+        execution: definitionBase.execution
+    };
+}
+exports.parseBlockDefinition = parseBlockDefinition;
+const validatorMap = new Map();
+function toggle(...args) {
+    return (str) => {
+        let index = args.indexOf(str);
+        return args[(index + 1) % args.length];
+    };
+}
+validatorMap.set('string', {
+    type: type_1.KomodiType.string,
+    defaultValue: 'str',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change string value', currentValue);
+        if (result && result.length > 0 && result.indexOf('"') == -1) {
+            return result;
+        }
+        return null;
+    }
+});
+validatorMap.set('bool', {
+    type: type_1.KomodiType.bool,
+    defaultValue: 'true',
+    updateInput: toggle('true', 'false')
+});
+validatorMap.set('int', {
+    type: type_1.KomodiType.int,
+    defaultValue: '42',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change integer value', currentValue);
+        if (result && !isNaN(parseInt(result))) {
+            return result;
+        }
+        return null;
+    }
+});
+validatorMap.set('scope', {
+    type: type_1.KomodiType.empty,
+    defaultValue: 'global',
+    updateInput: toggle('internal', 'global')
+});
+validatorMap.set('definition', {
+    type: type_1.KomodiType.empty,
+    defaultValue: 'test [arg: int]: bool',
+    updateInput: (currentValue) => {
+        let result = window.prompt('Change function definition', currentValue);
+        if (result) {
+            try {
+                parseDefinitionString(result);
+                return result;
+            }
+            catch (e) {
+                window.alert(e.toString());
+            }
+        }
+        return null;
+    }
+});
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 var KomodiType;
 (function (KomodiType) {
     KomodiType["string"] = "string";
@@ -21391,14 +21548,14 @@ exports.typeToColor = typeToColor;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var arrays  = __webpack_require__(8),
-    visitor = __webpack_require__(7);
+var arrays  = __webpack_require__(9),
+    visitor = __webpack_require__(8);
 
 /* AST utilities. */
 var asts = {
@@ -21463,7 +21620,7 @@ module.exports = asts;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21532,7 +21689,7 @@ exports.default = Shader;
 //# sourceMappingURL=Shader.js.map
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22155,7 +22312,7 @@ Container.prototype.containerUpdateTransform = Container.prototype.updateTransfo
 //# sourceMappingURL=Container.js.map
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22522,7 +22679,7 @@ _utils.pluginTarget.mixin(CanvasRenderer);
 //# sourceMappingURL=CanvasRenderer.js.map
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22582,7 +22739,7 @@ exports.default = WebGLManager;
 //# sourceMappingURL=WebGLManager.js.map
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22955,7 +23112,7 @@ Mesh.DRAW_MODES = {
 //# sourceMappingURL=Mesh.js.map
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22984,15 +23141,15 @@ module.exports.default = Loader;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const program_1 = __webpack_require__(9);
-const type_1 = __webpack_require__(16);
-const utils_1 = __webpack_require__(31);
+const program_1 = __webpack_require__(7);
+const type_1 = __webpack_require__(17);
+const utils_1 = __webpack_require__(33);
 class UserInputTokenGraphic extends PIXI.Container {
     constructor(target, token) {
         super();
@@ -23150,164 +23307,282 @@ function scopeGraphicsGenerator(block) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const peg = __webpack_require__(119);
 const _ = __webpack_require__(11);
-const type_1 = __webpack_require__(16);
-class PlaceholderToken {
-    constructor(text) {
-        this.text = text;
-        this.kind = "placeholder";
-    }
-}
-exports.PlaceholderToken = PlaceholderToken;
-class UserInputToken {
-    constructor(identifier, validator) {
-        this.identifier = identifier;
-        this.validator = validator;
-        this.kind = "user_input";
-    }
-}
-exports.UserInputToken = UserInputToken;
-class ExpressionToken {
-    constructor(identifier, type) {
-        this.identifier = identifier;
-        this.type = type;
-        this.kind = "expression";
-    }
-}
-exports.ExpressionToken = ExpressionToken;
-const PARSER_DEFINITION = `
-start = tokens: token+ returnType:(":" t:type { return t; })? {
-    return {
-        tokens: tokens,
-        returnType: returnType
-    };
-}
-
-SPACE = " "*
-PLACEHOLDER = $[^:\\[\\]\\{\\}]+
-IDENTIFIER = SPACE identifier:$[a-zA-Z0-9_]+ SPACE { return identifier; }
-
-type = SPACE type:("string" / "bool" / "int") SPACE { return type; }
-validator = SPACE validator:("string" / "bool" / "int" / "scope" / "definition") SPACE { return validator; }
-
-token
-    = str: PLACEHOLDER
-        { return {tokenType: "placeholder", value: str}; }
-    / "[" identifier:IDENTIFIER ":" type: type "]"
-        { return {tokenType: "expression", identifier: identifier, type: type}; }
-    / "{" identifier:IDENTIFIER ":" validator: validator "}"
-        { return {tokenType: "user_input", identifier: identifier, validator: validator}; }
-`;
-const blockDefinitionParser = peg.generate(PARSER_DEFINITION);
-function parseDefinitionString(definition) {
-    let parsed = blockDefinitionParser.parse(definition);
-    parsed.tokens = _.map(parsed.tokens, (token) => {
-        switch (token.tokenType) {
+const index_1 = __webpack_require__(25);
+const type_1 = __webpack_require__(17);
+const utils_1 = __webpack_require__(33);
+const program_1 = __webpack_require__(7);
+const MINIMUM_ARG_WIDTH = 26;
+const PADDING = 5;
+const BLOCK_HEIGHT = 35;
+const TIP_WIDTH = 12;
+const TIP_HEIGHT = 9;
+const CURVE_HEIGHT = 6;
+const DEFINITION_GAP = 4;
+const DEFINITION_LINE = 4;
+function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
+    const top = bottom - BLOCK_HEIGHT;
+    let definition = block.definition;
+    let target = block.graphic;
+    target.graphics.lineStyle(1, 0);
+    let tokenStrings = _.map(definition.tokens, (token) => {
+        switch (token.kind) {
             case "placeholder":
-                return new PlaceholderToken(token.value);
-            case "expression":
-                return new ExpressionToken(token.identifier, token.type);
+                return token.text;
             case "user_input":
-                let validatorId = token.validator;
-                if (!validatorMap.has(validatorId)) {
-                    throw new Error("parseBlockDefinition failed: unknown validator");
-                }
-                let validator = validatorMap.get(validatorId);
-                return new UserInputToken(token.identifier, validator);
-            default:
-                throw new Error("parseBlockDefinition failed: unknown token type");
+                return block.getInput(token.identifier);
+            case "expression":
+                return token.identifier;
         }
     });
-    parsed.returnType = parsed.returnType ? parsed.returnType : type_1.KomodiType.empty;
-    return parsed;
-}
-function parseBlockDefinition(definitionBase) {
-    let parsed = parseDefinitionString(definitionBase.definition);
-    return {
-        id: definitionBase.id,
-        definition: definitionBase.definition,
-        tokens: parsed.tokens,
-        returnType: parsed.returnType,
-        inputNames: _.filter(parsed.tokens, ((token) => token instanceof UserInputToken))
-            .map((token) => token.identifier),
-        argumentNames: _.filter(parsed.tokens, ((token) => token instanceof ExpressionToken))
-            .map((token) => token.identifier),
-        scopeNames: definitionBase.scopeNames || [],
-        validatorPre: definitionBase.validatorPre || [],
-        validatorInto: definitionBase.validatorInto || [],
-        nodeDrawer: definitionBase.nodeDrawer,
-        scopeDrawer: definitionBase.scopeDrawer,
-        execution: definitionBase.execution
+    tokenStrings.forEach((str, i) => {
+        target.labels[i].text = str;
+    });
+    let argumentGraphics = Array.from(getArgumentGraphics());
+    let expressionCnt = 0;
+    let graphicsIndex = definition.tokens.map((token) => token.kind == "expression" ? expressionCnt++ : null);
+    let tokenToWidth = (token, index) => {
+        switch (token.kind) {
+            case "placeholder":
+                return target.labels[index].width + PADDING;
+            case "user_input":
+                return target.labels[index].width + PADDING * 2;
+            case "expression":
+                let child = argumentGraphics[graphicsIndex[index]];
+                let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
+                return Math.max(target.labels[index].width + PADDING * 2, childWidth);
+        }
     };
+    let widthSum = PADDING * 2 + _.sum(definition.tokens.map((token, i) => tokenToWidth(token, i)));
+    let nowX = -widthSum * .5 + PADDING;
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        utils_1.centerChild(target.labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
+        nowX += width;
+    });
+    nowX = -widthSum * .5 + PADDING;
+    let outlinePath = [-widthSum * .5, top];
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        switch (token.kind) {
+            case "expression":
+                outlinePath.push(nowX + width * .5 - TIP_WIDTH * .5, top, nowX + width * .5, top + TIP_HEIGHT, nowX + width * .5 + TIP_WIDTH * .5, top);
+        }
+        nowX += width;
+    });
+    outlinePath.push(widthSum * .5, top);
+    outlinePath = outlinePath.concat(bottomOutline(widthSum));
+    outlinePath.push(-widthSum * .5, top);
+    target.graphics.beginFill(type_1.typeToColor(definition.returnType));
+    target.graphics.drawPolygon(outlinePath);
+    target.hitArea = new PIXI.Polygon(outlinePath);
+    let secondIterator = getArgumentGraphics();
+    nowX = -widthSum * .5 + PADDING;
+    _.forEach(definition.tokens, (token, i) => {
+        let width = tokenToWidth(token, i);
+        switch (token.kind) {
+            case "user_input":
+                let tokenGraphic = target.userInputTokens[i];
+                tokenGraphic.updateSize(width, BLOCK_HEIGHT - 2 * PADDING);
+                tokenGraphic.x = nowX;
+                tokenGraphic.y = top + PADDING;
+                target.userInputTokens.push(tokenGraphic);
+                break;
+            case "expression":
+                let graphic = secondIterator.next().value;
+                target.graphics.beginFill(type_1.typeToColor(token.type));
+                target.graphics.drawPolygon([
+                    nowX, top,
+                    nowX + width * .5 - TIP_WIDTH * .5, top,
+                    nowX + width * .5, top + TIP_HEIGHT,
+                    nowX + width * .5 + TIP_WIDTH * .5, top,
+                    nowX + width, top,
+                    nowX + width, bottom - PADDING,
+                    nowX, bottom - PADDING,
+                    nowX, top,
+                ]);
+                if (graphic) {
+                    graphic.x = nowX + width * .5;
+                    graphic.y = top + TIP_HEIGHT;
+                    if (block instanceof program_1.Block) {
+                        block.context.attacher.removeArgumentCoordinate(block, token.identifier);
+                    }
+                }
+                else {
+                    if (block instanceof program_1.Block) {
+                        block.context.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
+                    }
+                }
+                break;
+        }
+        nowX += width;
+    });
+    return widthSum;
 }
-exports.parseBlockDefinition = parseBlockDefinition;
-const validatorMap = new Map();
-function toggle(...args) {
-    return (str) => {
-        let index = args.indexOf(str);
-        return args[(index + 1) % args.length];
-    };
+class DefaultNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        if (block.definition.returnType == type_1.KomodiType.empty) {
+            defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
+                let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
+                    return [widthSum * .5 - num * widthSum, -CURVE_HEIGHT + Math.sin(num * Math.PI) * CURVE_HEIGHT];
+                }).value();
+                ret.push(-widthSum * .5, -CURVE_HEIGHT);
+                return ret;
+            });
+        }
+        else {
+            defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
+                widthSum * .5, -TIP_HEIGHT,
+                TIP_WIDTH * .5, -TIP_HEIGHT,
+                0, 0,
+                -TIP_WIDTH * .5, -TIP_HEIGHT,
+                -widthSum * .5, -TIP_HEIGHT,
+            ]);
+        }
+    }
 }
-validatorMap.set('string', {
-    type: type_1.KomodiType.string,
-    defaultValue: 'str',
-    updateInput: (currentValue) => {
-        let result = window.prompt('Change string value', currentValue);
-        if (result && result.length > 0 && result.indexOf('"') == -1) {
-            return result;
-        }
-        return null;
+exports.defaultNodeDrawer = new DefaultNodeDrawer();
+class DefinitionNodeDrawer extends index_1.NodeDrawer {
+    drawNode(block, getArgumentGraphics) {
+        let widthSum = defaultDrawNode(block, getArgumentGraphics, -DEFINITION_GAP - DEFINITION_LINE, (widthSum) => [
+            widthSum * .5, -DEFINITION_GAP - DEFINITION_LINE,
+            -widthSum * .5, -DEFINITION_GAP - DEFINITION_LINE,
+        ]);
+        block.graphic.graphics.beginFill(type_1.typeToColor(block.definition.returnType));
+        block.graphic.graphics.drawRect(-widthSum * .5, -DEFINITION_LINE, widthSum, DEFINITION_LINE);
     }
-});
-validatorMap.set('bool', {
-    type: type_1.KomodiType.bool,
-    defaultValue: 'true',
-    updateInput: toggle('true', 'false')
-});
-validatorMap.set('int', {
-    type: type_1.KomodiType.int,
-    defaultValue: '0',
-    updateInput: (currentValue) => {
-        let result = window.prompt('Change integer value', currentValue);
-        if (result && /^[+-]?(0|[1-9]\d*)$/.test(currentValue)) {
-            return result;
-        }
-        return null;
-    }
-});
-validatorMap.set('scope', {
-    type: type_1.KomodiType.empty,
-    defaultValue: 'global',
-    updateInput: toggle('internal', 'global')
-});
-validatorMap.set('definition', {
-    type: type_1.KomodiType.empty,
-    defaultValue: 'test [arg: int]: bool',
-    updateInput: (currentValue) => {
-        let result = window.prompt('Change function definition', currentValue);
-        if (result) {
-            try {
-                parseDefinitionString(result);
-                return result;
-            }
-            catch (e) {
-                window.alert(e.toString());
-            }
-        }
-        return null;
-    }
-});
+}
+exports.definitionNodeDrawer = new DefinitionNodeDrawer();
 
 
 /***/ }),
-/* 26 */
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ = __webpack_require__(11);
+const index_1 = __webpack_require__(25);
+const program_1 = __webpack_require__(7);
+const FLOW_VERTICAL_MARGIN = 20;
+const SPLIT_VERTICAL_MARGIN = 15;
+const SPLIT_HORIZONTAL_MARGIN = 40;
+const OUTLINE_PADDING = 6;
+function defaultDrawScope(block, getScopeGraphics) {
+    let definition = block.definition;
+    let target = block.graphic;
+    target.graphics.lineStyle(3, 0);
+    let widthList = Array.from(function* () {
+        for (let scopeGraphics of getScopeGraphics()) {
+            let width = 0;
+            for (let graphic of scopeGraphics) {
+                width = Math.max(width, graphic.width);
+            }
+            yield width;
+        }
+    }());
+    let widthSum = _.sum(widthList) + SPLIT_HORIZONTAL_MARGIN * (widthList.length - 1);
+    if (definition.scopeNames.length == 1) {
+        let attachPoints = [];
+        target.graphics.moveTo(0, 0);
+        target.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
+        attachPoints.push({ x: 0, y: FLOW_VERTICAL_MARGIN * .5 });
+        let nowY = FLOW_VERTICAL_MARGIN;
+        for (let scope of getScopeGraphics()) {
+            for (let block of scope) {
+                let rect = block.getLocalBounds();
+                block.x = 0;
+                block.y = nowY + (-rect.top);
+                target.graphics.moveTo(0, nowY);
+                target.graphics.lineTo(0, nowY + (-rect.top));
+                target.graphics.moveTo(0, nowY + rect.height);
+                target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
+                attachPoints.push({ x: 0, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
+                nowY += rect.height + FLOW_VERTICAL_MARGIN;
+            }
+        }
+        if (block instanceof program_1.Block) {
+            block.context.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
+        }
+        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
+    }
+    else if (definition.scopeNames.length >= 2) {
+        target.graphics.moveTo(0, 0);
+        target.graphics.lineTo(0, SPLIT_VERTICAL_MARGIN);
+        let endOffset = [];
+        let nowX = -widthSum * .5;
+        let scopeIterator = getScopeGraphics();
+        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
+            let attachPoints = [];
+            let currentScope = scopeIterator.next().value;
+            nowX += widthList[scopeIndex] * .5;
+            let nowY = SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN;
+            target.graphics.moveTo(0, SPLIT_VERTICAL_MARGIN);
+            target.graphics.lineTo(nowX, SPLIT_VERTICAL_MARGIN);
+            target.graphics.moveTo(nowX, SPLIT_VERTICAL_MARGIN);
+            target.graphics.lineTo(nowX, nowY);
+            attachPoints.push({ x: nowX, y: SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN * .5 });
+            for (let block of currentScope) {
+                let rect = block.getLocalBounds();
+                block.x = nowX;
+                block.y = nowY + (-rect.top);
+                target.graphics.moveTo(nowX, nowY);
+                target.graphics.lineTo(nowX, nowY + (-rect.top));
+                target.graphics.moveTo(nowX, nowY + rect.height);
+                target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
+                attachPoints.push({ x: nowX, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
+                nowY += rect.height + FLOW_VERTICAL_MARGIN;
+            }
+            endOffset.push({
+                x: nowX,
+                y: nowY,
+            });
+            if (block instanceof program_1.Block) {
+                block.context.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
+            }
+            nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
+        }
+        let maxY = _(endOffset).map((coord) => coord.y).max();
+        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
+            const offset = endOffset[scopeIndex];
+            target.graphics.moveTo(offset.x, offset.y);
+            target.graphics.lineTo(offset.x, maxY);
+            target.graphics.moveTo(offset.x, maxY);
+            target.graphics.lineTo(0, maxY);
+        }
+        target.graphics.moveTo(0, maxY);
+        target.graphics.lineTo(0, maxY + SPLIT_VERTICAL_MARGIN);
+        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, maxY + SPLIT_VERTICAL_MARGIN);
+    }
+    else {
+        return new PIXI.Rectangle();
+    }
+}
+class LineScopeDrawer extends index_1.ScopeDrawer {
+    drawScope(block, getScopeGraphics) {
+        defaultDrawScope(block, getScopeGraphics);
+    }
+}
+exports.lineScopeDrawer = new LineScopeDrawer();
+class BoxScopeDrawer extends index_1.ScopeDrawer {
+    drawScope(block, getScopeGraphics) {
+        let rect = defaultDrawScope(block, getScopeGraphics);
+        block.graphic.graphics.lineStyle(1, 0x9E9E9E);
+        block.graphic.graphics.drawRect(rect.x - OUTLINE_PADDING, rect.y, rect.width + OUTLINE_PADDING * 2, rect.height);
+    }
+}
+exports.boxScopeDrawer = new BoxScopeDrawer();
+
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23582,7 +23857,7 @@ function buildNativeLine(graphicsData, webGLData) {
 //# sourceMappingURL=buildLine.js.map
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23606,11 +23881,11 @@ var _FilterManager = __webpack_require__(151);
 
 var _FilterManager2 = _interopRequireDefault(_FilterManager);
 
-var _RenderTarget = __webpack_require__(29);
+var _RenderTarget = __webpack_require__(31);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
-var _ObjectRenderer = __webpack_require__(28);
+var _ObjectRenderer = __webpack_require__(30);
 
 var _ObjectRenderer2 = _interopRequireDefault(_ObjectRenderer);
 
@@ -24399,7 +24674,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 //# sourceMappingURL=WebGLRenderer.js.map
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24407,7 +24682,7 @@ _utils.pluginTarget.mixin(WebGLRenderer);
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(21);
+var _WebGLManager2 = __webpack_require__(22);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -24482,7 +24757,7 @@ exports.default = ObjectRenderer;
 //# sourceMappingURL=ObjectRenderer.js.map
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24814,7 +25089,7 @@ exports.default = RenderTarget;
 //# sourceMappingURL=RenderTarget.js.map
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24932,13 +25207,13 @@ global.PIXI = exports; // eslint-disable-line
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(30);
+const PIXI = __webpack_require__(32);
 const komodi_1 = __webpack_require__(52);
 function centerChild(target, x, y) {
     let localBounds = target.getLocalBounds();
@@ -24964,281 +25239,6 @@ function uuidToJsIdentifier(str) {
     return 'f' + str.replace(/-/g, '_');
 }
 exports.uuidToJsIdentifier = uuidToJsIdentifier;
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(11);
-const index_1 = __webpack_require__(24);
-const type_1 = __webpack_require__(16);
-const utils_1 = __webpack_require__(31);
-const program_1 = __webpack_require__(9);
-const MINIMUM_ARG_WIDTH = 26;
-const PADDING = 5;
-const BLOCK_HEIGHT = 35;
-const TIP_WIDTH = 12;
-const TIP_HEIGHT = 9;
-const CURVE_HEIGHT = 6;
-const DEFINITION_GAP = 4;
-const DEFINITION_LINE = 4;
-function defaultDrawNode(block, getArgumentGraphics, bottom, bottomOutline) {
-    const top = bottom - BLOCK_HEIGHT;
-    let definition = block.definition;
-    let target = block.graphic;
-    target.graphics.lineStyle(1, 0);
-    let tokenStrings = _.map(definition.tokens, (token) => {
-        switch (token.kind) {
-            case "placeholder":
-                return token.text;
-            case "user_input":
-                return block.getInput(token.identifier);
-            case "expression":
-                return token.identifier;
-        }
-    });
-    tokenStrings.forEach((str, i) => {
-        target.labels[i].text = str;
-    });
-    let argumentGraphics = Array.from(getArgumentGraphics());
-    let expressionCnt = 0;
-    let graphicsIndex = definition.tokens.map((token) => token.kind == "expression" ? expressionCnt++ : null);
-    let tokenToWidth = (token, index) => {
-        switch (token.kind) {
-            case "placeholder":
-                return target.labels[index].width + PADDING;
-            case "user_input":
-                return target.labels[index].width + PADDING * 2;
-            case "expression":
-                let child = argumentGraphics[graphicsIndex[index]];
-                let childWidth = child ? Math.max(child.getBounds().width, MINIMUM_ARG_WIDTH) : MINIMUM_ARG_WIDTH;
-                return Math.max(target.labels[index].width + PADDING * 2, childWidth);
-        }
-    };
-    let widthSum = PADDING * 2 + _.sum(definition.tokens.map((token, i) => tokenToWidth(token, i)));
-    let nowX = -widthSum * .5 + PADDING;
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        utils_1.centerChild(target.labels[i], nowX + width * .5, bottom - BLOCK_HEIGHT * .5);
-        nowX += width;
-    });
-    nowX = -widthSum * .5 + PADDING;
-    let outlinePath = [-widthSum * .5, top];
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        switch (token.kind) {
-            case "expression":
-                outlinePath.push(nowX + width * .5 - TIP_WIDTH * .5, top, nowX + width * .5, top + TIP_HEIGHT, nowX + width * .5 + TIP_WIDTH * .5, top);
-        }
-        nowX += width;
-    });
-    outlinePath.push(widthSum * .5, top);
-    outlinePath = outlinePath.concat(bottomOutline(widthSum));
-    outlinePath.push(-widthSum * .5, top);
-    target.graphics.beginFill(type_1.typeToColor(definition.returnType));
-    target.graphics.drawPolygon(outlinePath);
-    target.hitArea = new PIXI.Polygon(outlinePath);
-    let secondIterator = getArgumentGraphics();
-    nowX = -widthSum * .5 + PADDING;
-    _.forEach(definition.tokens, (token, i) => {
-        let width = tokenToWidth(token, i);
-        switch (token.kind) {
-            case "user_input":
-                let tokenGraphic = target.userInputTokens[i];
-                tokenGraphic.updateSize(width, BLOCK_HEIGHT - 2 * PADDING);
-                tokenGraphic.x = nowX;
-                tokenGraphic.y = top + PADDING;
-                target.userInputTokens.push(tokenGraphic);
-                break;
-            case "expression":
-                let graphic = secondIterator.next().value;
-                target.graphics.beginFill(type_1.typeToColor(token.type));
-                target.graphics.drawPolygon([
-                    nowX, top,
-                    nowX + width * .5 - TIP_WIDTH * .5, top,
-                    nowX + width * .5, top + TIP_HEIGHT,
-                    nowX + width * .5 + TIP_WIDTH * .5, top,
-                    nowX + width, top,
-                    nowX + width, bottom - PADDING,
-                    nowX, bottom - PADDING,
-                    nowX, top,
-                ]);
-                if (graphic) {
-                    graphic.x = nowX + width * .5;
-                    graphic.y = top + TIP_HEIGHT;
-                    if (block instanceof program_1.Block) {
-                        block.context.attacher.removeArgumentCoordinate(block, token.identifier);
-                    }
-                }
-                else {
-                    if (block instanceof program_1.Block) {
-                        block.context.attacher.setArgumentCoordinate(block, token.identifier, { x: nowX + width * .5, y: top + TIP_HEIGHT });
-                    }
-                }
-                break;
-        }
-        nowX += width;
-    });
-    return widthSum;
-}
-class DefaultNodeDrawer extends index_1.NodeDrawer {
-    drawNode(block, getArgumentGraphics) {
-        if (block.definition.returnType == type_1.KomodiType.empty) {
-            defaultDrawNode(block, getArgumentGraphics, -CURVE_HEIGHT, (widthSum) => {
-                let ret = _(_.range(0, 1, 0.04)).flatMap((num) => {
-                    return [widthSum * .5 - num * widthSum, -CURVE_HEIGHT + Math.sin(num * Math.PI) * CURVE_HEIGHT];
-                }).value();
-                ret.push(-widthSum * .5, -CURVE_HEIGHT);
-                return ret;
-            });
-        }
-        else {
-            defaultDrawNode(block, getArgumentGraphics, -TIP_HEIGHT, (widthSum) => [
-                widthSum * .5, -TIP_HEIGHT,
-                TIP_WIDTH * .5, -TIP_HEIGHT,
-                0, 0,
-                -TIP_WIDTH * .5, -TIP_HEIGHT,
-                -widthSum * .5, -TIP_HEIGHT,
-            ]);
-        }
-    }
-}
-exports.defaultNodeDrawer = new DefaultNodeDrawer();
-class DefinitionNodeDrawer extends index_1.NodeDrawer {
-    drawNode(block, getArgumentGraphics) {
-        let widthSum = defaultDrawNode(block, getArgumentGraphics, -DEFINITION_GAP - DEFINITION_LINE, (widthSum) => [
-            widthSum * .5, -DEFINITION_GAP - DEFINITION_LINE,
-            -widthSum * .5, -DEFINITION_GAP - DEFINITION_LINE,
-        ]);
-        block.graphic.graphics.beginFill(type_1.typeToColor(block.definition.returnType));
-        block.graphic.graphics.drawRect(-widthSum * .5, -DEFINITION_LINE, widthSum, DEFINITION_LINE);
-    }
-}
-exports.definitionNodeDrawer = new DefinitionNodeDrawer();
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-const _ = __webpack_require__(11);
-const index_1 = __webpack_require__(24);
-const program_1 = __webpack_require__(9);
-const FLOW_VERTICAL_MARGIN = 20;
-const SPLIT_VERTICAL_MARGIN = 15;
-const SPLIT_HORIZONTAL_MARGIN = 40;
-const OUTLINE_PADDING = 6;
-function defaultDrawScope(block, getScopeGraphics) {
-    let definition = block.definition;
-    let target = block.graphic;
-    target.graphics.lineStyle(3, 0);
-    let widthList = Array.from(function* () {
-        for (let scopeGraphics of getScopeGraphics()) {
-            let width = 0;
-            for (let graphic of scopeGraphics) {
-                width = Math.max(width, graphic.width);
-            }
-            yield width;
-        }
-    }());
-    let widthSum = _.sum(widthList) + SPLIT_HORIZONTAL_MARGIN * (widthList.length - 1);
-    if (definition.scopeNames.length == 1) {
-        let attachPoints = [];
-        target.graphics.moveTo(0, 0);
-        target.graphics.lineTo(0, FLOW_VERTICAL_MARGIN);
-        attachPoints.push({ x: 0, y: FLOW_VERTICAL_MARGIN * .5 });
-        let nowY = FLOW_VERTICAL_MARGIN;
-        for (let scope of getScopeGraphics()) {
-            for (let block of scope) {
-                let rect = block.getLocalBounds();
-                block.x = 0;
-                block.y = nowY + (-rect.top);
-                target.graphics.moveTo(0, nowY);
-                target.graphics.lineTo(0, nowY + (-rect.top));
-                target.graphics.moveTo(0, nowY + rect.height);
-                target.graphics.lineTo(0, nowY + rect.height + FLOW_VERTICAL_MARGIN);
-                attachPoints.push({ x: 0, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
-                nowY += rect.height + FLOW_VERTICAL_MARGIN;
-            }
-        }
-        if (block instanceof program_1.Block) {
-            block.context.attacher.setScopeCoordinate(block, definition.scopeNames[0], attachPoints);
-        }
-        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, nowY);
-    }
-    else if (definition.scopeNames.length >= 2) {
-        target.graphics.moveTo(0, 0);
-        target.graphics.lineTo(0, SPLIT_VERTICAL_MARGIN);
-        let endOffset = [];
-        let nowX = -widthSum * .5;
-        let scopeIterator = getScopeGraphics();
-        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
-            let attachPoints = [];
-            let currentScope = scopeIterator.next().value;
-            nowX += widthList[scopeIndex] * .5;
-            let nowY = SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN;
-            target.graphics.moveTo(0, SPLIT_VERTICAL_MARGIN);
-            target.graphics.lineTo(nowX, SPLIT_VERTICAL_MARGIN);
-            target.graphics.moveTo(nowX, SPLIT_VERTICAL_MARGIN);
-            target.graphics.lineTo(nowX, nowY);
-            attachPoints.push({ x: nowX, y: SPLIT_VERTICAL_MARGIN + FLOW_VERTICAL_MARGIN * .5 });
-            for (let block of currentScope) {
-                let rect = block.getLocalBounds();
-                block.x = nowX;
-                block.y = nowY + (-rect.top);
-                target.graphics.moveTo(nowX, nowY);
-                target.graphics.lineTo(nowX, nowY + (-rect.top));
-                target.graphics.moveTo(nowX, nowY + rect.height);
-                target.graphics.lineTo(nowX, nowY + rect.height + FLOW_VERTICAL_MARGIN);
-                attachPoints.push({ x: nowX, y: nowY + rect.height + FLOW_VERTICAL_MARGIN * .5 });
-                nowY += rect.height + FLOW_VERTICAL_MARGIN;
-            }
-            endOffset.push({
-                x: nowX,
-                y: nowY,
-            });
-            if (block instanceof program_1.Block) {
-                block.context.attacher.setScopeCoordinate(block, definition.scopeNames[scopeIndex], attachPoints);
-            }
-            nowX += widthList[scopeIndex] * .5 + SPLIT_HORIZONTAL_MARGIN;
-        }
-        let maxY = _(endOffset).map((coord) => coord.y).max();
-        for (let scopeIndex = 0; scopeIndex < widthList.length; scopeIndex++) {
-            const offset = endOffset[scopeIndex];
-            target.graphics.moveTo(offset.x, offset.y);
-            target.graphics.lineTo(offset.x, maxY);
-            target.graphics.moveTo(offset.x, maxY);
-            target.graphics.lineTo(0, maxY);
-        }
-        target.graphics.moveTo(0, maxY);
-        target.graphics.lineTo(0, maxY + SPLIT_VERTICAL_MARGIN);
-        return new PIXI.Rectangle(-widthSum * .5, 0, widthSum, maxY + SPLIT_VERTICAL_MARGIN);
-    }
-    else {
-        return new PIXI.Rectangle();
-    }
-}
-class LineScopeDrawer extends index_1.ScopeDrawer {
-    drawScope(block, getScopeGraphics) {
-        defaultDrawScope(block, getScopeGraphics);
-    }
-}
-exports.lineScopeDrawer = new LineScopeDrawer();
-class BoxScopeDrawer extends index_1.ScopeDrawer {
-    drawScope(block, getScopeGraphics) {
-        let rect = defaultDrawScope(block, getScopeGraphics);
-        block.graphic.graphics.lineStyle(1, 0x9E9E9E);
-        block.graphic.graphics.drawRect(rect.x - OUTLINE_PADDING, rect.y, rect.width + OUTLINE_PADDING * 2, rect.height);
-    }
-}
-exports.boxScopeDrawer = new BoxScopeDrawer();
 
 
 /***/ }),
@@ -27038,7 +27038,7 @@ var _Texture = __webpack_require__(12);
 
 var _Texture2 = _interopRequireDefault(_Texture);
 
-var _Container2 = __webpack_require__(19);
+var _Container2 = __webpack_require__(20);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -30006,14 +30006,16 @@ function reqType(xhr) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const common_1 = __webpack_require__(226);
-const io_1 = __webpack_require__(227);
-const string_1 = __webpack_require__(228);
-const graphic_1 = __webpack_require__(24);
+const common_1 = __webpack_require__(227);
+const io_1 = __webpack_require__(229);
+const string_1 = __webpack_require__(230);
+const integer_1 = __webpack_require__(228);
+const graphic_1 = __webpack_require__(25);
 const builtinModules = new Map();
 builtinModules.set('common', common_1.blockList);
 builtinModules.set('io', io_1.blockList);
 builtinModules.set('string', string_1.blockList);
+builtinModules.set('integer', integer_1.blockList);
 var ExportScope;
 (function (ExportScope) {
     ExportScope[ExportScope["INTERNAL"] = 0] = "INTERNAL";
@@ -30176,12 +30178,12 @@ exports.Module = Module;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const WebFont = __webpack_require__(232);
-const PIXI = __webpack_require__(30);
+const WebFont = __webpack_require__(234);
+const PIXI = __webpack_require__(32);
 const menu_1 = __webpack_require__(224);
 const context_1 = __webpack_require__(104);
-const validator_1 = __webpack_require__(230);
-const converter_1 = __webpack_require__(233);
+const validator_1 = __webpack_require__(232);
+const converter_1 = __webpack_require__(226);
 const KOMODI_STYLE = `
 .komodi-container {
     margin: 0;
@@ -30282,6 +30284,7 @@ class KomodiClass extends context_1.KomodiContext {
             }
             if (safe) {
                 let code = converter_1.transpileModule(this.module);
+                console.log(code);
                 eval(code);
             }
             else {
@@ -32297,7 +32300,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _autoDetectRenderer = __webpack_require__(69);
 
-var _Container = __webpack_require__(19);
+var _Container = __webpack_require__(20);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -32526,11 +32529,11 @@ var _utils = __webpack_require__(2);
 
 var utils = _interopRequireWildcard(_utils);
 
-var _CanvasRenderer = __webpack_require__(20);
+var _CanvasRenderer = __webpack_require__(21);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
-var _WebGLRenderer = __webpack_require__(27);
+var _WebGLRenderer = __webpack_require__(29);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -34151,7 +34154,7 @@ var _settings = __webpack_require__(3);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _Container = __webpack_require__(19);
+var _Container = __webpack_require__(20);
 
 var _Container2 = _interopRequireDefault(_Container);
 
@@ -38086,7 +38089,7 @@ var path = _interopRequireWildcard(_path);
 
 var _core = __webpack_require__(1);
 
-var _resourceLoader = __webpack_require__(23);
+var _resourceLoader = __webpack_require__(24);
 
 var _extras = __webpack_require__(87);
 
@@ -38149,7 +38152,7 @@ exports.default = function () {
 
 exports.getResourcePath = getResourcePath;
 
-var _resourceLoader = __webpack_require__(23);
+var _resourceLoader = __webpack_require__(24);
 
 var _url = __webpack_require__(106);
 
@@ -38188,7 +38191,7 @@ exports.default = function () {
     };
 };
 
-var _resourceLoader = __webpack_require__(23);
+var _resourceLoader = __webpack_require__(24);
 
 var _Texture = __webpack_require__(12);
 
@@ -38206,7 +38209,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(22);
+var _Mesh2 = __webpack_require__(23);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -38698,10 +38701,10 @@ function encodeBinary(input) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(30);
+const PIXI = __webpack_require__(32);
 const attacher_1 = __webpack_require__(225);
 const module_1 = __webpack_require__(51);
-const serializer_1 = __webpack_require__(229);
+const serializer_1 = __webpack_require__(231);
 class KomodiContext {
     constructor() {
         this.container = new PIXI.Container();
@@ -38743,7 +38746,7 @@ exports.KomodiContext = KomodiContext;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(11);
-const index_1 = __webpack_require__(9);
+const index_1 = __webpack_require__(7);
 function dependencyCheck(block, module, context) {
     if (!module.hasBlockClass(block.definition.id)) {
         context.result.error.push(`Broken dependency "${block.definition.definition}"`);
@@ -38778,6 +38781,16 @@ function checkScopeTree(parentBlock) {
     };
 }
 exports.checkScopeTree = checkScopeTree;
+function increaseLoopCount(block, module, context) {
+    context.loopDepth++;
+}
+exports.increaseLoopCount = increaseLoopCount;
+function insideLoop(block, module, context) {
+    if (context.loopDepth == 0) {
+        context.result.error.push(`"${block.definition.definition}" should be inside of a loop.`);
+    }
+}
+exports.insideLoop = insideLoop;
 exports.validatorPreAll = [
     dependencyCheck, freeBlockDefinitionCheck, argumentCheck
 ];
@@ -38815,7 +38828,7 @@ exports.validatorIntoAll = [
 
 
 var punycode = __webpack_require__(214);
-var util = __webpack_require__(231);
+var util = __webpack_require__(233);
 
 exports.parse = urlParse;
 exports.resolve = urlResolve;
@@ -39657,7 +39670,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 "use strict";
 
 
-var arrays  = __webpack_require__(8),
+var arrays  = __webpack_require__(9),
     objects = __webpack_require__(14);
 
 var compiler = {
@@ -39665,7 +39678,7 @@ var compiler = {
    * AST node visitor builder. Useful mainly for plugins which manipulate the
    * AST.
    */
-  visitor: __webpack_require__(7),
+  visitor: __webpack_require__(8),
 
   /*
    * Compiler passes.
@@ -39737,10 +39750,10 @@ module.exports = compiler;
 "use strict";
 
 
-var arrays  = __webpack_require__(8),
+var arrays  = __webpack_require__(9),
     objects = __webpack_require__(14),
-    asts    = __webpack_require__(17),
-    visitor = __webpack_require__(7),
+    asts    = __webpack_require__(18),
+    visitor = __webpack_require__(8),
     op      = __webpack_require__(57),
     js      = __webpack_require__(56);
 
@@ -40375,9 +40388,9 @@ module.exports = generateBytecode;
 "use strict";
 
 
-var arrays  = __webpack_require__(8),
+var arrays  = __webpack_require__(9),
     objects = __webpack_require__(14),
-    asts    = __webpack_require__(17),
+    asts    = __webpack_require__(18),
     op      = __webpack_require__(57),
     js      = __webpack_require__(56);
 
@@ -41776,8 +41789,8 @@ module.exports = generateJS;
 "use strict";
 
 
-var arrays  = __webpack_require__(8),
-    visitor = __webpack_require__(7);
+var arrays  = __webpack_require__(9),
+    visitor = __webpack_require__(8);
 
 /*
  * Removes proxy rules -- that is, rules that only delegate to other rule.
@@ -41826,9 +41839,9 @@ module.exports = removeProxyRules;
 
 
 var GrammarError = __webpack_require__(13),
-    arrays       = __webpack_require__(8),
+    arrays       = __webpack_require__(9),
     objects      = __webpack_require__(14),
-    visitor      = __webpack_require__(7);
+    visitor      = __webpack_require__(8);
 
 /* Checks that each label is defined only once within each scope. */
 function reportDuplicateLabels(ast) {
@@ -41887,7 +41900,7 @@ module.exports = reportDuplicateLabels;
 
 
 var GrammarError = __webpack_require__(13),
-    visitor      = __webpack_require__(7);
+    visitor      = __webpack_require__(8);
 
 /* Checks that each rule is defined only once. */
 function reportDuplicateRules(ast) {
@@ -41921,10 +41934,10 @@ module.exports = reportDuplicateRules;
 "use strict";
 
 
-var arrays       = __webpack_require__(8),
+var arrays       = __webpack_require__(9),
     GrammarError = __webpack_require__(13),
-    asts         = __webpack_require__(17),
-    visitor      = __webpack_require__(7);
+    asts         = __webpack_require__(18),
+    visitor      = __webpack_require__(8);
 
 /*
  * Reports left recursion in the grammar, which prevents infinite recursion in
@@ -41986,8 +41999,8 @@ module.exports = reportInfiniteRecursion;
 
 
 var GrammarError = __webpack_require__(13),
-    asts         = __webpack_require__(17),
-    visitor      = __webpack_require__(7);
+    asts         = __webpack_require__(18),
+    visitor      = __webpack_require__(8);
 
 /*
  * Reports expressions that don't consume any input inside |*| or |+| in the
@@ -42028,8 +42041,8 @@ module.exports = reportInfiniteRepetition;
 
 
 var GrammarError = __webpack_require__(13),
-    asts         = __webpack_require__(17),
-    visitor      = __webpack_require__(7);
+    asts         = __webpack_require__(18),
+    visitor      = __webpack_require__(8);
 
 /* Checks that all referenced rules exist. */
 function reportUndefinedRules(ast) {
@@ -47104,7 +47117,7 @@ module.exports = {
 "use strict";
 
 
-var arrays  = __webpack_require__(8),
+var arrays  = __webpack_require__(9),
     objects = __webpack_require__(14);
 
 var peg = {
@@ -49042,7 +49055,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.__esModule = true;
 
-var _Container2 = __webpack_require__(19);
+var _Container2 = __webpack_require__(20);
 
 var _Container3 = _interopRequireDefault(_Container2);
 
@@ -49076,7 +49089,7 @@ var _bezierCurveTo2 = __webpack_require__(132);
 
 var _bezierCurveTo3 = _interopRequireDefault(_bezierCurveTo2);
 
-var _CanvasRenderer = __webpack_require__(20);
+var _CanvasRenderer = __webpack_require__(21);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -50219,7 +50232,7 @@ Graphics._SPRITE_TEXTURE = null;
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(20);
+var _CanvasRenderer = __webpack_require__(21);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -50552,11 +50565,11 @@ var _utils = __webpack_require__(2);
 
 var _const = __webpack_require__(0);
 
-var _ObjectRenderer2 = __webpack_require__(28);
+var _ObjectRenderer2 = __webpack_require__(30);
 
 var _ObjectRenderer3 = _interopRequireDefault(_ObjectRenderer2);
 
-var _WebGLRenderer = __webpack_require__(27);
+var _WebGLRenderer = __webpack_require__(29);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -50966,7 +50979,7 @@ exports.default = WebGLGraphicsData;
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(18);
+var _Shader2 = __webpack_require__(19);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -51017,7 +51030,7 @@ exports.default = PrimitiveShader;
 exports.__esModule = true;
 exports.default = buildCircle;
 
-var _buildLine = __webpack_require__(26);
+var _buildLine = __webpack_require__(28);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -51115,7 +51128,7 @@ function buildCircle(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildPoly;
 
-var _buildLine = __webpack_require__(26);
+var _buildLine = __webpack_require__(28);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -51206,7 +51219,7 @@ function buildPoly(graphicsData, webGLData, webGLDataNativeLines) {
 exports.__esModule = true;
 exports.default = buildRectangle;
 
-var _buildLine = __webpack_require__(26);
+var _buildLine = __webpack_require__(28);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -51291,7 +51304,7 @@ var _earcut = __webpack_require__(53);
 
 var _earcut2 = _interopRequireDefault(_earcut);
 
-var _buildLine = __webpack_require__(26);
+var _buildLine = __webpack_require__(28);
 
 var _buildLine2 = _interopRequireDefault(_buildLine);
 
@@ -52347,7 +52360,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _const = __webpack_require__(0);
 
-var _RenderTarget = __webpack_require__(29);
+var _RenderTarget = __webpack_require__(31);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
@@ -53020,11 +53033,11 @@ function calculateSpriteMatrix(outputMatrix, filterArea, textureSize, sprite) {
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(21);
+var _WebGLManager2 = __webpack_require__(22);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
-var _RenderTarget = __webpack_require__(29);
+var _RenderTarget = __webpack_require__(31);
 
 var _RenderTarget2 = _interopRequireDefault(_RenderTarget);
 
@@ -53034,7 +53047,7 @@ var _Quad2 = _interopRequireDefault(_Quad);
 
 var _math = __webpack_require__(4);
 
-var _Shader = __webpack_require__(18);
+var _Shader = __webpack_require__(19);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -53619,7 +53632,7 @@ exports.default = FilterManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(21);
+var _WebGLManager2 = __webpack_require__(22);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -53834,7 +53847,7 @@ exports.default = MaskManager;
 
 exports.__esModule = true;
 
-var _WebGLManager2 = __webpack_require__(21);
+var _WebGLManager2 = __webpack_require__(22);
 
 var _WebGLManager3 = _interopRequireDefault(_WebGLManager2);
 
@@ -54184,7 +54197,7 @@ function validateContext(gl) {
 
 exports.__esModule = true;
 
-var _CanvasRenderer = __webpack_require__(20);
+var _CanvasRenderer = __webpack_require__(21);
 
 var _CanvasRenderer2 = _interopRequireDefault(_CanvasRenderer);
 
@@ -54400,11 +54413,11 @@ exports.default = Buffer;
 
 exports.__esModule = true;
 
-var _ObjectRenderer2 = __webpack_require__(28);
+var _ObjectRenderer2 = __webpack_require__(30);
 
 var _ObjectRenderer3 = _interopRequireDefault(_ObjectRenderer2);
 
-var _WebGLRenderer = __webpack_require__(27);
+var _WebGLRenderer = __webpack_require__(29);
 
 var _WebGLRenderer2 = _interopRequireDefault(_WebGLRenderer);
 
@@ -54948,7 +54961,7 @@ _WebGLRenderer2.default.registerPlugin('sprite', SpriteRenderer);
 exports.__esModule = true;
 exports.default = generateMultiTextureShader;
 
-var _Shader = __webpack_require__(18);
+var _Shader = __webpack_require__(19);
 
 var _Shader2 = _interopRequireDefault(_Shader);
 
@@ -63644,7 +63657,7 @@ Object.defineProperty(exports, 'textureParser', {
     }
 });
 
-var _resourceLoader = __webpack_require__(23);
+var _resourceLoader = __webpack_require__(24);
 
 Object.defineProperty(exports, 'Resource', {
     enumerable: true,
@@ -63737,7 +63750,7 @@ AppPrototype.destroy = function destroy(removeView) {
 
 exports.__esModule = true;
 
-var _resourceLoader = __webpack_require__(23);
+var _resourceLoader = __webpack_require__(24);
 
 var _resourceLoader2 = _interopRequireDefault(_resourceLoader);
 
@@ -64304,7 +64317,7 @@ exports.default = NineSlicePlane;
 
 exports.__esModule = true;
 
-var _Mesh2 = __webpack_require__(22);
+var _Mesh2 = __webpack_require__(23);
 
 var _Mesh3 = _interopRequireDefault(_Mesh2);
 
@@ -64549,7 +64562,7 @@ var _core = __webpack_require__(1);
 
 var core = _interopRequireWildcard(_core);
 
-var _Mesh = __webpack_require__(22);
+var _Mesh = __webpack_require__(23);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -64833,7 +64846,7 @@ core.CanvasRenderer.registerPlugin('mesh', MeshSpriteRenderer);
 
 exports.__esModule = true;
 
-var _Mesh = __webpack_require__(22);
+var _Mesh = __webpack_require__(23);
 
 Object.defineProperty(exports, 'Mesh', {
   enumerable: true,
@@ -64907,7 +64920,7 @@ var _pixiGlCore = __webpack_require__(5);
 
 var _pixiGlCore2 = _interopRequireDefault(_pixiGlCore);
 
-var _Mesh = __webpack_require__(22);
+var _Mesh = __webpack_require__(23);
 
 var _Mesh2 = _interopRequireDefault(_Mesh);
 
@@ -66197,7 +66210,7 @@ core.WebGLRenderer.registerPlugin('particle', ParticleRenderer);
 
 exports.__esModule = true;
 
-var _Shader2 = __webpack_require__(18);
+var _Shader2 = __webpack_require__(19);
 
 var _Shader3 = _interopRequireDefault(_Shader2);
 
@@ -68641,9 +68654,9 @@ module.exports = Komodi;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const PIXI = __webpack_require__(30);
+const PIXI = __webpack_require__(32);
 const MultiStyleText = __webpack_require__(127);
-const graphic_1 = __webpack_require__(24);
+const graphic_1 = __webpack_require__(25);
 const ui_1 = __webpack_require__(222);
 const module_1 = __webpack_require__(51);
 const TOP_MENU_HEIGHT = 85;
@@ -68906,8 +68919,8 @@ exports.ConsoleMenu = ConsoleMenu;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ = __webpack_require__(11);
-const index_1 = __webpack_require__(9);
-const utils_1 = __webpack_require__(31);
+const index_1 = __webpack_require__(7);
+const utils_1 = __webpack_require__(33);
 const INDICATOR_COLOR = 0x505050;
 const INDICATOR_RADIUS = 3;
 const NEAR = 120;
@@ -69112,13 +69125,54 @@ exports.Attacher = Attacher;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(9);
-const scope_drawer_1 = __webpack_require__(33);
-const node_drawer_1 = __webpack_require__(32);
-const definition_parser_1 = __webpack_require__(25);
+function transpileBlock(block) {
+    let children = {};
+    for (let inputName of block.definition.inputNames) {
+        children[inputName] = block.getInput(inputName);
+    }
+    for (let argumentName of block.definition.argumentNames) {
+        let argumentBlock = block.getArgument(argumentName);
+        if (argumentBlock) {
+            children[argumentName] = transpileBlock(argumentBlock);
+        }
+    }
+    for (let scopeName of block.definition.scopeNames) {
+        let scopeCode = '';
+        for (let scopeBlock of block.getScope(scopeName)) {
+            scopeCode += transpileBlock(scopeBlock);
+        }
+        children[scopeName] = scopeCode;
+    }
+    return block.definition.execution(children, block);
+}
+function transpileModule(module) {
+    let code = '';
+    for (let moduleName of module.getModuleList().userModule) {
+        for (let block of module.blockListOf(moduleName)) {
+            if (block.attachInfo == null) {
+                code += transpileBlock(block);
+            }
+        }
+    }
+    return code;
+}
+exports.transpileModule = transpileModule;
+
+
+/***/ }),
+/* 227 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __webpack_require__(7);
+const scope_drawer_1 = __webpack_require__(27);
+const node_drawer_1 = __webpack_require__(26);
+const definition_parser_1 = __webpack_require__(16);
 const module_1 = __webpack_require__(51);
-const utils_1 = __webpack_require__(31);
-const type_1 = __webpack_require__(16);
+const utils_1 = __webpack_require__(33);
+const type_1 = __webpack_require__(17);
 const validating_functions_1 = __webpack_require__(105);
 class DefinitionStart extends index_1.Definition {
     constructor() {
@@ -69249,33 +69303,161 @@ CmdIfElse.definition = definition_parser_1.parseBlockDefinition({
     execution: (children) => `if (${children.condition}) {${children.ifBranch}} else {${children.elseBranch}}`
 });
 exports.CmdIfElse = CmdIfElse;
+class CmdRepeat extends index_1.Command {
+    constructor() {
+        super(CmdRepeat.definition);
+        this.N = null;
+        this.body = [];
+    }
+}
+CmdRepeat.definition = definition_parser_1.parseBlockDefinition({
+    id: CmdRepeat.name, definition: "repeat [N: int] times", scopeNames: ["body"],
+    validatorInto: [validating_functions_1.increaseLoopCount],
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.boxScopeDrawer,
+    execution: (children) => `for (let i = 0; i < (${children.N}); i++) {${children.body}}`
+});
+exports.CmdRepeat = CmdRepeat;
+class CmdBreak extends index_1.Command {
+    constructor() {
+        super(CmdBreak.definition);
+    }
+}
+CmdBreak.definition = definition_parser_1.parseBlockDefinition({
+    id: CmdBreak.name, definition: "break",
+    validatorPre: [validating_functions_1.insideLoop],
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `break;`
+});
+exports.CmdBreak = CmdBreak;
 exports.blockList = [
-    DefinitionStart, DefinitionFunction, CmdIfElse
+    DefinitionStart, DefinitionFunction, CmdIfElse, CmdRepeat, CmdBreak
 ];
 
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(9);
-const node_drawer_1 = __webpack_require__(32);
-const scope_drawer_1 = __webpack_require__(33);
-const definition_parser_1 = __webpack_require__(25);
-class ExpReadLine extends index_1.Expression {
+const index_1 = __webpack_require__(7);
+const node_drawer_1 = __webpack_require__(26);
+const definition_parser_1 = __webpack_require__(16);
+const scope_drawer_1 = __webpack_require__(27);
+class ExpConstantInteger extends index_1.Expression {
     constructor() {
-        super(ExpReadLine.definition);
+        super(ExpConstantInteger.definition);
     }
 }
-ExpReadLine.definition = definition_parser_1.parseBlockDefinition({
-    id: ExpReadLine.name, definition: "read line: string",
+ExpConstantInteger.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpConstantInteger.name, definition: "{num: int}: int",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => children.num
+});
+exports.ExpConstantInteger = ExpConstantInteger;
+class ExpIntToString extends index_1.Expression {
+    constructor() {
+        super(ExpIntToString.definition);
+        this.num = null;
+    }
+}
+ExpIntToString.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpIntToString.name, definition: "toString [num: int]: string",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `""+(${children.num})`
+});
+exports.ExpIntToString = ExpIntToString;
+class ExpCompareInteger extends index_1.Expression {
+    constructor() {
+        super(ExpCompareInteger.definition);
+        this.num1 = null;
+        this.num2 = null;
+    }
+}
+ExpCompareInteger.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpCompareInteger.name, definition: "[num1: int] == [num2: int]: bool",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(${children.num1}) == (${children.num2})`
+});
+exports.ExpCompareInteger = ExpCompareInteger;
+class ExpLtInteger extends index_1.Expression {
+    constructor() {
+        super(ExpLtInteger.definition);
+        this.num1 = null;
+        this.num2 = null;
+    }
+}
+ExpLtInteger.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpLtInteger.name, definition: "[num1: int] < [num2: int]: bool",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(${children.num1}) < (${children.num2})`
+});
+exports.ExpLtInteger = ExpLtInteger;
+class ExpAddInteger extends index_1.Expression {
+    constructor() {
+        super(ExpAddInteger.definition);
+        this.num1 = null;
+        this.num2 = null;
+    }
+}
+ExpAddInteger.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpAddInteger.name, definition: "[num1: int] + [num2: int]: int",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(${children.num1}) + (${children.num2})`
+});
+exports.ExpAddInteger = ExpAddInteger;
+class ExpMinusInteger extends index_1.Expression {
+    constructor() {
+        super(ExpMinusInteger.definition);
+        this.num1 = null;
+        this.num2 = null;
+    }
+}
+ExpMinusInteger.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpMinusInteger.name, definition: "[num1: int] - [num2: int]: int",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(${children.num1}) - (${children.num2})`
+});
+exports.ExpMinusInteger = ExpMinusInteger;
+exports.blockList = [
+    ExpConstantInteger, ExpIntToString, ExpCompareInteger, ExpLtInteger, ExpAddInteger, ExpMinusInteger
+];
+
+
+/***/ }),
+/* 229 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = __webpack_require__(7);
+const node_drawer_1 = __webpack_require__(26);
+const scope_drawer_1 = __webpack_require__(27);
+const definition_parser_1 = __webpack_require__(16);
+class ExpReadString extends index_1.Expression {
+    constructor() {
+        super(ExpReadString.definition);
+    }
+}
+ExpReadString.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpReadString.name, definition: "read string: string",
     nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
     execution: () => `window.prompt('Input a string')`
 });
-exports.ExpReadLine = ExpReadLine;
+exports.ExpReadString = ExpReadString;
+class ExpReadInt extends index_1.Expression {
+    constructor() {
+        super(ExpReadInt.definition);
+    }
+}
+ExpReadInt.definition = definition_parser_1.parseBlockDefinition({
+    id: ExpReadInt.name, definition: "read integer: int",
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: () => `(function () {while(true) {let r = parseInt(window.prompt('Input an integer')); if (!isNaN(r)) return r;}})()`
+});
+exports.ExpReadInt = ExpReadInt;
 class CmdPrintLine extends index_1.Command {
     constructor() {
         super(CmdPrintLine.definition);
@@ -69289,21 +69471,21 @@ CmdPrintLine.definition = definition_parser_1.parseBlockDefinition({
 });
 exports.CmdPrintLine = CmdPrintLine;
 exports.blockList = [
-    ExpReadLine, CmdPrintLine
+    ExpReadString, ExpReadInt, CmdPrintLine
 ];
 
 
 /***/ }),
-/* 228 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(9);
-const node_drawer_1 = __webpack_require__(32);
-const scope_drawer_1 = __webpack_require__(33);
-const definition_parser_1 = __webpack_require__(25);
+const index_1 = __webpack_require__(7);
+const node_drawer_1 = __webpack_require__(26);
+const scope_drawer_1 = __webpack_require__(27);
+const definition_parser_1 = __webpack_require__(16);
 class ExpConstantString extends index_1.Expression {
     constructor() {
         super(ExpConstantString.definition);
@@ -69347,17 +69529,17 @@ exports.blockList = [
 
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __webpack_require__(9);
-const definition_parser_1 = __webpack_require__(25);
-const node_drawer_1 = __webpack_require__(32);
-const scope_drawer_1 = __webpack_require__(33);
-const type_1 = __webpack_require__(16);
+const index_1 = __webpack_require__(7);
+const definition_parser_1 = __webpack_require__(16);
+const node_drawer_1 = __webpack_require__(26);
+const scope_drawer_1 = __webpack_require__(27);
+const type_1 = __webpack_require__(17);
 const NOT_FOUND_ID = 'NotFound';
 class Serializer {
     constructor(context) {
@@ -69525,7 +69707,7 @@ exports.Serializer = Serializer;
 
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69538,6 +69720,7 @@ class ValidationContext {
     constructor(initialize = true) {
         if (initialize) {
             this.scopeTree = [];
+            this.loopDepth = 0;
             this.result = {
                 info: [],
                 warning: [],
@@ -69548,6 +69731,7 @@ class ValidationContext {
     clone() {
         let newContext = new ValidationContext(false);
         newContext.scopeTree = _.clone(this.scopeTree);
+        newContext.loopDepth = this.loopDepth;
         newContext.result = this.result;
         return newContext;
     }
@@ -69643,7 +69827,7 @@ exports.validationResultMapToString = validationResultMapToString;
 
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69666,7 +69850,7 @@ module.exports = {
 
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a)throw Error();if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c)for(var e in c)c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e]));d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
@@ -69687,47 +69871,6 @@ Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra
 function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
-
-
-/***/ }),
-/* 233 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function transpileBlock(block) {
-    let children = {};
-    for (let inputName of block.definition.inputNames) {
-        children[inputName] = block.getInput(inputName);
-    }
-    for (let argumentName of block.definition.argumentNames) {
-        let argumentBlock = block.getArgument(argumentName);
-        if (argumentBlock) {
-            children[argumentName] = transpileBlock(argumentBlock);
-        }
-    }
-    for (let scopeName of block.definition.scopeNames) {
-        let scopeCode = '';
-        for (let scopeBlock of block.getScope(scopeName)) {
-            scopeCode += transpileBlock(scopeBlock);
-        }
-        children[scopeName] = scopeCode;
-    }
-    return block.definition.execution(children, block);
-}
-function transpileModule(module) {
-    let code = '';
-    for (let moduleName of module.getModuleList().userModule) {
-        for (let block of module.blockListOf(moduleName)) {
-            if (block.attachInfo == null) {
-                code += transpileBlock(block);
-            }
-        }
-    }
-    return code;
-}
-exports.transpileModule = transpileModule;
 
 
 /***/ })

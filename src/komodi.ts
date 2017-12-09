@@ -128,6 +128,7 @@ export class KomodiClass extends KomodiContext {
             }
             if (safe) {
                 let code = transpileModule(this.module);
+                console.log(code);
                 eval(code);
             } else {
                 this.consoleMenu.result.text = validationResultMapToString(validationResultMap);

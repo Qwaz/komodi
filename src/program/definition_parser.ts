@@ -165,10 +165,10 @@ validatorMap.set('bool', {
 
 validatorMap.set('int', {
     type: KomodiType.int,
-    defaultValue: '0',
+    defaultValue: '42',
     updateInput: (currentValue: string) => {
         let result = window.prompt('Change integer value', currentValue);
-        if (result && /^[+-]?(0|[1-9]\d*)$/.test(currentValue)) {
+        if (result && !isNaN(parseInt(result))) {
             return result;
         }
         return null;

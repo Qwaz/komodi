@@ -37,6 +37,16 @@ export function checkScopeTree(parentBlock: Block) {
     }
 }
 
+export function increaseLoopCount(block: Block, module: Module, context: ValidationContext) {
+    context.loopDepth++;
+}
+
+export function insideLoop(block: Block, module: Module, context: ValidationContext) {
+    if (context.loopDepth == 0) {
+        context.result.error.push(`"${block.definition.definition}" should be inside of a loop.`);
+    }
+}
+
 export const validatorPreAll: ValidationFunction[] = [
     dependencyCheck, freeBlockDefinitionCheck, argumentCheck
 ];

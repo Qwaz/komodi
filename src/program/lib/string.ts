@@ -47,6 +47,6 @@ export class ExpCompareString extends Expression {
     }
 }
 
-export let blockList: BlockClass[] = [
+export const blockList: BlockClass[] = [
     ExpConstantString, ExpConcatString, ExpCompareString
 ];

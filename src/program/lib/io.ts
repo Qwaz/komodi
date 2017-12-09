@@ -3,15 +3,27 @@ import {defaultNodeDrawer} from "../../graphic/node_drawer";
 import {boxScopeDrawer, lineScopeDrawer} from "../../graphic/scope_drawer";
 import {parseBlockDefinition} from "../definition_parser";
 
-export class ExpReadLine extends Expression {
+export class ExpReadString extends Expression {
     static readonly definition = parseBlockDefinition({
-        id: ExpReadLine.name, definition: "read line: string",
+        id: ExpReadString.name, definition: "read string: string",
         nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
         execution: () => `window.prompt('Input a string')`
     });
 
     constructor () {
-        super(ExpReadLine.definition);
+        super(ExpReadString.definition);
+    }
+}
+
+export class ExpReadInt extends Expression {
+    static readonly definition = parseBlockDefinition({
+        id: ExpReadInt.name, definition: "read integer: int",
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
+        execution: () => `(function () {while(true) {let r = parseInt(window.prompt('Input an integer')); if (!isNaN(r)) return r;}})()`
+    });
+
+    constructor () {
+        super(ExpReadInt.definition);
     }
 }
 
@@ -29,6 +41,6 @@ export class CmdPrintLine extends Command {
     }
 }
 
-export let blockList: BlockClass[] = [
-    ExpReadLine, CmdPrintLine
+export const blockList: BlockClass[] = [
+    ExpReadString, ExpReadInt, CmdPrintLine
 ];

@@ -14,7 +14,7 @@ import {ExportScope, parseScopeString} from "../module";
 import {uuidToJsIdentifier, uuidv4} from "../../common/utils";
 import {KomodiType} from "../../type";
 import {KomodiContext} from "../../context";
-import {checkScopeTree} from "../validator/validating_functions";
+import {checkScopeTree, increaseLoopCount, insideLoop} from "../validator/validating_functions";
 
 export class DefinitionStart extends Definition {
     static readonly definition = parseBlockDefinition({
@@ -167,6 +167,36 @@ export class CmdIfElse extends Command {
     }
 }
 
-export let blockList: BlockClass[] = [
-    DefinitionStart, DefinitionFunction, CmdIfElse
+export class CmdRepeat extends Command {
+    static readonly definition = parseBlockDefinition({
+        id: CmdRepeat.name, definition: "repeat [N: int] times", scopeNames: ["body"],
+        validatorInto: [increaseLoopCount],
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: boxScopeDrawer,
+        execution: (children) => `for (let i = 0; i < (${children.N}); i++) {${children.body}}`
+    });
+
+    N: Expression | null = null;
+    body: Scope = [];
+
+    constructor() {
+        super(CmdRepeat.definition);
+    }
+}
+
+
+export class CmdBreak extends Command {
+    static readonly definition = parseBlockDefinition({
+        id: CmdBreak.name, definition: "break",
+        validatorPre: [insideLoop],
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
+        execution: (children) => `break;`
+    });
+
+    constructor() {
+        super(CmdBreak.definition);
+    }
+}
+
+export const blockList: BlockClass[] = [
+    DefinitionStart, DefinitionFunction, CmdIfElse, CmdRepeat, CmdBreak
 ];

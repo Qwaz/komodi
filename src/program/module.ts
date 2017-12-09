@@ -2,6 +2,7 @@ import {Block, BlockClass} from "./index";
 import {blockList as commonBlockList} from "./lib/common"
 import {blockList as ioBlockList} from "./lib/io"
 import {blockList as stringBlockList} from "./lib/string"
+import {blockList as integerBlockList} from "./lib/integer"
 import {BlockGraphic} from "../graphic";
 import {KomodiContext} from "../context";
 
@@ -10,6 +11,7 @@ const builtinModules: Map<string, BlockClass[]> = new Map();
 builtinModules.set('common', commonBlockList);
 builtinModules.set('io', ioBlockList);
 builtinModules.set('string', stringBlockList);
+builtinModules.set('integer', integerBlockList);
 
 export enum ExportScope {
     INTERNAL, GLOBAL

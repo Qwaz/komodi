@@ -13,11 +13,13 @@ export interface ValidationResult {
 
 export class ValidationContext {
     scopeTree: Block[];
+    loopDepth: number;
     result: ValidationResult;
 
     constructor(initialize: boolean = true) {
         if (initialize) {
             this.scopeTree = [];
+            this.loopDepth = 0;
             this.result = {
                 info: [],
                 warning: [],
@@ -29,6 +31,7 @@ export class ValidationContext {
     clone(): ValidationContext {
         let newContext = new ValidationContext(false);
         newContext.scopeTree = _.clone(this.scopeTree);
+        newContext.loopDepth = this.loopDepth;
         newContext.result = this.result;
 
         return newContext;
