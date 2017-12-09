@@ -21,3 +21,7 @@ export function uuidv4(): string {
         return v.toString(16);
     });
 }
+
+export function uuidToJsIdentifier(str: string): string {
+    return 'f'+str.replace(/-/g, '_');
+}

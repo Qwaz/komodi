@@ -19,7 +19,7 @@ export function argumentCheck(block: Block, module: Module, context: ValidationC
     for (let argumentName of block.definition.argumentNames) {
         let argumentBlock = block.getArgument(argumentName);
         if (argumentBlock == null) {
-            context.result.warning.push("All argument should be filled.");
+            context.result.warning.push("All arguments should be filled.");
             break;
         }
     }

@@ -22,13 +22,6 @@ export abstract class BlockBase {
     abstract getScope(scopeName: string): Scope;
 
     abstract getInput(inputName: string): string;
-
-    getExtra(extraName: string): any {
-        if (_.includes(this.definition.extraNames, extraName)) {
-            return (<any>this)[extraName];
-        }
-        throw new Error(`getExtra failed: ${extraName} does not exist`);
-    }
 }
 
 export class VirtualBlock extends BlockBase {
@@ -69,7 +62,7 @@ export abstract class Block extends BlockBase {
 
     context: KomodiContext;
     moduleName: string;
-    protected exportInfo: {scope: ExportScope, blockClass: BlockClass}[] = [];
+    exportInfo: {scope: ExportScope, blockClass: BlockClass}[] = [];
 
     constructor(definition: BlockDefinition) {
         super(definition);

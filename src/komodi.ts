@@ -3,7 +3,8 @@ import * as WebFont from "webfontloader";
 import * as PIXI from "pixi.js";
 import {ConsoleMenu, SideMenu, TopMenu} from "./menu";
 import {KomodiContext} from "./context";
-import {Validator} from "./program/validator";
+import {validationResultMapToString, Validator} from "./program/validator";
+import {transpileModule} from "./program/converter";
 
 const KOMODI_STYLE = `
 .komodi-container {
@@ -111,6 +112,29 @@ export class KomodiClass extends KomodiContext {
             }
         });
 
+        this.topMenu.addMenu('Execute', () => {
+            let validationResultMap = this.validator.validate(
+                this.serializer.serializeProgram()
+            );
+            let safe = true;
+            for (let [_moduleName, arr] of validationResultMap.entries()) {
+                for (let result of arr) {
+                    if (result.warning.length > 0 || result.error.length > 0) {
+                        safe = false;
+                        break;
+                    }
+                }
+                if (!safe) break;
+            }
+            if (safe) {
+                let code = transpileModule(this.module);
+                eval(code);
+            } else {
+                this.consoleMenu.result.text = validationResultMapToString(validationResultMap);
+                window.alert("Compile error: check the output");
+            }
+        });
+
         // renderer initialization
         this.renderer = PIXI.autoDetectRenderer(
             1, 1,
@@ -176,9 +200,10 @@ export class KomodiClass extends KomodiContext {
             updateCnt++;
             if (updateCnt == 200) {
                 updateCnt = 0;
-                this.consoleMenu.result.text = this.validator.validate(
+                let validationResultMap = this.validator.validate(
                     this.serializer.serializeProgram()
                 );
+                this.consoleMenu.result.text = validationResultMapToString(validationResultMap);
             }
         };
 

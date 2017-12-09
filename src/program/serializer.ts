@@ -80,10 +80,6 @@ export class Serializer {
             result.data[scopeName] = block.getScope(scopeName).map(this.serializeBlock.bind(this));
         }
 
-        for (let extraName of block.definition.extraNames) {
-            result.data[extraName] = block.getExtra(extraName);
-        }
-
         return result;
     }
 
@@ -120,7 +116,8 @@ export class Serializer {
         } else if (blockData.id == NOT_FOUND_ID) {
             let definition = parseBlockDefinition({
                 id: NOT_FOUND_ID, definition: blockData.definition!,
-                nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
+                nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
+                execution: () => ''
             });
             if (definition.returnType == KomodiType.empty) {
                 blockClass = createAnonymousCommand(definition);

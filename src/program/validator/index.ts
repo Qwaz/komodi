@@ -78,44 +78,55 @@ export class Validator {
         return context.result;
     }
 
-
-    validate(program: SerializedProgram): string {
+    validate(program: SerializedProgram): Map<String, ValidationResult[]> {
         this.context.module.clear();
         this.context.serializer.deserializeProgram(program);
 
-        let validationResult = '';
+        let validationResultMap = new Map();
 
         let modules = this.context.module.getModuleList();
         for (let moduleName of modules.userModule) {
-            validationResult += `<heading>Module "${moduleName}"\n</heading>`;
-            let cnt = 0;
+            let arr = [];
             for (let block of this.context.module.blockListOf(moduleName).values()) {
                 if (block.attachInfo == null) {
-                    cnt++;
-                    validationResult += `FreeBlock #${cnt}: `;
-                    let result = this.validateFreeBlock(block);
-                    if (result.info.length > 0 || result.warning.length > 0 || result.error.length > 0) {
-                        validationResult += '\n';
-                        for (let infoString of result.info) {
-                            validationResult += `[INFO] ${infoString}\n`;
-                        }
-                        for (let warningString of result.warning) {
-                            validationResult += `<warning>[WARNING] ${warningString}\n</warning>`;
-                        }
-                        for (let errorString of result.error) {
-                            validationResult += `<error>[ERROR] ${errorString}\n</error>`;
-                        }
-                    } else {
-                        validationResult += 'OK!\n';
-                    }
+                    arr.push(this.validateFreeBlock(block));
                 }
             }
-            if (this.context.module.blockListOf(moduleName).size == 0) {
-                validationResult += "Nothing to validate.\n";
-            }
-            validationResult += "\n";
+            validationResultMap.set(moduleName, arr);
         }
 
-        return validationResult;
+        return validationResultMap;
     }
+}
+
+export function validationResultMapToString(map: Map<String, ValidationResult[]>) {
+    let str = '';
+    for (let [moduleName, arr] of map.entries()) {
+        str += `<heading>Module "${moduleName}"\n</heading>`;
+
+        let cnt = 0;
+        for (let result of arr) {
+            cnt++;
+            str += `FreeBlock #${cnt}: `;
+            if (result.info.length > 0 || result.warning.length > 0 || result.error.length > 0) {
+                str += '\n';
+                for (let infoString of result.info) {
+                    str += `[INFO] ${infoString}\n`;
+                }
+                for (let warningString of result.warning) {
+                    str += `<warning>[WARNING] ${warningString}\n</warning>`;
+                }
+                for (let errorString of result.error) {
+                    str += `<error>[ERROR] ${errorString}\n</error>`;
+                }
+            } else {
+                str += 'OK!\n';
+            }
+        }
+        if (arr.length == 0) {
+            str += "Nothing to validate.\n";
+        }
+        str += "\n";
+    }
+    return str;
 }

@@ -2089,12 +2089,6 @@ class BlockBase {
     constructor(definition) {
         this.definition = definition;
     }
-    getExtra(extraName) {
-        if (_.includes(this.definition.extraNames, extraName)) {
-            return this[extraName];
-        }
-        throw new Error(`getExtra failed: ${extraName} does not exist`);
-    }
 }
 exports.BlockBase = BlockBase;
 class VirtualBlock extends BlockBase {
@@ -23246,11 +23240,11 @@ function parseBlockDefinition(definitionBase) {
         argumentNames: _.filter(parsed.tokens, ((token) => token instanceof ExpressionToken))
             .map((token) => token.identifier),
         scopeNames: definitionBase.scopeNames || [],
-        extraNames: definitionBase.extraNames || [],
         validatorPre: definitionBase.validatorPre || [],
         validatorInto: definitionBase.validatorInto || [],
         nodeDrawer: definitionBase.nodeDrawer,
-        scopeDrawer: definitionBase.scopeDrawer
+        scopeDrawer: definitionBase.scopeDrawer,
+        execution: definitionBase.execution
     };
 }
 exports.parseBlockDefinition = parseBlockDefinition;
@@ -23266,7 +23260,7 @@ validatorMap.set('string', {
     defaultValue: 'str',
     updateInput: (currentValue) => {
         let result = window.prompt('Change string value', currentValue);
-        if (result && result.length > 0) {
+        if (result && result.length > 0 && result.indexOf('"') == -1) {
             return result;
         }
         return null;
@@ -24966,6 +24960,10 @@ function uuidv4() {
     });
 }
 exports.uuidv4 = uuidv4;
+function uuidToJsIdentifier(str) {
+    return 'f' + str.replace(/-/g, '_');
+}
+exports.uuidToJsIdentifier = uuidToJsIdentifier;
 
 
 /***/ }),
@@ -30183,6 +30181,7 @@ const PIXI = __webpack_require__(30);
 const menu_1 = __webpack_require__(224);
 const context_1 = __webpack_require__(104);
 const validator_1 = __webpack_require__(230);
+const converter_1 = __webpack_require__(233);
 const KOMODI_STYLE = `
 .komodi-container {
     margin: 0;
@@ -30268,6 +30267,28 @@ class KomodiClass extends context_1.KomodiContext {
                 this.module.addUserModule(moduleName);
             }
         });
+        this.topMenu.addMenu('Execute', () => {
+            let validationResultMap = this.validator.validate(this.serializer.serializeProgram());
+            let safe = true;
+            for (let [_moduleName, arr] of validationResultMap.entries()) {
+                for (let result of arr) {
+                    if (result.warning.length > 0 || result.error.length > 0) {
+                        safe = false;
+                        break;
+                    }
+                }
+                if (!safe)
+                    break;
+            }
+            if (safe) {
+                let code = converter_1.transpileModule(this.module);
+                eval(code);
+            }
+            else {
+                this.consoleMenu.result.text = validator_1.validationResultMapToString(validationResultMap);
+                window.alert("Compile error: check the output");
+            }
+        });
         this.renderer = PIXI.autoDetectRenderer(1, 1, { antialias: false, transparent: true, resolution: 2, roundPixels: true });
     }
     get projectName() {
@@ -30316,7 +30337,8 @@ class KomodiClass extends context_1.KomodiContext {
             updateCnt++;
             if (updateCnt == 200) {
                 updateCnt = 0;
-                this.consoleMenu.result.text = this.validator.validate(this.serializer.serializeProgram());
+                let validationResultMap = this.validator.validate(this.serializer.serializeProgram());
+                this.consoleMenu.result.text = validator_1.validationResultMapToString(validationResultMap);
             }
         };
         WebFont.load({
@@ -38738,7 +38760,7 @@ function argumentCheck(block, module, context) {
     for (let argumentName of block.definition.argumentNames) {
         let argumentBlock = block.getArgument(argumentName);
         if (argumentBlock == null) {
-            context.result.warning.push("All argument should be filled.");
+            context.result.warning.push("All arguments should be filled.");
             break;
         }
     }
@@ -69106,7 +69128,8 @@ class DefinitionStart extends index_1.Definition {
 }
 DefinitionStart.definition = definition_parser_1.parseBlockDefinition({
     id: DefinitionStart.name, definition: "start", scopeNames: ["body"],
-    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(function () {${children.body}})();`
 });
 exports.DefinitionStart = DefinitionStart;
 class DefinitionFunction extends index_1.Definition {
@@ -69143,7 +69166,24 @@ class DefinitionFunction extends index_1.Definition {
         let scope = module_1.parseScopeString(this.scope);
         let definition = definition_parser_1.parseBlockDefinition({
             id: utils_1.uuidv4(), definition: this.define,
-            nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+            nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+            execution: (children, block) => {
+                let functionId = utils_1.uuidToJsIdentifier(block.definition.id);
+                let argumentString = '';
+                for (let argumentName of block.definition.argumentNames) {
+                    if (argumentString == '') {
+                        argumentString = `(${children[argumentName]})`;
+                    }
+                    else {
+                        argumentString += `, (${children[argumentName]})`;
+                    }
+                }
+                let callString = `${functionId}(${argumentString})`;
+                if (block.definition.returnType == type_1.KomodiType.empty) {
+                    callString += ';';
+                }
+                return callString;
+            }
         });
         if (definition.returnType == type_1.KomodiType.empty) {
             this.addExport(scope, index_1.createAnonymousCommand(definition));
@@ -69156,7 +69196,8 @@ class DefinitionFunction extends index_1.Definition {
                 let argumentDefinition = definition_parser_1.parseBlockDefinition({
                     id: utils_1.uuidv4(), definition: `${token.identifier}: ${token.type}`,
                     validatorPre: [validating_functions_1.checkScopeTree(this)],
-                    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+                    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+                    execution: () => `${token.identifier}`
                 });
                 this.addExport(module_1.ExportScope.INTERNAL, index_1.createAnonymousExpression(argumentDefinition));
             }
@@ -69165,7 +69206,8 @@ class DefinitionFunction extends index_1.Definition {
             let returnBlockDefinition = definition_parser_1.parseBlockDefinition({
                 id: utils_1.uuidv4(), definition: `return [result: ${definition.returnType}]`,
                 validatorPre: [validating_functions_1.checkScopeTree(this)],
-                nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+                nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+                execution: (children) => `return (${children.result});`
             });
             this.addExport(module_1.ExportScope.INTERNAL, index_1.createAnonymousCommand(returnBlockDefinition));
         }
@@ -69177,7 +69219,20 @@ class DefinitionFunction extends index_1.Definition {
 }
 DefinitionFunction.definition = definition_parser_1.parseBlockDefinition({
     id: DefinitionFunction.name, definition: "{scope: scope} function {define: definition}", scopeNames: ["body"],
-    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.definitionNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children, block) => {
+        let functionId = utils_1.uuidToJsIdentifier(block.exportInfo[0].blockClass.definition.id);
+        let argumentString = '';
+        for (let argumentName of block.exportInfo[0].blockClass.definition.argumentNames) {
+            if (argumentString == '') {
+                argumentString = argumentName;
+            }
+            else {
+                argumentString += `, ${argumentName}`;
+            }
+        }
+        return `function ${functionId}(${argumentString}) {${children.body}}`;
+    }
 });
 exports.DefinitionFunction = DefinitionFunction;
 class CmdIfElse extends index_1.Command {
@@ -69190,7 +69245,8 @@ class CmdIfElse extends index_1.Command {
 }
 CmdIfElse.definition = definition_parser_1.parseBlockDefinition({
     id: CmdIfElse.name, definition: "if [condition: bool]", scopeNames: ["ifBranch", "elseBranch"],
-    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.boxScopeDrawer
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.boxScopeDrawer,
+    execution: (children) => `if (${children.condition}) {${children.ifBranch}} else {${children.elseBranch}}`
 });
 exports.CmdIfElse = CmdIfElse;
 exports.blockList = [
@@ -69216,7 +69272,8 @@ class ExpReadLine extends index_1.Expression {
 }
 ExpReadLine.definition = definition_parser_1.parseBlockDefinition({
     id: ExpReadLine.name, definition: "read line: string",
-    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: () => `window.prompt('Input a string')`
 });
 exports.ExpReadLine = ExpReadLine;
 class CmdPrintLine extends index_1.Command {
@@ -69227,7 +69284,8 @@ class CmdPrintLine extends index_1.Command {
 }
 CmdPrintLine.definition = definition_parser_1.parseBlockDefinition({
     id: CmdPrintLine.name, definition: "print line [str: string]", scopeNames: [],
-    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.boxScopeDrawer
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.boxScopeDrawer,
+    execution: (children) => `window.alert(${children.str});`
 });
 exports.CmdPrintLine = CmdPrintLine;
 exports.blockList = [
@@ -69253,7 +69311,8 @@ class ExpConstantString extends index_1.Expression {
 }
 ExpConstantString.definition = definition_parser_1.parseBlockDefinition({
     id: ExpConstantString.name, definition: "{str: string}: string",
-    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `"${children.str}"`
 });
 exports.ExpConstantString = ExpConstantString;
 class ExpConcatString extends index_1.Expression {
@@ -69265,7 +69324,8 @@ class ExpConcatString extends index_1.Expression {
 }
 ExpConcatString.definition = definition_parser_1.parseBlockDefinition({
     id: ExpConcatString.name, definition: "concat [str1: string] + [str2: string]: string",
-    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(${children.str1})+(${children.str2})`
 });
 exports.ExpConcatString = ExpConcatString;
 class ExpCompareString extends index_1.Expression {
@@ -69277,7 +69337,8 @@ class ExpCompareString extends index_1.Expression {
 }
 ExpCompareString.definition = definition_parser_1.parseBlockDefinition({
     id: ExpCompareString.name, definition: "is same [str1: string], [str2: string]: bool",
-    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+    nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+    execution: (children) => `(${children.str1}) == (${children.str2})`
 });
 exports.ExpCompareString = ExpCompareString;
 exports.blockList = [
@@ -69325,9 +69386,6 @@ class Serializer {
         for (let scopeName of block.definition.scopeNames) {
             result.data[scopeName] = block.getScope(scopeName).map(this.serializeBlock.bind(this));
         }
-        for (let extraName of block.definition.extraNames) {
-            result.data[extraName] = block.getExtra(extraName);
-        }
         return result;
     }
     serializeProgram() {
@@ -69360,7 +69418,8 @@ class Serializer {
         else if (blockData.id == NOT_FOUND_ID) {
             let definition = definition_parser_1.parseBlockDefinition({
                 id: NOT_FOUND_ID, definition: blockData.definition,
-                nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer
+                nodeDrawer: node_drawer_1.defaultNodeDrawer, scopeDrawer: scope_drawer_1.lineScopeDrawer,
+                execution: () => ''
             });
             if (definition.returnType == type_1.KomodiType.empty) {
                 blockClass = index_1.createAnonymousCommand(definition);
@@ -69534,42 +69593,53 @@ class Validator {
     validate(program) {
         this.context.module.clear();
         this.context.serializer.deserializeProgram(program);
-        let validationResult = '';
+        let validationResultMap = new Map();
         let modules = this.context.module.getModuleList();
         for (let moduleName of modules.userModule) {
-            validationResult += `<heading>Module "${moduleName}"\n</heading>`;
-            let cnt = 0;
+            let arr = [];
             for (let block of this.context.module.blockListOf(moduleName).values()) {
                 if (block.attachInfo == null) {
-                    cnt++;
-                    validationResult += `FreeBlock #${cnt}: `;
-                    let result = this.validateFreeBlock(block);
-                    if (result.info.length > 0 || result.warning.length > 0 || result.error.length > 0) {
-                        validationResult += '\n';
-                        for (let infoString of result.info) {
-                            validationResult += `[INFO] ${infoString}\n`;
-                        }
-                        for (let warningString of result.warning) {
-                            validationResult += `<warning>[WARNING] ${warningString}\n</warning>`;
-                        }
-                        for (let errorString of result.error) {
-                            validationResult += `<error>[ERROR] ${errorString}\n</error>`;
-                        }
-                    }
-                    else {
-                        validationResult += 'OK!\n';
-                    }
+                    arr.push(this.validateFreeBlock(block));
                 }
             }
-            if (this.context.module.blockListOf(moduleName).size == 0) {
-                validationResult += "Nothing to validate.\n";
-            }
-            validationResult += "\n";
+            validationResultMap.set(moduleName, arr);
         }
-        return validationResult;
+        return validationResultMap;
     }
 }
 exports.Validator = Validator;
+function validationResultMapToString(map) {
+    let str = '';
+    for (let [moduleName, arr] of map.entries()) {
+        str += `<heading>Module "${moduleName}"\n</heading>`;
+        let cnt = 0;
+        for (let result of arr) {
+            cnt++;
+            str += `FreeBlock #${cnt}: `;
+            if (result.info.length > 0 || result.warning.length > 0 || result.error.length > 0) {
+                str += '\n';
+                for (let infoString of result.info) {
+                    str += `[INFO] ${infoString}\n`;
+                }
+                for (let warningString of result.warning) {
+                    str += `<warning>[WARNING] ${warningString}\n</warning>`;
+                }
+                for (let errorString of result.error) {
+                    str += `<error>[ERROR] ${errorString}\n</error>`;
+                }
+            }
+            else {
+                str += 'OK!\n';
+            }
+        }
+        if (arr.length == 0) {
+            str += "Nothing to validate.\n";
+        }
+        str += "\n";
+    }
+    return str;
+}
+exports.validationResultMapToString = validationResultMapToString;
 
 
 /***/ }),
@@ -69617,6 +69687,47 @@ Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra
 function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m)for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n)k="";else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n)n="4";else var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1);k=[k,n].join("")}}else k="";k&&g.push(k)}0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
 g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1)a.a.push(new G(e,f[d]))}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b)a([]);else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2)for(var g=b[f],m=b[f+1],h=0;h<m.length;h++)e.push(new G(g,m[h]));try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = function(){return Z}.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function transpileBlock(block) {
+    let children = {};
+    for (let inputName of block.definition.inputNames) {
+        children[inputName] = block.getInput(inputName);
+    }
+    for (let argumentName of block.definition.argumentNames) {
+        let argumentBlock = block.getArgument(argumentName);
+        if (argumentBlock) {
+            children[argumentName] = transpileBlock(argumentBlock);
+        }
+    }
+    for (let scopeName of block.definition.scopeNames) {
+        let scopeCode = '';
+        for (let scopeBlock of block.getScope(scopeName)) {
+            scopeCode += transpileBlock(scopeBlock);
+        }
+        children[scopeName] = scopeCode;
+    }
+    return block.definition.execution(children, block);
+}
+function transpileModule(module) {
+    let code = '';
+    for (let moduleName of module.getModuleList().userModule) {
+        for (let block of module.blockListOf(moduleName)) {
+            if (block.attachInfo == null) {
+                code += transpileBlock(block);
+            }
+        }
+    }
+    return code;
+}
+exports.transpileModule = transpileModule;
 
 
 /***/ })

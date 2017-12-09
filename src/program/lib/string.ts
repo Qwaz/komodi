@@ -6,7 +6,8 @@ import {parseBlockDefinition} from "../definition_parser";
 export class ExpConstantString extends Expression {
     static readonly definition = parseBlockDefinition({
         id: ExpConstantString.name, definition: "{str: string}: string",
-        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
+        execution: (children) => `"${children.str}"`
     });
 
     str: string;
@@ -19,7 +20,8 @@ export class ExpConstantString extends Expression {
 export class ExpConcatString extends Expression {
     static readonly definition = parseBlockDefinition({
         id: ExpConcatString.name, definition: "concat [str1: string] + [str2: string]: string",
-        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
+        execution: (children) => `(${children.str1})+(${children.str2})`
     });
 
     str1: Expression | null = null;
@@ -33,7 +35,8 @@ export class ExpConcatString extends Expression {
 export class ExpCompareString extends Expression {
     static readonly definition = parseBlockDefinition({
         id: ExpCompareString.name, definition: "is same [str1: string], [str2: string]: bool",
-        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer
+        nodeDrawer: defaultNodeDrawer, scopeDrawer: lineScopeDrawer,
+        execution: (children) => `(${children.str1}) == (${children.str2})`
     });
 
     str1: Expression | null = null;

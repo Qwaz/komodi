@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import {KomodiType} from "../type";
 import {NodeDrawer, ScopeDrawer} from "../graphic";
 import {ValidationFunction} from "./validator";
+import {Block} from "./index";
 
 export class PlaceholderToken {
     kind: "placeholder" = "placeholder";
@@ -56,11 +57,11 @@ export interface BlockDefinitionBase {
     id: string;
     definition: string;
     scopeNames?: string[];
-    extraNames?: string[];
     validatorPre?: ValidationFunction[];
     validatorInto?: ValidationFunction[];
     nodeDrawer: NodeDrawer;
     scopeDrawer: ScopeDrawer;
+    execution: (children: {[key: string]: string}, block: Block) => string;
 }
 
 export interface BlockDefinition {
@@ -71,11 +72,11 @@ export interface BlockDefinition {
     inputNames: string[];
     argumentNames: string[];
     scopeNames: string[];
-    extraNames: string[];
     validatorPre: ValidationFunction[];
     validatorInto: ValidationFunction[];
     nodeDrawer: NodeDrawer;
     scopeDrawer: ScopeDrawer;
+    execution: (children: {[key: string]: string}, block: Block) => string;
 }
 
 function parseDefinitionString(definition: string): {
@@ -120,11 +121,11 @@ export function parseBlockDefinition(definitionBase: BlockDefinitionBase): Block
             <(x: Token) => x is ExpressionToken>((token) => token instanceof ExpressionToken))
             .map((token) => token.identifier),
         scopeNames: definitionBase.scopeNames || [],
-        extraNames: definitionBase.extraNames || [],
         validatorPre: definitionBase.validatorPre || [],
         validatorInto: definitionBase.validatorInto || [],
         nodeDrawer: definitionBase.nodeDrawer,
-        scopeDrawer: definitionBase.scopeDrawer
+        scopeDrawer: definitionBase.scopeDrawer,
+        execution: definitionBase.execution
     }
 }
 
@@ -149,7 +150,7 @@ validatorMap.set('string', {
     defaultValue: 'str',
     updateInput: (currentValue: string) => {
         let result = window.prompt('Change string value', currentValue);
-        if (result && result.length > 0) {
+        if (result && result.length > 0 && result.indexOf('"') == -1) {
             return result;
         }
         return null;
