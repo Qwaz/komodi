@@ -3,12 +3,11 @@
     "target": "es2015",
     "module": "commonjs",
     "moduleResolution": "node",
+    "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strictNullChecks": true,
     "removeComments": true,
     "sourceMap": true
   },
@@ -16,7 +15,6 @@
     "src/**/*"
   ],
   "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
+    "node_modules"
   ]
 }

@@ -1,9 +1,14 @@
 // webpack.config.js
+let webpack = require('webpack');
+
 module.exports = {
-    entry: './src/entry.ts',
+    entry: {
+        komodi: './src/entry.ts'
+        // worker: './src/worker.ts'
+    },
     output: {
-        filename: 'komodi.js',
-        library: 'Komodi',
+        filename: '[name].js',
+        library: "[name]",
         libraryTarget: "umd"
     },
     resolve: {
@@ -12,9 +17,14 @@ module.exports = {
         modules: ["node_modules"]
     },
     module: {
-        loaders: [
+        rules: [
             // all files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'
-            { test: /\.tsx?$/, loader: "ts-loader" }
+            {
+                test: /\.tsx?$/,
+                use: {
+                    loader: "ts-loader"
+                }
+            }
         ]
     }
 };
